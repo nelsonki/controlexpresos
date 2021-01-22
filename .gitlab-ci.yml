@@ -1,0 +1,140 @@
+stages:
+  - backup
+  - build
+  - deploy
+  - rollback
+
+dev_backup_job:
+  stage: backup
+  script:
+    - docker image tag devtrack-front:latest devtrack-front:prev || true
+  tags:
+    - devapp
+  only:
+    - develop
+
+dev_build_job:
+  stage: build
+  script:
+    - docker build -t devtrack-front .
+  when: on_success
+  tags:
+    - devapp
+  only:
+    - develop
+    
+dev_deploy_job:
+  stage: deploy
+  script:
+    - docker stop devtrack-front || true
+    - docker rm devtrack-front || true
+    - docker run --restart always --name devtrack-front -d -p 10085:80 devtrack-front
+  when: on_success
+  tags:
+    - devapp
+  only:
+    - develop
+
+dev_rollback_job:
+  stage: rollback
+  script:
+    - docker stop devtrack-front || true
+    - docker rm devtrack-front || true
+    - docker image tag devtrack-front:prev devtrack-front:latest || true
+    - docker run --restart always --name devtrack-front -d -p 10085:80 devtrack-front
+  when: manual
+  tags:
+    - devapp
+  only:
+    - develop
+    
+    
+qa_backup_job:
+  stage: backup
+  script:
+    - docker image tag qatrack-front:latest qatrack-front:prev || true
+  tags:
+    - qaapp
+  only:
+    - QA
+
+
+qa_build_job:
+  stage: build
+  script:
+    - docker build -t qatrack-front .
+  when: on_success
+  tags:
+    - qaapp
+  only:
+    - QA
+    
+
+qa_deploy_job:
+  stage: deploy
+  script:
+    - docker stop qatrack-front || true
+    - docker rm qatrack-front || true
+    - docker run --restart always --name qatrack-front -d -p 8063:80 qatrack-front
+  when: on_success
+  tags:
+    - qaapp
+  only:
+    - QA
+
+qa_rollback_job:
+  stage: rollback
+  script:
+    - docker stop qatrack-front || true
+    - docker rm qatrack-front || true
+    - docker image tag qatrack-front:prev qatrack-front:latest || true
+    - docker run --restart always --name qatrack-front -d -p 8063:80 qatrack-front
+  when: manual
+  tags:
+    - qaapp
+  only:
+    - QA
+
+prod_backup_job:
+  stage: backup
+  script:
+    - docker image tag track-front:latest track-front:prev || true
+  tags:
+    - prodjakiro
+  only:
+    - tags
+
+prod_build_job:
+  stage: build
+  script:
+    - docker build -t track-front .
+  when: on_success
+  tags:
+    - prodjakiro
+  only:
+    - tags
+
+prod_deploy_job:
+  stage: deploy
+  script:
+    - docker stop track-front || true
+    - docker rm track-front || true
+    - docker run --restart always --name track-front -d -p 8003:80 track-front
+  when: on_success
+  tags:
+    - prodjakiro
+  only:
+    - tags
+
+prod_rollback_job:
+  stage: rollback
+  script:
+    - docker stop track-front || true
+    - docker rm track-front || true
+    - docker image tag track-front:prev track-front:latest || true
+    - docker run --restart always --name track-front -d -p 8003:80 track-front
+  when: manual
+  tags:
+    - prodjakiro
+  only:
+    - tags
