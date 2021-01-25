@@ -1,0 +1,87 @@
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+body,
+html {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    background-color: #f0f3f5 !important;
+    background-image: none !important;
+    background-repeat: no-repeat !important;
+}
+
+ ::host {}
+
+.example-icon {
+    padding: 0 14px;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+ ::ng-deep {}
+
+
+/*
+   * en caso de ser desktop
+   */
+
+@media(min-width:992px) {
+    .example-sidenav {
+        width: 300px !important
+    }
+    .profile_user {
+        display: block;
+    }
+    .profile_user_mobile {
+        display: none;
+    }
+    .logo-menu {
+        display: block
+    }
+    .logo-menu-mobile {
+        display: none;
+    }
+    .mobile-profile {
+        display: none;
+        padding-bottom: 20px;
+        margin: 0 !important;
+        margin-left: -30px !important;
+        background-color: #eac804;
+        //background-image: url('../../../../assets/info-box_bg-1.jpg.png');
+        background-position: top center;
+    }
+}
+
+@media(max-width:992px) {
+    .profile_user {
+        display: none;
+    }
+    .profile_user_mobile {
+        display: block;
+    }
+    .logo-menu {
+        display: none;
+    }
+    .logo-menu-mobile {
+        display: block;
+    }
+    .mobile-profile {
+        display: block;
+        padding-bottom: 20px;
+        margin: 0 !important;
+        margin-left: -30px !important;
+        background-color: #eac804;
+        //background-image: url('../../../../assets/info-box_bg-1.jpg.png');
+        background-position: top center;
+    }
+}
+
+mat-toolbar {
+    background: hsl(189, 97%, 47%);
+}
+
+
+/**/

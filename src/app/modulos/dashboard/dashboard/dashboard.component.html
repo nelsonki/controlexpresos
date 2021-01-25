@@ -1,0 +1,101 @@
+<mat-toolbar>
+    <span>JAKIRO2 </span>
+    <button type="button" mat-button (click)="drawer.toggle() ">
+    <!--<button type="button" mat-button (click)="goToMenu()">-->
+       <mat-icon>menu</mat-icon>
+    </button>
+
+
+
+    <span class="example-spacer"></span>
+
+</mat-toolbar>
+<mat-drawer-container class="example-container" autosize style="width: 100%; height: 100vh;">
+    <mat-drawer #drawer mode="over" opened="false" position="start" class="example-sidenav" style="width:100%">
+        <ul class="side-menu" style="list-style: none; ">
+
+            <ng-container>
+                <li style="padding-top: 15px; padding-left: 15px">
+                    <a [routerLink]="['/' ]" routerLinkActive="router-link-active" (click)="dashboard()">
+                        <mat-icon>addchart</mat-icon>
+                        <span style=" font-family: Arial, Helvetica, sans-serif; font-weight: bold; padding-left: 6px"> Dashboard</span>
+                    </a>
+                </li>
+                <hr>
+                <li>
+
+                    <button mat-button [matMenuTriggerFor]="menuOrders">
+<img src="../../../../assets/registrar_carga.png" alt="" height="22px"/>
+
+&nbsp;
+<span style="font-size: 15px; font-weight: bold;">Catálogos</span>
+</button>
+                    <mat-menu #menuOrders="matMenu">
+                        <button mat-menu-item><i class="fas fa-sticky-note"></i>&nbsp;Listar Pedidos</button>
+                        <button mat-menu-item><i class="fas fa-sticky-note"></i>&nbsp;Crear Pedidos</button>
+                    </mat-menu>
+                </li>
+                <hr>
+
+                <li>
+
+                    <button mat-button [matMenuTriggerFor]="menuOrders">
+<img src="../../../../assets/registrar_carga.png" alt="" height="22px"/>
+
+&nbsp;
+<span style="font-size: 15px; font-weight: bold;">Inventario</span>
+</button>
+                    <mat-menu #menuOrders="matMenu">
+                        <button mat-menu-item><i class="fas fa-sticky-note"></i>&nbsp;Listar Pedidos</button>
+                        <button mat-menu-item><i class="fas fa-sticky-note"></i>&nbsp;Crear Pedidos</button>
+                    </mat-menu>
+                </li>
+                <hr>
+                <li>
+
+                    <button mat-button [matMenuTriggerFor]="menuOrders">
+<img src="../../../../assets/registrar_carga.png" alt="" height="22px"/>
+
+&nbsp;
+<span style="font-size: 15px; font-weight: bold;">Operaciones</span>
+</button>
+                    <mat-menu #menuOrders="matMenu">
+                        <button mat-menu-item><i class="fas fa-sticky-note"></i>&nbsp;Listar Pedidos</button>
+                        <button mat-menu-item><i class="fas fa-sticky-note"></i>&nbsp;Crear Pedidos</button>
+                    </mat-menu>
+                </li>
+                <hr>
+                <li>
+
+                    <button mat-button [matMenuTriggerFor]="menuOrders">
+<img src="../../../../assets/registrar_carga.png" alt="" height="22px"/>
+
+&nbsp;
+<span style="font-size: 15px; font-weight: bold;">Inspección</span>
+</button>
+                    <mat-menu #menuOrders="matMenu">
+                        <button mat-menu-item><i class="fas fa-sticky-note"></i>&nbsp;Listar Pedidos</button>
+                        <button mat-menu-item><i class="fas fa-sticky-note"></i>&nbsp;Crear Pedidos</button>
+                    </mat-menu>
+                </li>
+                <hr>
+                <!-- <li style="padding-top: 15px; padding-left: 15px">
+                   ng-content [routerLink]="['/Embarques' ]" routerLinkActive="router-link-active" (click)="listarEmbarques()">
+                        <mat-icon>anchor</mat-icon>
+                        <span style=" font-family: Arial, Helvetica, sans-serif; font-weight: bold; padding-left: 6px"> Embarque y Tripulación</span>
+                    </a>
+                </li>-->
+
+
+            </ng-container>
+
+        </ul>
+    </mat-drawer>
+
+    <router-outlet #outlet="outlet">
+
+
+
+
+    </router-outlet>
+</mat-drawer-container>
