@@ -1,59 +1,51 @@
 <form [formGroup]="firstform" class="client-form-top" (ngSubmit)="onSubmit()">
     <div class="form-group">
         <mat-form-field class="example-chip-list">
-            <mat-label>Código(*)</mat-label>
-            <input matInput formControlName="codigo" [ngClass]="{ 'is-invalid': submitted && f.codigo.errors }" />
-            <mat-error *ngIf="submitted && f.codigo.errors">
-                <div *ngIf="f.codigo.errors.required">
-                    Por Favor, Ingrese codigo
+            <mat-label>DNI(*)</mat-label>
+            <input matInput formControlName="dni" [ngClass]="{ 'is-invalid': submitted && f.dni.errors }" />
+            <mat-error *ngIf="submitted && f.dni.errors">
+                <div *ngIf="f.dni.errors.required">
+                    Por Favor, Ingrese dni
                 </div>
             </mat-error>
         </mat-form-field>
         <mat-form-field class="example-chip-list">
-            <mat-label>Tipo de recarga(*)</mat-label>
-            <input matInput formControlName="tipo" [ngClass]="{ 'is-invalid': submitted && f.tipo.errors }" />
-            <mat-error *ngIf="submitted && f.tipo.errors">
-                <div *ngIf="f.tipo.errors.required">
-                    Por Favor, Ingrese tipo
+            <mat-label>Nombre Comercial(*)</mat-label>
+            <input matInput formControlName="nombre" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }" />
+            <mat-error *ngIf="submitted && f.nombre.errors">
+                <div *ngIf="f.nombre.errors.required">
+                    Por Favor, Ingrese nombre
                 </div>
             </mat-error>
         </mat-form-field>
         <mat-form-field class="example-chip-list">
-            <mat-label>Responsable(*)</mat-label>
-            <input matInput formControlName="responsable" [ngClass]="{ 'is-invalid': submitted && f.responsable.errors }" />
-            <mat-error *ngIf="submitted && f.responsable.errors">
-                <div *ngIf="f.responsable.errors.required">
-                    Por Favor, Ingrese observación
+            <mat-label>Dirección(*)</mat-label>
+            <input matInput formControlName="direccion" [ngClass]="{ 'is-invalid': submitted && f.direccion.errors }" />
+            <mat-error *ngIf="submitted && f.direccion.errors">
+                <div *ngIf="f.direccion.errors.required">
+                    Por Favor, Ingrese direccion
                 </div>
             </mat-error>
         </mat-form-field>
         <mat-form-field class="example-chip-list">
-            <mat-label>Fecha(*)</mat-label>
-            <input matInput formControlName="fecha" [ngClass]="{ 'is-invalid': submitted && f.fecha.errors }" />
-            <mat-error *ngIf="submitted && f.fecha.errors">
-                <div *ngIf="f.fecha.errors.required">
-                    Por Favor, Ingrese fecha
+            <mat-label>Teléfono(*)</mat-label>
+            <input matInput formControlName="telefono" [ngClass]="{ 'is-invalid': submitted && f.telefono.errors }" />
+            <mat-error *ngIf="submitted && f.telefono.errors">
+                <div *ngIf="f.telefono.errors.required">
+                    Por Favor, Ingrese telefono
                 </div>
             </mat-error>
         </mat-form-field>
         <mat-form-field class="example-chip-list">
-            <mat-label>Monto(*)</mat-label>
-            <input matInput formControlName="monto" [ngClass]="{ 'is-invalid': submitted && f.monto.errors }" />
-            <mat-error *ngIf="submitted && f.monto.errors">
-                <div *ngIf="f.monto.errors.required">
-                    Por Favor, Ingrese monto
-                </div>
-            </mat-error>observacion
-        </mat-form-field>
-        <mat-form-field class="example-chip-list">
-            <mat-label>Observación(*)</mat-label>
-            <input matInput formControlName="observacion" [ngClass]="{ 'is-invalid': submitted && f.observacion.errors }" />
-            <mat-error *ngIf="submitted && f.observacion.errors">
-                <div *ngIf="f.observacion.errors.required">
-                    Por Favor, Ingrese observacion
+            <mat-label>Email(*)</mat-label>
+            <input matInput formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+            <mat-error *ngIf="submitted && f.email.errors">
+                <div *ngIf="f.email.errors.required">
+                    Por Favor, Ingrese email
                 </div>
             </mat-error>
         </mat-form-field>
+
     </div>
 
 

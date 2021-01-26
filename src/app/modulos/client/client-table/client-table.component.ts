@@ -20,7 +20,7 @@ export class ClientTableComponent implements OnInit {
   @ViewChild('basicModal') basicModal!: ModalDirective;
   @Output() onChange: EventEmitter<File> = new EventEmitter<File>();
   public titleModal: string;
-  public element: any[]; 
+  public element; 
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;

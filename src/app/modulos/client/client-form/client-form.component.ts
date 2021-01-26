@@ -48,12 +48,11 @@ export class ClientFormComponent implements OnInit {
 
   ngOnInit() {
     this.firstform = this.formBuilder.group({ 
-      codigo: ["", Validators.required],
-      tipo: ["", Validators.required],
-      responsable: ["", Validators.required],
-      fecha: ["", Validators.required],
-      monto: ["", Validators.required],
-      observacion: ["", Validators.required]
+      dni: ["", Validators.required],
+      nombre: ["", Validators.required],
+      direccion: ["", Validators.required],
+      telefono: ["", Validators.required],
+      email: ["", Validators.required]
     });
   }
   public closeModal() {
