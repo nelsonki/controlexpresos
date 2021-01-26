@@ -1,0 +1,79 @@
+<form [formGroup]="firstform" class="client-form-top" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <mat-form-field class="example-chip-list">
+            <mat-label>Código(*)</mat-label>
+            <input matInput formControlName="codigo" [ngClass]="{ 'is-invalid': submitted && f.codigo.errors }" />
+            <mat-error *ngIf="submitted && f.codigo.errors">
+                <div *ngIf="f.codigo.errors.required">
+                    Por Favor, Ingrese codigo
+                </div>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-chip-list">
+            <mat-label>Tipo de recarga(*)</mat-label>
+            <input matInput formControlName="tipo" [ngClass]="{ 'is-invalid': submitted && f.tipo.errors }" />
+            <mat-error *ngIf="submitted && f.tipo.errors">
+                <div *ngIf="f.tipo.errors.required">
+                    Por Favor, Ingrese tipo
+                </div>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-chip-list">
+            <mat-label>Responsable(*)</mat-label>
+            <input matInput formControlName="responsable" [ngClass]="{ 'is-invalid': submitted && f.responsable.errors }" />
+            <mat-error *ngIf="submitted && f.responsable.errors">
+                <div *ngIf="f.responsable.errors.required">
+                    Por Favor, Ingrese observación
+                </div>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-chip-list">
+            <mat-label>Fecha(*)</mat-label>
+            <input matInput formControlName="fecha" [ngClass]="{ 'is-invalid': submitted && f.fecha.errors }" />
+            <mat-error *ngIf="submitted && f.fecha.errors">
+                <div *ngIf="f.fecha.errors.required">
+                    Por Favor, Ingrese fecha
+                </div>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-chip-list">
+            <mat-label>Monto(*)</mat-label>
+            <input matInput formControlName="monto" [ngClass]="{ 'is-invalid': submitted && f.monto.errors }" />
+            <mat-error *ngIf="submitted && f.monto.errors">
+                <div *ngIf="f.monto.errors.required">
+                    Por Favor, Ingrese monto
+                </div>
+            </mat-error>observacion
+        </mat-form-field>
+        <mat-form-field class="example-chip-list">
+            <mat-label>Observación(*)</mat-label>
+            <input matInput formControlName="observacion" [ngClass]="{ 'is-invalid': submitted && f.observacion.errors }" />
+            <mat-error *ngIf="submitted && f.observacion.errors">
+                <div *ngIf="f.observacion.errors.required">
+                    Por Favor, Ingrese observacion
+                </div>
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+
+
+    <div class="form-group warehouse-width-button">
+        <div class="row ">
+            <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="row">
+                    <div class="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <button [disabled]="loading" mat-raised-button color="primary" class="btn btn-accent">
+            Aceptar
+          </button>
+                    </div>
+                    <div class="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <button style="color:white" mat-raised-button color="accent" class="btn btn-accent" type="button" (click)="closeModal()">
+            Cancelar
+          </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

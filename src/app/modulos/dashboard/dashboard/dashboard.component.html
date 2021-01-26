@@ -24,58 +24,59 @@
                 <hr>
                 <li>
 
-                    <button mat-button [matMenuTriggerFor]="menuOrders">
+                    <button mat-button [matMenuTriggerFor]="menuCatalogo">
 <img src="../../../../assets/registrar_carga.png" alt="" height="22px"/>
 
 &nbsp;
 <span style="font-size: 15px; font-weight: bold;">Catálogos</span>
 </button>
-                    <mat-menu #menuOrders="matMenu">
-                        <button mat-menu-item><i class="fas fa-sticky-note"></i>&nbsp;Listar Pedidos</button>
-                        <button mat-menu-item><i class="fas fa-sticky-note"></i>&nbsp;Crear Pedidos</button>
+                    <mat-menu #menuCatalogo="matMenu">
+                        <button (click)="listarClientes()" mat-menu-item [routerLink]="['/Client' ]" routerLinkActive="router-link-active"><i class="fas fa-sticky-note"></i>&nbsp;Clientes</button>
+                        <button mat-menu-item><i class="fas fa-sticky-note"></i>&nbsp;Sucursales</button>
                     </mat-menu>
                 </li>
                 <hr>
 
                 <li>
 
-                    <button mat-button [matMenuTriggerFor]="menuOrders">
+                    <button mat-button [matMenuTriggerFor]="menuInventario">
 <img src="../../../../assets/registrar_carga.png" alt="" height="22px"/>
 
 &nbsp;
 <span style="font-size: 15px; font-weight: bold;">Inventario</span>
 </button>
-                    <mat-menu #menuOrders="matMenu">
-                        <button mat-menu-item><i class="fas fa-sticky-note"></i>&nbsp;Listar Pedidos</button>
-                        <button mat-menu-item><i class="fas fa-sticky-note"></i>&nbsp;Crear Pedidos</button>
+                    <mat-menu #menuInventario="matMenu">
+                        <button mat-menu-item><i class="fas fa-sticky-note"></i>&nbsp;Colores</button>
+                        <button mat-menu-item><i class="fas fa-sticky-note"></i>&nbsp;Servicios</button>
+                        <button mat-menu-item><i class="fas fa-sticky-note"></i>&nbsp;Sub-Servicios</button>
+
                     </mat-menu>
                 </li>
                 <hr>
                 <li>
 
-                    <button mat-button [matMenuTriggerFor]="menuOrders">
+                    <button mat-button [matMenuTriggerFor]="menuOpera">
 <img src="../../../../assets/registrar_carga.png" alt="" height="22px"/>
 
 &nbsp;
 <span style="font-size: 15px; font-weight: bold;">Operaciones</span>
 </button>
-                    <mat-menu #menuOrders="matMenu">
-                        <button mat-menu-item><i class="fas fa-sticky-note"></i>&nbsp;Listar Pedidos</button>
-                        <button mat-menu-item><i class="fas fa-sticky-note"></i>&nbsp;Crear Pedidos</button>
+                    <mat-menu #menuOpera="matMenu">
+                        <button mat-menu-item (click)="listarEntradas()" mat-menu-item [routerLink]="['/Entradas' ]" routerLinkActive="router-link-active"><i class="fas fa-sticky-note"></i>&nbsp;Registrar entrada</button>
+                        <button mat-menu-item (click)="listarSalidas()" mat-menu-item [routerLink]="['/Salidas' ]" routerLinkActive="router-link-active"><i class="fas fa-sticky-note"></i>&nbsp;Registrar Salida</button>
                     </mat-menu>
                 </li>
                 <hr>
                 <li>
 
-                    <button mat-button [matMenuTriggerFor]="menuOrders">
+                    <button mat-button [matMenuTriggerFor]="menuInspe">
 <img src="../../../../assets/registrar_carga.png" alt="" height="22px"/>
 
 &nbsp;
 <span style="font-size: 15px; font-weight: bold;">Inspección</span>
 </button>
-                    <mat-menu #menuOrders="matMenu">
-                        <button mat-menu-item><i class="fas fa-sticky-note"></i>&nbsp;Listar Pedidos</button>
-                        <button mat-menu-item><i class="fas fa-sticky-note"></i>&nbsp;Crear Pedidos</button>
+                    <mat-menu #menuInspe="matMenu">
+                        <button mat-menu-item><i class="fas fa-sticky-note"></i>&nbsp;Procesadas</button>
                     </mat-menu>
                 </li>
                 <hr>
