@@ -6,13 +6,21 @@ const routes: Routes = [
   {
       path: '',
       component: DashboardComponent,
-      /* children:
+       children:
       [
        {
-          path: 'Boardings',
-          loadChildren: () => import('./modules/boardings/boardings.module').then(m => m.BoardingsModule)
+          path: 'Client',
+          loadChildren: () => import('./modulos/client/client.module').then(m => m.ClientModule)
         },
-      ]*/
+        {
+          path: 'Entradas',
+          loadChildren: () => import('./modulos/entradas/entradas.module').then(m => m.EntradasModule)
+        },
+        {
+          path: 'Salidas',
+          loadChildren: () => import('./modulos/salidas/salidas.module').then(m => m.SalidasModule)
+        },
+      ]
     }
 ];
 

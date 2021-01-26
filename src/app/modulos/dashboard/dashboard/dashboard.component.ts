@@ -46,6 +46,7 @@ export class DashboardComponent implements OnInit  {
     public router: Router,
     ) {
        this.name = 'JAKIRO2';
+       console.log("hola bashboard")
      }
   prepareRoute(outlet: RouterOutlet) {
 
@@ -69,10 +70,18 @@ export class DashboardComponent implements OnInit  {
       this.router.navigate(['/']);
       this.drawer.close();
     }
-    listarEmbarques() {
-      //this.router.navigate(['/Boardings']);
-     // this.drawer.close();
+    listarClientes() {
+     this.router.navigate(['/Client']);
+     this.drawer.close();
     }
+    listarEntradas() {
+      this.router.navigate(['/Entradas']);
+      this.drawer.close();
+     }
+     listarSalidas() {
+      this.router.navigate(['/Salidas']);
+      this.drawer.close();
+     }
     ngOnInit(): void {
     this.showSuccess()
   }
