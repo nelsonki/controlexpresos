@@ -1,1 +1,127 @@
-<p>entradas-table works!</p>
+<div class="container-fluid prod-container-table">
+
+    <div class="nav-menu-top">
+        <nav class="navbar  navbar-expand-lg navbar-dark mat-toolbar mat-primary nav-padding-option">
+            <div class="table-title-width">
+                <div>
+                    <img src="../../../../../assets/menuIcons/typelending_w.png" height="38px" alt="" />
+                </div>
+                <div>
+                    &nbsp; Entradas
+                </div>
+            </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto col-lg-8 col-md-9 col-sm-9 col-xs-9">
+                    <li class="nav-item active button-li-top col-lg-2 col-md-1 col-sm-1 col-xs-1">
+                        <a class="pointer" (click)="Refresh()">
+                            <button *ngIf="true" mat-mini-fab color="white" matTooltip="Refrescar Tabla" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-sync-alt"></i>
+              </button>
+                        </a>
+                    </li>
+                </ul>
+                <span class="navbar-text button-li-top">
+          <div class="row">
+            <div class="col-lg-5 col-md-6 col-sm-6 col-xs-6">
+              <mat-form-field width="40px">
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar" />
+              </mat-form-field>
+            </div>
+
+            <!--<div class="col-lg-7 col-md-5 col-sm-5 col-xs-5 text-right">
+              <a class="pointer" (click)="exportTo('xls')">
+                <button class="opAut-button-excel" mat-mini-fab color="white" matTooltip="Exportar a Excel"
+                  data-toggle="tooltip" data-placement="left">
+                  <svg style="width:20px;height:20px;" viewBox="0 0 24 24">
+                    <path fill="#ffff"
+                      d="M6,2H14L20,8V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V4A2,2 0 0,1 6,2M13,3.5V9H18.5L13,3.5M17,11H13V13H14L12,14.67L10,13H11V11H7V13H8L11,15.5L8,18H7V20H11V18H10L12,16.33L14,18H13V20H17V18H16L13,15.5L16,13H17V11Z" />
+                  </svg>
+                </button>
+              </a>
+            </div>-->
+          </div>
+        </span>
+            </div>
+        </nav>
+    </div>
+
+
+    <div class="prod-scroll-table">
+        <table mat-table [dataSource]="dataSource">
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="Item">
+                <th mat-header-cell *matHeaderCellDef> Item </th>
+                <td mat-cell *matCellDef="let element"> </td>
+            </ng-container>
+            <!-- Position Column -->
+            <ng-container matColumnDef="ID">
+                <th mat-header-cell *matHeaderCellDef> ID </th>
+                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+            </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="Cliente - Sucursal">
+                <th mat-header-cell *matHeaderCellDef> Cliente - Sucursal </th>
+                <td mat-cell *matCellDef="let element"> {{element.cliente}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="Fecha - Hora">
+                <th mat-header-cell *matHeaderCellDef> Fecha - Hora </th>
+                <td mat-cell *matCellDef="let element"> {{element.fecha}} </td>
+            </ng-container>
+            <!-- Weight Column -->
+            <ng-container matColumnDef="Usuario">
+                <th mat-header-cell *matHeaderCellDef> Usuario </th>
+                <td mat-cell *matCellDef="let element"> {{element.usuario}} </td>
+            </ng-container>
+            <!-- Weight Column -->
+            <ng-container matColumnDef="Observación">
+                <th mat-header-cell *matHeaderCellDef> Observación </th>
+                <td mat-cell *matCellDef="let element"> {{element.observacion}} </td>
+            </ng-container>
+            <!-- Weight Column -->
+            <ng-container matColumnDef="Acciones">
+                <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                <td mat-cell *matCellDef="let element"> </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+    <div class="btn-group">
+        <button id="boton" matTooltip="{{ titleModal }}" (click)="basicModal.show(); reset(); showModal()" mat-mini-fab color="primary" class="btn btn-fab" data-toggle="tooltip" data-placement="left" data-original-title="" title="" id="main">
+      <img src="assets/menuIcons/ballot_w.png" alt="" height="22px" />
+    </button>
+    </div>
+    <div id="basicModal" mdbModal #basicModal="mdbModal" class="modal fade right modal-scroll" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-full-height modal-right" role="document">
+            <div class="modal-content">
+                <div class="modal-header mat-toolbar mat-primary mat-toolbar-single-row" color="primary">
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+            <span aria-hidden="true" class="client-buttom-close">×</span>
+          </button>
+                    <h4 class="modal-title w-100" id="myModalLabel">
+                        <img src="assets/menuIcons/ballot_w.png" alt="" height="22px" /> &nbsp;{{ titleModal }}
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="container">
+                            <div class="col-xs-12 col-sm-12">
+                                <app-entradas-form (statusCloseModal)="closeModals($event)" [element]="element">
+                                </app-entradas-form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
