@@ -1,0 +1,63 @@
+<form [formGroup]="firstform" class="client-form-top" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <mat-form-field class="example-chip-list">
+            <mat-label>Usuario(*)</mat-label>
+            <input matInput formControlName="usuario" [ngClass]="{ 'is-invalid': submitted && f.usuario.errors }" />
+            <mat-error *ngIf="submitted && f.usuario.errors">
+                <div *ngIf="f.usuario.errors.required">
+                    Por Favor, Ingrese usuario
+                </div>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-chip-list">
+            <mat-label>Código(*)</mat-label>
+            <input matInput formControlName="codigo" [ngClass]="{ 'is-invalid': submitted && f.codigo.errors }" />
+            <mat-error *ngIf="submitted && f.codigo.errors">
+                <div *ngIf="f.codigo.errors.required">
+                    Por Favor, Ingrese codigo
+                </div>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-chip-list">
+            <mat-label>Nombre(*)</mat-label>
+            <input matInput formControlName="nombre" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }" />
+            <mat-error *ngIf="submitted && f.nombre.errors">
+                <div *ngIf="f.nombre.errors.required">
+                    Por Favor, Ingrese nombre
+                </div>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-chip-list">
+            <mat-label>Dirección(*)</mat-label>
+            <input matInput formControlName="direccion" [ngClass]="{ 'is-invalid': submitted && f.direccion.errors }" />
+            <mat-error *ngIf="submitted && f.direccion.errors">
+                <div *ngIf="f.direccion.errors.required">
+                    Por Favor, Ingrese dirección
+                </div>
+            </mat-error>
+        </mat-form-field>
+
+
+    </div>
+
+
+
+    <div class="form-group warehouse-width-button">
+        <div class="row ">
+            <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="row">
+                    <div class="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <button [disabled]="loading" mat-raised-button color="primary" class="btn btn-accent">
+            Aceptar
+          </button>
+                    </div>
+                    <div class="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <button style="color:white" mat-raised-button color="accent" class="btn btn-accent" type="button" (click)="closeModal()">
+            Cancelar
+          </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
