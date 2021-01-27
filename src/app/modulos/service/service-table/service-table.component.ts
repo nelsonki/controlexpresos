@@ -6,20 +6,20 @@ import { ModalDirective } from "angular-bootstrap-md";
 import { ToastrService } from "ngx-toastr";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import {ColorFormComponent} from '../color-form/color-form.component'
+import {ServiceFormComponent} from '../service-form/service-form.component'
 declare var $: any;
 
 @Component({
-  selector: 'app-color-table',
-  templateUrl: './color-table.component.html',
-  styleUrls: ['./color-table.component.scss']
+  selector: 'app-service-table',
+  templateUrl: './service-table.component.html',
+  styleUrls: ['./service-table.component.scss']
 })
-export class ColorTableComponent implements OnInit {
+export class ServiceTableComponent implements OnInit {
   @ViewChild('basicModal') basicModal: ModalDirective;
-  @ViewChild(ColorFormComponent) form: ColorFormComponent;
+  @ViewChild(ServiceFormComponent) form: ServiceFormComponent;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  displayedColumns: string[] = ['ID', 'Color', 'Acciones'];
+  displayedColumns: string[] = ['ID', 'Nombre', 'Margen', 'Acciones'];
   dataSource = new MatTableDataSource<PeriodicElement>(element);
   public titleModal: string;
   public element; 
@@ -34,7 +34,7 @@ export class ColorTableComponent implements OnInit {
     //public templatesService: TemplatesService
   ) {
      //this.api = environment.apiInventory;
-    this.titleModal = "Crear Color";
+    this.titleModal = "Crear Servicio";
   }
 
   ngOnInit() {
@@ -52,11 +52,11 @@ export class ColorTableComponent implements OnInit {
 }
 export interface PeriodicElement {
   id: string;
-  color: string;
-
+  nombre: string;
+  margen: string;
 }
 const element: PeriodicElement[] = [
-  {id: 'a4', color: '#4fs5df' },
-  {id: 'a3', color: '#d54s87' },
+  {id: 'a4', nombre: 'Limpieza', margen: '0'  },
+  {id: 'a3', nombre: 'Secado', margen: '1'  },
 
 ];

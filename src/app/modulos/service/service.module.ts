@@ -17,18 +17,16 @@ import {  MatInputModule } from '@angular/material/input';
 import { MaterialModule } from './../../material.module';
 
 
-
-
-import { ColorTableComponent } from './color-table/color-table.component';
-import { ColorFormComponent } from './color-form/color-form.component';
-import {ColorRoutingModule} from './color-routing.module'
+import { ServiceTableComponent } from './service-table/service-table.component';
+import { ServiceFormComponent } from './service-form/service-form.component';
+import {ServiceRoutingModule} from './service-routing.module'
 
 
 @NgModule({
-  declarations: [ColorTableComponent, ColorFormComponent],
+  declarations: [ServiceTableComponent, ServiceFormComponent],
   imports: [
     CommonModule,
-    ColorRoutingModule, 
+    ServiceRoutingModule, 
     ModalModule,
     ButtonsModule,
     WavesModule,
@@ -45,4 +43,4 @@ import {ColorRoutingModule} from './color-routing.module'
     ReactiveFormsModule
   ]
 })
-export class ColorModule { }
+export class ServiceModule { }

@@ -46,9 +46,9 @@
 <span style="font-size: 15px; font-weight: bold;">Inventario</span>
 </button>
                     <mat-menu #menuInventario="matMenu">
-                        <button mat-menu-item><i class="fas fa-sticky-note"></i>&nbsp;Colores</button>
-                        <button mat-menu-item><i class="fas fa-sticky-note"></i>&nbsp;Servicios</button>
-                        <button mat-menu-item><i class="fas fa-sticky-note"></i>&nbsp;Sub-Servicios</button>
+                        <button (click)="listarColores()" mat-menu-item [routerLink]="['/Color' ]" routerLinkActive="router-link-active"><i class="fas fa-sticky-note"></i>&nbsp;Colores</button>
+                        <button (click)="listarServices()" mat-menu-item [routerLink]="['/Service' ]" routerLinkActive="router-link-active"><i class="fas fa-sticky-note"></i>&nbsp;Servicios</button>
+                        <button (click)="listarSubServices()" mat-menu-item [routerLink]="['/Sub-service' ]" routerLinkActive="router-link-active"><i class="fas fa-sticky-note"></i>&nbsp;Sub-Servicios</button>
 
                     </mat-menu>
                 </li>
