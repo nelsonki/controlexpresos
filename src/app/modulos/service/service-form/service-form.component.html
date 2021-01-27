@@ -2,16 +2,23 @@
     <div class="form-group">
 
         <mat-form-field class="example-chip-list">
-            <mat-label>Color(*)</mat-label>
-            <input matInput formControlName="color" [ngClass]="{ 'is-invalid': submitted && f.color.errors }" />
-            <mat-error *ngIf="submitted && f.color.errors">
-                <div *ngIf="f.color.errors.required">
-                    Por Favor, Ingrese color
+            <mat-label>Nombre(*)</mat-label>
+            <input matInput formControlName="nombre" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }" />
+            <mat-error *ngIf="submitted && f.nombre.errors">
+                <div *ngIf="f.nombre.errors.required">
+                    Por Favor, Ingrese nombre
                 </div>
             </mat-error>
         </mat-form-field>
-
-
+        <mat-form-field class="example-chip-list">
+            <mat-label>Margen de Error(*)</mat-label>
+            <input matInput formControlName="margen" [ngClass]="{ 'is-invalid': submitted && f.margen.errors }" />
+            <mat-error *ngIf="submitted && f.margen.errors">
+                <div *ngIf="f.margen.errors.required">
+                    Por Favor, Ingrese margen
+                </div>
+            </mat-error>
+        </mat-form-field>
 
 
     </div>

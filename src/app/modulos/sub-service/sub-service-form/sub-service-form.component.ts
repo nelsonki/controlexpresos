@@ -17,11 +17,11 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 
 @Component({
-  selector: 'app-color-form',
-  templateUrl: './color-form.component.html',
-  styleUrls: ['./color-form.component.scss']
+  selector: 'app-sub-service-form',
+  templateUrl: './sub-service-form.component.html',
+  styleUrls: ['./sub-service-form.component.scss']
 })
-export class ColorFormComponent implements OnInit {
+export class SubServiceFormComponent implements OnInit {
   @Input() element: string  ;
   @Output() statusCloseModal = new EventEmitter();
   
@@ -48,7 +48,7 @@ export class ColorFormComponent implements OnInit {
 
   ngOnInit() {
     this.firstform = this.formBuilder.group({ 
-      color: ["", Validators.required],
+      nombre: ["", Validators.required],
     });
   }
   public closeModal() {

@@ -6,20 +6,20 @@ import { ModalDirective } from "angular-bootstrap-md";
 import { ToastrService } from "ngx-toastr";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import {ColorFormComponent} from '../color-form/color-form.component'
+import {SubServiceFormComponent} from '../sub-service-form/sub-service-form.component'
 declare var $: any;
 
 @Component({
-  selector: 'app-color-table',
-  templateUrl: './color-table.component.html',
-  styleUrls: ['./color-table.component.scss']
+  selector: 'app-sub-service-table',
+  templateUrl: './sub-service-table.component.html',
+  styleUrls: ['./sub-service-table.component.scss']
 })
-export class ColorTableComponent implements OnInit {
+export class SubServiceTableComponent implements OnInit {
   @ViewChild('basicModal') basicModal: ModalDirective;
-  @ViewChild(ColorFormComponent) form: ColorFormComponent;
+  @ViewChild(SubServiceFormComponent) form: SubServiceFormComponent;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  displayedColumns: string[] = ['ID', 'Color', 'Acciones'];
+  displayedColumns: string[] = ['ID', 'Sub-Servicio', 'Acciones'];
   dataSource = new MatTableDataSource<PeriodicElement>(element);
   public titleModal: string;
   public element; 
@@ -34,7 +34,7 @@ export class ColorTableComponent implements OnInit {
     //public templatesService: TemplatesService
   ) {
      //this.api = environment.apiInventory;
-    this.titleModal = "Crear Color";
+    this.titleModal = "Crear Sub Servicio";
   }
 
   ngOnInit() {
@@ -52,11 +52,10 @@ export class ColorTableComponent implements OnInit {
 }
 export interface PeriodicElement {
   id: string;
-  color: string;
-
+  nombre: string;
 }
 const element: PeriodicElement[] = [
-  {id: 'a4', color: '#4fs5df' },
-  {id: 'a3', color: '#d54s87' },
+  {id: 'a4', nombre: 'Limpieza de prenda'  },
+  {id: 'a3', nombre: 'Secado de prenda' },
 
 ];

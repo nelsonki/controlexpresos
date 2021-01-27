@@ -17,6 +17,18 @@ const routes: Routes = [
           loadChildren: () => import('./modulos/branch/branch.module').then(m => m.BranchModule)
         },
         {
+          path: 'Color',
+          loadChildren: () => import('./modulos/color/color.module').then(m => m.ColorModule)
+        },
+        {
+          path: 'Service',
+          loadChildren: () => import('./modulos/service/service.module').then(m => m.ServiceModule)
+        },
+        {
+          path: 'Sub-service',
+          loadChildren: () => import('./modulos/sub-service/sub-service.module').then(m => m.SubServiceModule)
+        },
+        {
           path: 'Entradas',
           loadChildren: () => import('./modulos/entradas/entradas.module').then(m => m.EntradasModule)
         },
