@@ -3,8 +3,8 @@ import {AfterViewInit,  ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { ModalDirective } from "angular-bootstrap-md";
-import { ToastrService } from "ngx-toastr";
-
+import { ToastrService } from 'ngx-toastr';
+import {EntradasFormComponent} from '../entradas-form/entradas-form.component'
 declare var $: any;
 
 @Component({
@@ -13,14 +13,17 @@ declare var $: any;
   styleUrls: ['./entradas-table.component.scss']
 })
 export class EntradasTableComponent implements OnInit {
-  displayedColumns: string[] = ['Item', 'ID', 'Cliente - Sucursal', 'Fecha - Hora', 'Usuario', 'Observación', 'Acciones'];
-  dataSource = new MatTableDataSource<PeriodicElement>(element);
+
+  @ViewChild(EntradasFormComponent) form: EntradasFormComponent;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild("basicModal") basicModal: ModalDirective;
+  @ViewChild('basicModal') basicModal: ModalDirective;
   @Output() onChange: EventEmitter<File> = new EventEmitter<File>();
+
+  displayedColumns: string[] = ['Item', 'ID', 'Cliente - Sucursal', 'Fecha - Hora', 'Usuario', 'Observación', 'Acciones'];
+  dataSource = new MatTableDataSource<PeriodicElement>(element);
   public titleModal: string;
-  public element ;
+  public element =[];
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator; 

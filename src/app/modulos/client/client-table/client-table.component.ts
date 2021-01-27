@@ -4,7 +4,9 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { ModalDirective } from "angular-bootstrap-md";
 import { ToastrService } from "ngx-toastr";
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
+import {ClientFormComponent} from '../client-form/client-form.component'
 declare var $: any;
 
 @Component({
@@ -13,12 +15,12 @@ declare var $: any;
   styleUrls: ['./client-table.component.scss']
 })
 export class ClientTableComponent implements OnInit {
+  @ViewChild('basicModal') basicModal: ModalDirective;
+  @ViewChild(ClientFormComponent) form: ClientFormComponent;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
   displayedColumns: string[] = ['DNI', 'Nombre Comercial', 'Dirección', 'Teléfono', 'Email', 'Acciones'];
   dataSource = new MatTableDataSource<PeriodicElement>(element);
-
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild('basicModal') basicModal!: ModalDirective;
-  @Output() onChange: EventEmitter<File> = new EventEmitter<File>();
   public titleModal: string;
   public element; 
 
@@ -26,7 +28,7 @@ export class ClientTableComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
   constructor(
-    //public dialog: MatDialog,
+    public dialog: MatDialog,
     //public formBuilder: FormBuilder,
     public toasTer: ToastrService,
     //public templatesService: TemplatesService

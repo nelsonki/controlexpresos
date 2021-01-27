@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SalidasTableComponent } from './salidas-table.component';
+import { ColorTableComponent } from './color-table.component';
 
-describe('SalidasTableComponent', () => {
-  let component: SalidasTableComponent;
-  let fixture: ComponentFixture<SalidasTableComponent>;
+describe('ColorTableComponent', () => {
+  let component: ColorTableComponent;
+  let fixture: ComponentFixture<ColorTableComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SalidasTableComponent ]
+      declarations: [ ColorTableComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SalidasTableComponent);
+    fixture = TestBed.createComponent(ColorTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

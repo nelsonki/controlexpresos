@@ -74,6 +74,10 @@ export class DashboardComponent implements OnInit  {
      this.router.navigate(['/Client']);
      this.drawer.close();
     }
+    listarBranch() {
+      this.router.navigate(['/Branch']);
+      this.drawer.close();
+     }
     listarEntradas() {
       this.router.navigate(['/Entradas']);
       this.drawer.close();

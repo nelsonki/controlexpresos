@@ -25,14 +25,14 @@
                 <li>
 
                     <button mat-button [matMenuTriggerFor]="menuCatalogo">
-<img src="../../../../assets/registrar_carga.png" alt="" height="22px"/>
+<img src="../../../../assets/menuIcons/clock.png" alt="" height="22px"/>
 
 &nbsp;
 <span style="font-size: 15px; font-weight: bold;">Catálogos</span>
 </button>
                     <mat-menu #menuCatalogo="matMenu">
                         <button (click)="listarClientes()" mat-menu-item [routerLink]="['/Client' ]" routerLinkActive="router-link-active"><i class="fas fa-sticky-note"></i>&nbsp;Clientes</button>
-                        <button mat-menu-item><i class="fas fa-sticky-note"></i>&nbsp;Sucursales</button>
+                        <button (click)="listarBranch()" mat-menu-item [routerLink]="['/Branch' ]" routerLinkActive="router-link-active"><i class="fas fa-sticky-note"></i>&nbsp;Sucursales</button>
                     </mat-menu>
                 </li>
                 <hr>
@@ -40,7 +40,7 @@
                 <li>
 
                     <button mat-button [matMenuTriggerFor]="menuInventario">
-<img src="../../../../assets/registrar_carga.png" alt="" height="22px"/>
+<img src="../../../../assets/menuIcons/clock.png" alt="" height="22px"/>
 
 &nbsp;
 <span style="font-size: 15px; font-weight: bold;">Inventario</span>
@@ -56,7 +56,7 @@
                 <li>
 
                     <button mat-button [matMenuTriggerFor]="menuOpera">
-<img src="../../../../assets/registrar_carga.png" alt="" height="22px"/>
+<img src="../../../../assets/menuIcons/clock.png" alt="" height="22px"/>
 
 &nbsp;
 <span style="font-size: 15px; font-weight: bold;">Operaciones</span>
@@ -70,7 +70,7 @@
                 <li>
 
                     <button mat-button [matMenuTriggerFor]="menuInspe">
-<img src="../../../../assets/registrar_carga.png" alt="" height="22px"/>
+<img src="../../../../assets/menuIcons/clock.png" alt="" height="22px"/>
 
 &nbsp;
 <span style="font-size: 15px; font-weight: bold;">Inspección</span>

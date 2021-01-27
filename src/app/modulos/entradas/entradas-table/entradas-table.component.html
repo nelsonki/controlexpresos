@@ -4,7 +4,7 @@
         <nav class="navbar  navbar-expand-lg navbar-dark mat-toolbar mat-primary nav-padding-option">
             <div class="table-title-width">
                 <div>
-                    <img src="../../../../../assets/menuIcons/typelending_w.png" height="38px" alt="" />
+                    <img src="../../../../../assets/menuIcons/ballot_w.png" height="38px" alt="" />
                 </div>
                 <div>
                     &nbsp; Entradas
@@ -99,23 +99,25 @@
       <img src="assets/menuIcons/ballot_w.png" alt="" height="22px" />
     </button>
     </div>
-    <div id="basicModal" mdbModal #basicModal="mdbModal" class="modal fade right modal-scroll" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-full-height modal-right" role="document">
+    <div id="modal" mdbModal #basicModal="mdbModal" class="modal fade right modal-scroll" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true" [config]='{backdrop: false, ignoreBackdropClick: false}' style="overflow: auto;">
+        <div class="modal-dialog modal-lg modal-full-height modal-right" style="
+        margin-top: 1px !important;" role="document">
             <div class="modal-content">
                 <div class="modal-header mat-toolbar mat-primary mat-toolbar-single-row" color="primary">
-                    <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
-            <span aria-hidden="true" class="client-buttom-close">×</span>
-          </button>
+                    <button type="button" class="close modal-button pull-right" aria-label="Close" (click)="basicModal.hide()">
+                        <span aria-hidden="true"   class="client-buttom-close"> x </span>
+                    </button>
                     <h4 class="modal-title w-100" id="myModalLabel">
-                        <img src="assets/menuIcons/ballot_w.png" alt="" height="22px" /> &nbsp;{{ titleModal }}
+                        <mat-icon height="38px">anchor</mat-icon>
+                        {{ titleModal }}
+                        <!--<img src="assets/menuIcons/tags.png" alt="" height="22px" /> {{ titleModal }}-->
                     </h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="container">
                             <div class="col-xs-12 col-sm-12">
-                                <!-- <app-entradas-form (statusCloseModal)="closeModals($event)" [element]="element">
-                                    </app-entradas-form>-->
+                                <app-entradas-form (statusCloseModal)="closeModals($event)" [element]="element"> </app-entradas-form>
                             </div>
                         </div>
                     </div>
