@@ -19,7 +19,7 @@ export class BranchTableComponent implements OnInit {
   @ViewChild(BranchFormComponent) form: BranchFormComponent;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  displayedColumns: string[] = ['ID', 'Sucursal', 'Dirección',  'Acciones'];
+  displayedColumns: string[] = ['ID', 'Cliente', 'Sucursal', 'Dirección',  'Acciones'];
   dataSource = new MatTableDataSource<PeriodicElement>(element);
   public titleModal: string;
   public element; 
@@ -52,12 +52,13 @@ export class BranchTableComponent implements OnInit {
 }
 export interface PeriodicElement {
   id: string;
+  cliente: string;
   sucursal: string;
   direccion: string;
   
 }
 const element: PeriodicElement[] = [
-  {id: 'a4', sucursal: 'cordero', direccion: 'cordero' },
-  {id: 'a3', sucursal: 'las lomas', direccion: 'san cristobal' },
+  {id: 'a4', cliente: 'Pedro', sucursal: 'cordero', direccion: 'cordero' },
+  {id: 'a3', cliente: 'Pablo', sucursal: 'las lomas', direccion: 'san cristobal' },
 
 ];

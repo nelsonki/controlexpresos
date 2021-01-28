@@ -59,6 +59,12 @@
             </ng-container>
 
             <!-- Name Column -->
+            <ng-container matColumnDef="Cliente">
+                <th mat-header-cell *matHeaderCellDef> Cliente </th>
+                <td mat-cell *matCellDef="let element"> {{element.cliente}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
             <ng-container matColumnDef="Sucursal">
                 <th mat-header-cell *matHeaderCellDef> Sucursal </th>
                 <td mat-cell *matCellDef="let element"> {{element.sucursal}} </td>
