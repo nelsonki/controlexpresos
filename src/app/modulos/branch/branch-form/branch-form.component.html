@@ -1,11 +1,11 @@
 <form [formGroup]="firstform" class="client-form-top" (ngSubmit)="onSubmit()">
     <div class="form-group">
         <mat-form-field class="example-chip-list">
-            <mat-label>Usuario(*)</mat-label>
-            <input matInput formControlName="usuario" [ngClass]="{ 'is-invalid': submitted && f.usuario.errors }" />
-            <mat-error *ngIf="submitted && f.usuario.errors">
-                <div *ngIf="f.usuario.errors.required">
-                    Por Favor, Ingrese usuario
+            <mat-label>Cliente(*)</mat-label>
+            <input matInput formControlName="cliente" [ngClass]="{ 'is-invalid': submitted && f.cliente.errors }" />
+            <mat-error *ngIf="submitted && f.cliente.errors">
+                <div *ngIf="f.cliente.errors.required">
+                    Por Favor, Ingrese cliente
                 </div>
             </mat-error>
         </mat-form-field>

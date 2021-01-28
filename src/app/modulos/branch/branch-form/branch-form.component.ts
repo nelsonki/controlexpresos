@@ -48,7 +48,7 @@ export class BranchFormComponent implements OnInit {
 
   ngOnInit() {
     this.firstform = this.formBuilder.group({ 
-      usuario: ["", Validators.required],
+      cliente: ["", Validators.required],
       codigo: ["", Validators.required],
       nombre: ["", Validators.required],
       direccion: ["", Validators.required],
