@@ -24,7 +24,8 @@ import { MatChipInputEvent } from '@angular/material/chips';
 export class ClientFormComponent implements OnInit {
   @Input() element: string  ;
   @Output() statusCloseModal = new EventEmitter();
-  
+  @Output() onChange: EventEmitter<File> = new EventEmitter<File>();
+
   public firstform: FormGroup ;
   public submitted = false;
   public loading: boolean = false;
@@ -37,6 +38,8 @@ export class ClientFormComponent implements OnInit {
   public addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   public taskList = [];
+  public profileImage2=null;
+  public loadImg: any = '';
 
 
   constructor(
@@ -58,6 +61,22 @@ export class ClientFormComponent implements OnInit {
   public closeModal() {
     this.closeStatus = !this.closeStatus;
     this.statusCloseModal.emit(this.closeStatus);
+  }
+  projectImage2(file1: File) {
+    this.loadImg = file1;
+    if ( file1){
+        let reader = new FileReader;
+        reader.onload = (e: any) => {
+            this.profileImage2 = e.target.result;
+            this.onChange.emit(file1);
+        };
+        reader.readAsDataURL(file1);
+    } else{
+      this.profileImage2 = '';
+    }
+  }
+  updateSource2($event: Event) {
+    this.projectImage2($event.target['files'][0]);
   }
   onSubmit(){}
   get f() {
