@@ -7,6 +7,7 @@ import { ToastrService } from "ngx-toastr";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import {ClientFormComponent} from '../client-form/client-form.component'
+import {ClientServices}from '../client-services/client-services'
 declare var $: any;
 
 @Component({
@@ -19,25 +20,65 @@ export class ClientTableComponent implements OnInit {
   @ViewChild(ClientFormComponent) form: ClientFormComponent;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  displayedColumns: string[] = ['DNI', 'Nombre Comercial', 'Dirección', 'Teléfono', 'Email', 'Acciones'];
-  dataSource = new MatTableDataSource<PeriodicElement>(element);
+  displayedColumns: string[] = ['Item','DNI', 'Nombre Comercial', 'Dirección', 'Teléfono', 'Email', 'Acciones'];
+  dataSource;;
   public titleModal: string;
   public element; 
-
+  public data;
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-  }
+   }
   constructor(
     public dialog: MatDialog,
     //public formBuilder: FormBuilder,
     public toasTer: ToastrService,
-    //public templatesService: TemplatesService
+    public clientServices: ClientServices
   ) {
      //this.api = environment.apiInventory;
     this.titleModal = "Crear Cliente";
   }
 
   ngOnInit() {
+    this.loadAllCapital();
+  }
+  public loadAllCapital(){ 
+
+    this.clientServices.getList().subscribe((value) => {
+      this.data=[];
+      this.element=[];
+      //console.log(value["data"])
+      if (value["data"]){
+        this.element = [];
+        Object.keys(value["data"]).forEach(e => {
+            const datos ={
+              Item: "",
+              "id":value["data"][e].id,
+              "dni":value["data"][e].dni,
+              "name":value["data"][e].name,
+              "email":value["data"][e].email,
+              "phone":value["data"][e].phone,
+              "address":value["data"][e].address,
+ 
+            };
+           this.data.push(datos);
+           this.element.push(datos);
+           //console.log(this.element);
+        });
+        Object.keys(this.element).forEach((i, index) => {
+          this.element[i].Item = index + 1;
+       });
+        this.dataSource = new MatTableDataSource(this.element);
+        this.dataSource.paginator = this.paginator;
+        return this.dataSource;
+      } else {
+        this.toasTer.error(value["message"]);
+        this.data = [];
+        this.element=[];
+        this.dataSource = new MatTableDataSource(this.element);
+        this.dataSource.paginator = this.paginator;
+        return this.dataSource;
+      }
+    });
+    
   }
   Refresh(){}
   applyFilter(event){}
@@ -50,15 +91,4 @@ export class ClientTableComponent implements OnInit {
     this.basicModal.hide();
   }
 }
-export interface PeriodicElement {
-  dni: string;
-  nombre: string;
-  direccion: string;
-  telefono:string;
-  email:string;
-}
-const element: PeriodicElement[] = [
-  {dni: 'a4', nombre: 'El junquito', direccion: 'cordero', telefono: '0412-1451212', email: 'rolavetadiuc@gmail.com' },
-  {dni: 'a3', nombre: 'comercio', direccion: 'tariba', telefono: '0414-7897878', email: 'quinonezn@zippyttech.com' },
-
-];
+ 
