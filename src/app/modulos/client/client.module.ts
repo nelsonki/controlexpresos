@@ -20,11 +20,12 @@ import { MaterialModule } from './../../material.module';
 import { ClientTableComponent } from './client-table/client-table.component';
 import { ClientRoutingModule } from './client-routing.module';
 import { ClientFormComponent } from './client-form/client-form.component';
+import { ClientDeleteComponent } from './dialog/client-delete/client-delete.component';
 
 
 
 @NgModule({
-  declarations: [ClientTableComponent, ClientFormComponent],
+  declarations: [ClientTableComponent, ClientFormComponent, ClientDeleteComponent],
   imports: [
     CommonModule,
     ClientRoutingModule, 

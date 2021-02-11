@@ -8,7 +8,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 
 import {ClientFormComponent} from '../client-form/client-form.component'
 import {ClientServices}from '../client-services/client-services'
-declare var $: any;
+import {ClientDeleteComponent} from '../dialog/client-delete/client-delete.component'
+ declare var $: any;
 
 @Component({
   selector: 'app-client-table',
@@ -19,9 +20,8 @@ export class ClientTableComponent implements OnInit {
   @ViewChild('basicModal') basicModal: ModalDirective;
   @ViewChild(ClientFormComponent) form: ClientFormComponent;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-
   displayedColumns: string[] = ['Item','DNI', 'Nombre Comercial', 'Dirección', 'Teléfono', 'Email', 'Acciones'];
-  dataSource;;
+  dataSource;
   public titleModal: string;
   public element; 
   public data;
@@ -80,6 +80,10 @@ export class ClientTableComponent implements OnInit {
     });
     
   }
+   public openEdit(id) {
+    this.titleModal = "Modificar Cliente";
+    this.form.addForm(id);
+  }
   Refresh(){}
   applyFilter(event){}
   reset(){}
@@ -90,5 +94,12 @@ export class ClientTableComponent implements OnInit {
   public closeModals(value) {
     this.basicModal.hide();
   }
+  eliminar(id){
+    this.dialog.open(ClientDeleteComponent, {
+     width: "450px",
+     data: id
+   });
+  
+}
 }
  

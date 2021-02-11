@@ -29,16 +29,19 @@ export class ClientServices {
     }
 
     save(body) {
-        return this.http.doPost('categories', body, this.api);
-    }
+        let enpoint = 'clients/store';
+        return this.http.doPost(this.api, enpoint, body);
+     }
 
     update(id, body) {
-        return this.http.doPut(this.api, 'categories/' + id, body);
+        let enpoint = 'clients/update/'+id;
+        return this.http.doPut(this.api, enpoint, body);
     }
 
     delete(id) {
-        return this.http.doDelete(this.api, 'categories/'+ id);
-    }
+        let enpoint = 'clients/delete/'+id;
+        return this.http.doDelete(this.api, enpoint);
+     }
 
      
 }
