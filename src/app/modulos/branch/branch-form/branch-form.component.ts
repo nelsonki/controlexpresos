@@ -9,9 +9,9 @@ import {
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-//import { TemplateMsg } from "../../../utils/const/message";
+import { branchMsg } from "../../../utils/const/message";
 import { ToastrService } from "ngx-toastr";
-//import { TemplatesService } from '../templates-services/templates.service';
+import { BranchServices } from '../branch-services/branch-services';
 
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
@@ -38,27 +38,109 @@ export class BranchFormComponent implements OnInit {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   public taskList = [];
 
+  public putSubmit: boolean = false;
+  public idEdit: any;
 
   constructor(
     private formBuilder: FormBuilder,
     public router: Router,
     public toasTer: ToastrService,
-    //public templatesService: TemplatesService
+    public branchServices: BranchServices
   ) { }
 
   ngOnInit() {
     this.firstform = this.formBuilder.group({ 
-      cliente: ["", Validators.required],
-      codigo: ["", Validators.required],
-      nombre: ["", Validators.required],
-      direccion: ["", Validators.required],
+      name: ["", Validators.required],
+      address: ["", Validators.required],
+      client_id: ["", Validators.required],
+     });
+  }
+  public addForm(id) {  
+    this.idEdit = id;
+    let dataEdit = [];
+    this.editSubmit = true;
+    this.putSubmit = true;
+    Object.keys(this.element).forEach(i => {
+      if (this.element[i].id == id) {
+        dataEdit.push(this.element[i]);
+      }
     });
+    //console.log(dataEdit[0]);
+    this.firstform.controls["client_id"].setValue(dataEdit[0]["cliente"]);
+    this.firstform.controls["name"].setValue(dataEdit[0]["name"]);
+    this.firstform.controls["address"].setValue(dataEdit[0]["address"]);
+  
   }
   public closeModal() {
     this.closeStatus = !this.closeStatus;
     this.statusCloseModal.emit(this.closeStatus);
   }
-  onSubmit(){}
+  onSubmit(){
+    
+    this.submitted = true;
+     if(this.firstform.invalid) {
+      return;
+    }else{
+    if (this.putSubmit) {
+      this.loading = true;
+    
+
+      let bodyData = Object.assign({
+   
+        "name": this.firstform.controls["name"].value,
+        "address": this.firstform.controls["address"].value,
+        "client_id": this.firstform.controls["client_id"].value,
+ 
+      });
+         // console.warn(bodyData);
+          this.branchServices.update(this.idEdit, bodyData).subscribe(
+            response => {
+                  this.toasTer.success(branchMsg.update);
+                  this.reloadComponent();
+              },
+              error => {
+                this.loading = false;
+                this.toasTer.error(branchMsg.errorProcess);
+                this.loading = false;
+              }
+            );
+        
+      
+    }
+    else {
+          this.loading = true;
+
+          //let codFormatted = cod.trim().replace(/\s/g, "");//para que se usa
+          let bodyData = Object.assign({
+            "name": this.firstform.controls["name"].value,
+            "address": this.firstform.controls["address"].value,
+            "client_id": this.firstform.controls["client_id"].value,
+
+            });
+           // console.log(bodyData);
+            this.branchServices.save(bodyData).subscribe(
+              response => {
+                    this.toasTer.success(branchMsg.save);
+                    this.reloadComponent();
+                },
+                error => {
+                  this.loading = false;
+                  this.toasTer.error(branchMsg.errorProcess);
+                  this.loading = false;
+                }
+              );
+          
+        
+      }
+    }
+  }
+  reloadComponent() {
+    const currentUrl = this.router.url;
+    const refreshUrl = currentUrl.indexOf("dashboard") > -1 ? "/" : "/";
+    this.router
+      .navigateByUrl(refreshUrl)
+      .then(() => this.router.navigateByUrl(currentUrl));
+   }
   get f() {
     return this.firstform.controls;
   }

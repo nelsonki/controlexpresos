@@ -38,9 +38,9 @@ export class ClientTableComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadAllCapital();
+    this.loadAll();
   }
-  public loadAllCapital(){ 
+  public loadAll(){ 
 
     this.clientServices.getList().subscribe((value) => {
       this.data=[];

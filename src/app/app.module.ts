@@ -24,8 +24,11 @@ import { MatMenuModule } from '@angular/material/menu';
 import { ToastrModule } from 'ngx-toastr';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { ModalModule, ButtonsModule, WavesModule } from 'angular-bootstrap-md';
+
 import {HttpServices} from '../app/http/httpServices/httpServices';
 import {ClientServices}from '../app/modulos/client/client-services/client-services'
+import {BranchServices}from '../app/modulos/branch/branch-services/branch-services'
+
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
@@ -76,7 +79,7 @@ import { DashboardComponent } from './modulos/dashboard/dashboard/dashboard.comp
      ],
       
   providers: [
-    HttpServices, ClientServices
+    HttpServices, ClientServices, BranchServices
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],

@@ -2,36 +2,28 @@
     <div class="form-group">
         <mat-form-field class="example-chip-list">
             <mat-label>Cliente(*)</mat-label>
-            <input matInput formControlName="cliente" [ngClass]="{ 'is-invalid': submitted && f.cliente.errors }" />
-            <mat-error *ngIf="submitted && f.cliente.errors">
-                <div *ngIf="f.cliente.errors.required">
+            <input matInput formControlName="client_id" [ngClass]="{ 'is-invalid': submitted && f.client_id.errors }" />
+            <mat-error *ngIf="submitted && f.client_id.errors">
+                <div *ngIf="f.client_id.errors.required">
                     Por Favor, Ingrese cliente
                 </div>
             </mat-error>
         </mat-form-field>
-        <mat-form-field class="example-chip-list">
-            <mat-label>Código(*)</mat-label>
-            <input matInput formControlName="codigo" [ngClass]="{ 'is-invalid': submitted && f.codigo.errors }" />
-            <mat-error *ngIf="submitted && f.codigo.errors">
-                <div *ngIf="f.codigo.errors.required">
-                    Por Favor, Ingrese codigo
-                </div>
-            </mat-error>
-        </mat-form-field>
+
         <mat-form-field class="example-chip-list">
             <mat-label>Nombre(*)</mat-label>
-            <input matInput formControlName="nombre" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }" />
-            <mat-error *ngIf="submitted && f.nombre.errors">
-                <div *ngIf="f.nombre.errors.required">
+            <input matInput formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+            <mat-error *ngIf="submitted && f.name.errors">
+                <div *ngIf="f.name.errors.required">
                     Por Favor, Ingrese nombre
                 </div>
             </mat-error>
         </mat-form-field>
         <mat-form-field class="example-chip-list">
             <mat-label>Dirección(*)</mat-label>
-            <input matInput formControlName="direccion" [ngClass]="{ 'is-invalid': submitted && f.direccion.errors }" />
-            <mat-error *ngIf="submitted && f.direccion.errors">
-                <div *ngIf="f.direccion.errors.required">
+            <input matInput formControlName="address" [ngClass]="{ 'is-invalid': submitted && f.address.errors }" />
+            <mat-error *ngIf="submitted && f.address.errors">
+                <div *ngIf="f.address.errors.required">
                     Por Favor, Ingrese dirección
                 </div>
             </mat-error>
