@@ -89,7 +89,22 @@
             <!-- Weight Column -->
             <ng-container matColumnDef="Acciones">
                 <th mat-header-cell *matHeaderCellDef> Acciones </th>
-                <td mat-cell *matCellDef="let element"> </td>
+                <td mat-cell *matCellDef="let element">
+                    <div class="row text-center purchase-width-actions">
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Editar" (click)="openEdit(element.id); basicModal.show()">
+                            <i class="fas fa-edit"></i>
+                        </div>
+                        <!--<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Eliminar Embarque" (click)="remove(element.id)">
+                        <i class="far fa-trash-alt"></i>
+                </div>-->
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Eliminar" (click)="eliminar(element.id)">
+                            <i class="far fa-trash-alt"></i>
+
+                        </div>
+                    </div>
+
+
+                </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

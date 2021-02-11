@@ -36,8 +36,8 @@
         </mat-form-field>
         <mat-form-field class="example-chip-list">
             <mat-label>Nombre Comercial(*)</mat-label>
-            <input matInput formControlName="nombre" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }" />
-            <mat-error *ngIf="submitted && f.nombre.errors">
+            <input matInput formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+            <mat-error *ngIf="submitted && f.name.errors">
                 <div *ngIf="f.nombre.errors.required">
                     Por Favor, Ingrese nombre
                 </div>
@@ -45,18 +45,18 @@
         </mat-form-field>
         <mat-form-field class="example-chip-list">
             <mat-label>Dirección(*)</mat-label>
-            <input matInput formControlName="direccion" [ngClass]="{ 'is-invalid': submitted && f.direccion.errors }" />
-            <mat-error *ngIf="submitted && f.direccion.errors">
-                <div *ngIf="f.direccion.errors.required">
+            <input matInput formControlName="address" [ngClass]="{ 'is-invalid': submitted && f.address.errors }" />
+            <mat-error *ngIf="submitted && f.address.errors">
+                <div *ngIf="f.address.errors.required">
                     Por Favor, Ingrese direccion
                 </div>
             </mat-error>
         </mat-form-field>
         <mat-form-field class="example-chip-list">
             <mat-label>Teléfono(*)</mat-label>
-            <input matInput formControlName="telefono" [ngClass]="{ 'is-invalid': submitted && f.telefono.errors }" />
-            <mat-error *ngIf="submitted && f.telefono.errors">
-                <div *ngIf="f.telefono.errors.required">
+            <input matInput formControlName="phone" [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" />
+            <mat-error *ngIf="submitted && f.phone.errors">
+                <div *ngIf="f.phone.errors.required">
                     Por Favor, Ingrese telefono
                 </div>
             </mat-error>
