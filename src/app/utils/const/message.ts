@@ -7,3 +7,12 @@ export const clientsMsg = {
     getAllFail: 'Ha ocurrido un error al obtener los clientes',
     errorProcess: 'Proceso rechazado'
 };
+export const branchMsg = {
+    save: 'Registro creado de forma exitosa',
+    update: 'Registro modificado de forma exitosa',
+    delete: 'Registro eliminado de forma exitosa',
+    get: 'Sucursal encontrada',
+    getFail: 'Ha ocurrido un error al obtener la sucursal',
+    getAllFail: 'Ha ocurrido un error al obtener la sucursal',
+    errorProcess: 'Proceso rechazado'
+};

@@ -18,11 +18,12 @@ import { MaterialModule } from './../../material.module';
 
 import { BranchTableComponent } from './branch-table/branch-table.component';
 import { BranchFormComponent } from './branch-form/branch-form.component';
-import {BranchRoutingModule} from './branch-routing.module'
+import {BranchRoutingModule} from './branch-routing.module';
+import { BranchDeleteComponent } from './dialog/branch-delete/branch-delete.component'
 
 
 @NgModule({
-  declarations: [BranchTableComponent, BranchFormComponent],
+  declarations: [BranchTableComponent, BranchFormComponent, BranchDeleteComponent],
   imports: [
     CommonModule,
     BranchRoutingModule,

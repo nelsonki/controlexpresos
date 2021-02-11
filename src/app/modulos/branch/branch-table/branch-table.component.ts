@@ -7,6 +7,8 @@ import { ToastrService } from "ngx-toastr";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import {BranchFormComponent} from '../branch-form/branch-form.component'
+import {BranchServices}from '../branch-services/branch-services'
+import {BranchDeleteComponent} from '../dialog/branch-delete/branch-delete.component'
 declare var $: any;
 
 @Component({
@@ -19,46 +21,95 @@ export class BranchTableComponent implements OnInit {
   @ViewChild(BranchFormComponent) form: BranchFormComponent;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  displayedColumns: string[] = ['ID', 'Cliente', 'Sucursal', 'Dirección',  'Acciones'];
-  dataSource = new MatTableDataSource<PeriodicElement>(element);
+  displayedColumns: string[] = ['Item', 'Cliente', 'Sucursal', 'Dirección',  'Acciones'];
+  dataSource ;
   public titleModal: string;
   public element; 
+  public data; 
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-  }
+   }
   constructor(
     public dialog: MatDialog,
     //public formBuilder: FormBuilder,
     public toasTer: ToastrService,
-    //public templatesService: TemplatesService
+    public branchServices: BranchServices
   ) {
      //this.api = environment.apiInventory;
     this.titleModal = "Crear Sucursal";
   }
 
   ngOnInit() {
+    this.loadAll();
+  }
+  public loadAll(){ 
+
+    this.branchServices.getList().subscribe((value) => {
+      this.data=[];
+      this.element=[];
+      //console.log(value["data"])
+      if (value["data"]){
+        this.element = [];
+        Object.keys(value["data"]).forEach(e => {
+            const datos ={
+              Item: "",
+              "id":value["data"][e].id,
+              "code":value["data"][e].code,
+              "name":value["data"][e].name,
+              "address":value["data"][e].address,
+              "cliente":value["data"][e].cliente,
+  
+            };
+           this.data.push(datos);
+           this.element.push(datos);
+           //console.log(this.element);
+        });
+        Object.keys(this.element).forEach((i, index) => {
+          this.element[i].Item = index + 1;
+       });
+        this.dataSource = new MatTableDataSource(this.element);
+        this.dataSource.paginator = this.paginator;
+        return this.dataSource;
+      } else {
+        this.toasTer.error(value["message"]);
+        this.data = [];
+        this.element=[];
+        this.dataSource = new MatTableDataSource(this.element);
+        this.dataSource.paginator = this.paginator;
+        return this.dataSource;
+      }
+    });
+    
   }
   Refresh(){}
   applyFilter(event){}
-  reset(){}
-  showModal() {
+   showModal() {
     $("#basicModal").show();
     this.reset();
   }
   public closeModals(value) {
     this.basicModal.hide();
   }
-}
-export interface PeriodicElement {
-  id: string;
-  cliente: string;
-  sucursal: string;
-  direccion: string;
+  public openEdit(id) {
+    this.titleModal = "Modificar Sucursal";
+    this.form.addForm(id);
+  }
+  eliminar(id){
+    this.dialog.open(BranchDeleteComponent, {
+     width: "450px",
+     data: id
+   });
   
 }
-const element: PeriodicElement[] = [
-  {id: 'a4', cliente: 'Pedro', sucursal: 'cordero', direccion: 'cordero' },
-  {id: 'a3', cliente: 'Pablo', sucursal: 'las lomas', direccion: 'san cristobal' },
+reset(){
+  
+  this.form.firstform.controls["client_id"].setValue("");
+  this.form.firstform.controls["name"].setValue("");
+  this.form.firstform.controls["address"].setValue("");
 
-];
+  this.titleModal = "Crear Sucursal";
+  this.form.putSubmit = false;
+  this.form.editSubmit = false;
+}
+}
+ 
