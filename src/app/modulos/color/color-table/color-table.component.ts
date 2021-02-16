@@ -6,7 +6,9 @@ import { ModalDirective } from "angular-bootstrap-md";
 import { ToastrService } from "ngx-toastr";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
+import {ColorServices} from '../color-services/color-services'
 import {ColorFormComponent} from '../color-form/color-form.component'
+import {ColorDeleteComponent} from '../dialog/color-delete/color-delete.component'
 declare var $: any;
 
 @Component({
@@ -19,29 +21,83 @@ export class ColorTableComponent implements OnInit {
   @ViewChild(ColorFormComponent) form: ColorFormComponent;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  displayedColumns: string[] = ['ID', 'Color', 'Acciones'];
-  dataSource = new MatTableDataSource<PeriodicElement>(element);
+  displayedColumns: string[] = ['Item', 'Color', 'Acciones'];
+  dataSource;
   public titleModal: string;
   public element; 
-
+  public data;
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
   }
   constructor(
     public dialog: MatDialog,
     //public formBuilder: FormBuilder,
     public toasTer: ToastrService,
-    //public templatesService: TemplatesService
+    public colorServices: ColorServices
   ) {
      //this.api = environment.apiInventory;
     this.titleModal = "Crear Color";
   }
 
   ngOnInit() {
+    this.loadAll();
   }
+  public loadAll(){ 
+
+    this.colorServices.getList().subscribe((value) => {
+      this.data=[];
+      this.element=[];
+      //console.log(value["data"])
+      if (value["data"]){
+        this.element = [];
+        Object.keys(value["data"]).forEach(e => {
+            const datos ={
+              Item: "",
+              "id":value["data"][e].id,
+              "color":value["data"][e].color,
+  
+            };
+           this.data.push(datos);
+           this.element.push(datos);
+         });
+        Object.keys(this.element).forEach((i, index) => {
+          this.element[i].Item = index + 1;
+       });
+        this.dataSource = new MatTableDataSource(this.element);
+        this.dataSource.paginator = this.paginator;
+        return this.dataSource;
+      } else {
+        this.toasTer.error(value["message"]);
+        this.data = [];
+        this.element=[];
+        this.dataSource = new MatTableDataSource(this.element);
+        this.dataSource.paginator = this.paginator;
+        return this.dataSource;
+      }
+    });
+    
+  }
+  public openEdit(id) {
+    this.titleModal = "Modificar Color";
+    this.form.addForm(id);
+  }
+  eliminar(id){
+    this.dialog.open(ColorDeleteComponent, {
+     width: "450px",
+     data: id
+   });
+  
+}
+reset(){
+  
+  this.form.firstform.controls["color"].setValue("");
+
+  this.titleModal = "Crear Color";
+  this.form.putSubmit = false;
+  this.form.editSubmit = false;
+}
   Refresh(){}
   applyFilter(event){}
-  reset(){}
+   
   showModal() {
     $("#basicModal").show();
     this.reset();
@@ -50,13 +106,4 @@ export class ColorTableComponent implements OnInit {
     this.basicModal.hide();
   }
 }
-export interface PeriodicElement {
-  id: string;
-  color: string;
-
-}
-const element: PeriodicElement[] = [
-  {id: 'a4', color: '#4fs5df' },
-  {id: 'a3', color: '#d54s87' },
-
-];
+ 

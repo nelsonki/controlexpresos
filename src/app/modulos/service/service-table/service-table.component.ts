@@ -6,7 +6,10 @@ import { ModalDirective } from "angular-bootstrap-md";
 import { ToastrService } from "ngx-toastr";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
+import {ServiceServices} from '../service-services/service-services'
 import {ServiceFormComponent} from '../service-form/service-form.component'
+
+import {ServiceDeleteComponent} from '../dialog/service-delete/service-delete.component'
 declare var $: any;
 
 @Component({
@@ -19,44 +22,88 @@ export class ServiceTableComponent implements OnInit {
   @ViewChild(ServiceFormComponent) form: ServiceFormComponent;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  displayedColumns: string[] = ['ID', 'Nombre', 'Margen', 'Acciones'];
-  dataSource = new MatTableDataSource<PeriodicElement>(element);
+  displayedColumns: string[] = ['Item', 'Nombre', 'Margen', 'Acciones'];
+  dataSource;
   public titleModal: string;
   public element; 
-
+  public data;
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
   }
   constructor(
     public dialog: MatDialog,
     //public formBuilder: FormBuilder,
     public toasTer: ToastrService,
-    //public templatesService: TemplatesService
+    public serviceServices: ServiceServices
   ) {
      //this.api = environment.apiInventory;
     this.titleModal = "Crear Servicio";
   }
 
   ngOnInit() {
+    this.loadAll()
   }
+  public loadAll(){ 
+
+    this.serviceServices.getList().subscribe((value) => {
+      this.data=[];
+      this.element=[];
+      console.log(value["data"])
+      if (value["data"]){
+        this.element = [];
+        Object.keys(value["data"]).forEach(e => {
+            const datos ={
+              Item: "",
+              "id":value["data"][e].id,
+              "name":value["data"][e].name,
+              "error_range":value["data"][e].error_range,
+
+            };
+           this.data.push(datos);
+           this.element.push(datos);
+         });
+        Object.keys(this.element).forEach((i, index) => {
+          this.element[i].Item = index + 1;
+       });
+        this.dataSource = new MatTableDataSource(this.element);
+        this.dataSource.paginator = this.paginator;
+        return this.dataSource;
+      } else {
+        this.toasTer.error(value["message"]);
+        this.data = [];
+        this.element=[];
+        this.dataSource = new MatTableDataSource(this.element);
+        this.dataSource.paginator = this.paginator;
+        return this.dataSource;
+      }
+    });
+    
+  }
+  public openEdit(id) {
+    this.titleModal = "Modificar Servicio";
+    this.form.addForm(id);
+  }
+  eliminar(id){
+    this.dialog.open(ServiceDeleteComponent, {
+     width: "450px",
+     data: id
+   });
+  
+}
   Refresh(){}
   applyFilter(event){}
-  reset(){}
-  showModal() {
+  reset(){
+  
+    this.form.firstform.controls["nombre"].setValue("");
+    this.form.firstform.controls["margen"].setValue("");
+
+    this.titleModal = "Crear Color";
+    //this.form.putSubmit = false;
+    this.form.editSubmit = false;
+  }  showModal() {
     $("#basicModal").show();
     this.reset();
   }
   public closeModals(value) {
     this.basicModal.hide();
   }
-}
-export interface PeriodicElement {
-  id: string;
-  nombre: string;
-  margen: string;
-}
-const element: PeriodicElement[] = [
-  {id: 'a4', nombre: 'Limpieza', margen: '0'  },
-  {id: 'a3', nombre: 'Secado', margen: '1'  },
-
-];
+} 
