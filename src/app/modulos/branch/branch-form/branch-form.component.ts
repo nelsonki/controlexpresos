@@ -45,6 +45,7 @@ export class BranchFormComponent implements OnInit {
   public api;
   openOptionClient: boolean = false;
   filteredOptions: Observable<string[]>;
+  public disabledButoon: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
