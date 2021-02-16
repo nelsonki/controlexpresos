@@ -9,3 +9,74 @@
 .warehouse-width-button {
     width: 50%;
 }
+
+//////////////buscar cliente
+.example-chip-list {
+    width: 100%;
+}
+
+.client-buttom-width {
+    width: 57%;
+}
+
+.warehouse-width-button {
+    width: 50%;
+}
+
+.button-search {
+    background-color: transparent;
+    color: #000;
+    border: 1px solid #ffff;
+}
+
+.width-form-groud {
+    display: inline-flex;
+    width: 100%;
+}
+
+.info-box-table {
+    display: block;
+    height: 36px;
+    min-height: 30px;
+    background: #fff;
+    width: 100%;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+    border-radius: 2px;
+    margin-bottom: 15px;
+}
+
+.info-box-icon-table {
+    display: block;
+    float: left;
+    height: 36px;
+    min-height: 30px;
+    width: 30px;
+    text-align: center;
+    font-size: 25px;
+    line-height: auto;
+    align-items: center;
+    margin: 0 auto;
+    background: rgba(0, 0, 0, .2);
+    background-color: rgba(0, 0, 0, .2);
+    border-radius: 2px 0 0 2px;
+}
+
+.info-box-content-table {
+    padding: 5px;
+    margin-left: 30px;
+}
+
+.info-box-text-table {
+    text-transform: uppercase;
+    display: block;
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.info-box-number-table {
+    display: block;
+    font-weight: 700;
+    font-size: 10px;
+}

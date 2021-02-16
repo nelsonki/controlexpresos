@@ -1,14 +1,35 @@
-<form [formGroup]="firstform" class="client-form-top" (ngSubmit)="onSubmit()">
+<form [formGroup]="firstform" class="client-form-top" autocomplete="off" (click)="closeOption()">
     <div class="form-group">
-        <mat-form-field class="example-chip-list">
-            <mat-label>Cliente(*)</mat-label>
-            <input matInput formControlName="client_id" [ngClass]="{ 'is-invalid': submitted && f.client_id.errors }" />
-            <mat-error *ngIf="submitted && f.client_id.errors">
-                <div *ngIf="f.client_id.errors.required">
-                    Por Favor, Ingrese cliente
+
+        <div class="form-group" class="width-form-groud ">
+            <mat-form-field class="example-full-width" style="width: 100%;">
+                <mat-label>Empresa(*)</mat-label>
+
+                <input type="text" placeholder="Cliente(*)" aria-label="Number" matInput formControlName="client">
+                <div class="typeahead--wrapper" *ngIf="openOptionClient">
+                    <ul class="typeahead--ul">
+                        <li *ngFor="let data of filteredOptions" (click)="
+               setDataFormul($event,
+                 data.id,
+                 data.name
+               )
+             " class="typeahead--list">
+                            <b>{{ data.name }}</b>
+                        </li>
+                    </ul>
                 </div>
-            </mat-error>
-        </mat-form-field>
+                <mat-error *ngIf="submitted && f.client.errors">
+                    <div *ngIf="f.client.errors.required">Por favor, seleccione un Cliente</div>
+                </mat-error>
+            </mat-form-field>
+
+            <div>
+                <button [disabled]="disabledButoon" matTooltip="Buscar" class="button-search" (click)="searchClient()">
+                        <i class="fas fa-search"></i>
+                    </button>
+            </div>
+        </div>
+        <input formControlName="client_id" matInput="" style="display: none;" />
 
         <mat-form-field class="example-chip-list">
             <mat-label>Nombre(*)</mat-label>
@@ -39,7 +60,7 @@
             <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="row">
                     <div class="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <button [disabled]="loading" mat-raised-button color="primary" class="btn btn-accent">
+                        <button [disabled]="loading" mat-raised-button color="primary" class="btn btn-accent" (click)="onSubmit()">
             Aceptar
           </button>
                     </div>

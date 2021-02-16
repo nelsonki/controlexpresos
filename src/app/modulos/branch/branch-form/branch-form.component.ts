@@ -7,15 +7,17 @@ import {
   Output,
   EventEmitter
 } from "@angular/core";
+import { Observable } from "rxjs";
+
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { branchMsg } from "../../../utils/const/message";
 import { ToastrService } from "ngx-toastr";
 import { BranchServices } from '../branch-services/branch-services';
-
+import {environment} from '../../../../environments/environment'
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
-
+import {HttpServices}from '../../../http/httpServices/httpServices'
 @Component({
   selector: 'app-branch-form',
   templateUrl: './branch-form.component.html',
@@ -40,12 +42,17 @@ export class BranchFormComponent implements OnInit {
 
   public putSubmit: boolean = false;
   public idEdit: any;
+  public api;
+  openOptionClient: boolean = false;
+  filteredOptions: Observable<string[]>;
 
   constructor(
     private formBuilder: FormBuilder,
     public router: Router,
     public toasTer: ToastrService,
-    public branchServices: BranchServices
+    public branchServices: BranchServices,
+    private http: HttpServices,
+
   ) { }
 
   ngOnInit() {
@@ -53,7 +60,35 @@ export class BranchFormComponent implements OnInit {
       name: ["", Validators.required],
       address: ["", Validators.required],
       client_id: ["", Validators.required],
+      client: ["", Validators.required],
+
      });
+  }
+    public searchClient() {
+    this.api = environment.apiJakiro2;
+    let valueSearch = this.firstform.controls["client"].value;
+    if (valueSearch.trim() !== "") {
+      let enpoint = "clients/search/" + this.firstform.controls["client"].value;
+      this.http.doGet(this.api, enpoint).subscribe((data: any) => {
+        console.log(data);
+        if (data.length > 0) {
+          this.openOptionClient = true;
+          this.filteredOptions = data;
+        } else {
+          this.openOptionClient = false;
+          this.firstform.controls["client_id"].setValue("");
+          this.firstform.controls["client"].setValue("");
+        }
+      });
+    }
+  }
+  public setDataFormul(event, id, nombreComercial) {
+    this.openOptionClient = false;
+    this.firstform.controls["client_id"].setValue(id);
+    this.firstform.controls["client"].setValue(nombreComercial);
+  }
+  public closeOption() {
+    this.openOptionClient = false;
   }
   public addForm(id) {  
     this.idEdit = id;
@@ -66,7 +101,8 @@ export class BranchFormComponent implements OnInit {
       }
     });
     //console.log(dataEdit[0]);
-    this.firstform.controls["client_id"].setValue(dataEdit[0]["cliente"]);
+    this.firstform.controls["client"].setValue(dataEdit[0]["cliente"]);
+    this.firstform.controls["client_id"].setValue(dataEdit[0]["cliente_id"]);
     this.firstform.controls["name"].setValue(dataEdit[0]["name"]);
     this.firstform.controls["address"].setValue(dataEdit[0]["address"]);
   

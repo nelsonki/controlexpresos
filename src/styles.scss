@@ -1,4 +1,55 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.typeahead--ul>li:hover {
+    background-color: #bfdeff;
+}
+
+.typeahead--ul {
+    padding: 0;
+    list-style-type: none;
+    display: table;
+    width: 100%;
+}
+
+.typeahead--list {
+    list-style: none;
+    width: 100%;
+    min-width: 100%;
+    cursor: pointer;
+    border-bottom: 1px solid #eeeeee;
+    padding: 0.25em 0.625em;
+    font-size: 0.8rem;
+}
+
+.typeahead--ul>li:hover {
+    background-color: #bfdeff;
+}
+
+.typeahead--wrapper {
+    position: absolute;
+    z-index: 1000;
+    background-color: white;
+    // display:table;
+    border: 1px solid #ced4da;
+    width: 100%;
+    min-width: 100%;
+    -webkit-box-shadow: 3px 7px 10px -10px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 3px 7px 10px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 3px 7px 10px -10px rgba(0, 0, 0, 0.75);
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 150px;
+    white-space: nowrap;
+    padding: 10px;
+    // border-radius: 25px;
+}

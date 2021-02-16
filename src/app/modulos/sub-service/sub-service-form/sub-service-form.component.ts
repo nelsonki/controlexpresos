@@ -65,7 +65,7 @@ export class SubServiceFormComponent implements OnInit {
       }
     });
     //console.log(dataEdit[0]);
-    this.firstform.controls["name"].setValue(dataEdit[0]["name"]);
+    this.firstform.controls["name"].setValue(dataEdit[0]["nombre"]);
 
   }
   public closeModal() {
