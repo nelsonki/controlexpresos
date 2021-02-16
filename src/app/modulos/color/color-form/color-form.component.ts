@@ -12,7 +12,7 @@ import { Router } from "@angular/router";
 
 import { ToastrService } from "ngx-toastr";
 import { ColorServices } from '../color-services/color-services';
-import { branchMsg } from "../../../utils/const/message";
+import { colorMsg } from "../../../utils/const/message";
 
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
@@ -86,12 +86,12 @@ export class ColorFormComponent implements OnInit {
          // console.warn(bodyData);
           this.colorServices.update(this.idEdit, bodyData).subscribe(
             response => {
-                  this.toasTer.success(branchMsg.update);
+                  this.toasTer.success(colorMsg.update);
                   this.reloadComponent();
               },
               error => {
                 this.loading = false;
-                this.toasTer.error(branchMsg.errorProcess);
+                this.toasTer.error(colorMsg.errorProcess);
                 this.loading = false;
               }
             );
@@ -109,12 +109,12 @@ export class ColorFormComponent implements OnInit {
            // console.log(bodyData);
             this.colorServices.save(bodyData).subscribe(
               response => {
-                    this.toasTer.success(branchMsg.save);
+                    this.toasTer.success(colorMsg.save);
                     this.reloadComponent();
                 },
                 error => {
                   this.loading = false;
-                  this.toasTer.error(branchMsg.errorProcess);
+                  this.toasTer.error(colorMsg.errorProcess);
                   this.loading = false;
                 }
               );

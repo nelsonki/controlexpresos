@@ -9,9 +9,9 @@ import {
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-//import { TemplateMsg } from "../../../utils/const/message";
+import { subserviceMsg } from "../../../utils/const/message";
 import { ToastrService } from "ngx-toastr";
-//import { TemplatesService } from '../templates-services/templates.service';
+import { SubServiceServices } from '../sub-service-services/sub-service-services';
 
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
@@ -38,24 +38,102 @@ export class SubServiceFormComponent implements OnInit {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   public taskList = [];
 
+  public putSubmit: boolean = false;
+  public idEdit: any;
 
   constructor(
     private formBuilder: FormBuilder,
     public router: Router,
     public toasTer: ToastrService,
-    //public templatesService: TemplatesService
+    public subServiceServices: SubServiceServices
   ) { }
 
   ngOnInit() {
     this.firstform = this.formBuilder.group({ 
-      nombre: ["", Validators.required],
+      name: ["", Validators.required],
+
     });
+  }
+  public addForm(id) {  
+    this.idEdit = id;
+    let dataEdit = [];
+    this.editSubmit = true;
+    this.putSubmit = true;
+    Object.keys(this.element).forEach(i => {
+      if (this.element[i].id == id) {
+        dataEdit.push(this.element[i]);
+      }
+    });
+    //console.log(dataEdit[0]);
+    this.firstform.controls["name"].setValue(dataEdit[0]["name"]);
+
   }
   public closeModal() {
     this.closeStatus = !this.closeStatus;
     this.statusCloseModal.emit(this.closeStatus);
   }
-  onSubmit(){}
+  onSubmit(){
+    
+    this.submitted = true;
+     if(this.firstform.invalid) {
+      return;
+    }else{
+    if (this.putSubmit) {
+      this.loading = true;
+    
+
+      let bodyData = Object.assign({
+   
+        "name": this.firstform.controls["name"].value,
+
+      });
+         // console.warn(bodyData);
+          this.subServiceServices.update(this.idEdit, bodyData).subscribe(
+            response => {
+                  this.toasTer.success(subserviceMsg.update);
+                  this.reloadComponent();
+              },
+              error => {
+                this.loading = false;
+                this.toasTer.error(subserviceMsg.errorProcess);
+                this.loading = false;
+              }
+            );
+        
+      
+    }
+    else {
+          this.loading = true;
+
+          //let codFormatted = cod.trim().replace(/\s/g, "");//para que se usa
+          let bodyData = Object.assign({
+            "name": this.firstform.controls["name"].value,
+
+            });
+           // console.log(bodyData);
+            this.subServiceServices.save(bodyData).subscribe(
+              response => {
+                    this.toasTer.success(subserviceMsg.save);
+                    this.reloadComponent();
+                },
+                error => {
+                  this.loading = false;
+                  this.toasTer.error(subserviceMsg.errorProcess);
+                  this.loading = false;
+                }
+              );
+          
+        
+      }
+    }
+  }
+  reloadComponent() {
+    const currentUrl = this.router.url;
+    const refreshUrl = currentUrl.indexOf("dashboard") > -1 ? "/" : "/";
+    this.router
+      .navigateByUrl(refreshUrl)
+      .then(() => this.router.navigateByUrl(currentUrl));
+   }
   get f() {
     return this.firstform.controls;
   }

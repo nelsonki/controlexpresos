@@ -2,21 +2,21 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
-import {BranchServices} from "../../branch-services/branch-services";
-import {branchMsg} from "../../../../utils/const/message";
+import {SubServiceServices} from "../../sub-service-services/sub-service-services";
+import {subserviceMsg} from "../../../../utils/const/message";
 
 @Component({
-  selector: 'app-branch-delete',
-  templateUrl: './branch-delete.component.html',
-  styleUrls: ['./branch-delete.component.scss']
+  selector: 'app-sub-service-delete',
+  templateUrl: './sub-service-delete.component.html',
+  styleUrls: ['./sub-service-delete.component.scss']
 })
-export class BranchDeleteComponent implements OnInit {
+export class SubServiceDeleteComponent implements OnInit {
   public id:any;
 
   constructor(
-      public dialogRef: MatDialogRef<BranchDeleteComponent>,
+      public dialogRef: MatDialogRef<SubServiceDeleteComponent>,
       public router: Router,
-      public branchServices: BranchServices,
+      public subServiceServices: SubServiceServices,
       public toasTer: ToastrService,
       @Inject(MAT_DIALOG_DATA) public data: MatDialog
   ) {
@@ -27,13 +27,13 @@ export class BranchDeleteComponent implements OnInit {
 
 
   public deleteRow(id) {
-      this.branchServices.delete(this.id).subscribe(
+      this.subServiceServices.delete(this.id).subscribe(
         response => {
-              this.toasTer.success(branchMsg.delete);
+              this.toasTer.success(subserviceMsg.delete);
               this.reloadComponent();
           },
           error => {
-            this.toasTer.error(branchMsg.errorProcess);
+            this.toasTer.error(subserviceMsg.errorProcess);
           }
         );
   }

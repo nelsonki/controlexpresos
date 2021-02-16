@@ -99,7 +99,8 @@ export class ServiceTableComponent implements OnInit {
     this.titleModal = "Crear Color";
     //this.form.putSubmit = false;
     this.form.editSubmit = false;
-  }  showModal() {
+  } 
+   showModal() {
     $("#basicModal").show();
     this.reset();
   }

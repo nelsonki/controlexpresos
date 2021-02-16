@@ -56,6 +56,13 @@
                 <th mat-header-cell *matHeaderCellDef> Item </th>
                 <td mat-cell *matCellDef="let element"> {{element.Item}} </td>
             </ng-container>
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="Foto">
+                <th mat-header-cell *matHeaderCellDef> Foto </th>
+                <td mat-cell *matCellDef="let element"><img style="border-radius: 50%; width:120px; height: 120px;" src=" {{element.image}} " alt=""></td>
+            </ng-container>
+
             <!-- Position Column -->
             <ng-container matColumnDef="DNI">
                 <th mat-header-cell *matHeaderCellDef> DNI </th>

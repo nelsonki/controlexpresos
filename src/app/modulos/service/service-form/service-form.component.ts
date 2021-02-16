@@ -136,7 +136,8 @@ onSubmit(){
     this.router
       .navigateByUrl(refreshUrl)
       .then(() => this.router.navigateByUrl(currentUrl));
-   }  get f() {
+   } 
+    get f() {
     return this.firstform.controls;
   }
 }

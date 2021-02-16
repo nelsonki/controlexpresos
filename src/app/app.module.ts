@@ -30,7 +30,7 @@ import {ClientServices}from '../app/modulos/client/client-services/client-servic
 import {BranchServices}from '../app/modulos/branch/branch-services/branch-services'
 import {ColorServices} from '../app/modulos/color/color-services/color-services'
 import {ServiceServices} from '../app/modulos/service/service-services/service-services'
-
+import {SubServiceServices} from '../app/modulos/sub-service/sub-service-services/sub-service-services'
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
@@ -85,7 +85,8 @@ import { DashboardComponent } from './modulos/dashboard/dashboard/dashboard.comp
     ClientServices,
     BranchServices, 
     ColorServices,
-    ServiceServices
+    ServiceServices,
+    SubServiceServices
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
