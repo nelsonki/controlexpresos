@@ -53,7 +53,7 @@ export class SubServiceTableComponent implements OnInit {
             const datos ={
               Item: "",
               "id":value["data"][e].id,
-              "name":value["data"][e].name,
+              "nombre":value["data"][e].name,
 
             };
            this.data.push(datos);

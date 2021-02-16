@@ -47,7 +47,7 @@ export class BranchTableComponent implements OnInit {
     this.branchServices.getList().subscribe((value) => {
       this.data=[];
       this.element=[];
-      //console.log(value["data"])
+      console.log(value["data"])
       if (value["data"]){
         this.element = [];
         Object.keys(value["data"]).forEach(e => {
@@ -58,7 +58,8 @@ export class BranchTableComponent implements OnInit {
               "name":value["data"][e].name,
               "address":value["data"][e].address,
               "cliente":value["data"][e].cliente,
-  
+              "cliente_id":value["data"][e].cliente_id,
+
             };
            this.data.push(datos);
            this.element.push(datos);
@@ -102,7 +103,7 @@ export class BranchTableComponent implements OnInit {
   
 }
 reset(){
-  
+  this.form.firstform.controls["client"].setValue("");
   this.form.firstform.controls["client_id"].setValue("");
   this.form.firstform.controls["name"].setValue("");
   this.form.firstform.controls["address"].setValue("");
