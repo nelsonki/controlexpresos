@@ -34,3 +34,12 @@ export const serviceMsg = {
     getAllFail: 'Ha ocurrido un error al obtener el servicio',
     errorProcess: 'Proceso rechazado'
 };
+export const subserviceMsg = {
+    save: 'Registro creado de forma exitosa',
+    update: 'Registro modificado de forma exitosa',
+    delete: 'Registro eliminado de forma exitosa',
+    get: 'Sub-servicio encontrado',
+    getFail: 'Ha ocurrido un error al obtener el sub-servicio',
+    getAllFail: 'Ha ocurrido un error al obtener el sub-servicio',
+    errorProcess: 'Proceso rechazado'
+};

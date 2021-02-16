@@ -3,9 +3,9 @@
 
         <mat-form-field class="example-chip-list">
             <mat-label>Sub-servicio(*)</mat-label>
-            <input matInput formControlName="nombre" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }" />
-            <mat-error *ngIf="submitted && f.nombre.errors">
-                <div *ngIf="f.nombre.errors.required">
+            <input matInput formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+            <mat-error *ngIf="submitted && f.name.errors">
+                <div *ngIf="f.name.errors.required">
                     Por Favor, Ingrese nombre
                 </div>
             </mat-error>

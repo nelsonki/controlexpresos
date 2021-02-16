@@ -114,7 +114,7 @@ export class ClientFormComponent implements OnInit {
         "address": this.firstform.controls["address"].value,
         "phone": this.firstform.controls["phone"].value,
         "email": this.firstform.controls["email"].value,
-        //'imagen':  (this.profileImage2 === '') ? 'null' : this.profileImage2,
+        'image':  (this.profileImage2 === '') ? 'null' : this.profileImage2,
 
       });
       this.profileImage2 = bodyData.image;
@@ -144,7 +144,7 @@ export class ClientFormComponent implements OnInit {
             "address": this.firstform.controls["address"].value,
             "phone": this.firstform.controls["phone"].value,
             "email": this.firstform.controls["email"].value,
-            //'imagen':  (this.profileImage2 === '') ? 'null' : this.profileImage2,
+            'image':  (this.profileImage2 === '') ? 'null' : this.profileImage2,
 
             });
             this.profileImage2 = bodyData.image;

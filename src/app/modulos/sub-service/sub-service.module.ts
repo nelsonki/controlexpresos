@@ -19,11 +19,12 @@ import { MaterialModule } from './../../material.module';
 
 import { SubServiceTableComponent } from './sub-service-table/sub-service-table.component';
 import { SubServiceFormComponent } from './sub-service-form/sub-service-form.component';
-import {SubServiceRoutingModule} from './sub-service-routing.module'
+import {SubServiceRoutingModule} from './sub-service-routing.module';
+import { SubServiceDeleteComponent } from './dialog/sub-service-delete/sub-service-delete.component'
 
 
 @NgModule({
-  declarations: [SubServiceTableComponent, SubServiceFormComponent],
+  declarations: [SubServiceTableComponent, SubServiceFormComponent, SubServiceDeleteComponent],
   imports: [
     CommonModule,
     SubServiceRoutingModule, 

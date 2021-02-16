@@ -3,7 +3,7 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import {ColorServices} from "../../color-services/color-services";
-import {clientsMsg} from "../../../../utils/const/message";
+import {colorMsg} from "../../../../utils/const/message";
 
 @Component({
   selector: 'app-color-delete',
@@ -29,11 +29,11 @@ export class ColorDeleteComponent implements OnInit {
   public deleteRow(id) {
       this.colorServices.delete(this.id).subscribe(
         response => {
-              this.toasTer.success(clientsMsg.delete);
+              this.toasTer.success(colorMsg.delete);
               this.reloadComponent();
           },
           error => {
-            this.toasTer.error(clientsMsg.errorProcess);
+            this.toasTer.error(colorMsg.errorProcess);
           }
         );
   }

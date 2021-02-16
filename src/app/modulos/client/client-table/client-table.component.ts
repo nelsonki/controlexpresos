@@ -20,7 +20,7 @@ export class ClientTableComponent implements OnInit {
   @ViewChild('basicModal') basicModal: ModalDirective;
   @ViewChild(ClientFormComponent) form: ClientFormComponent;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  displayedColumns: string[] = ['Item','DNI', 'Nombre Comercial', 'Dirección', 'Teléfono', 'Email', 'Acciones'];
+  displayedColumns: string[] = ['Item','Foto', 'DNI', 'Nombre Comercial', 'Dirección', 'Teléfono', 'Email', 'Acciones'];
   dataSource;
   public titleModal: string;
   public element; 
@@ -57,11 +57,11 @@ export class ClientTableComponent implements OnInit {
               "email":value["data"][e].email,
               "phone":value["data"][e].phone,
               "address":value["data"][e].address,
- 
+               "image":value["data"][e].image
             };
            this.data.push(datos);
            this.element.push(datos);
-           //console.log(this.element);
+           console.log(this.element);
         });
         Object.keys(this.element).forEach((i, index) => {
           this.element[i].Item = index + 1;
