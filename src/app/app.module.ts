@@ -28,6 +28,8 @@ import { ModalModule, ButtonsModule, WavesModule } from 'angular-bootstrap-md';
 import {HttpServices} from '../app/http/httpServices/httpServices';
 import {ClientServices}from '../app/modulos/client/client-services/client-services'
 import {BranchServices}from '../app/modulos/branch/branch-services/branch-services'
+import {ColorServices} from '../app/modulos/color/color-services/color-services'
+import {ServiceServices} from '../app/modulos/service/service-services/service-services'
 
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
@@ -79,7 +81,11 @@ import { DashboardComponent } from './modulos/dashboard/dashboard/dashboard.comp
      ],
       
   providers: [
-    HttpServices, ClientServices, BranchServices
+    HttpServices, 
+    ClientServices,
+    BranchServices, 
+    ColorServices,
+    ServiceServices
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],

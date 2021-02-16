@@ -114,9 +114,12 @@ export class ClientFormComponent implements OnInit {
         "address": this.firstform.controls["address"].value,
         "phone": this.firstform.controls["phone"].value,
         "email": this.firstform.controls["email"].value,
+        //'imagen':  (this.profileImage2 === '') ? 'null' : this.profileImage2,
 
       });
-         // console.warn(bodyData);
+      this.profileImage2 = bodyData.image;
+
+          console.warn(bodyData);
           this.clientServices.update(this.idEdit, bodyData).subscribe(
             response => {
                   this.toasTer.success(clientsMsg.update);
@@ -128,7 +131,7 @@ export class ClientFormComponent implements OnInit {
                 this.loading = false;
               }
             );
-        
+      
       
     }
     else {
@@ -141,10 +144,13 @@ export class ClientFormComponent implements OnInit {
             "address": this.firstform.controls["address"].value,
             "phone": this.firstform.controls["phone"].value,
             "email": this.firstform.controls["email"].value,
+            //'imagen':  (this.profileImage2 === '') ? 'null' : this.profileImage2,
 
             });
-           // console.log(bodyData);
-            this.clientServices.save(bodyData).subscribe(
+            this.profileImage2 = bodyData.image;
+
+            console.log(bodyData);
+           this.clientServices.save(bodyData).subscribe(
               response => {
                     this.toasTer.success(clientsMsg.save);
                     this.reloadComponent();

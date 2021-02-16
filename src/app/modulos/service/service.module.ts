@@ -19,11 +19,12 @@ import { MaterialModule } from './../../material.module';
 
 import { ServiceTableComponent } from './service-table/service-table.component';
 import { ServiceFormComponent } from './service-form/service-form.component';
-import {ServiceRoutingModule} from './service-routing.module'
+import {ServiceRoutingModule} from './service-routing.module';
+import { ServiceDeleteComponent } from './dialog/service-delete/service-delete.component'
 
 
 @NgModule({
-  declarations: [ServiceTableComponent, ServiceFormComponent],
+  declarations: [ServiceTableComponent, ServiceFormComponent, ServiceDeleteComponent],
   imports: [
     CommonModule,
     ServiceRoutingModule, 

@@ -16,3 +16,21 @@ export const branchMsg = {
     getAllFail: 'Ha ocurrido un error al obtener la sucursal',
     errorProcess: 'Proceso rechazado'
 };
+export const colorMsg = {
+    save: 'Registro creado de forma exitosa',
+    update: 'Registro modificado de forma exitosa',
+    delete: 'Registro eliminado de forma exitosa',
+    get: 'Color encontrado',
+    getFail: 'Ha ocurrido un error al obtener el color',
+    getAllFail: 'Ha ocurrido un error al obtener el color',
+    errorProcess: 'Proceso rechazado'
+};
+export const serviceMsg = {
+    save: 'Registro creado de forma exitosa',
+    update: 'Registro modificado de forma exitosa',
+    delete: 'Registro eliminado de forma exitosa',
+    get: 'Servicio encontrado',
+    getFail: 'Ha ocurrido un error al obtener el servicio',
+    getAllFail: 'Ha ocurrido un error al obtener el servicio',
+    errorProcess: 'Proceso rechazado'
+};

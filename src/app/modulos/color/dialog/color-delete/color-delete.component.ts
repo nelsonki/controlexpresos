@@ -2,21 +2,21 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
-import {BranchServices} from "../../branch-services/branch-services";
+import {ColorServices} from "../../color-services/color-services";
 import {clientsMsg} from "../../../../utils/const/message";
 
 @Component({
-  selector: 'app-branch-delete',
-  templateUrl: './branch-delete.component.html',
-  styleUrls: ['./branch-delete.component.scss']
+  selector: 'app-color-delete',
+  templateUrl: './color-delete.component.html',
+  styleUrls: ['./color-delete.component.scss']
 })
-export class BranchDeleteComponent implements OnInit {
+export class ColorDeleteComponent implements OnInit {
   public id:any;
 
   constructor(
-      public dialogRef: MatDialogRef<BranchDeleteComponent>,
+      public dialogRef: MatDialogRef<ColorDeleteComponent>,
       public router: Router,
-      public branchServices: BranchServices,
+      public colorServices: ColorServices,
       public toasTer: ToastrService,
       @Inject(MAT_DIALOG_DATA) public data: MatDialog
   ) {
@@ -27,7 +27,7 @@ export class BranchDeleteComponent implements OnInit {
 
 
   public deleteRow(id) {
-      this.branchServices.delete(this.id).subscribe(
+      this.colorServices.delete(this.id).subscribe(
         response => {
               this.toasTer.success(clientsMsg.delete);
               this.reloadComponent();

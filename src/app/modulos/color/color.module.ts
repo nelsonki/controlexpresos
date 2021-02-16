@@ -21,11 +21,12 @@ import { MaterialModule } from './../../material.module';
 
 import { ColorTableComponent } from './color-table/color-table.component';
 import { ColorFormComponent } from './color-form/color-form.component';
-import {ColorRoutingModule} from './color-routing.module'
+import {ColorRoutingModule} from './color-routing.module';
+import { ColorDeleteComponent } from './dialog/color-delete/color-delete.component'
 
 
 @NgModule({
-  declarations: [ColorTableComponent, ColorFormComponent],
+  declarations: [ColorTableComponent, ColorFormComponent, ColorDeleteComponent],
   imports: [
     CommonModule,
     ColorRoutingModule, 
