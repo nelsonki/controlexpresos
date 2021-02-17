@@ -61,8 +61,8 @@ export class ClientFormComponent implements OnInit {
     this.firstform = this.formBuilder.group({ 
       dni: ["", Validators.required],
       name: ["", Validators.required],
-      address: ["", Validators.required],
-      phone: ["", Validators.required],
+      address: ["", ""],
+      phone: ["", ""],
       fruitCtrl: ["", ""],
 
     });

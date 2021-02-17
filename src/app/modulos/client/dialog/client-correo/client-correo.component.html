@@ -1,0 +1,10 @@
+<h3 class="text-center"> Correos del Cliente</h3>
+<mat-dialog-content class="mat-typography  ">
+    <ul>
+        <li *ngFor="let item of verCorreos">{{ item }}
+        </li>
+    </ul>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-button mat-raised-button color="accent" class="color-text" mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>

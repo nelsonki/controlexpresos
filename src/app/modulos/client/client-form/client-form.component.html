@@ -1,4 +1,4 @@
-<form [formGroup]="firstform" class="client-form-top" (ngSubmit)="onSubmit()">
+<form [formGroup]="firstform" class="client-form-top">
     <div class="row">
         <div class="col-md-12">
             <ng-container>
@@ -26,40 +26,41 @@
     <div class="form-group">
 
         <mat-form-field class="example-chip-list">
-            <mat-label>DNI(*)</mat-label>
-            <input matInput formControlName="dni" [ngClass]="{ 'is-invalid': submitted && f.dni.errors }" />
+            <mat-label>DNI</mat-label>
+            <input matInput required formControlName="dni" id="dni" type="text" />
             <mat-error *ngIf="submitted && f.dni.errors">
                 <div *ngIf="f.dni.errors.required">
-                    Por Favor, Ingrese dni
+                    Por favor, ingrese un dni
                 </div>
             </mat-error>
         </mat-form-field>
         <mat-form-field class="example-chip-list">
-            <mat-label>Nombre Comercial(*)</mat-label>
-            <input matInput formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+            <mat-label>Nombre Comercial</mat-label>
+            <input matInput required formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
             <mat-error *ngIf="submitted && f.name.errors">
-                <div *ngIf="f.nombre.errors.required">
+                <div *ngIf="f.name.errors.required">
                     Por Favor, Ingrese nombre
                 </div>
             </mat-error>
         </mat-form-field>
         <mat-form-field class="example-chip-list">
-            <mat-label>Dirección(*)</mat-label>
+            <mat-label>Dirección</mat-label>
             <input matInput formControlName="address" [ngClass]="{ 'is-invalid': submitted && f.address.errors }" />
-            <mat-error *ngIf="submitted && f.address.errors">
+            <!--<mat-error *ngIf="submitted && f.address.errors">
                 <div *ngIf="f.address.errors.required">
                     Por Favor, Ingrese direccion
                 </div>
-            </mat-error>
+                </mat-error>-->
         </mat-form-field>
         <mat-form-field class="example-chip-list">
-            <mat-label>Teléfono(*)</mat-label>
+            <mat-label>Teléfono</mat-label>
             <input matInput formControlName="phone" [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" />
+            <!--
             <mat-error *ngIf="submitted && f.phone.errors">
                 <div *ngIf="f.phone.errors.required">
                     Por Favor, Ingrese telefono
                 </div>
-            </mat-error>
+            </mat-error>-->
         </mat-form-field>
         <!--
         <mat-form-field class="example-chip-list">
@@ -108,7 +109,7 @@
             <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="row">
                     <div class="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <button [disabled]="loading" mat-raised-button color="primary" class="btn btn-accent">
+                        <button [disabled]="loading" mat-raised-button color="primary" class="btn btn-accent" (click)="onSubmit()">
             Aceptar
           </button>
                     </div>
