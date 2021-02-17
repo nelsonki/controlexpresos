@@ -67,7 +67,9 @@ export class ClientFormComponent implements OnInit {
 
     });
   }
-  public addForm(id) {  
+  public addForm(id) { 
+    this.fruits = [];
+ 
     this.idEdit = id;
     let dataEdit = [];
     this.editSubmit = true;
@@ -82,8 +84,8 @@ export class ClientFormComponent implements OnInit {
     this.firstform.controls["name"].setValue(dataEdit[0]["name"]);
     this.firstform.controls["address"].setValue(dataEdit[0]["address"]);
     this.firstform.controls["phone"].setValue(dataEdit[0]["phone"]);
-    this.firstform.controls["email"].setValue(dataEdit[0]["email"]);
-
+    var emails = (dataEdit[0]["email"])? dataEdit[0]["email"].split(","): "";
+    this.fruits = (emails !== "") ? emails : [];
   }
   public closeModal() {
     this.closeStatus = !this.closeStatus;

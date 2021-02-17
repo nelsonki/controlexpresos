@@ -86,7 +86,20 @@ export class ClientTableComponent implements OnInit {
   }
   Refresh(){}
   applyFilter(event){}
-  reset(){}
+  reset(){
+    this.form.firstform.controls["dni"].setValue("");
+    this.form.firstform.controls["name"].setValue("");
+    this.form.firstform.controls["address"].setValue("");
+    this.form.firstform.controls["phone"].setValue("");
+    this.form.firstform.controls["fruitCtrl"].setValue("");
+    this.form.fruits=[];
+    this.form.fruitCtrl.setValue(null);
+    this.form.firstform.controls["fruitCtrl"].setValue(this.form.fruits);
+    this.form.firstform.reset();
+    this.titleModal = "Crear Cliente";
+    this.form.putSubmit = false;
+    this.form.editSubmit = false;
+  }
   showModal() {
     $("#basicModal").show();
     this.reset();
