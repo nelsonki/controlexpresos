@@ -9,6 +9,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import {ClientFormComponent} from '../client-form/client-form.component'
 import {ClientServices}from '../client-services/client-services'
 import {ClientDeleteComponent} from '../dialog/client-delete/client-delete.component'
+import {ClientCorreoComponent} from '../dialog/client-correo/client-correo.component'
  declare var $: any;
 
 @Component({
@@ -20,7 +21,7 @@ export class ClientTableComponent implements OnInit {
   @ViewChild('basicModal') basicModal: ModalDirective;
   @ViewChild(ClientFormComponent) form: ClientFormComponent;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  displayedColumns: string[] = ['Item','Foto', 'DNI', 'Nombre Comercial', 'Dirección', 'Teléfono', 'Email', 'Acciones'];
+  displayedColumns: string[] = ['Item', 'DNI', 'Nombre Comercial',  'Teléfono', 'Email', 'Acciones'];
   dataSource;
   public titleModal: string;
   public element; 
@@ -84,8 +85,15 @@ export class ClientTableComponent implements OnInit {
     this.titleModal = "Modificar Cliente";
     this.form.addForm(id);
   }
-  Refresh(){}
-  applyFilter(event){}
+  Refresh(){
+    this.loadAll();
+  }
+  public applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    Object.keys(this.dataSource.filteredData).forEach((i, index) => {
+        this.dataSource.filteredData[i].Item = index + 1;
+    });
+}
   reset(){
     this.form.firstform.controls["dni"].setValue("");
     this.form.firstform.controls["name"].setValue("");
@@ -113,6 +121,13 @@ export class ClientTableComponent implements OnInit {
      data: id
    });
   
+}
+verCorreo(id){
+  this.dialog.open(ClientCorreoComponent, {
+   width: "550px",
+   data: id
+ });
+
 }
 }
  
