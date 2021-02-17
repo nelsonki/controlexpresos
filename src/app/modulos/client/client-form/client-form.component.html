@@ -61,6 +61,7 @@
                 </div>
             </mat-error>
         </mat-form-field>
+        <!--
         <mat-form-field class="example-chip-list">
             <mat-label>Email(*)</mat-label>
             <input matInput formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
@@ -69,7 +70,32 @@
                     Por Favor, Ingrese email
                 </div>
             </mat-error>
-        </mat-form-field>
+        </mat-form-field>-->
+        <div class="form-group">
+            <div class="row">
+                <mat-form-field class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 example-chip-list">
+                    <mat-chip-list #chipList aria-label="Fruit selection">
+                        <mat-chip *ngFor="let fruit of fruits" [selectable]="selectable" [removable]="removable" (removed)="remove(fruit)">
+                            {{ fruit }}
+                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                        </mat-chip>
+                        <input placeholder="Correo Electrónico" #fruitInput [formControl]="fruitCtrl" [matAutocomplete]="auto" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)"
+                            [ngClass]="{ 'is-invalid': submitted && f.fruitCtrl.errors }" />
+                    </mat-chip-list>
+                    <mat-autocomplete #auto="matAutocomplete">
+                    </mat-autocomplete>
+                </mat-form-field>
+
+                <mat-error *ngIf="statusValidEmail" class="noti-error-user">
+                    <div *ngIf="statusValidEmail">
+                        Correo invalido
+                    </div>
+                </mat-error>
+
+                <span class="text-menssag-span"> <i>Agrega multiples correos presionando "Enter"</i> </span>
+
+            </div>
+        </div>
 
     </div>
 

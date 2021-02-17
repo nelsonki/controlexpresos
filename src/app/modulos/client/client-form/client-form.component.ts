@@ -7,7 +7,7 @@ import {
   Output,
   EventEmitter
 } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
 import { Router } from "@angular/router";
 import { clientsMsg } from "../../../utils/const/message";
 import { ToastrService } from "ngx-toastr";
@@ -44,6 +44,12 @@ export class ClientFormComponent implements OnInit {
   public putSubmit: boolean = false;
   public idEdit: any;
 
+  public statusValidEmail: boolean = false;
+  public fruits: string[] = [];
+  public fruitCtrl = new FormControl();
+  public email: any;
+
+
   constructor(
     private formBuilder: FormBuilder,
     public router: Router,
@@ -57,7 +63,8 @@ export class ClientFormComponent implements OnInit {
       name: ["", Validators.required],
       address: ["", Validators.required],
       phone: ["", Validators.required],
-      email: ["", Validators.required]
+      fruitCtrl: ["", ""],
+
     });
   }
   public addForm(id) {  
@@ -99,21 +106,26 @@ export class ClientFormComponent implements OnInit {
     this.projectImage2($event.target['files'][0]);
   }
   onSubmit(){
-    
+    this.email = "";
+
     this.submitted = true;
      if(this.firstform.invalid) {
       return;
     }else{
+      Object.keys(this.fruits).forEach(i => {
+                this.email += this.fruits[i] + ",";
+      });
+      var emailData = this.email.substring(0, this.email.length - 1);
     if (this.putSubmit) {
       this.loading = true;
-    
+      
 
       let bodyData = Object.assign({
         "dni": this.firstform.controls["dni"].value,
         "name": this.firstform.controls["name"].value,
         "address": this.firstform.controls["address"].value,
         "phone": this.firstform.controls["phone"].value,
-        "email": this.firstform.controls["email"].value,
+        "email": emailData,
         'image':  (this.profileImage2 === '') ? 'null' : this.profileImage2,
 
       });
@@ -136,14 +148,14 @@ export class ClientFormComponent implements OnInit {
     }
     else {
           this.loading = true;
-
+ 
           //let codFormatted = cod.trim().replace(/\s/g, "");//para que se usa
           let bodyData = Object.assign({
             "dni": this.firstform.controls["dni"].value,
             "name": this.firstform.controls["name"].value,
             "address": this.firstform.controls["address"].value,
             "phone": this.firstform.controls["phone"].value,
-            "email": this.firstform.controls["email"].value,
+            "email": emailData,
             'image':  (this.profileImage2 === '') ? 'null' : this.profileImage2,
 
             });
@@ -176,4 +188,66 @@ export class ClientFormComponent implements OnInit {
   get f() {
     return this.firstform.controls;
   }
+
+  //////////////correo///////////////////////////////////////////////////
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+    // Add our fruit
+    //console.log(value);
+    let statusEmail = this.validarCorreo(value);
+    if (statusEmail) {
+        this.statusValidEmail = false;
+        if ((value || "").trim()) {
+            this.fruits.push(value.trim());
+        }
+        // Reset the input value
+        if (input) {
+            input.value = "";
+        }
+        this.fruitCtrl.setValue(null);
+    } else {
+        this.statusValidEmail = true;
+    }
+
+    console.log(this.fruits);
+}
+
+public validarCorreo(valor) {
+    var status;
+    let regex = /[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/;
+
+    if (regex.test(valor.trim())) {
+        status = true;
+        console.log('Correo validado');
+
+    } else {
+        status = false;
+        console.log('La direccón de correo no es válida');
+    }
+    return status;
+}
+
+remove(fruit: string): void {
+    const index = this.fruits.indexOf(fruit);
+    if (index >= 0) {
+        this.fruits.splice(index, 1);
+    }
+    this.firstform.controls["fruitCtrl"].setValue(this.fruits);
+}
+
+public eliminateDuplicates(arr) {
+    var i,
+        len = arr.length,
+        out = [],
+        obj = {};
+
+    for (i = 0; i < len; i++) {
+        obj[arr[i]] = 0;
+    }
+    for (i in obj) {
+        out.push(i);
+    }
+    return out;
+}
 }
