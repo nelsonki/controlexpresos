@@ -52,16 +52,33 @@
                 </div>
                 </mat-error>-->
         </mat-form-field>
-        <mat-form-field class="example-chip-list">
-            <mat-label>Teléfono</mat-label>
-            <input matInput formControlName="phone" [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" />
-            <!--
-            <mat-error *ngIf="submitted && f.phone.errors">
-                <div *ngIf="f.phone.errors.required">
-                    Por Favor, Ingrese telefono
+        <div class="form-group">
+            <div class="row">
+                <mat-form-field class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 example-chip-list">
+                    <mat-chip-list #chipList2 aria-label="Fruit2 selection2">
+                        <mat-chip *ngFor="let fruit2 of fruits2" [selectable]="selectable2" [removable]="removable2" (removed)="removePhone(fruit2)">
+                            {{ fruit2 }}
+                            <mat-icon matChipRemove *ngIf="removable2">cancel</mat-icon>
+                        </mat-chip>
+                        <input placeholder="Teléfono" #fruitInput [formControl]="fruitCtrl2" [matAutocomplete]="auto" [matChipInputFor]="chipList2" [matChipInputSeparatorKeyCodes]="separatorKeysCodes2" [matChipInputAddOnBlur]="addOnBlur2" (matChipInputTokenEnd)="addPhone($event)"
+                            [ngClass]="{ 'is-invalid': submitted && f.fruitCtrl2.errors }" />
+                    </mat-chip-list>
+                    <mat-autocomplete #auto="matAutocomplete">
+                    </mat-autocomplete>
+                </mat-form-field>
+
+                <mat-error *ngIf="statusValidPhone" class="noti-error-user">
+                    <div *ngIf="statusValidPhone">
+                        Teléfono invalido
+                    </div>
+                </mat-error>
+                <div *ngIf="!statusValidPhone">
+                    <span class="text-menssag-span"> <i>Agrega multiples teléfonos presionando "Enter"</i> </span>
+
                 </div>
-            </mat-error>-->
-        </mat-form-field>
+
+            </div>
+        </div>
         <!--
         <mat-form-field class="example-chip-list">
             <mat-label>Email(*)</mat-label>

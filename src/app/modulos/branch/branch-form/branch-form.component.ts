@@ -58,8 +58,9 @@ export class BranchFormComponent implements OnInit {
 
   ngOnInit() {
     this.firstform = this.formBuilder.group({ 
+      dni: ["", Validators.required],
       name: ["", Validators.required],
-      address: ["", Validators.required],
+      address: ["", ""],
       client_id: ["", Validators.required],
       client: ["", Validators.required],
 
@@ -102,6 +103,8 @@ export class BranchFormComponent implements OnInit {
       }
     });
     //console.log(dataEdit[0]);
+    this.firstform.controls["dni"].setValue(dataEdit[0]["dni"]);
+
     this.firstform.controls["client"].setValue(dataEdit[0]["cliente"]);
     this.firstform.controls["client_id"].setValue(dataEdit[0]["cliente_id"]);
     this.firstform.controls["name"].setValue(dataEdit[0]["name"]);
@@ -123,7 +126,8 @@ export class BranchFormComponent implements OnInit {
     
 
       let bodyData = Object.assign({
-   
+        "dni": this.firstform.controls["dni"].value,
+
         "name": this.firstform.controls["name"].value,
         "address": this.firstform.controls["address"].value,
         "client_id": this.firstform.controls["client_id"].value,
@@ -149,6 +153,8 @@ export class BranchFormComponent implements OnInit {
 
           //let codFormatted = cod.trim().replace(/\s/g, "");//para que se usa
           let bodyData = Object.assign({
+            "dni": this.firstform.controls["dni"].value,
+
             "name": this.firstform.controls["name"].value,
             "address": this.firstform.controls["address"].value,
             "client_id": this.firstform.controls["client_id"].value,
