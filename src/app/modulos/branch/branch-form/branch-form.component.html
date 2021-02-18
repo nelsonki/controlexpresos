@@ -49,13 +49,9 @@
             </mat-error>
         </mat-form-field>
         <mat-form-field class="example-chip-list">
-            <mat-label>Dirección(*)</mat-label>
-            <input matInput formControlName="address" [ngClass]="{ 'is-invalid': submitted && f.address.errors }" />
-            <mat-error *ngIf="submitted && f.address.errors">
-                <div *ngIf="f.address.errors.required">
-                    Por Favor, Ingrese dirección
-                </div>
-            </mat-error>
+            <mat-label>Dirección</mat-label>
+            <input matInput formControlName="address" />
+
         </mat-form-field>
 
 
