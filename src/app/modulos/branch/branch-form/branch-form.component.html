@@ -3,7 +3,7 @@
 
         <div class="form-group" class="width-form-groud ">
             <mat-form-field class="example-full-width" style="width: 100%;">
-                <mat-label>Empresa(*)</mat-label>
+                <mat-label>Cliente(*)</mat-label>
 
                 <input type="text" placeholder="Cliente(*)" aria-label="Number" matInput formControlName="client">
                 <div class="typeahead--wrapper" *ngIf="openOptionClient">
@@ -30,7 +30,15 @@
             </div>
         </div>
         <input formControlName="client_id" matInput="" style="display: none;" />
-
+        <mat-form-field class="example-chip-list">
+            <mat-label>DNI(*)</mat-label>
+            <input matInput formControlName="dni" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+            <mat-error *ngIf="submitted && f.dni.errors">
+                <div *ngIf="f.dni.errors.required">
+                    Por Favor, Ingrese dni
+                </div>
+            </mat-error>
+        </mat-form-field>
         <mat-form-field class="example-chip-list">
             <mat-label>Nombre(*)</mat-label>
             <input matInput formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />

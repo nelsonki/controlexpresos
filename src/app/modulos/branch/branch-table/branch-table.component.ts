@@ -21,7 +21,7 @@ export class BranchTableComponent implements OnInit {
   @ViewChild(BranchFormComponent) form: BranchFormComponent;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  displayedColumns: string[] = ['Item', 'Cliente', 'Sucursal', 'Dirección',  'Acciones'];
+  displayedColumns: string[] = ['Item', 'Cliente', 'DNI', 'Sucursal', 'Dirección',  'Acciones'];
   dataSource ;
   public titleModal: string;
   public element; 
@@ -54,7 +54,7 @@ export class BranchTableComponent implements OnInit {
             const datos ={
               Item: "",
               "id":value["data"][e].id,
-              "code":value["data"][e].code,
+              "dni":value["data"][e].dni,
               "name":value["data"][e].name,
               "address":value["data"][e].address,
               "cliente":value["data"][e].cliente,
@@ -103,6 +103,8 @@ export class BranchTableComponent implements OnInit {
   
 }
 reset(){
+  this.form.firstform.controls["dni"].setValue("");
+
   this.form.firstform.controls["client"].setValue("");
   this.form.firstform.controls["client_id"].setValue("");
   this.form.firstform.controls["name"].setValue("");

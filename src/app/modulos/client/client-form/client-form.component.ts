@@ -39,6 +39,7 @@ export class ClientFormComponent implements OnInit {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   public taskList = [];
   public profileImage2=null;
+
   public loadImg: any = '';
 
   public putSubmit: boolean = false;
@@ -48,6 +49,16 @@ export class ClientFormComponent implements OnInit {
   public fruits: string[] = [];
   public fruitCtrl = new FormControl();
   public email: any;
+
+  readonly separatorKeysCodes2: number[] = [ENTER, COMMA];
+  public visible2 = true;
+  public selectable2 = true;
+  public removable2 = true;
+  public addOnBlur2 = true;
+  public statusValidPhone: boolean = false;
+  public fruits2: string[] = [];
+  public fruitCtrl2 = new FormControl();
+  public phone: any;
 
 
   constructor(
@@ -62,7 +73,7 @@ export class ClientFormComponent implements OnInit {
       dni: ["", Validators.required],
       name: ["", Validators.required],
       address: ["", ""],
-      phone: ["", ""],
+      fruitCtrl2: ["", ""],
       fruitCtrl: ["", ""],
 
     });
@@ -83,9 +94,13 @@ export class ClientFormComponent implements OnInit {
     this.firstform.controls["dni"].setValue(dataEdit[0]["dni"].toLowerCase());
     this.firstform.controls["name"].setValue(dataEdit[0]["name"]);
     this.firstform.controls["address"].setValue(dataEdit[0]["address"]);
-    this.firstform.controls["phone"].setValue(dataEdit[0]["phone"]);
+
+    var phones = (dataEdit[0]["phone"])? dataEdit[0]["phone"].split(","): "";
+    this.fruits2 = (phones !== "") ? phones : [];
+
     var emails = (dataEdit[0]["email"])? dataEdit[0]["email"].split(","): "";
     this.fruits = (emails !== "") ? emails : [];
+
   }
   public closeModal() {
     this.closeStatus = !this.closeStatus;
@@ -109,15 +124,22 @@ export class ClientFormComponent implements OnInit {
   }
   onSubmit(){
     this.email = "";
+    this.phone = "";
 
     this.submitted = true;
      if(this.firstform.invalid) {
       return;
     }else{
+      /////correo
       Object.keys(this.fruits).forEach(i => {
                 this.email += this.fruits[i] + ",";
       });
       var emailData = this.email.substring(0, this.email.length - 1);
+      /////telefono
+      Object.keys(this.fruits2).forEach(i => {
+        this.phone += this.fruits2[i] + ",";
+      });
+      var phoneData = this.phone.substring(0, this.phone.length - 1);
     if (this.putSubmit) {
       this.loading = true;
       
@@ -126,7 +148,7 @@ export class ClientFormComponent implements OnInit {
         "dni": this.firstform.controls["dni"].value,
         "name": this.firstform.controls["name"].value,
         "address": this.firstform.controls["address"].value,
-        "phone": this.firstform.controls["phone"].value,
+        "phone": phoneData,
         "email": emailData,
         'image':  (this.profileImage2 === '') ? 'null' : this.profileImage2,
 
@@ -156,7 +178,7 @@ export class ClientFormComponent implements OnInit {
             "dni": this.firstform.controls["dni"].value,
             "name": this.firstform.controls["name"].value,
             "address": this.firstform.controls["address"].value,
-            "phone": this.firstform.controls["phone"].value,
+            "phone": phoneData,
             "email": emailData,
             'image':  (this.profileImage2 === '') ? 'null' : this.profileImage2,
 
@@ -215,6 +237,7 @@ export class ClientFormComponent implements OnInit {
     console.log(this.fruits);
 }
 
+
 public validarCorreo(valor) {
     var status;
     let regex = /[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/;
@@ -251,5 +274,49 @@ public eliminateDuplicates(arr) {
         out.push(i);
     }
     return out;
+}
+/////////////////////validar teléfono
+addPhone(event: MatChipInputEvent): void {
+  const input = event.input;
+  const value = event.value;
+  // Add our fruit
+  //console.log(value);
+  let statusEmail = this.validarTelefono(value);
+  if (statusEmail) {
+      this.statusValidPhone = false;
+      if ((value || "").trim()) {
+          this.fruits2.push(value.trim());
+      }
+      // Reset the input value
+      if (input) {
+          input.value = "";
+      }
+      this.fruitCtrl2.setValue(null);
+  } else {
+      this.statusValidPhone = true;
+  }
+
+  console.log(this.fruits);
+}
+public validarTelefono(valor) {
+  var status;
+  let regex = /[0-9]{9}/;
+
+  if (regex.test(valor.trim())) {
+      status = true;
+      console.log('teléfono validado');
+
+  } else {
+      status = false;
+      console.log('Teléfono no es válida');
+  }
+  return status;
+}
+removePhone(fruit2: string): void {
+  const index = this.fruits2.indexOf(fruit2);
+  if (index >= 0) {
+      this.fruits2.splice(index, 1);
+  }
+  this.firstform.controls["fruitCtrl2"].setValue(this.fruits2);
 }
 }
