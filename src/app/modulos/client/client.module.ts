@@ -22,11 +22,12 @@ import { ClientRoutingModule } from './client-routing.module';
 import { ClientFormComponent } from './client-form/client-form.component';
 import { ClientDeleteComponent } from './dialog/client-delete/client-delete.component';
 import { ClientCorreoComponent } from './dialog/client-correo/client-correo.component';
+import { ClientPhoneComponent } from './dialog/client-phone/client-phone.component';
 
 
 
 @NgModule({
-  declarations: [ClientTableComponent, ClientFormComponent, ClientDeleteComponent, ClientCorreoComponent],
+  declarations: [ClientTableComponent, ClientFormComponent, ClientDeleteComponent, ClientCorreoComponent, ClientPhoneComponent],
   imports: [
     CommonModule,
     ClientRoutingModule, 

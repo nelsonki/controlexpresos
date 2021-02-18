@@ -10,6 +10,7 @@ import {ClientFormComponent} from '../client-form/client-form.component'
 import {ClientServices}from '../client-services/client-services'
 import {ClientDeleteComponent} from '../dialog/client-delete/client-delete.component'
 import {ClientCorreoComponent} from '../dialog/client-correo/client-correo.component'
+import {ClientPhoneComponent} from '../dialog/client-phone/client-phone.component'
  declare var $: any;
 
 @Component({
@@ -26,6 +27,7 @@ export class ClientTableComponent implements OnInit {
   public titleModal: string;
   public element; 
   public data;
+  
   ngAfterViewInit() {
    }
   constructor(
@@ -58,12 +60,21 @@ export class ClientTableComponent implements OnInit {
               "email":value["data"][e].email,
               "phone":value["data"][e].phone,
               "address":value["data"][e].address,
-               "image":value["data"][e].image
+               "image":value["data"][e].image,
+               "phoneV":[],
+               "emailV":[]
             };
            this.data.push(datos);
            this.element.push(datos);
-           console.log(this.element);
+           //console.log(this.element);
+           var phones = (value["data"][e].phone)? value["data"][e].phone.split(","): "";
+           this.element[e].phoneV = (phones !== "") ? phones : [];
+    
+            var emails = (value["data"][e].email)? value["data"][e].email.split(","): "";
+            this.element[e].emailV = (emails !== "") ? emails : []; 
         });
+            
+
         Object.keys(this.element).forEach((i, index) => {
           this.element[i].Item = index + 1;
        });
@@ -124,6 +135,13 @@ export class ClientTableComponent implements OnInit {
 }
 verCorreo(id){
   this.dialog.open(ClientCorreoComponent, {
+   width: "550px",
+   data: id
+ });
+
+}
+verPhone(id){
+  this.dialog.open(ClientPhoneComponent, {
    width: "550px",
    data: id
  });
