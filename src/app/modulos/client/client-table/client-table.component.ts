@@ -109,10 +109,16 @@ export class ClientTableComponent implements OnInit {
     this.form.firstform.controls["dni"].setValue("");
     this.form.firstform.controls["name"].setValue("");
     this.form.firstform.controls["address"].setValue("");
-    this.form.firstform.controls["phone"].setValue("");
     this.form.firstform.controls["fruitCtrl"].setValue("");
+    this.form.firstform.controls["fruitCtrl2"].setValue("");
+    this.form.firstform.controls["fruitCtrl"].setValue("");
+    this.form.profileImage2=null;
     this.form.fruits=[];
+    this.form.fruits2=[];
     this.form.fruitCtrl.setValue(null);
+    this.form.fruitCtrl2.setValue(null);
+    this.form.firstform.controls["fruitCtrl2"].setValue(this.form.fruits2);
+
     this.form.firstform.controls["fruitCtrl"].setValue(this.form.fruits);
     this.form.firstform.reset();
     this.titleModal = "Crear Cliente";

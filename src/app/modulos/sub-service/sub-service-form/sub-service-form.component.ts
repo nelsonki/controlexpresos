@@ -15,6 +15,8 @@ import { SubServiceServices } from '../sub-service-services/sub-service-services
 
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
+import {environment} from '../../../../environments/environment'
+import {HttpServices}from '../../../http/httpServices/httpServices'
 
 @Component({
   selector: 'app-sub-service-form',
@@ -30,7 +32,7 @@ export class SubServiceFormComponent implements OnInit {
   public loading: boolean = false;
   public editSubmit: boolean = false;
   public closeStatus: boolean = false;
-
+  public api;
   public visible = true;
   public selectable = true;
   public removable = true;
@@ -45,7 +47,8 @@ export class SubServiceFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     public router: Router,
     public toasTer: ToastrService,
-    public subServiceServices: SubServiceServices
+    public subServiceServices: SubServiceServices,
+    public http: HttpServices
   ) { }
 
   ngOnInit() {
@@ -103,25 +106,43 @@ export class SubServiceFormComponent implements OnInit {
       
     }
     else {
-          this.loading = true;
 
-          //let codFormatted = cod.trim().replace(/\s/g, "");//para que se usa
-          let bodyData = Object.assign({
-            "name": this.firstform.controls["name"].value,
 
-            });
-           // console.log(bodyData);
-            this.subServiceServices.save(bodyData).subscribe(
-              response => {
-                    this.toasTer.success(subserviceMsg.save);
-                    this.reloadComponent();
-                },
-                error => {
-                  this.loading = false;
-                  this.toasTer.error(subserviceMsg.errorProcess);
-                  this.loading = false;
-                }
-              );
+      this.api = environment.apiJakiro2;
+      let valueSearch = this.firstform.controls["name"].value;
+      if (valueSearch.trim() !== "") {
+        let enpoint = "subservices/search/" + this.firstform.controls["name"].value;
+        this.http.doGet(this.api, enpoint).subscribe((data: any) => {
+          console.log(data);
+          if (data=== true) {
+                this.firstform.controls["name"].setValue("");
+                this.toasTer.error("Ya existe este nombre de sub-servicio");
+                this.loading = false;
+                return;
+          } else {
+            this.loading = true;
+            let bodyData = Object.assign({
+              "name": this.firstform.controls["name"].value,
+              });
+              this.subServiceServices.save(bodyData).subscribe(
+                response => {
+                      this.toasTer.success(subserviceMsg.save);
+                      this.reloadComponent();
+                  },
+                  error => {
+                    this.loading = false;
+                    this.toasTer.error(subserviceMsg.errorProcess);
+                    this.loading = false;
+                  }
+                );
+  
+          }
+        });
+      }
+        
+          
+
+ 
           
         
       }
