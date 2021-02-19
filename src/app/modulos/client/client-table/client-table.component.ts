@@ -66,8 +66,9 @@ export class ClientTableComponent implements OnInit {
             };
            this.data.push(datos);
            this.element.push(datos);
-           //console.log(this.element);
-           var phones = (value["data"][e].phone)? value["data"][e].phone.split(","): "";
+           console.log(this.element);
+           var miphone =value["data"][e].phone;
+           var phones = (miphone)? miphone.split(","): "";
            this.element[e].phoneV = (phones !== "") ? phones : [];
     
             var emails = (value["data"][e].email)? value["data"][e].email.split(","): "";
