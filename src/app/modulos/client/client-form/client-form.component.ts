@@ -100,7 +100,7 @@ export class ClientFormComponent implements OnInit {
 
     var emails = (dataEdit[0]["email"])? dataEdit[0]["email"].split(","): "";
     this.fruits = (emails !== "") ? emails : [];
-
+    this.profileImage2 = dataEdit[0]["image"]
   }
   public closeModal() {
     this.closeStatus = !this.closeStatus;

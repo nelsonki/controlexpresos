@@ -22,7 +22,7 @@ export class ClientTableComponent implements OnInit {
   @ViewChild('basicModal') basicModal: ModalDirective;
   @ViewChild(ClientFormComponent) form: ClientFormComponent;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  displayedColumns: string[] = ['Item', 'DNI', 'Nombre Comercial',  'Teléfono', 'Email', 'Acciones'];
+  displayedColumns: string[] = ['Item', 'DNI', 'Nombre Comercial',  'Teléfono','Email', 'Acciones'];
   dataSource;
   public titleModal: string;
   public element; 
