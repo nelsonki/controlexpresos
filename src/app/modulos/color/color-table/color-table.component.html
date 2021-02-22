@@ -89,7 +89,7 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
     </div>
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
 
     <div class="btn-group">
         <button id="boton" matTooltip="{{ titleModal }}" (click)="basicModal.show(); reset(); showModal()" mat-mini-fab color="primary" class="btn btn-fab" data-toggle="tooltip" data-placement="left" data-original-title="" title="" id="main">

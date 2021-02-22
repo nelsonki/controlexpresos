@@ -22,7 +22,7 @@ export class ClientTableComponent implements OnInit {
   @ViewChild('basicModal') basicModal: ModalDirective;
   @ViewChild(ClientFormComponent) form: ClientFormComponent;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  displayedColumns: string[] = ['Item', 'DNI', 'Nombre Comercial',  'Teléfono', 'Email', 'Acciones'];
+  displayedColumns: string[] = ['Item', 'DNI', 'Nombre Comercial',  'Teléfono','Email', 'Acciones'];
   dataSource;
   public titleModal: string;
   public element; 
@@ -66,8 +66,9 @@ export class ClientTableComponent implements OnInit {
             };
            this.data.push(datos);
            this.element.push(datos);
-           //console.log(this.element);
-           var phones = (value["data"][e].phone)? value["data"][e].phone.split(","): "";
+           console.log(this.element);
+           var miphone =value["data"][e].phone;
+           var phones = (miphone)? miphone.split(","): "";
            this.element[e].phoneV = (phones !== "") ? phones : [];
     
             var emails = (value["data"][e].email)? value["data"][e].email.split(","): "";
