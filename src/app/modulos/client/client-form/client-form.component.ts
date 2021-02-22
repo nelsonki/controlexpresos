@@ -191,11 +191,20 @@ export class ClientFormComponent implements OnInit {
                     this.toasTer.success(clientsMsg.save);
                     this.reloadComponent();
                 },
+                 
                 error => {
-                  this.loading = false;
+                  if (error["status"] === 422) {
+                    this.toasTer.error('Ya existe este DNI de cliente');
+                    this.loading = false;
+
+                  }else{
+                        this.loading = false;
                   this.toasTer.error(clientsMsg.errorProcess);
                   this.loading = false;
+                  }
+              
                 }
+                
               );
           
         
