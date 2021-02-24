@@ -279,7 +279,7 @@ public searchClient2() {
   this.api2 = environment.apiJakiro2;
   let valueSearch2 = this.firstFormGroup.controls["sucursal"].value;
   if (valueSearch2.trim() !== "") {
-    let enpoint = "clients/search/" + this.firstFormGroup.controls["sucursal"].value;
+    let enpoint = "branches/search/" + this.firstFormGroup.controls["sucursal"].value;
     this.http.doGet(this.api, enpoint).subscribe((data: any) => {
       console.log(data);
       if (data.length > 0) {
