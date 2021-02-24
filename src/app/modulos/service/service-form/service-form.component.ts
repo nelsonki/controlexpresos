@@ -12,9 +12,10 @@ import { Router } from "@angular/router";
 import { serviceMsg } from "../../../utils/const/message";
 import { ToastrService } from "ngx-toastr";
 import { ServiceServices } from '../service-services/service-services';
-
+import {environment} from '../../../../environments/environment'
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
+import {HttpServices}from '../../../http/httpServices/httpServices'
 
 @Component({
   selector: 'app-service-form',
@@ -41,11 +42,14 @@ export class ServiceFormComponent implements OnInit {
   public putSubmit: boolean = false;
   public idEdit: any;
 
+  public api;
+
   constructor(
     private formBuilder: FormBuilder,
     public router: Router,
     public toasTer: ToastrService,
-    public serviceServices: ServiceServices
+    public serviceServices: ServiceServices,
+    public http: HttpServices
   ) { }
 
   ngOnInit() {
@@ -80,11 +84,21 @@ onSubmit(){
       return;
     }else{
     if (this.putSubmit) {
-      this.loading = true;
-    
+      this.api = environment.apiJakiro2;
+      let valueSearch = this.firstform.controls["nombre"].value;
+      if (valueSearch.trim() !== "") {
+        let enpoint = "services/search/" + this.firstform.controls["nombre"].value;
+        this.http.doGet(this.api, enpoint).subscribe((data: any) => {
+          console.log(data);
+          if (data=== true) {
+                this.firstform.controls["nombre"].setValue("");
+                this.toasTer.error("Ya existe este nombre de Servicio");
+                this.loading = false;
+                return;
+          } else {
 
+      this.loading = true;
       let bodyData = Object.assign({
-   
         "name": this.firstform.controls["nombre"].value,
         "error_range": this.firstform.controls["margen"].value,
 
@@ -101,12 +115,27 @@ onSubmit(){
                 this.loading = false;
               }
             );
-        
+            
+          }
+        });
+      }
       
     }
     else {
-          this.loading = true;
+      this.api = environment.apiJakiro2;
+      let valueSearch = this.firstform.controls["nombre"].value;
+      if (valueSearch.trim() !== "") {
+        let enpoint = "services/search/" + this.firstform.controls["nombre"].value;
+        this.http.doGet(this.api, enpoint).subscribe((data: any) => {
+          console.log(data);
+          if (data=== true) {
+                this.firstform.controls["nombre"].setValue("");
+                this.toasTer.error("Ya existe este nombre de Servicio");
+                this.loading = false;
+                return;
+          } else {
 
+          this.loading = true;
           //let codFormatted = cod.trim().replace(/\s/g, "");//para que se usa
           let bodyData = Object.assign({
             "name": this.firstform.controls["nombre"].value,
@@ -126,7 +155,12 @@ onSubmit(){
                 }
               );
           
-        
+
+            }
+          });
+        }
+
+
       }
     }
   }

@@ -42,6 +42,7 @@ export class BranchFormComponent implements OnInit {
 
   public putSubmit: boolean = false;
   public idEdit: any;
+  
   public api;
   openOptionClient: boolean = false;
   filteredOptions: Observable<string[]>;
@@ -140,9 +141,16 @@ export class BranchFormComponent implements OnInit {
                   this.reloadComponent();
               },
               error => {
-                this.loading = false;
+                if (error["status"] === 422) {
+                  this.toasTer.error('Ya existe este DNI de sucursal');
+                  this.loading = false;
+
+                }else{
+                      this.loading = false;
                 this.toasTer.error(branchMsg.errorProcess);
                 this.loading = false;
+                }
+          
               }
             );
         
