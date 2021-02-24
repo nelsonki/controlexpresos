@@ -15,7 +15,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 
 import {environment} from '../../../../environments/environment'
 import {HttpServices}from '../../../http/httpServices/httpServices'
-
+import {ColorServices} from '../../color/color-services/color-services'
 
 import { Router } from "@angular/router";
 import { Pipe, PipeTransform } from '@angular/core';
@@ -71,6 +71,20 @@ export class EntradasFormComponent implements OnInit {
   filteredOptions2: Observable<string[]>;
   public disabledButoon2: boolean = false;
 
+  public colores: Array<any> = [];
+
+ 
+  public tipoRopa: Array<any> = [{
+    value: 'Nueva',
+  },
+  {
+    value: 'Usada',
+  },
+  {
+    value: 'Desmanche',
+  },
+   
+  ];
   public personList: Array<any> = [
     {
       id: 0,
@@ -90,7 +104,7 @@ export class EntradasFormComponent implements OnInit {
     public cd: ChangeDetectorRef,
     public dialog: MatDialog,
     private http: HttpServices,
-     
+     private colorServices: ColorServices
    ) {     
       this.isLoading = true;
    }
@@ -112,6 +126,38 @@ export class EntradasFormComponent implements OnInit {
       subservicio:  ['' ],
       tipo:  ['' ],
      });
+     this.colorServices.getList().pipe()
+      .subscribe((value) => {
+        
+        Object.keys(value['data']).forEach(i => {
+          this.colores.push(
+               {
+                 id: value['data'][i].id,
+                 color: value['data'][i].color,
+  
+                }
+  
+          );
+         
+            });
+
+           /* $(".valid-number").on("keypress keyup blur", function (event) {
+              $(this).val(
+                $(this)
+                  .val()
+                  .replace(/[^0-9\.]/g, "")
+              );
+              if (
+                $(this)
+                  .val()
+                  .indexOf(".") !== -1 &&
+                (event.which < 48 || event.which > 57) &&
+                event.which !== 8
+              ) {
+                event.preventDefault();
+              }
+            });*/
+      });
   }
   public closeModal() {
     this.closeStatus = !this.closeStatus;
@@ -280,7 +326,7 @@ public searchClient2() {
   let valueSearch2 = this.firstFormGroup.controls["sucursal"].value;
   if (valueSearch2.trim() !== "") {
     let enpoint = "branches/search/" + this.firstFormGroup.controls["sucursal"].value;
-    this.http.doGet(this.api, enpoint).subscribe((data: any) => {
+    this.http.doGet(this.api2, enpoint).subscribe((data: any) => {
       console.log(data);
       if (data.length > 0) {
         this.openOptionClient2 = true;

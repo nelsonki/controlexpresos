@@ -46,13 +46,13 @@
                                 <input type="text" placeholder="Sucursal(*)" aria-label="Number" matInput formControlName="sucursal">
                                 <div class="typeahead--wrapper" *ngIf="openOptionClient2">
                                     <ul class="typeahead--ul">
-                                        <li *ngFor="let data of filteredOptions2" (click)="
+                                        <li *ngFor="let data2 of filteredOptions2" (click)="
                                setDataFormul2($event,
-                                 data.id,
-                                 data.name
+                                 data2.id,
+                                 data2.name
                                )
                              " class="typeahead--list">
-                                            <b>{{ data.name }}</b>
+                                            <b>{{ data2.name }}</b>
                                         </li>
                                     </ul>
                                 </div>
@@ -109,17 +109,27 @@
                         <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
                             <mat-label>Peso (*)</mat-label>
 
-                            <input matInput formControlName="peso" id="peso" type="text" />
+                            <input matInput formControlName="peso" id="peso" type="number" min="0" />
                         </mat-form-field>
                         <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
                             <mat-label>Cantidad (*)</mat-label>
 
-                            <input matInput formControlName="cantidad" id="cantidad" type="text" />
+                            <input matInput formControlName="cantidad" id="cantidad" type="number" min="0" />
                         </mat-form-field>
+
+
                         <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
                             <mat-label>color (*)</mat-label>
-
-                            <input matInput formControlName="color" id="color" type="text" />
+                            <mat-select formControlName="color" id="color">
+                                <mat-option *ngFor="let col  of colores" [value]="col.id">
+                                    {{col.color}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="submitted && f.tipo.errors">
+                                <div *ngIf="f.tipo.errors.required">
+                                    Por favor, ingrese un color
+                                </div>
+                            </mat-error>
                         </mat-form-field>
                         <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
                             <mat-label>subservicio (*)</mat-label>
@@ -128,8 +138,11 @@
                         </mat-form-field>
                         <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
                             <mat-label>tipo (*)</mat-label>
-
-                            <input matInput formControlName="tipo" id="tipo" type="text" />
+                            <mat-select formControlName="tipo" [matAutocomplete]="auto" id="tipo">
+                                <mat-option *ngFor="let t  of tipoRopa" [value]="t.value">
+                                    {{t.value}}
+                                </mat-option>
+                            </mat-select>
                         </mat-form-field>
 
                         <div class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
