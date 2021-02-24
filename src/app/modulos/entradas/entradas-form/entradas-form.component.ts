@@ -12,9 +12,11 @@ import { MatStepper } from '@angular/material/stepper';
 import * as $ from 'jquery';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-//import { HttpServicesBoardings } from './../../http/httpServices/httpServicesBoardings';
-//import { boardingsMsg } from '../../utils/const/message';
-//import {BoardingsService} from '../../boardings/boardings-services/boardings.service';
+
+import {environment} from '../../../../environments/environment'
+import {HttpServices}from '../../../http/httpServices/httpServices'
+
+
 import { Router } from "@angular/router";
 import { Pipe, PipeTransform } from '@angular/core';
 import {Observable} from 'rxjs';
@@ -51,7 +53,6 @@ export class EntradasFormComponent implements OnInit {
   public putSubmit: boolean = false;
   public isLoading;
   data: any = [];
-  filteredOptions: Observable<string[]>;
   options: string[] = [];
   public ifbandera=0;
 
@@ -59,6 +60,16 @@ export class EntradasFormComponent implements OnInit {
   myControl2: FormGroup;
   public nameButtonAceptar: string = 'Agregar';
   public idToUpdate: number;
+
+  public api;
+  openOptionClient: boolean = false;
+  filteredOptions: Observable<string[]>;
+  public disabledButoon: boolean = false;
+
+  public api2;
+  openOptionClient2: boolean = false;
+  filteredOptions2: Observable<string[]>;
+  public disabledButoon2: boolean = false;
 
   public personList: Array<any> = [
     {
@@ -78,16 +89,20 @@ export class EntradasFormComponent implements OnInit {
     //public templatesService: TemplatesService
     public cd: ChangeDetectorRef,
     public dialog: MatDialog,
-   // private http: HttpServicesBoardings,
-    //private boardingsService: BoardingsService,
+    private http: HttpServices,
+     
    ) {     
       this.isLoading = true;
    }
 
   ngOnInit() {
     this.firstFormGroup = this.formBuilder.group({
-      cliente: ['', [Validators.required ]],
+      client: ['', [Validators.required ]],
+      client_id: ['', [Validators.required ]],
+
       sucursal: ['', [Validators.required, Validators.minLength(2) ]],
+      sucursal_id: ['', [Validators.required ]],
+
     });
     this.myControl2 = this.formBuilder.group({
       servicio:  ['', [Validators.required, Validators.minLength(2) ]],
@@ -234,6 +249,54 @@ public returnStepper(stepper: MatStepper) {
 }
 public goForward(stepper: MatStepper) {
   stepper.reset();
+}
+/*buscar cliente*/
+public searchClient() {
+  this.api = environment.apiJakiro2;
+  let valueSearch = this.firstFormGroup.controls["client"].value;
+  if (valueSearch.trim() !== "") {
+    let enpoint = "clients/search/" + this.firstFormGroup.controls["client"].value;
+    this.http.doGet(this.api, enpoint).subscribe((data: any) => {
+      console.log(data);
+      if (data.length > 0) {
+        this.openOptionClient = true;
+        this.filteredOptions = data;
+      } else {
+        this.openOptionClient = false;
+        this.firstFormGroup.controls["client_id"].setValue("");
+        this.firstFormGroup.controls["client"].setValue("");
+      }
+    });
+  }
+}
+public setDataFormul(event, id, nombreComercial) {
+  this.openOptionClient = false;
+  this.firstFormGroup.controls["client_id"].setValue(id);
+  this.firstFormGroup.controls["client"].setValue(nombreComercial);
+}
+/*buscar sucursal*//////////////////////////////////////////////////////////////////////
+public searchClient2() {
+  this.api2 = environment.apiJakiro2;
+  let valueSearch2 = this.firstFormGroup.controls["sucursal"].value;
+  if (valueSearch2.trim() !== "") {
+    let enpoint = "clients/search/" + this.firstFormGroup.controls["sucursal"].value;
+    this.http.doGet(this.api, enpoint).subscribe((data: any) => {
+      console.log(data);
+      if (data.length > 0) {
+        this.openOptionClient2 = true;
+        this.filteredOptions2 = data;
+      } else {
+        this.openOptionClient2 = false;
+        this.firstFormGroup.controls["sucursal_id"].setValue("");
+        this.firstFormGroup.controls["sucursal"].setValue("");
+      }
+    });
+  }
+}
+public setDataFormul2(event, id, nombreComercial) {
+  this.openOptionClient2 = false;
+  this.firstFormGroup.controls["sucursal_id"].setValue(id);
+  this.firstFormGroup.controls["sucursal"].setValue(nombreComercial);
 }
 }
 

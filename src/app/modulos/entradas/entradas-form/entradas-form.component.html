@@ -9,14 +9,71 @@
                         Datos del Cliente y Sucursal
                     </mat-toolbar><br>
                     <div class="row">
-                        <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
-                            <mat-label>Cliente (*)</mat-label>
-                            <input matInput formControlName="cliente" id="cliente" type="text" />
-                        </mat-form-field>
+
+                        <div class="form-group" class="width-form-groud col-12 col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <mat-form-field class="example-full-width ">
+                                <mat-label>Cliente(*)</mat-label>
+
+                                <input type="text" placeholder="Cliente(*)" aria-label="Number" matInput formControlName="client">
+                                <div class="typeahead--wrapper" *ngIf="openOptionClient">
+                                    <ul class="typeahead--ul">
+                                        <li *ngFor="let data of filteredOptions" (click)="
+                               setDataFormul($event,
+                                 data.id,
+                                 data.name
+                               )
+                             " class="typeahead--list">
+                                            <b>{{ data.name }}</b>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <mat-error *ngIf="submitted && f.client.errors">
+                                    <div *ngIf="f.client.errors.required">Por favor, seleccione un Cliente</div>
+                                </mat-error>
+                            </mat-form-field>
+
+                            <div>
+                                <button [disabled]="disabledButoon" matTooltip="Buscar" class="button-search" (click)="searchClient()">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                            </div>
+                        </div>
+                        <input formControlName="client_id" matInput="" style="display: none;" />
+                        <div class="form-group" class="width-form-groud col-12 col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <mat-form-field class="example-full-width ">
+                                <mat-label>Sucursal(*)</mat-label>
+
+                                <input type="text" placeholder="Sucursal(*)" aria-label="Number" matInput formControlName="sucursal">
+                                <div class="typeahead--wrapper" *ngIf="openOptionClient2">
+                                    <ul class="typeahead--ul">
+                                        <li *ngFor="let data of filteredOptions2" (click)="
+                               setDataFormul2($event,
+                                 data.id,
+                                 data.name
+                               )
+                             " class="typeahead--list">
+                                            <b>{{ data.name }}</b>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <mat-error *ngIf="submitted && f.sucursal.errors">
+                                    <div *ngIf="f.sucursal.errors.required">Por favor, seleccione una Sucursal</div>
+                                </mat-error>
+                            </mat-form-field>
+
+                            <div>
+                                <button [disabled]="disabledButoon" matTooltip="Buscar" class="button-search" (click)="searchClient2()">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                            </div>
+                        </div>
+                        <input formControlName="sucursal_id" matInput="" style="display: none;" />
+
+                        <!--
                         <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
                             <mat-label>Sucursal (*)</mat-label>
                             <input matInput formControlName="sucursal" id="sucursal" type="text" />
-                        </mat-form-field>
+                        </mat-form-field>-->
 
                     </div>
 
@@ -24,12 +81,11 @@
                 <br><br>
                 <div class="user-margin-buttons">
                     <div class="row">
-                        <div class="col-4 col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                            <button mat-button mat-raised-button color="accent" class="netxPrev" matStepperNext>
-                                <img src="../../../../../assets/menuIcons/next_w.png" height="50px" alt="">
-                              </button>
-                        </div>
 
+                        <div class="col-4 col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <button tabindex="-1" mat-raised-button color="accent" matStepperNext>
+                                <img src="../../../../../assets/menuIcons/next_w.png" height="36px" alt="">
+                              </button> </div>
                     </div>
                 </div>
 
@@ -39,10 +95,10 @@
         </mat-step>
         <mat-step [stepControl]="myControl2 " [optional]="isOptional">
             <form [formGroup]="myControl2" class="user-form-top">
-                <ng-template matStepLabel>Tripulación</ng-template>
+                <ng-template matStepLabel>Entrada</ng-template>
                 <div class="form-group"><br>
                     <mat-toolbar>
-                        Nuevo Tripulante
+                        Nueva Entrada
                     </mat-toolbar><br>
                     <div class="row">
                         <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
@@ -87,7 +143,7 @@
 
 
                     <mat-toolbar>
-                        Tripulación del Embarque
+                        Operaciones realizadas
                     </mat-toolbar>
                     <div class="row">
 
@@ -170,14 +226,18 @@
 
                     <div class="container">
                         <div class="row">
+                            <div class="col-4 col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <button tabindex="-1" mat-raised-button color="accent" matStepperPrevious>
+                                    <img src="../../../../../assets/menuIcons/back_w.png" height="36px" alt="">
+                                  </button> </div>
 
-                            <div class="col-6 col-xs-6 col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-4 col-xs-4 col-sm-4 col-md-4 col-lg-4">
                                 <button tabindex="-1" mat-raised-button (click)="onSubmit()" color="primary">
                                     <strong>Guardar</strong> 
                                     </button>
                             </div>
 
-                            <div class="col-6 col-xs-6 col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-4 col-xs-4 col-sm-4 col-md-4 col-lg-4">
                                 <button tabindex="-1" [disabled]="loading" type="button" (click)="closeModal()" mat-raised-button color="accent" style="color:white" class="btn btn-accent">
                                         
                                     <strong>Cancelar</strong>
@@ -185,13 +245,7 @@
                             </div>
                         </div>
                     </div><br><br>
-                    <div class="row">
-                        <div class="col-4 col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                            <button mat-button mat-raised-button color="accent" class="netxPrev" matStepperPrevious>
-                                <img src="../../../../../assets/menuIcons/back_w.png" height="50px" alt="">
-                              </button> </div>
 
-                    </div>
 
                 </div>
             </form>

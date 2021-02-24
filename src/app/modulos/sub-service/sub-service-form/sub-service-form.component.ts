@@ -76,19 +76,31 @@ export class SubServiceFormComponent implements OnInit {
     this.statusCloseModal.emit(this.closeStatus);
   }
   onSubmit(){
-    
+     
+
     this.submitted = true;
      if(this.firstform.invalid) {
       return;
     }else{
     if (this.putSubmit) {
+      
+
+      this.api = environment.apiJakiro2;
+      let valueSearch = this.firstform.controls["name"].value;
+      if (valueSearch.trim() !== "") {
+        let enpoint = "subservices/search/" + this.firstform.controls["name"].value;
+        this.http.doGet(this.api, enpoint).subscribe((data: any) => {
+          console.log(data);
+          if (data=== true) {
+                this.firstform.controls["name"].setValue("");
+                this.toasTer.error("Ya existe este nombre de sub-servicio");
+                this.loading = false;
+                return;
+          } else {
+
       this.loading = true;
-    
-
       let bodyData = Object.assign({
-   
-        "name": this.firstform.controls["name"].value,
-
+         "name": this.firstform.controls["name"].value,
       });
          // console.warn(bodyData);
           this.subServiceServices.update(this.idEdit, bodyData).subscribe(
@@ -103,7 +115,10 @@ export class SubServiceFormComponent implements OnInit {
               }
             );
         
-      
+          }
+        });
+      }
+             
     }
     else {
 

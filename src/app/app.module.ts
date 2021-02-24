@@ -31,6 +31,8 @@ import {BranchServices}from '../app/modulos/branch/branch-services/branch-servic
 import {ColorServices} from '../app/modulos/color/color-services/color-services'
 import {ServiceServices} from '../app/modulos/service/service-services/service-services'
 import {SubServiceServices} from '../app/modulos/sub-service/sub-service-services/sub-service-services'
+import {EntradasServices} from '../app/modulos/entradas/entradas-services/entradas-services'
+
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
@@ -86,7 +88,8 @@ import { DashboardComponent } from './modulos/dashboard/dashboard/dashboard.comp
     BranchServices, 
     ColorServices,
     ServiceServices,
-    SubServiceServices
+    SubServiceServices,
+    EntradasServices
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
