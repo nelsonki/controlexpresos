@@ -138,7 +138,7 @@
                         </mat-form-field>
                         <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
                             <mat-label>tipo (*)</mat-label>
-                            <mat-select formControlName="tipo" [matAutocomplete]="auto" id="tipo">
+                            <mat-select formControlName="tipo" id="tipo">
                                 <mat-option *ngFor="let t  of tipoRopa" [value]="t.value">
                                     {{t.value}}
                                 </mat-option>
