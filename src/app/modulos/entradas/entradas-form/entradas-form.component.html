@@ -102,9 +102,16 @@
                     </mat-toolbar><br>
                     <div class="row">
                         <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
-                            <mat-label>Servicio(*)</mat-label>
+                            <mat-label>Servicio (*)</mat-label>
 
-                            <input matInput formControlName="servicio" id="servicio" type="text" />
+                            <input aria-label="Number" type="text" placeholder="Servicio" matInput formControlName="myControl_ser" [matAutocomplete]="auto">
+                            <mat-autocomplete (optionSelected)="onSelectionChanged2($event)" autoActiveFirstOption #auto="matAutocomplete">
+                                <!--[displayWith]="displayFn"-->
+
+                                <mat-option *ngFor="let option4  of filteredOptions4  | async" [value]="option4">
+                                    {{ option4.name }}
+                                </mat-option>
+                            </mat-autocomplete>
                         </mat-form-field>
                         <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
                             <mat-label>Peso (*)</mat-label>
@@ -134,7 +141,14 @@
                         <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
                             <mat-label>subservicio (*)</mat-label>
 
-                            <input matInput formControlName="subservicio" id="subservicio" type="text" />
+                            <input aria-label="Number" type="text" placeholder="subservicio" matInput formControlName="myControl_sub" [matAutocomplete]="auto">
+                            <mat-autocomplete (optionSelected)="onSelectionChanged($event)" autoActiveFirstOption #auto="matAutocomplete">
+                                <!--[displayWith]="displayFn"-->
+
+                                <mat-option *ngFor="let option  of filteredOptions3  | async" [value]="option">
+                                    {{ option.name }}
+                                </mat-option>
+                            </mat-autocomplete>
                         </mat-form-field>
                         <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
                             <mat-label>tipo (*)</mat-label>

@@ -84,20 +84,7 @@ export class SubServiceFormComponent implements OnInit {
     }else{
     if (this.putSubmit) {
       
-
-      this.api = environment.apiJakiro2;
-      let valueSearch = this.firstform.controls["name"].value;
-      if (valueSearch.trim() !== "") {
-        let enpoint = "subservices/search/" + this.firstform.controls["name"].value;
-        this.http.doGet(this.api, enpoint).subscribe((data: any) => {
-          console.log(data);
-          if (data=== true) {
-                this.firstform.controls["name"].setValue("");
-                this.toasTer.error("Ya existe este nombre de sub-servicio");
-                this.loading = false;
-                return;
-          } else {
-
+ 
       this.loading = true;
       let bodyData = Object.assign({
          "name": this.firstform.controls["name"].value,
@@ -109,32 +96,25 @@ export class SubServiceFormComponent implements OnInit {
                   this.reloadComponent();
               },
               error => {
-                this.loading = false;
-                this.toasTer.error(subserviceMsg.errorProcess);
-                this.loading = false;
+                if (error["status"] === 422) {
+                  this.toasTer.error('Ya existe este nombre de Sub-servicio');
+                  this.loading = false;
+
+                }else{
+                  this.loading = false;
+                  this.toasTer.error(subserviceMsg.errorProcess);
+                  this.loading = false;
+                }
               }
             );
         
-          }
-        });
-      }
+       
              
     }
     else {
 
 
-      this.api = environment.apiJakiro2;
-      let valueSearch = this.firstform.controls["name"].value;
-      if (valueSearch.trim() !== "") {
-        let enpoint = "subservices/search/" + this.firstform.controls["name"].value;
-        this.http.doGet(this.api, enpoint).subscribe((data: any) => {
-          console.log(data);
-          if (data=== true) {
-                this.firstform.controls["name"].setValue("");
-                this.toasTer.error("Ya existe este nombre de sub-servicio");
-                this.loading = false;
-                return;
-          } else {
+      
             this.loading = true;
             let bodyData = Object.assign({
               "name": this.firstform.controls["name"].value,
@@ -145,16 +125,19 @@ export class SubServiceFormComponent implements OnInit {
                       this.reloadComponent();
                   },
                   error => {
-                    this.loading = false;
-                    this.toasTer.error(subserviceMsg.errorProcess);
-                    this.loading = false;
+                    if (error["status"] === 422) {
+                      this.toasTer.error('Ya existe este nombre de Sub-servicio');
+                      this.loading = false;
+    
+                    }else{
+                      this.loading = false;
+                      this.toasTer.error(subserviceMsg.errorProcess);
+                      this.loading = false;
+                    }
                   }
                 );
   
-          }
-        });
-      }
-        
+     
           
 
  
