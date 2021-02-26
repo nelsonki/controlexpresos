@@ -95,8 +95,16 @@ reset(){
   //this.form.putSubmit = false;
   this.form.editSubmit = false;
 } 
-  Refresh(){}
-  applyFilter(event){}
+Refresh(){
+  this.loadAll();
+
+}
+public applyFilter(filterValue: string){
+  this.dataSource.filter = filterValue.trim().toLocaleLowerCase();
+  Object.keys(this.dataSource.filteredData).forEach((i, index) => {
+    this.dataSource.filteredData[i].Item = index + 1;
+  });
+}  
    showModal() {
     $("#basicModal").show();
     this.reset();

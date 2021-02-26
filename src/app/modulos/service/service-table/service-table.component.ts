@@ -89,8 +89,16 @@ export class ServiceTableComponent implements OnInit {
    });
   
 }
-  Refresh(){}
-  applyFilter(event){}
+Refresh(){
+  this.loadAll();
+
+}
+public applyFilter(filterValue: string){
+  this.dataSource.filter = filterValue.trim().toLocaleLowerCase();
+  Object.keys(this.dataSource.filteredData).forEach((i, index) => {
+    this.dataSource.filteredData[i].Item = index + 1;
+  });
+}   
   reset(){
   
     this.form.firstform.controls["nombre"].setValue("");
