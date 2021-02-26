@@ -108,8 +108,8 @@
                             <mat-autocomplete (optionSelected)="onSelectionChanged4($event)" autoActiveFirstOption #auto="matAutocomplete">
                                 <!--[displayWith]="displayFn"-->
 
-                                <mat-option *ngFor="let option4  of filteredOptions4  | async" [value]="option4">
-                                    {{ option4.name }}
+                                <mat-option *ngFor="let option  of filteredOptions4  | async" [value]="option">
+                                    {{ option.name }}
                                 </mat-option>
                             </mat-autocomplete>
                         </mat-form-field>

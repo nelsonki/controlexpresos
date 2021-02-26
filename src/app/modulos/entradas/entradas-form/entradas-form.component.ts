@@ -178,6 +178,7 @@ export class EntradasFormComponent implements OnInit {
           );
          
         });
+        console.log(this.options2)
       });
       this.filteredOptions3  = this.myControl2.controls['myControl_sub'].valueChanges.pipe(
         startWith(''),
@@ -200,6 +201,7 @@ export class EntradasFormComponent implements OnInit {
           );
          
         });
+        console.log(this.options4)
       });
       this.filteredOptions4  = this.myControl2.controls['myControl_ser'].valueChanges.pipe(
         startWith(''),
@@ -266,37 +268,28 @@ add() {
   }else{
     miid = this.personList[idv].id;
   }
-  let fechab;
-  if (form.value.date_from === '' || form.value.date_from === null){
-    fechab= '';
-   }else{
-    fechab =this.convertFormat(form.value.date_from)
-   } 
- 
+  
   this.personList.push({ 
     id: miid,
-    name: form.value.name,
-    passport_number: form.value.passport_number,
-    date_from: fechab,
-    sex:  form.value.sex,
+    servicio: form.value.myControl_ser,
+    peso: form.value.peso,
+    cantidad: form.value.cantidad,
+    color:  form.value.color,
+    subservicio:  form.value.myControl_sub,
+    tipo: form.value.tipo,
   });
   console.log(this.personList);
   this.clearInput();
 }
  edittri(id: any) {
-  let fechaboat ;
-  let fechab = (this.personList[id]["date_from"] === '' || this.personList[id]["date_from"] === null ) ? '' : this.personList[id]["date_from"];
-if(fechab=== '' || fechab === null){
- fechaboat = '';
-}else{
- fechaboat = fechab + "T00:00:00";
-}
-  
+  this.myControl2.controls['myControl_ser'].setValue(this.personList[id]["servicio"]);
+  this.myControl2.controls['peso'].setValue(this.personList[id]["peso"]);
+  this.myControl2.controls['cantidad'].setValue(this.personList[id]["cantidad"]);
+  this.myControl2.controls['color'].setValue(this.personList[id]["color"]);
+  this.myControl2.controls['myControl_sub'].setValue(this.personList[id]["subservicio"]);
+  this.myControl2.controls['tipo'].setValue(this.personList[id]["tipo"]);
 
-  this.myControl2.controls['name'].setValue(this.personList[id]["name"]);
-  this.myControl2.controls['passport_number'].setValue(this.personList[id]["passport_number"]);
-  this.myControl2.controls['date_from'].setValue(fechaboat);
-  this.myControl2.controls['sex'].setValue(this.personList[id]["sex"]);
+
   this.nameButtonAceptar = 'Editar';
   this.idToUpdate = id;
   console.log(this.personList);
@@ -309,32 +302,6 @@ public clearInput() {
  
  }
 
-convertFormat(range){
-var fechaSearch;
-
-  var fecha = new Date(range);
-  var dia = fecha.getDate();
-  var mes = fecha.getMonth();
-  var anno = fecha.getFullYear();
-
-  
-
-  if((mes + 1) < 10){
-      fechaSearch = anno + '-' + 0 + (mes + 1);
-    }else{
-      fechaSearch = anno + '-' + (mes + 1);
-  }
-
-  if(dia < 10){
-      fechaSearch = fechaSearch + '-' + 0 + (dia);
-    }else{
-      fechaSearch = fechaSearch + '-' + (dia);
-  }
-
-    
-  return fechaSearch ;
-
-}
 public asigneStepper(stepper: MatStepper) {
   this.stepper = stepper;
 } 
@@ -429,9 +396,9 @@ onSelectionChanged4(event: MatAutocompleteSelectedEvent) {
   
 }
 
-private _filter4(name4: string): Servicio[] {
-  const filterValue4 = name4.toLowerCase();
-  return this.options4.filter(option4 => option4.name.toLowerCase().indexOf(filterValue4) === 0 );
+private _filter4(name: string): Servicio[] {
+  const filterValue4 = name.toLowerCase();
+  return this.options4.filter(option => option.name.toLowerCase().indexOf(filterValue4) === 0 );
 }
 }
 

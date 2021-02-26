@@ -76,9 +76,37 @@ export class EntradasTableComponent implements OnInit {
     });
     
   }
-  Refresh(){}
-  applyFilter(event){}
-  reset(){}
+  Refresh(){
+    this.loadAll()
+
+  }
+  public applyFilter(filterValue: string){
+    this.dataSource.filter = filterValue.trim().toLocaleLowerCase();
+    Object.keys(this.dataSource.filteredData).forEach((i, index) => {
+      this.dataSource.filteredData[i].Item = index + 1;
+    });
+  }
+  reset(){
+   /* this.form.myControl2.reset();
+    this.form.nameButtonAceptar = 'Agregar';
+    this.form.firstFormGroup.controls['client'].setValue('');
+    this.form.firstFormGroup.controls['client_id'].setValue('');
+    this.form.firstFormGroup.controls['sucursal'].setValue('');
+    this.form.firstFormGroup.controls['sucursal_id'].setValue('');
+ 
+    //this.form.myControl2.controls['myControl_ser'].setValue('');
+    this.form.myControl2.controls['peso'].setValue('');
+    this.form.myControl2.controls['cantidad'].setValue('');
+    this.form.myControl2.controls['color'].setValue('');
+    //this.form.myControl2.controls['myControl_sub'].setValue('');
+    this.form.myControl2.controls['tipo'].setValue('');
+
+    this.form.putSubmit = false;
+    this.titleModal = "Crear Entrada";
+    this.form.personList = [];
+    this.form.stepper.selectedIndex = 0;*/
+
+  }
   showModal() {
     $("#basicModal").show();
     this.reset();
