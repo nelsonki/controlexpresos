@@ -24,6 +24,8 @@ import {map, startWith} from 'rxjs/operators';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import {SubServiceServices} from '../../sub-service/sub-service-services/sub-service-services'
 import {ServiceServices} from '../../service/service-services/service-services'
+import {EntradasServices} from '../entradas-services/entradas-services'
+import {entradasMsg} from '../../../utils/const/message'
 export interface Subservicio {
   id: number;
   name: string;
@@ -109,10 +111,12 @@ export class EntradasFormComponent implements OnInit {
     {
       id: 0,
       servicio: '',
+      servicio_id: '',
       peso: '',
       cantidad: '',
       color:  '',
       subservicio:  '',
+      subservicio_id:  '',
       tipo: '',
     }
   ];
@@ -120,12 +124,13 @@ export class EntradasFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     public router: Router,
     public toasTer: ToastrService,
-    public subServiceServices: SubServiceServices,
-    public serviceServices: ServiceServices,
+    private subServiceServices: SubServiceServices,
+    private serviceServices: ServiceServices,
     public cd: ChangeDetectorRef,
     public dialog: MatDialog,
     private http: HttpServices,
-     private colorServices: ColorServices
+    private colorServices: ColorServices,
+    private entradasServices: EntradasServices
    ) {     
       this.isLoading = true;
    }
@@ -144,7 +149,11 @@ export class EntradasFormComponent implements OnInit {
       cantidad: ['' ],
       color:  ['' ],
       myControl_sub : ['', [Validators.required ]],
+      myControl_sub_id : ['', [Validators.required ]],
+
       myControl_ser : ['', [Validators.required ]],
+      myControl_ser_id : ['', [Validators.required ]],
+
       tipo:  ['' ],
      });
      this.colorServices.getList().pipe()
@@ -166,7 +175,7 @@ export class EntradasFormComponent implements OnInit {
       /*BUSCAR SUB-SERVICIO*/
       this.subServiceServices.getList().pipe()
       .subscribe((value2) => {
-        //console.log(value2["data"])
+        console.log(value2["data"])
         Object.keys(value2["data"]).forEach(i => {
           this.options2.push(
                {
@@ -178,7 +187,6 @@ export class EntradasFormComponent implements OnInit {
           );
          
         });
-        console.log(this.options2)
       });
       this.filteredOptions3  = this.myControl2.controls['myControl_sub'].valueChanges.pipe(
         startWith(''),
@@ -189,7 +197,7 @@ export class EntradasFormComponent implements OnInit {
       /*BUSCAR SERVICIO*/
       this.serviceServices.getList().pipe()
       .subscribe((value) => {
-        //console.log(value["data"])
+        console.log(value["data"])
         Object.keys(value["data"]).forEach(i => {
           this.options4.push(
                {
@@ -201,7 +209,6 @@ export class EntradasFormComponent implements OnInit {
           );
          
         });
-        console.log(this.options4)
       });
       this.filteredOptions4  = this.myControl2.controls['myControl_ser'].valueChanges.pipe(
         startWith(''),
@@ -213,7 +220,171 @@ export class EntradasFormComponent implements OnInit {
     this.closeStatus = !this.closeStatus;
     this.statusCloseModal.emit(this.closeStatus);
   }
-  onSubmit(){}
+  onSubmit(){
+    
+    if ( this.firstFormGroup.invalid  ) {
+      return;
+    }else{
+     /* this.ifbandera = 0;
+      Object.keys(this.personList).forEach(e => {
+        const nacion: string = this.personList[e]["nationality"] ;
+        console.log(nacion);
+        
+        if (nacion === '' || nacion === null) {
+          this.ifbandera = this.ifbandera + 1;
+           
+        }else{
+          Object.keys(this.options).forEach(i => {
+          const opc: string = this.options[i];
+          if (nacion.toLowerCase() === opc.toLowerCase()) {
+            this.ifbandera = this.ifbandera + 1;
+             
+          }
+          
+          });
+        }
+        
+      });
+      if ( this.ifbandera === 0 && this.putSubmit === false){
+        this.loading = false;
+        this.toasTer.error('No existe nacionalidad');
+      }else{*/
+      
+        if (this.putSubmit) {
+          
+          this.loading = true;
+          let listEnpti = [];
+          this.loading = true;
+          let list = [];
+          this.loading = true;
+          Object.keys(this.personList).forEach(e => {
+            if(this.personList[e]["id"] === 0){              
+              list.push({
+                id: 0,
+                service_id: this.personList[e]["servicio_id"],
+                weight: this.personList[e]["peso"],
+                quantity: this.personList[e]["cantidad"],
+                color_id:  this.personList[e]["color"],
+                subservice_id:  this.personList[e]["subservicio_id"],
+                operation_type: this.personList[e]["tipo"],
+                observation:null,
+                user:null
+              });
+            }else{             
+              list.push({    
+                id: this.personList[e]["id"],
+                service_id: this.personList[e]["servicio_id"],
+                weight: this.personList[e]["peso"],
+                quantity: this.personList[e]["cantidad"],
+                color_id:  this.personList[e]["color"],
+                subservice_id:  this.personList[e]["subservicio_id"],
+                operation_type: this.personList[e]["tipo"],
+                observation:null,
+                user:null
+              });
+            }
+            
+
+          });
+          listEnpti = list.filter(function (n) {
+            let value1 = n.service_id;
+            let value2 = n.subservice_id;
+            return value1 === "" ||  value2 === ""  ;
+          });
+          if (listEnpti.length > 0) {
+            this.loading = false;
+            this.toasTer.error('No puede guardar campo vacios');
+  
+          }else {
+            if (this.personList.length === 0) {
+              this.loading = false;
+              this.toasTer.error('Debe agregar al menos 1 entrada');
+  
+            }else {
+              
+              let bodyData = Object.assign({
+                "client_id": this.firstFormGroup.controls["client_id"].value,
+                "branch_id": this.firstFormGroup.controls["sucursal_id"].value,
+                "moreInputs": list
+              });  
+              //console.warn(bodyData);
+              this.entradasServices.update(this.idEdit, bodyData).subscribe(
+                response => {
+                      this.toasTer.success(entradasMsg.update);
+                      this.reloadComponent();
+                  },
+                  error => {
+                    this.loading = false;
+                    this.toasTer.error(entradasMsg.errorProcess);
+                    this.loading = false;
+                  }
+                );
+              }
+          }
+  
+        }else{
+          if (this.firstFormGroup.invalid) {
+            return;
+          } else {
+            let listEnpti = [];
+            this.loading = true;
+            let list = [];
+            this.loading = true;
+            Object.keys(this.personList).forEach(e => {
+               
+              list.push({
+                service_id: this.personList[e]["servicio_id"],
+                weight: this.personList[e]["peso"],
+                quantity: this.personList[e]["cantidad"],
+                color_id:  this.personList[e]["color"],
+                subservice_id:  this.personList[e]["subservicio_id"],
+                operation_type: this.personList[e]["tipo"],
+                observation:null,
+                user:null
+              });
+            });
+            listEnpti = list.filter(function (n) {
+              let value1 = n.service_id;
+              let value2 = n.subservice_id;
+             
+              return value1 === "" ||  value2 === "" ;
+            });
+            if (listEnpti.length > 0) {
+              this.loading = false;
+              this.toasTer.error('No puede guardar campo vacios');
+  
+            }else {
+              if (this.personList.length === 0) {
+                this.loading = false;
+                this.toasTer.error('Debe agregar al menos 1 entrada');
+    
+              }else {
+            let bodyData = Object.assign({
+              "client_id": this.firstFormGroup.controls["client_id"].value,
+              "branch_id": this.firstFormGroup.controls["sucursal_id"].value,
+              "moreInputs": list
+            });
+            console.log(bodyData);
+            this.entradasServices.save(bodyData).subscribe(
+              response => {
+                    this.toasTer.success(entradasMsg.save);
+                    this.reloadComponent();
+                },
+                error => {
+                  this.loading = false;
+                  this.toasTer.error(entradasMsg.errorProcess);
+                  this.loading = false;
+                }
+              );
+              }
+            }
+          }
+        } 
+      //}
+        
+          
+    }
+  }
   get f() {
     return this.firstform.controls;
   }
@@ -244,10 +415,12 @@ public changeSelect(id: number, property: string, event: any,  value ) {
 }
 remove(id: any) {
   this.myControl2.controls['myControl_ser'].setValue('');
+  this.myControl2.controls['myControl_ser_id'].setValue('');
   this.myControl2.controls['peso'].setValue('');
   this.myControl2.controls['cantidad'].setValue('');
   this.myControl2.controls['color'].setValue('');
   this.myControl2.controls['myControl_sub'].setValue('');
+  this.myControl2.controls['myControl_sub_id'].setValue('');
   this.myControl2.controls['tipo'].setValue(''); 
   this.personList.splice(id, 1);
   this.nameButtonAceptar = 'Agregar';
@@ -277,10 +450,14 @@ add() {
   this.personList.push({ 
     id: miid,
     servicio: form.value.myControl_ser,
+    servicio_id: form.value.myControl_ser_id,
+
     peso: form.value.peso,
     cantidad: form.value.cantidad,
     color:  form.value.color,
     subservicio:  form.value.myControl_sub,
+    subservicio_id:  form.value.myControl_sub_id,
+
     tipo: form.value.tipo,
   });
   console.log(this.personList);
@@ -288,10 +465,14 @@ add() {
 }
  edittri(id: any) {
   this.myControl2.controls['myControl_ser'].setValue(this.personList[id]["servicio"]);
+  this.myControl2.controls['myControl_ser_id'].setValue(this.personList[id]["servicio"]);
+
   this.myControl2.controls['peso'].setValue(this.personList[id]["peso"]);
   this.myControl2.controls['cantidad'].setValue(this.personList[id]["cantidad"]);
   this.myControl2.controls['color'].setValue(this.personList[id]["color"]);
   this.myControl2.controls['myControl_sub'].setValue(this.personList[id]["subservicio"]);
+  this.myControl2.controls['myControl_sub_id'].setValue(this.personList[id]["subservicio"]);
+
   this.myControl2.controls['tipo'].setValue(this.personList[id]["tipo"]);
 
 
@@ -304,10 +485,14 @@ add() {
 public clearInput() {
   /*this.myControl2.reset();*/
   this.myControl2.controls['myControl_ser'].setValue('');
+  this.myControl2.controls['myControl_ser_id'].setValue('');
+
   this.myControl2.controls['peso'].setValue('');
   this.myControl2.controls['cantidad'].setValue('');
   this.myControl2.controls['color'].setValue('');
   this.myControl2.controls['myControl_sub'].setValue('');
+  this.myControl2.controls['myControl_sub_id'].setValue('');
+
   this.myControl2.controls['tipo'].setValue('');
   this.nameButtonAceptar = 'Agregar';
  
@@ -383,6 +568,8 @@ onSelectionChanged(event: MatAutocompleteSelectedEvent) {
   namesub = viene.name ? viene.name : '';
   //console.log(pla);
   this.myControl2.controls['myControl_sub'].setValue(namesub);
+  this.myControl2.controls['myControl_sub_id'].setValue(this.idsubservicio);
+
 }
 private _filter(name: string): Servicio[] {
   const filterValue = name.toLowerCase();
@@ -404,7 +591,8 @@ onSelectionChanged4(event: MatAutocompleteSelectedEvent) {
   namesub4 = viene4.name ? viene4.name : '';
   //console.log(pla);
   this.myControl2.controls['myControl_ser'].setValue(namesub4);
-  
+  this.myControl2.controls['myControl_ser_id'].setValue(this.idsubservicio4);
+
 }
 
 private _filter4(name: string): Servicio[] {
