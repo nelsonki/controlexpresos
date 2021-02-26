@@ -84,19 +84,7 @@ onSubmit(){
       return;
     }else{
     if (this.putSubmit) {
-      this.api = environment.apiJakiro2;
-      let valueSearch = this.firstform.controls["nombre"].value;
-      if (valueSearch.trim() !== "") {
-        let enpoint = "services/search/" + this.firstform.controls["nombre"].value;
-        this.http.doGet(this.api, enpoint).subscribe((data: any) => {
-          console.log(data);
-          if (data=== true) {
-                this.firstform.controls["nombre"].setValue("");
-                this.toasTer.error("Ya existe este nombre de Servicio");
-                this.loading = false;
-                return;
-          } else {
-
+      
       this.loading = true;
       let bodyData = Object.assign({
         "name": this.firstform.controls["nombre"].value,
@@ -110,30 +98,23 @@ onSubmit(){
                   this.reloadComponent();
               },
               error => {
-                this.loading = false;
-                this.toasTer.error(serviceMsg.errorProcess);
-                this.loading = false;
+                if (error["status"] === 422) {
+                  this.toasTer.error('Ya existe este nombre de Servicio');
+                  this.loading = false;
+
+                }else{
+                  this.loading = false;
+                  this.toasTer.error(serviceMsg.errorProcess);
+                  this.loading = false;
+                }
               }
             );
             
-          }
-        });
-      }
+       
       
     }
     else {
-      this.api = environment.apiJakiro2;
-      let valueSearch = this.firstform.controls["nombre"].value;
-      if (valueSearch.trim() !== "") {
-        let enpoint = "services/search/" + this.firstform.controls["nombre"].value;
-        this.http.doGet(this.api, enpoint).subscribe((data: any) => {
-          console.log(data);
-          if (data=== true) {
-                this.firstform.controls["nombre"].setValue("");
-                this.toasTer.error("Ya existe este nombre de Servicio");
-                this.loading = false;
-                return;
-          } else {
+     
 
           this.loading = true;
           //let codFormatted = cod.trim().replace(/\s/g, "");//para que se usa
@@ -149,16 +130,20 @@ onSubmit(){
                     this.reloadComponent();
                 },
                 error => {
-                  this.loading = false;
-                  this.toasTer.error(serviceMsg.errorProcess);
-                  this.loading = false;
+                  if (error["status"] === 422) {
+                    this.toasTer.error('Ya existe este nombre de Servicio');
+                    this.loading = false;
+  
+                  }else{
+                    this.loading = false;
+                    this.toasTer.error(serviceMsg.errorProcess);
+                    this.loading = false;
+                  }
                 }
               );
           
 
-            }
-          });
-        }
+        
 
 
       }

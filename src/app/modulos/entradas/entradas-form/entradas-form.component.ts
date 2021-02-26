@@ -21,7 +21,7 @@ import { Router } from "@angular/router";
 import { Pipe, PipeTransform } from '@angular/core';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import {SubServiceServices} from '../../sub-service/sub-service-services/sub-service-services'
 import {ServiceServices} from '../../service/service-services/service-services'
 export interface Subservicio {
@@ -204,7 +204,7 @@ export class EntradasFormComponent implements OnInit {
       this.filteredOptions4  = this.myControl2.controls['myControl_ser'].valueChanges.pipe(
         startWith(''),
           map(value => typeof value === 'string' ? value : value.name),
-          map(name => name ? this._filter2(name) : this.options4.slice())
+          map(name => name ? this._filter4(name) : this.options4.slice())
       );
   }
   public closeModal() {
@@ -413,11 +413,11 @@ private _filter(name: string): Servicio[] {
 
 /*BUSCAR SERVICIO*///////////////////////////////////////////////////////////////////////////////////////////////
 
-displayFn2(servicio: Servicio): string {
+displayFn4(servicio: Servicio): string {
   return servicio && servicio.name ? servicio.name : '';
 }
 
-onSelectionChanged2(event: MatAutocompleteSelectedEvent) {
+onSelectionChanged4(event: MatAutocompleteSelectedEvent) {
   this.idsubservicio4 = 0;
   let namesub4:string;
   
@@ -429,7 +429,7 @@ onSelectionChanged2(event: MatAutocompleteSelectedEvent) {
   
 }
 
-private _filter2(name4: string): Servicio[] {
+private _filter4(name4: string): Servicio[] {
   const filterValue4 = name4.toLowerCase();
   return this.options4.filter(option4 => option4.name.toLowerCase().indexOf(filterValue4) === 0 );
 }

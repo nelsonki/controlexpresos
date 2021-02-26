@@ -78,18 +78,7 @@ export class ColorFormComponent implements OnInit {
       return;
     }else{
     if (this.putSubmit) {
-      this.api = environment.apiJakiro2; 
-      let valueSearch = this.firstform.controls["color"].value;
-      if (valueSearch.trim() !== "") {
-        let enpoint = "colors/search/" + this.firstform.controls["color"].value;
-        this.http.doGet(this.api, enpoint).subscribe((data: any) => {
-          console.log(data);
-          if (data=== true) {
-                this.firstform.controls["color"].setValue("");
-                this.toasTer.error("Ya existe este nombre de color");
-                this.loading = false;
-                return;
-          } else {
+     
 
       this.loading = true;
       let bodyData = Object.assign({
@@ -104,30 +93,22 @@ export class ColorFormComponent implements OnInit {
                   this.reloadComponent();
               },
               error => {
-                this.loading = false;
-                this.toasTer.error(colorMsg.errorProcess);
-                this.loading = false;
+                if (error["status"] === 422) {
+                  this.toasTer.error('Ya existe este nombre de Color');
+                  this.loading = false;
+
+                }else{
+                  this.loading = false;
+                  this.toasTer.error(colorMsg.errorProcess);
+                  this.loading = false;
+                }
               }
             );
-            
-          }
-        });
-      }
+      
       
     }
     else {
-      this.api = environment.apiJakiro2; 
-      let valueSearch = this.firstform.controls["color"].value;
-      if (valueSearch.trim() !== "") {
-        let enpoint = "colors/search/" + this.firstform.controls["color"].value;
-        this.http.doGet(this.api, enpoint).subscribe((data: any) => {
-          console.log(data);
-          if (data=== true) {
-                this.firstform.controls["color"].setValue("");
-                this.toasTer.error("Ya existe este nombre de color");
-                this.loading = false;
-                return;
-          } else {
+       
             this.loading = true;
             let bodyData = Object.assign({
               "color": this.firstform.controls["color"].value,
@@ -138,15 +119,19 @@ export class ColorFormComponent implements OnInit {
                       this.reloadComponent();
                   },
                   error => {
-                    this.loading = false;
-                    this.toasTer.error(colorMsg.errorProcess);
-                    this.loading = false;
+                    if (error["status"] === 422) {
+                      this.toasTer.error('Ya existe este nombre de Color');
+                      this.loading = false;
+    
+                    }else{
+                      this.loading = false;
+                      this.toasTer.error(colorMsg.errorProcess);
+                      this.loading = false;
+                    }
                   }
                 );
   
-          }
-        });
-      }
+       
         
           
         
