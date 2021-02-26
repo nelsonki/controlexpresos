@@ -46,7 +46,7 @@ export class SubServiceTableComponent implements OnInit {
     this.subServiceServices.getList().subscribe((value) => {
       this.data=[];
       this.element=[];
-      console.log(value["data"])
+     // console.log(value["data"])
       if (value["data"]){
         this.element = [];
         Object.keys(value["data"]).forEach(e => {

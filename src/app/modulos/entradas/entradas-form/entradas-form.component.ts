@@ -21,7 +21,17 @@ import { Router } from "@angular/router";
 import { Pipe, PipeTransform } from '@angular/core';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import {SubServiceServices} from '../../sub-service/sub-service-services/sub-service-services'
+import {ServiceServices} from '../../service/service-services/service-services'
+export interface Subservicio {
+  id: number;
+  name: string;
+}
+export interface Servicio {
+  id: number;
+  name: string;
+}
 @Component({
   selector: 'app-entradas-form',
   templateUrl: './entradas-form.component.html',
@@ -71,6 +81,16 @@ export class EntradasFormComponent implements OnInit {
   filteredOptions2: Observable<string[]>;
   public disabledButoon2: boolean = false;
 
+  //buscar sub-servicio
+  public filteredOptions3: Observable<Subservicio[]>;
+  public options2: Array<any> = [];
+  public idsubservicio = 0;
+
+  //buscar servicio
+  public filteredOptions4: Observable<Servicio[]>;
+  public options4: Array<any> = [];
+  public idsubservicio4 = 0;
+
   public colores: Array<any> = [];
 
  
@@ -100,7 +120,8 @@ export class EntradasFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     public router: Router,
     public toasTer: ToastrService,
-    //public templatesService: TemplatesService
+    public subServiceServices: SubServiceServices,
+    public serviceServices: ServiceServices,
     public cd: ChangeDetectorRef,
     public dialog: MatDialog,
     private http: HttpServices,
@@ -119,11 +140,11 @@ export class EntradasFormComponent implements OnInit {
 
     });
     this.myControl2 = this.formBuilder.group({
-      servicio:  ['', [Validators.required, Validators.minLength(2) ]],
       peso: ['', Validators.required],
       cantidad: ['' ],
       color:  ['' ],
-      subservicio:  ['' ],
+      myControl_sub : ['', [Validators.required ]],
+      myControl_ser : ['', [Validators.required ]],
       tipo:  ['' ],
      });
      this.colorServices.getList().pipe()
@@ -140,24 +161,51 @@ export class EntradasFormComponent implements OnInit {
           );
          
             });
-
-           /* $(".valid-number").on("keypress keyup blur", function (event) {
-              $(this).val(
-                $(this)
-                  .val()
-                  .replace(/[^0-9\.]/g, "")
-              );
-              if (
-                $(this)
-                  .val()
-                  .indexOf(".") !== -1 &&
-                (event.which < 48 || event.which > 57) &&
-                event.which !== 8
-              ) {
-                event.preventDefault();
-              }
-            });*/
+ 
       });
+      /*BUSCAR SUB-SERVICIO*/
+      this.subServiceServices.getList().pipe()
+      .subscribe((value2) => {
+        //console.log(value2["data"])
+        Object.keys(value2["data"]).forEach(i => {
+          this.options2.push(
+               {
+                 "id": value2["data"][i].id,
+                 "name": value2["data"][i].name,
+  
+                }
+  
+          );
+         
+        });
+      });
+      this.filteredOptions3  = this.myControl2.controls['myControl_sub'].valueChanges.pipe(
+        startWith(''),
+          map(value => typeof value === 'string' ? value : value.name),
+          map(name => name ? this._filter(name) : this.options2.slice())
+      );
+
+      /*BUSCAR SERVICIO*/
+      this.serviceServices.getList().pipe()
+      .subscribe((value) => {
+        //console.log(value["data"])
+        Object.keys(value["data"]).forEach(i => {
+          this.options4.push(
+               {
+                 "id": value["data"][i].id,
+                 "name": value["data"][i].name,
+  
+                }
+  
+          );
+         
+        });
+      });
+      this.filteredOptions4  = this.myControl2.controls['myControl_ser'].valueChanges.pipe(
+        startWith(''),
+          map(value => typeof value === 'string' ? value : value.name),
+          map(name => name ? this._filter2(name) : this.options4.slice())
+      );
   }
   public closeModal() {
     this.closeStatus = !this.closeStatus;
@@ -343,6 +391,47 @@ public setDataFormul2(event, id, nombreComercial) {
   this.openOptionClient2 = false;
   this.firstFormGroup.controls["sucursal_id"].setValue(id);
   this.firstFormGroup.controls["sucursal"].setValue(nombreComercial);
+}
+/*BUSCAR SUB-SERVICIO*/
+
+displayFn(subservicio: Subservicio): string {
+  return subservicio && subservicio.name ? subservicio.name : '';
+}
+onSelectionChanged(event: MatAutocompleteSelectedEvent) {
+  this.idsubservicio = 0;
+  let namesub:string;
+  const viene = event.option.value;
+  this.idsubservicio = viene.id ? viene.id : 0;
+  namesub = viene.name ? viene.name : '';
+  //console.log(pla);
+  this.myControl2.controls['myControl_sub'].setValue(namesub);
+}
+private _filter(name: string): Servicio[] {
+  const filterValue = name.toLowerCase();
+  return this.options2.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0 );
+}
+
+/*BUSCAR SERVICIO*///////////////////////////////////////////////////////////////////////////////////////////////
+
+displayFn2(servicio: Servicio): string {
+  return servicio && servicio.name ? servicio.name : '';
+}
+
+onSelectionChanged2(event: MatAutocompleteSelectedEvent) {
+  this.idsubservicio4 = 0;
+  let namesub4:string;
+  
+  const viene4= event.option.value;
+  this.idsubservicio4 = viene4.id ? viene4.id : 0;
+  namesub4 = viene4.name ? viene4.name : '';
+  //console.log(pla);
+  this.myControl2.controls['myControl_ser'].setValue(namesub4);
+  
+}
+
+private _filter2(name4: string): Servicio[] {
+  const filterValue4 = name4.toLowerCase();
+  return this.options4.filter(option4 => option4.name.toLowerCase().indexOf(filterValue4) === 0 );
 }
 }
 
