@@ -243,9 +243,14 @@ public changeSelect(id: number, property: string, event: any,  value ) {
   this.editField =  value;
 }
 remove(id: any) {
-  this.myControl2.reset();
-   this.personList.splice(id, 1);
-   this.nameButtonAceptar = 'Agregar';
+  this.myControl2.controls['myControl_ser'].setValue('');
+  this.myControl2.controls['peso'].setValue('');
+  this.myControl2.controls['cantidad'].setValue('');
+  this.myControl2.controls['color'].setValue('');
+  this.myControl2.controls['myControl_sub'].setValue('');
+  this.myControl2.controls['tipo'].setValue(''); 
+  this.personList.splice(id, 1);
+  this.nameButtonAceptar = 'Agregar';
 }
 
 add() {
@@ -297,7 +302,13 @@ add() {
 
 
 public clearInput() {
-  this.myControl2.reset();
+  /*this.myControl2.reset();*/
+  this.myControl2.controls['myControl_ser'].setValue('');
+  this.myControl2.controls['peso'].setValue('');
+  this.myControl2.controls['cantidad'].setValue('');
+  this.myControl2.controls['color'].setValue('');
+  this.myControl2.controls['myControl_sub'].setValue('');
+  this.myControl2.controls['tipo'].setValue('');
   this.nameButtonAceptar = 'Agregar';
  
  }
