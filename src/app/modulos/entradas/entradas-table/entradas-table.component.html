@@ -55,7 +55,7 @@
             <!-- Position Column -->
             <ng-container matColumnDef="Item">
                 <th mat-header-cell *matHeaderCellDef> Item </th>
-                <td mat-cell *matCellDef="let element"> </td>
+                <td mat-cell *matCellDef="let element"> {{element.Item}}</td>
             </ng-container>
             <!-- Position Column -->
             <ng-container matColumnDef="ID">
@@ -93,7 +93,7 @@
                         </div>
                         <!--<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Eliminar Embarque" (click)="remove(element.id)">
             <i class="far fa-trash-alt"></i>
-    </div>-->
+            </div>-->
                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Eliminar" (click)="eliminar(element.id)">
                             <i class="far fa-trash-alt"></i>
 
@@ -103,7 +103,7 @@
 
                 </td>
             </ng-container>
-            <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+
             <ng-container matColumnDef="expandedDetail">
                 <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
                     <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
@@ -111,7 +111,7 @@
                             <br>
                             <table [dataSource]="dataSource" class="table table-bordered " style="width: 100%;">
                                 <caption>
-                                    Listado de Operaciones de Entrada
+                                    Listado de Operaciones de Entradas
                                 </caption>
 
                                 <tr>
@@ -151,7 +151,7 @@
                                         </td>
 
                                     </tr>
-            </ng-container>-->
+                               </ng-container>-->
 
                             </table><br>
                         </div>
@@ -160,7 +160,6 @@
                     </div>
                 </td>
             </ng-container>
-
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="example-element-row" [class.example-expanded-row]="expandedElement === element" (click)="expandedElement = expandedElement === element ? null : element">
             </tr>

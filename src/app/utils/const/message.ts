@@ -52,3 +52,12 @@ export const entradasMsg = {
     getAllFail: 'Ha ocurrido un error al obtener la entrada',
     errorProcess: 'Proceso rechazado'
 };
+export const SalidasMsg = {
+    save: 'Registro creado de forma exitosa',
+    update: 'Registro modificado de forma exitosa',
+    delete: 'Registro eliminado de forma exitosa',
+    get: 'Salidas encontrada',
+    getFail: 'Ha ocurrido un error al obtener la salida',
+    getAllFail: 'Ha ocurrido un error al obtener la salida',
+    errorProcess: 'Proceso rechazado'
+};

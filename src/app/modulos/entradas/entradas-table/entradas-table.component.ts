@@ -5,9 +5,11 @@ import {MatTableDataSource} from '@angular/material/table';
 import { ModalDirective } from "angular-bootstrap-md";
 import { ToastrService } from 'ngx-toastr';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import {EntradasServices} from '../entradas-services/entradas-services'
 import {EntradasFormComponent} from '../entradas-form/entradas-form.component'
+import {EntradasDeleteComponent} from '../dialog/entradas-delete/entradas-delete.component'
 declare var $: any;
 
 @Component({
@@ -41,7 +43,7 @@ export class EntradasTableComponent implements OnInit {
   ngAfterViewInit() {
   }
   constructor(
-    //public dialog: MatDialog,
+    public dialog: MatDialog,
     //public formBuilder: FormBuilder,
     public toasTer: ToastrService,
     public entradasServices: EntradasServices
@@ -128,5 +130,16 @@ export class EntradasTableComponent implements OnInit {
   }
   public closeModals(value) {
     this.basicModal.hide();
+  }
+  public openEdit(id) {
+    this.titleModal = "Modificar Entrada";
+    this.form.addForm(id);
+  }
+  eliminar(id){
+    this.dialog.open(EntradasDeleteComponent, {
+     width: "450px",
+     data: id
+   });
+  
   }
 }

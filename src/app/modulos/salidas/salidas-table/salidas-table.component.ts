@@ -4,13 +4,23 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { ModalDirective } from "angular-bootstrap-md";
 import { ToastrService } from 'ngx-toastr';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {SalidasServices} from '../salidas-services/salidas-services'
+
 import {SalidasFormComponent} from '../salidas-form/salidas-form.component'
 declare var $: any;
 
 @Component({
   selector: 'app-salidas-table',
   templateUrl: './salidas-table.component.html',
-  styleUrls: ['./salidas-table.component.scss']
+  styleUrls: ['./salidas-table.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class SalidasTableComponent implements OnInit {
 
@@ -21,24 +31,65 @@ export class SalidasTableComponent implements OnInit {
   @Output() onChange: EventEmitter<File> = new EventEmitter<File>();
 
   displayedColumns: string[] = ['Item', 'ID', 'Cliente - Sucursal', 'Fecha - Hora', 'Usuario', 'Observación', 'Acciones'];
-  dataSource = new MatTableDataSource<PeriodicElement>(element);
+  dataSource;
   public titleModal: string;
   public element =[];
+  public data;
+
+  expandedElement;
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator; 
   }
   constructor(
     //public dialog: MatDialog,
     //public formBuilder: FormBuilder,
     public toasTer: ToastrService,
-    //public templatesService: TemplatesService
+    public salidasServices: SalidasServices
   ) {
     //this.api = environment.apiInventory;
-    this.titleModal = "Crear Entrada";
+    this.titleModal = "Crear Salida";
   }
 
   ngOnInit() {
+    this.loadAll();
+  }
+  public loadAll(){ 
+
+    this.salidasServices.getList().subscribe((value) => {
+      this.data=[];
+      this.element=[];
+      console.log(value["data"])
+      if (value["data"]){
+        this.element = [];
+        Object.keys(value["data"]).forEach(e => {
+            const datos ={
+              Item: "",
+              "id":value["data"][e].id,
+              "cliente":value["data"][e].cliente,
+              "sucursal":value["data"][e].sucursal,
+              "usuario":value["data"][e].usuario,
+              "observacion":value["data"][e].observacion,
+
+            };
+           this.data.push(datos);
+           this.element.push(datos);
+         });
+        Object.keys(this.element).forEach((i, index) => {
+          this.element[i].Item = index + 1;
+       });
+        this.dataSource = new MatTableDataSource(this.element);
+        this.dataSource.paginator = this.paginator;
+        return this.dataSource;
+      } else {
+        this.toasTer.error(value["message"]);
+        this.data = [];
+        this.element=[];
+        this.dataSource = new MatTableDataSource(this.element);
+        this.dataSource.paginator = this.paginator;
+        return this.dataSource;
+      }
+    });
+    
   }
   Refresh(){}
   applyFilter(event){}
@@ -50,16 +101,8 @@ export class SalidasTableComponent implements OnInit {
   public closeModals(value) {
     this.basicModal.hide();
   }
-}
-export interface PeriodicElement { 
-  id: string;
-  cliente: string;
-  fecha: string;
-  usuario: string;
-  observacion: string;
-}
-const element: PeriodicElement[] = [
-  {id: 'a4', cliente: 'Nelson - Barata', fecha: '02-02-2021 12:00', usuario: 'admin' , observacion: 'sin comentarios'},
-  {id: 'a3', cliente: 'Nelson - Locatel', fecha: '02-02-2021 12:00' , usuario: 'admin' , observacion: 'sin comentarios'},
-
-];
+  public openEdit(id) {
+    this.titleModal = "Crear Salidas";
+    this.form.addForm(id);
+  }
+} 

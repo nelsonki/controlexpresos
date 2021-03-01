@@ -32,6 +32,7 @@ import {ColorServices} from '../app/modulos/color/color-services/color-services'
 import {ServiceServices} from '../app/modulos/service/service-services/service-services'
 import {SubServiceServices} from '../app/modulos/sub-service/sub-service-services/sub-service-services'
 import {EntradasServices} from '../app/modulos/entradas/entradas-services/entradas-services'
+import {SalidasServices} from '../app/modulos/salidas/salidas-services/salidas-services'
 
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
@@ -89,7 +90,8 @@ import { DashboardComponent } from './modulos/dashboard/dashboard/dashboard.comp
     ColorServices,
     ServiceServices,
     SubServiceServices,
-    EntradasServices
+    EntradasServices,
+    SalidasServices
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],

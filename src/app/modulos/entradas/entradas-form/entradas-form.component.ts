@@ -22,9 +22,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+
 import {SubServiceServices} from '../../sub-service/sub-service-services/sub-service-services'
 import {ServiceServices} from '../../service/service-services/service-services'
 import {EntradasServices} from '../entradas-services/entradas-services'
+
 import {entradasMsg} from '../../../utils/const/message'
 export interface Subservicio {
   id: number;
@@ -496,7 +498,7 @@ public clearInput() {
   this.myControl2.controls['tipo'].setValue('');
   this.nameButtonAceptar = 'Agregar';
  
- }
+}
 
 public asigneStepper(stepper: MatStepper) {
   this.stepper = stepper;

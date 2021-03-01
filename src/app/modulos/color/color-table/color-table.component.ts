@@ -86,7 +86,7 @@ export class ColorTableComponent implements OnInit {
      data: id
    });
   
-}
+  }
 reset(){
   
   this.form.firstform.controls["color"].setValue("");
