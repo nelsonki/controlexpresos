@@ -140,21 +140,21 @@ export class EntradasFormComponent implements OnInit {
       client: ['', [Validators.required ]],
       client_id: ['', [Validators.required ]],
 
-      sucursal: ['', [Validators.required, Validators.minLength(2) ]],
-      sucursal_id: ['', [Validators.required ]],
+      sucursal: [''],
+      sucursal_id: [''],
 
     });
     this.myControl2 = this.formBuilder.group({
-      peso: ['', Validators.required],
+      peso: [''],
       cantidad: ['' ],
       color:  ['' ],
-      myControl_sub : ['', [Validators.required ]],
-      myControl_sub_id : ['', [Validators.required ]],
+      myControl_sub : [''],
+      myControl_sub_id : [''],
 
       myControl_ser : ['', [Validators.required ]],
       myControl_ser_id : ['', [Validators.required ]],
 
-      tipo:  ['' ],
+      tipo:  ['',  [Validators.required ] ],
      });
      this.colorServices.getList().pipe()
       .subscribe((value) => {

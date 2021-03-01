@@ -41,7 +41,7 @@
                         <input formControlName="client_id" matInput="" style="display: none;" />
                         <div class="form-group" class="width-form-groud col-12 col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <mat-form-field class="example-full-width ">
-                                <mat-label>Sucursal(*)</mat-label>
+                                <mat-label>Sucursal</mat-label>
 
                                 <input type="text" placeholder="Sucursal(*)" aria-label="Number" matInput formControlName="sucursal">
                                 <div class="typeahead--wrapper" *ngIf="openOptionClient2">
@@ -56,9 +56,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <mat-error *ngIf="submitted && f.sucursal.errors">
-                                    <div *ngIf="f.sucursal.errors.required  ">Por favor, seleccione una Sucursal</div>
-                                </mat-error>
+
                             </mat-form-field>
 
                             <div>
@@ -102,7 +100,17 @@
                     </mat-toolbar><br>
                     <div class="row">
                         <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
-                            <mat-label>Servicio (*)</mat-label>
+                            <mat-label>Peso</mat-label>
+
+                            <input matInput formControlName="peso" id="peso" type="number" min="0" />
+                        </mat-form-field>
+                        <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
+                            <mat-label>Cantidad</mat-label>
+
+                            <input matInput formControlName="cantidad" id="cantidad" type="number" min="0" />
+                        </mat-form-field>
+                        <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
+                            <mat-label>Tipo de Servicio (*)</mat-label>
 
                             <input aria-label="Number" type="text" placeholder="Servicio" matInput formControlName="myControl_ser" [matAutocomplete]="auto">
                             <mat-autocomplete (optionSelected)="onSelectionChanged4($event)" autoActiveFirstOption #auto="matAutocomplete">
@@ -112,34 +120,35 @@
                                     {{ option.name }}
                                 </mat-option>
                             </mat-autocomplete>
-                        </mat-form-field>
-                        <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
-                            <mat-label>Peso (*)</mat-label>
-
-                            <input matInput formControlName="peso" id="peso" type="number" min="0" />
-                        </mat-form-field>
-                        <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
-                            <mat-label>Cantidad (*)</mat-label>
-
-                            <input matInput formControlName="cantidad" id="cantidad" type="number" min="0" />
+                            <mat-error *ngIf="submitted && f.myControl_ser.errors">
+                                <div *ngIf="f.myControl_ser.errors.required">
+                                    Por favor, ingrese un servicio
+                                </div>
+                            </mat-error>
                         </mat-form-field>
 
 
+
+
                         <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
-                            <mat-label>color (*)</mat-label>
+                            <mat-label>color</mat-label>
                             <mat-select formControlName="color" id="color">
                                 <mat-option *ngFor="let col  of colores" [value]="col.id">
                                     {{col.color}}
                                 </mat-option>
                             </mat-select>
-                            <mat-error *ngIf="submitted && f.tipo.errors">
-                                <div *ngIf="f.tipo.errors.required">
-                                    Por favor, ingrese un color
-                                </div>
-                            </mat-error>
+
                         </mat-form-field>
                         <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
-                            <mat-label>subservicio (*)</mat-label>
+                            <mat-label>tipo de Ropa (*)</mat-label>
+                            <mat-select formControlName="tipo" id="tipo">
+                                <mat-option *ngFor="let t  of tipoRopa" [value]="t.value">
+                                    {{t.value}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
+                            <mat-label>Sub Servicio</mat-label>
 
                             <input aria-label="Number" type="text" placeholder="subservicio" matInput formControlName="myControl_sub" [matAutocomplete]="auto2">
                             <mat-autocomplete (optionSelected)="onSelectionChanged($event)" autoActiveFirstOption #auto2="matAutocomplete">
@@ -150,14 +159,7 @@
                                 </mat-option>
                             </mat-autocomplete>
                         </mat-form-field>
-                        <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
-                            <mat-label>tipo (*)</mat-label>
-                            <mat-select formControlName="tipo" id="tipo">
-                                <mat-option *ngFor="let t  of tipoRopa" [value]="t.value">
-                                    {{t.value}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
+
 
                         <div class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
                             <button mat-raised-button color="primary" class="btn btn-accent " (click)="add()" [disabled]="!myControl2.valid || idsubservicio===0 || idsubservicio4===0">+</button>&nbsp; &nbsp;
