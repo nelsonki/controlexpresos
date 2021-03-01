@@ -4,6 +4,8 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { ModalDirective } from "angular-bootstrap-md";
 import { ToastrService } from 'ngx-toastr';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+
 import {EntradasServices} from '../entradas-services/entradas-services'
 import {EntradasFormComponent} from '../entradas-form/entradas-form.component'
 declare var $: any;
@@ -11,7 +13,14 @@ declare var $: any;
 @Component({
   selector: 'app-entradas-table',
   templateUrl: './entradas-table.component.html',
-  styleUrls: ['./entradas-table.component.scss']
+  styleUrls: ['./entradas-table.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class EntradasTableComponent implements OnInit {
 
@@ -26,6 +35,9 @@ export class EntradasTableComponent implements OnInit {
   public titleModal: string;
   public element =[];
   public data=[];
+
+  expandedElement;
+
   ngAfterViewInit() {
   }
   constructor(
@@ -53,8 +65,11 @@ export class EntradasTableComponent implements OnInit {
             const datos ={
               Item: "",
               "id":value["data"][e].id,
-              "color":value["data"][e].color,
-  
+              "cliente":value["data"][e].cliente,
+              "sucursal":value["data"][e].sucursal,
+              "usuario":value["data"][e].usuario,
+              "observacion":value["data"][e].observacion,
+
             };
            this.data.push(datos);
            this.element.push(datos);
