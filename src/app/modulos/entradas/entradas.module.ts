@@ -21,11 +21,12 @@ import { MaterialModule } from './../../material.module';
 
 import { EntradasTableComponent } from './entradas-table/entradas-table.component';
 import {EntradasRoutingModule} from './entradas-routing.module';
-import { EntradasFormComponent } from './entradas-form/entradas-form.component'
+import { EntradasFormComponent } from './entradas-form/entradas-form.component';
+import { EntradasDeleteComponent } from './dialog/entradas-delete/entradas-delete.component'
 
 
 @NgModule({
-  declarations: [EntradasTableComponent, EntradasFormComponent],
+  declarations: [EntradasTableComponent, EntradasFormComponent, EntradasDeleteComponent],
   imports: [
     CommonModule,
     EntradasRoutingModule,
