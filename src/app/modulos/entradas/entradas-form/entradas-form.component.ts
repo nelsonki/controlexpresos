@@ -129,8 +129,8 @@ export class EntradasFormComponent implements OnInit {
       peso: '',
       cantidad: '',
       color:  '',
-      subservicio:  '',
-      subservicio_id:  '',
+      subservicio:  [],
+      //subservicio_id:  '',
       tipo: '',
     }
   ];
@@ -163,7 +163,6 @@ export class EntradasFormComponent implements OnInit {
       cantidad: ['' ],
       color:  ['' ],
       myControl_sub : [''],
-      myControl_sub_id : [''],
 
       myControl_ser : ['', [Validators.required ]],
       myControl_ser_id : ['', [Validators.required ]],
@@ -415,6 +414,51 @@ export class EntradasFormComponent implements OnInit {
     this.cd.detectChanges();
 }
 public addForm(id) {  
+  
+  this.firstFormGroup.controls['client'].setValue('');
+  this.firstFormGroup.controls['client_id'].setValue('');
+
+  this.firstFormGroup.controls['sucursal'].setValue('');
+  this.firstFormGroup.controls['sucursal_id'].setValue('');
+  var editDetail = [];
+  this.idEdit = id;
+  let dataEdit = [];
+  this.editSubmit = true;
+  this.putSubmit = true;
+  this.personList = [];
+  //console.warn(this.element)
+  Object.keys(this.element).forEach(i => {
+    if (this.element[i].id === id) {
+      dataEdit.push(this.element[i]);
+    }
+  });
+  console.log(dataEdit[0]);
+  this.firstFormGroup.controls['client'].setValue(dataEdit[0]["cliente"]);
+  this.firstFormGroup.controls['client_id'].setValue(dataEdit[0]["cliente_id"]);
+
+  this.firstFormGroup.controls['sucursal'].setValue(dataEdit[0]["sucursal"]);
+  this.firstFormGroup.controls['sucursal_id'].setValue(dataEdit[0]["sucursal_id"]);
+
+
+  /*this.boardingsService.getAllCrewaId(this.idEdit).pipe()
+              .subscribe((value2: any) => {
+                Object.keys(value2.data).forEach(i => {
+                
+                  this.personList.push(
+                      {
+                      'id': value2.data[i].id,
+                      'name': value2.data[i].name,
+                      'passport_number': value2.data[i].passport_number,
+                      'date_from': fechaboat,
+                      'sex': vienesex,
+                      'nationality': value2.data[i].nationality,
+                      'boat_id': value2.data[i].boat_id,
+                      'file' : value2.data[i].file
+                     }
+                  );
+                    });
+              });*/
+
 }  
 
 reloadComponent() {
@@ -440,7 +484,6 @@ remove(id: any) {
   this.myControl2.controls['cantidad'].setValue('');
   this.myControl2.controls['color'].setValue('');
   this.myControl2.controls['myControl_sub'].setValue('');
-  this.myControl2.controls['myControl_sub_id'].setValue('');
   this.myControl2.controls['tipo'].setValue(''); 
   this.personList.splice(id, 1);
   this.nameButtonAceptar = 'Agregar';
@@ -466,7 +509,11 @@ add() {
   }else{
     miid = this.personList[idv].id;
   }
-  
+  this.misSubServicios='';
+  Object.keys(this.fruits2).forEach(i => {
+    this.misSubServicios += this.fruits2[i] + ",";
+  });
+  let serviciosVan = this.misSubServicios.substring(0, this.misSubServicios.length - 1);
   this.personList.push({ 
     id: miid,
     servicio: form.value.myControl_ser,
@@ -475,8 +522,7 @@ add() {
     peso: form.value.peso,
     cantidad: form.value.cantidad,
     color:  form.value.color,
-    subservicio:  this.fruits2,
-    subservicio_id:  this.fruits2,
+    subservicio:  serviciosVan,
 
     tipo: form.value.tipo,
   });
@@ -490,10 +536,11 @@ add() {
   this.myControl2.controls['peso'].setValue(this.personList[id]["peso"]);
   this.myControl2.controls['cantidad'].setValue(this.personList[id]["cantidad"]);
   this.myControl2.controls['color'].setValue(this.personList[id]["color"]);
-  this.myControl2.controls['myControl_sub'].setValue(this.personList[id]["subservicio"]);
-  this.myControl2.controls['myControl_sub_id'].setValue(this.personList[id]["subservicio"]);
-
   this.myControl2.controls['tipo'].setValue(this.personList[id]["tipo"]);
+  let ss = (this.personList[id]["subservicio"])? this.personList[id]["subservicio"].split(","): "";
+  this.fruits2 = (ss !== "") ? ss : [];
+ 
+  this.myControl2.controls["fruitCtrl2"].setValue(this.fruits2);
 
 
   this.nameButtonAceptar = 'Editar';
@@ -511,7 +558,6 @@ public clearInput() {
   this.myControl2.controls['cantidad'].setValue('');
   this.myControl2.controls['color'].setValue('');
   this.myControl2.controls['myControl_sub'].setValue('');
-  this.myControl2.controls['myControl_sub_id'].setValue('');
 
   this.myControl2.controls['tipo'].setValue('');
   this.nameButtonAceptar = 'Agregar';
@@ -590,7 +636,6 @@ onSelectionChanged(event: MatAutocompleteSelectedEvent) {
   namesub = viene.name ? viene.name : '';
   //console.log(pla);
   this.myControl2.controls['myControl_sub'].setValue('');
-  this.myControl2.controls['myControl_sub_id'].setValue('');
   this.buscarSubServicio(namesub)
   this.fruits2.push(namesub);
 
