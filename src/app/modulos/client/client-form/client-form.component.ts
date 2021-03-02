@@ -94,8 +94,7 @@ export class ClientFormComponent implements OnInit {
     this.firstform.controls["dni"].setValue(dataEdit[0]["dni"].toLowerCase());
     this.firstform.controls["name"].setValue(dataEdit[0]["name"]);
     this.firstform.controls["address"].setValue(dataEdit[0]["address"]);
-
-    var phones = (dataEdit[0]["phone"])? dataEdit[0]["phone"].split(","): "";
+     var phones = (dataEdit[0]["phone"])? dataEdit[0]["phone"].split(","): "";
     this.fruits2 = (phones !== "") ? phones : [];
 
     var emails = (dataEdit[0]["email"])? dataEdit[0]["email"].split(","): "";

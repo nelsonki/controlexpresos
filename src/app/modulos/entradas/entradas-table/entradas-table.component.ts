@@ -68,7 +68,9 @@ export class EntradasTableComponent implements OnInit {
               Item: "",
               "id":value["data"][e].id,
               "cliente":value["data"][e].cliente,
+              "cliente_id":value["data"][e].cliente_id,
               "sucursal":value["data"][e].sucursal,
+              "sucursal_id":value["data"][e].sucursal_id,
               "usuario":value["data"][e].usuario,
               "observacion":value["data"][e].observacion,
 
