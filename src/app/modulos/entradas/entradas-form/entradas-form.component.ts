@@ -22,6 +22,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
 import {SubServiceServices} from '../../sub-service/sub-service-services/sub-service-services'
 import {ServiceServices} from '../../service/service-services/service-services'
@@ -95,6 +97,16 @@ export class EntradasFormComponent implements OnInit {
   public options4: Array<any> = [];
   public idsubservicio4 = 0;
 
+  readonly separatorKeysCodes2: number[] = [ENTER, COMMA];
+  public visible2 = true;
+  public selectable2 = true;
+  public removable2 = true;
+  public addOnBlur2 = true;
+  public statusValidPhone: boolean = false;
+  public fruits2: string[] = [];
+  public fruitCtrl2 = new FormControl();
+  public misSubServicios: any;
+
   public colores: Array<any> = [];
 
  
@@ -157,6 +169,8 @@ export class EntradasFormComponent implements OnInit {
       myControl_ser_id : ['', [Validators.required ]],
 
       tipo:  ['',  [Validators.required ] ],
+      fruitCtrl2: ["", ""],
+
      });
      this.colorServices.getList().pipe()
       .subscribe((value) => {
@@ -223,7 +237,7 @@ export class EntradasFormComponent implements OnInit {
     this.statusCloseModal.emit(this.closeStatus);
   }
   onSubmit(){
-    
+    this.misSubServicios="";
     if ( this.firstFormGroup.invalid  ) {
       return;
     }else{
@@ -251,8 +265,13 @@ export class EntradasFormComponent implements OnInit {
         this.loading = false;
         this.toasTer.error('No existe nacionalidad');
       }else{*/
-      
-        if (this.putSubmit) {
+      /////telefono
+      Object.keys(this.personList).forEach(i => {
+        this.misSubServicios += this.personList[i]["subservicio"] + ",";
+      });
+      let serviciosVan = this.misSubServicios.substring(0, this.misSubServicios.length - 1);
+     
+      if (this.putSubmit) {
           
           this.loading = true;
           let listEnpti = [];
@@ -267,7 +286,7 @@ export class EntradasFormComponent implements OnInit {
                 weight: this.personList[e]["peso"],
                 quantity: this.personList[e]["cantidad"],
                 color_id:  this.personList[e]["color"],
-                subservice_id:  this.personList[e]["subservicio_id"],
+                subservice_id:  serviciosVan,
                 operation_type: this.personList[e]["tipo"],
                 observation:null,
                 user:null
@@ -279,7 +298,7 @@ export class EntradasFormComponent implements OnInit {
                 weight: this.personList[e]["peso"],
                 quantity: this.personList[e]["cantidad"],
                 color_id:  this.personList[e]["color"],
-                subservice_id:  this.personList[e]["subservicio_id"],
+                subservice_id:  serviciosVan,
                 operation_type: this.personList[e]["tipo"],
                 observation:null,
                 user:null
@@ -290,8 +309,7 @@ export class EntradasFormComponent implements OnInit {
           });
           listEnpti = list.filter(function (n) {
             let value1 = n.service_id;
-            let value2 = n.subservice_id;
-            return value1 === "" ||  value2 === ""  ;
+            return value1 === ""  ;
           });
           if (listEnpti.length > 0) {
             this.loading = false;
@@ -339,7 +357,7 @@ export class EntradasFormComponent implements OnInit {
                 weight: this.personList[e]["peso"],
                 quantity: this.personList[e]["cantidad"],
                 color_id:  this.personList[e]["color"],
-                subservice_id:  this.personList[e]["subservicio_id"],
+                subservice_id:  serviciosVan,
                 operation_type: this.personList[e]["tipo"],
                 observation:null,
                 user:null
@@ -349,7 +367,7 @@ export class EntradasFormComponent implements OnInit {
               let value1 = n.service_id;
               let value2 = n.subservice_id;
              
-              return value1 === "" ||  value2 === "" ;
+              return value1 === "" ;
             });
             if (listEnpti.length > 0) {
               this.loading = false;
@@ -457,8 +475,8 @@ add() {
     peso: form.value.peso,
     cantidad: form.value.cantidad,
     color:  form.value.color,
-    subservicio:  form.value.myControl_sub,
-    subservicio_id:  form.value.myControl_sub_id,
+    subservicio:  this.fruits2,
+    subservicio_id:  this.fruits2,
 
     tipo: form.value.tipo,
   });
@@ -497,7 +515,9 @@ public clearInput() {
 
   this.myControl2.controls['tipo'].setValue('');
   this.nameButtonAceptar = 'Agregar';
- 
+  this.fruits2=[];
+  this.myControl2.controls["fruitCtrl2"].setValue('');
+
 }
 
 public asigneStepper(stepper: MatStepper) {
@@ -569,8 +589,10 @@ onSelectionChanged(event: MatAutocompleteSelectedEvent) {
   this.idsubservicio = viene.id ? viene.id : 0;
   namesub = viene.name ? viene.name : '';
   //console.log(pla);
-  this.myControl2.controls['myControl_sub'].setValue(namesub);
-  this.myControl2.controls['myControl_sub_id'].setValue(this.idsubservicio);
+  this.myControl2.controls['myControl_sub'].setValue('');
+  this.myControl2.controls['myControl_sub_id'].setValue('');
+  this.buscarSubServicio(namesub)
+  this.fruits2.push(namesub);
 
 }
 private _filter(name: string): Servicio[] {
@@ -601,6 +623,23 @@ private _filter4(name: string): Servicio[] {
   const filterValue4 = name.toLowerCase();
   return this.options4.filter(option => option.name.toLowerCase().indexOf(filterValue4) === 0 );
 }
+/////////////////////remover subservicios seleccionados tipo etiquetas
+buscarSubServicio(fruit2: string): void {
+  const index = this.fruits2.indexOf(fruit2);
+  if (index >= 0) {
+      this.fruits2.splice(index, 1);
+  }
+  this.myControl2.controls["fruitCtrl2"].setValue(this.fruits2);
+}
+
+removePhone(fruit2: string): void {
+  const index = this.fruits2.indexOf(fruit2);
+  if (index >= 0) {
+      this.fruits2.splice(index, 1);
+  }
+  this.myControl2.controls["fruitCtrl2"].setValue(this.fruits2);
+}
+
 }
 
 
