@@ -148,9 +148,9 @@
                             </mat-select>
                         </mat-form-field>
                         <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
-                            <mat-label>Sub Servicio</mat-label>
+                            <mat-label>Seleccionar Sub Servicio</mat-label>
 
-                            <input aria-label="Number" type="text" placeholder="subservicio" matInput formControlName="myControl_sub" [matAutocomplete]="auto2">
+                            <input aria-label="Number" type="text" placeholder="Seleccionar Sub Servicio" matInput formControlName="myControl_sub" [matAutocomplete]="auto2">
                             <mat-autocomplete (optionSelected)="onSelectionChanged($event)" autoActiveFirstOption #auto2="matAutocomplete">
                                 <!--[displayWith]="displayFn"-->
 
@@ -159,7 +159,16 @@
                                 </mat-option>
                             </mat-autocomplete>
                         </mat-form-field>
+                        <mat-form-field class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 example-chip-list">
+                            <mat-chip-list #chipList2 aria-label="Fruit2 selection2">
+                                <mat-chip *ngFor="let fruit2 of fruits2" [selectable]="selectable2" [removable]="removable2" (removed)="removePhone(fruit2)">
+                                    {{ fruit2 }}
+                                    <mat-icon matChipRemove *ngIf="removable2">cancel</mat-icon>
+                                </mat-chip>
+                                <input placeholder="Sub Servicios seleccionados" #fruitInput [formControl]="fruitCtrl2" [matChipInputFor]="chipList2" [matChipInputSeparatorKeyCodes]="separatorKeysCodes2" [matChipInputAddOnBlur]="addOnBlur2" onkeydown="return false" />
+                            </mat-chip-list>
 
+                        </mat-form-field>
 
                         <div class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
                             <button mat-raised-button color="primary" class="btn btn-accent " (click)="add()" [disabled]="!myControl2.valid || idsubservicio===0 || idsubservicio4===0">+</button>&nbsp; &nbsp;
