@@ -12,7 +12,7 @@
         </mat-form-field>
         <mat-form-field class="example-chip-list">
             <mat-label>Margen de Error(*)</mat-label>
-            <input matInput formControlName="margen" type="number" min="0" [ngClass]="{ 'is-invalid': submitted && f.margen.errors }" />
+            <input matInput formControlName="margen" type="number" min="0" onkeypress="return event.charCode >= 48" [ngClass]="{ 'is-invalid': submitted && f.margen.errors }" />
             <mat-error *ngIf="submitted && f.margen.errors">
                 <div *ngIf="f.margen.errors.required">
                     Por Favor, Ingrese margen

@@ -102,12 +102,12 @@
                         <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
                             <mat-label>Peso</mat-label>
 
-                            <input matInput formControlName="peso" id="peso" type="number" min="0" />
+                            <input matInput formControlName="peso" id="peso" type="number" min="0" onkeypress="return event.charCode >= 48" />
                         </mat-form-field>
                         <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
                             <mat-label>Cantidad</mat-label>
 
-                            <input matInput formControlName="cantidad" id="cantidad" type="number" min="0" />
+                            <input matInput formControlName="cantidad" id="cantidad" type="number" min="0" onkeypress="return event.charCode >= 48" />
                         </mat-form-field>
                         <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
                             <mat-label>Tipo de Servicio (*)</mat-label>
