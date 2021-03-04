@@ -287,8 +287,7 @@ export class EntradasFormComponent implements OnInit {
                 color_id:  this.personList[e]["color"],
                 subservice_id:  serviciosVan,
                 operation_type: this.personList[e]["tipo"],
-                observation:null,
-                user:null
+                 
               });
             }else{             
               list.push({    
@@ -299,8 +298,7 @@ export class EntradasFormComponent implements OnInit {
                 color_id:  this.personList[e]["color"],
                 subservice_id:  serviciosVan,
                 operation_type: this.personList[e]["tipo"],
-                observation:null,
-                user:null
+                 
               });
             }
             
@@ -323,7 +321,7 @@ export class EntradasFormComponent implements OnInit {
               
               let bodyData = Object.assign({
                 "client_id": this.firstFormGroup.controls["client_id"].value,
-                "branch_id": this.firstFormGroup.controls["sucursal_id"].value,
+                "branch_id": (this.firstFormGroup.controls["sucursal_id"].value!=="") ? this.firstFormGroup.controls["sucursal_id"].value : null ,
                 "moreInputs": list
               });  
               //console.warn(bodyData);
@@ -352,14 +350,14 @@ export class EntradasFormComponent implements OnInit {
             Object.keys(this.personList).forEach(e => {
                
               list.push({
+                 
                 service_id: this.personList[e]["servicio_id"],
                 weight: this.personList[e]["peso"],
                 quantity: this.personList[e]["cantidad"],
                 color_id:  this.personList[e]["color"],
                 subservice_id:  serviciosVan,
                 operation_type: this.personList[e]["tipo"],
-                observation:null,
-                user:null
+                 
               });
             });
             listEnpti = list.filter(function (n) {
@@ -380,7 +378,7 @@ export class EntradasFormComponent implements OnInit {
               }else {
             let bodyData = Object.assign({
               "client_id": this.firstFormGroup.controls["client_id"].value,
-              "branch_id": this.firstFormGroup.controls["sucursal_id"].value,
+              "branch_id": (this.firstFormGroup.controls["sucursal_id"].value!=="") ? this.firstFormGroup.controls["sucursal_id"].value : null ,
               "moreInputs": list
             });
             console.log(bodyData);
