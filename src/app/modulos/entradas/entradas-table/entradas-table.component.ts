@@ -36,8 +36,7 @@ export class EntradasTableComponent implements OnInit {
   dataSource;
   public titleModal: string;
   public element =[];
-  public data=[];
-
+  data: any = [];
   expandedElement;
 
   ngAfterViewInit() {
@@ -60,27 +59,41 @@ export class EntradasTableComponent implements OnInit {
     this.entradasServices.getList().subscribe((value) => {
       this.data=[];
       this.element=[];
-      console.log(value["data"])
+      //console.log(value["data"])
       if (value["data"]){
         this.element = [];
         Object.keys(value["data"]).forEach(e => {
             const datos ={
               Item: "",
               "id":value["data"][e].id,
-              "cliente":value["data"][e].cliente,
-              "cliente_id":value["data"][e].cliente_id,
-              "sucursal":value["data"][e].sucursal,
-              "sucursal_id":value["data"][e].sucursal_id,
-              "usuario":value["data"][e].usuario,
-              "observacion":value["data"][e].observacion,
-
+              "client_name":value["data"][e].client_name,
+              "client_id":value["data"][e].client_id,
+              "branch_name":value["data"][e].branch_name,
+              "branch_id":value["data"][e].branch_id,
+              "observation":value["data"][e].observation,
+              "date_time": value["data"][e].date_time,
+              "inputs":[]
             };
-           this.data.push(datos);
-           this.element.push(datos);
+            this.element.push(datos);
+            Object.keys(value["data"][e].inputs).forEach(i => {
+            this.data =
+            {
+              id:value["data"][e].inputs[i].id,
+              weight: value["data"][e].inputs[i].weight,
+              quantity: value["data"][e].inputs[i].quantity,
+              service_id: value["data"][e].inputs[i].service_id,
+              color_id: value["data"][e].inputs[i].color_id,
+              subservices_tag: value["data"][e].inputs[i].subservices_tag,
+              operation_type: value["data"][e].inputs[i].operation_type,
+              created_at: value["data"][e].inputs[i].created_at,
+            } ;                       
+            this.element[e].inputs.push(this.data);
+              });
          });
-        Object.keys(this.element).forEach((i, index) => {
+         Object.keys(this.element).forEach((i, index) => {
           this.element[i].Item = index + 1;
        });
+       
         this.dataSource = new MatTableDataSource(this.element);
         this.dataSource.paginator = this.paginator;
         return this.dataSource;
@@ -144,4 +157,5 @@ export class EntradasTableComponent implements OnInit {
    });
   
   }
+  dialogCancel(){}
 }
