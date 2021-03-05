@@ -18,11 +18,12 @@ import { MaterialModule } from './../../material.module';
 
 import { SalidasTableComponent } from './salidas-table/salidas-table.component';
 import {SalidasRoutingModule} from './salidas-routing.module';
-import { SalidasFormComponent } from './salidas-form/salidas-form.component'
+import { SalidasFormComponent } from './salidas-form/salidas-form.component';
+import { SalidasDeleteComponent } from './dialog/salidas-delete/salidas-delete.component'
 
 
 @NgModule({
-  declarations: [SalidasTableComponent, SalidasFormComponent],
+  declarations: [SalidasTableComponent, SalidasFormComponent, SalidasDeleteComponent],
   imports: [
     CommonModule,
     SalidasRoutingModule,
