@@ -59,7 +59,7 @@ export class EntradasTableComponent implements OnInit {
     this.entradasServices.getList().subscribe((value) => {
       this.data=[];
       this.element=[];
-      //console.log(value["data"])
+      console.log(value["data"])
       if (value["data"]){
         this.element = [];
         Object.keys(value["data"]).forEach(e => {
@@ -82,7 +82,10 @@ export class EntradasTableComponent implements OnInit {
               weight: value["data"][e].inputs[i].weight,
               quantity: value["data"][e].inputs[i].quantity,
               service_id: value["data"][e].inputs[i].service_id,
+              service_name: value["data"][e].inputs[i].service_name,
+
               color_id: value["data"][e].inputs[i].color_id,
+              color_name: value["data"][e].inputs[i].color_name,
               subservices_tag: value["data"][e].inputs[i].subservices_tag,
               operation_type: value["data"][e].inputs[i].operation_type,
               created_at: value["data"][e].inputs[i].created_at,
@@ -127,11 +130,18 @@ export class EntradasTableComponent implements OnInit {
     this.form.firstFormGroup.controls['sucursal_id'].setValue('');
  
     this.form.myControl2.controls['myControl_ser'].setValue('');
+    this.form.myControl2.controls['myControl_ser_id'].setValue('');
+
     this.form.myControl2.controls['peso'].setValue('');
     this.form.myControl2.controls['cantidad'].setValue('');
-    this.form.myControl2.controls['color'].setValue('');
+    this.form.myControl2.controls['myControl_color'].setValue('');
+    this.form.myControl2.controls['myControl_color_id'].setValue('');
+
     this.form.myControl2.controls['myControl_sub'].setValue('');
     this.form.myControl2.controls['tipo'].setValue('');
+
+    this.form.fruits2=[];
+    this.form.myControl2.controls["fruitCtrl2"].setValue('');
 
     this.form.putSubmit = false;
     this.titleModal = "Crear Entrada";
@@ -151,11 +161,19 @@ export class EntradasTableComponent implements OnInit {
     this.form.addForm(id);
   }
   eliminar(id){
+    let modulo ="delete";
     this.dialog.open(EntradasDeleteComponent, {
      width: "450px",
-     data: id
+     data: [id, modulo]
    });
   
   }
-  dialogCancel(){}
-}
+  eliminarOp(id){
+    let modulo ="deleteOp";
+    this.dialog.open(EntradasDeleteComponent, {
+     width: "450px",
+     data: [id, modulo]
+   });
+  
+  }
+ }

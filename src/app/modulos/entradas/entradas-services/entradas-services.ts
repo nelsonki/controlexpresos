@@ -38,9 +38,16 @@ export class EntradasServices {
         return this.http.doPut(this.api, enpoint, body);
     }
 
-    delete(id) {
-        let enpoint = 'inputs/delete/'+id;
-        return this.http.doDelete(this.api, enpoint);
+    delete(id, modulo) {
+         if(modulo === "delete"){
+            let enpoint = 'inputs/delete/'+id;
+            return this.http.doDelete(this.api, enpoint); 
+        }
+        if(modulo === "deleteOp"){
+            let enpoint = 'inputs/deleteOp/'+id;
+            return this.http.doDelete(this.api, enpoint); 
+        }
+        
      }
 
      

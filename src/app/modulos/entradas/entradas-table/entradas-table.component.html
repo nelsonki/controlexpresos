@@ -133,15 +133,15 @@
                                         <td>{{id2+1}}</td>
                                         <td>{{input.weight}}</td>
                                         <td>{{input.quantity}}</td>
-                                        <td>{{input.service_id}}</td>
-                                        <td>{{input.color_id}}</td>
+                                        <td>{{input.service_name}}</td>
+                                        <td>{{input.color_name}}</td>
                                         <td>{{input.subservices_tag}}</td>
                                         <td>{{input.operation_type}}</td>
                                         <td>{{input.created_at}}</td>
 
                                         <td class="text-center">
                                             <span class="table-remove">
-                                <a (click)="dialogCancel(input.id)">
+                                <a (click)="eliminarOp(input.id)">
                                     <mdb-icon
                                     fas
                                     icon="trash-alt"
