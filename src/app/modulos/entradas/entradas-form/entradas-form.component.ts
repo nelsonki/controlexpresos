@@ -27,6 +27,7 @@ import {HttpServices}from '../../../http/httpServices/httpServices'
 import {ColorServices} from '../../color/color-services/color-services'
 import {SubServiceServices} from '../../sub-service/sub-service-services/sub-service-services'
 import {ServiceServices} from '../../service/service-services/service-services'
+import {ClientServices} from '../../client/client-services/client-services'
 import {EntradasServices} from '../entradas-services/entradas-services'
 
 import {entradasMsg} from '../../../utils/const/message'
@@ -39,6 +40,10 @@ export interface Servicio {
   name: string;
 }
 export interface Color {
+  id: number;
+  name: string;
+}
+export interface Cliente {
   id: number;
   name: string;
 }
@@ -81,10 +86,10 @@ export class EntradasFormComponent implements OnInit {
   public nameButtonAceptar: string = 'Agregar';
   public idToUpdate: number;
 
-  public api;
+  /*public api;
   openOptionClient: boolean = false;
   filteredOptions: Observable<string[]>;
-  public disabledButoon: boolean = false;
+  public disabledButoon: boolean = false;*/
 
   public api2;
   openOptionClient2: boolean = false;
@@ -105,6 +110,11 @@ export class EntradasFormComponent implements OnInit {
   public filteredOptions5: Observable<Color[]>;
   public options5: Array<any> = [];
   public idsubservicio5 = 0;
+
+  //buscar cliente
+  public filteredOptions6: Observable<Cliente[]>;
+  public options6: Array<any> = [];
+  public idsubservicio6 = 0;
 
   readonly separatorKeysCodes2: number[] = [ENTER, COMMA];
   public visible2 = true;
@@ -154,7 +164,8 @@ export class EntradasFormComponent implements OnInit {
     public dialog: MatDialog,
     private http: HttpServices,
     private colorServices: ColorServices,
-    private entradasServices: EntradasServices
+    private entradasServices: EntradasServices,
+    private clientServices: ClientServices
    ) {     
       this.isLoading = true;
    }
@@ -248,6 +259,28 @@ export class EntradasFormComponent implements OnInit {
         startWith(''),
           map(value => typeof value === 'string' ? value : value.name),
           map(name => name ? this._filter5(name) : this.options5.slice())
+      );
+      /*BUSCAR CLIENTE*******************************/
+      this.clientServices.getList()
+      .subscribe((value) => {
+        
+        Object.keys(value['data']).forEach(i => {
+          this.options6.push(
+               {
+                 id: value['data'][i].id,
+                 name: value['data'][i].name,
+  
+                }
+  
+          );
+         
+            });
+ 
+      });
+      this.filteredOptions6  = this.firstFormGroup.controls['client'].valueChanges.pipe(
+        startWith(''),
+          map(value => typeof value === 'string' ? value : value.name),
+          map(name => name ? this._filter6(name) : this.options6.slice())
       );
   }
   public closeModal() {
@@ -601,8 +634,32 @@ public returnStepper(stepper: MatStepper) {
 public goForward(stepper: MatStepper) {
   stepper.reset();
 }
+
+/*BUSCAR CLIENTE*///////////////////////////////////////////////////////////////////////////////////////////////
+
+displayFn6(cliente: Cliente): string {
+  return cliente && cliente.name ? cliente.name : '';
+}
+
+onSelectionChanged6(event: MatAutocompleteSelectedEvent) {
+  this.idsubservicio6 = 0;
+  let namesub6:string;
+  
+  const viene6= event.option.value;
+  this.idsubservicio6 = viene6.id ? viene6.id : 0;
+  namesub6 = viene6.name ? viene6.name : '';
+  //console.log(pla);
+  this.firstFormGroup.controls['client'].setValue(namesub6);
+  this.firstFormGroup.controls['client_id'].setValue(this.idsubservicio6);
+
+}
+
+private _filter6(name: string): Cliente[] {
+  const filterValue6 = name.toLowerCase();
+  return this.options6.filter(option => option.name.toLowerCase().indexOf(filterValue6) === 0 );
+}
 /*buscar cliente*/
-public searchClient() {
+/*public searchClient() {
   this.api = environment.apiJakiro2;
   let valueSearch = this.firstFormGroup.controls["client"].value;
   if (valueSearch.trim() !== "") {
@@ -624,9 +681,9 @@ public setDataFormul(event, id, nombreComercial) {
   this.openOptionClient = false;
   this.firstFormGroup.controls["client_id"].setValue(id);
   this.firstFormGroup.controls["client"].setValue(nombreComercial);
-}
+}*/
 /*buscar sucursal*//////////////////////////////////////////////////////////////////////
-public searchClient2() {
+/*public searchClient2() {
   this.api2 = environment.apiJakiro2;
   let valueSearch2 = this.firstFormGroup.controls["sucursal"].value;
   if (valueSearch2.trim() !== "") {
@@ -648,7 +705,7 @@ public setDataFormul2(event, id, nombreComercial) {
   this.openOptionClient2 = false;
   this.firstFormGroup.controls["sucursal_id"].setValue(id);
   this.firstFormGroup.controls["sucursal"].setValue(nombreComercial);
-}
+}*/
 /*BUSCAR SUB-SERVICIO*/
 
 displayFn(subservicio: Subservicio): string {
