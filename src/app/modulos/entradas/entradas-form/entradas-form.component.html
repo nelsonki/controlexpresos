@@ -131,12 +131,16 @@
 
 
                         <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
-                            <mat-label>color</mat-label>
-                            <mat-select formControlName="color" id="color">
-                                <mat-option *ngFor="let col  of colores" [value]="col.id">
-                                    {{col.color}}
+                            <mat-label>Color</mat-label>
+
+                            <input aria-label="Number" type="text" placeholder="Color" matInput formControlName="myControl_color" [matAutocomplete]="auto5">
+                            <mat-autocomplete (optionSelected)="onSelectionChanged5($event)" autoActiveFirstOption #auto5="matAutocomplete">
+                                <!--[displayWith]="displayFn"-->
+
+                                <mat-option *ngFor="let option  of filteredOptions5  | async" [value]="option">
+                                    {{ option.name }}
                                 </mat-option>
-                            </mat-select>
+                            </mat-autocomplete>
 
                         </mat-form-field>
                         <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
@@ -171,7 +175,7 @@
                         </mat-form-field>
 
                         <div class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
-                            <button mat-raised-button color="primary" class="btn btn-accent " (click)="add()" [disabled]="!myControl2.valid || idsubservicio===0 || idsubservicio4===0">+</button>&nbsp; &nbsp;
+                            <button mat-raised-button color="primary" class="btn btn-accent " (click)="add()" [disabled]="!myControl2.valid ||  idsubservicio4===0">+</button>&nbsp; &nbsp;
                             <button mat-raised-button color="primary" class="btn btn-accent " (click)="clearInput()" color="accent">Limpiar</button>&nbsp; &nbsp;
 
                             <!--[disabled]="!myControl.valid" (click)="reset()"-->

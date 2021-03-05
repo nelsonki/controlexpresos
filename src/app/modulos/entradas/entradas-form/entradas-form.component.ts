@@ -14,8 +14,6 @@ import { ToastrService } from 'ngx-toastr';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import {environment} from '../../../../environments/environment'
-import {HttpServices}from '../../../http/httpServices/httpServices'
-import {ColorServices} from '../../color/color-services/color-services'
 
 import { Router } from "@angular/router";
 import { Pipe, PipeTransform } from '@angular/core';
@@ -25,6 +23,8 @@ import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material
 import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
+import {HttpServices}from '../../../http/httpServices/httpServices'
+import {ColorServices} from '../../color/color-services/color-services'
 import {SubServiceServices} from '../../sub-service/sub-service-services/sub-service-services'
 import {ServiceServices} from '../../service/service-services/service-services'
 import {EntradasServices} from '../entradas-services/entradas-services'
@@ -35,6 +35,10 @@ export interface Subservicio {
   name: string;
 }
 export interface Servicio {
+  id: number;
+  name: string;
+}
+export interface Color {
   id: number;
   name: string;
 }
@@ -97,6 +101,11 @@ export class EntradasFormComponent implements OnInit {
   public options4: Array<any> = [];
   public idsubservicio4 = 0;
 
+  //buscar color
+  public filteredOptions5: Observable<Color[]>;
+  public options5: Array<any> = [];
+  public idsubservicio5 = 0;
+
   readonly separatorKeysCodes2: number[] = [ENTER, COMMA];
   public visible2 = true;
   public selectable2 = true;
@@ -108,16 +117,16 @@ export class EntradasFormComponent implements OnInit {
   public misSubServicios: any;
 
   public colores: Array<any> = [];
-
+ 
  
   public tipoRopa: Array<any> = [{
-    value: 'Nueva',
+    value: 'nueva',
   },
   {
-    value: 'Usada',
+    value: 'usada',
   },
   {
-    value: 'Desmanche',
+    value: 'desmanche',
   },
    
   ];
@@ -129,6 +138,7 @@ export class EntradasFormComponent implements OnInit {
       peso: '',
       cantidad: '',
       color:  '',
+      color_id:'',
       subservicio:  [],
       //subservicio_id:  '',
       tipo: '',
@@ -161,32 +171,19 @@ export class EntradasFormComponent implements OnInit {
     this.myControl2 = this.formBuilder.group({
       peso: [''],
       cantidad: ['' ],
-      color:  ['' ],
+      myControl_color:  ['' ],
+      myControl_color_id:  ['' ],
+
       myControl_sub : [''],
 
       myControl_ser : ['', [Validators.required ]],
       myControl_ser_id : ['', [Validators.required ]],
 
       tipo:  ['',  [Validators.required ] ],
-      fruitCtrl2: ["", ""],
+      fruitCtrl2: [""],
 
      });
-     this.colorServices.getList().pipe()
-      .subscribe((value) => {
-        
-        Object.keys(value['data']).forEach(i => {
-          this.colores.push(
-               {
-                 id: value['data'][i].id,
-                 color: value['data'][i].color,
-  
-                }
-  
-          );
-         
-            });
- 
-      });
+     
       /*BUSCAR SUB-SERVICIO*/
       this.subServiceServices.getList().pipe()
       .subscribe((value2) => {
@@ -229,6 +226,28 @@ export class EntradasFormComponent implements OnInit {
         startWith(''),
           map(value => typeof value === 'string' ? value : value.name),
           map(name => name ? this._filter4(name) : this.options4.slice())
+      );
+      /*BUSCAR COLOR*/
+      this.colorServices.getList().pipe()
+      .subscribe((value) => {
+        
+        Object.keys(value['data']).forEach(i => {
+          this.options5.push(
+               {
+                 id: value['data'][i].id,
+                 name: value['data'][i].color,
+  
+                }
+  
+          );
+         
+            });
+ 
+      });
+      this.filteredOptions5  = this.myControl2.controls['myControl_color'].valueChanges.pipe(
+        startWith(''),
+          map(value => typeof value === 'string' ? value : value.name),
+          map(name => name ? this._filter5(name) : this.options5.slice())
       );
   }
   public closeModal() {
@@ -282,9 +301,9 @@ export class EntradasFormComponent implements OnInit {
               list.push({
                 id: 0,
                 service_id: this.personList[e]["servicio_id"],
-                weight: this.personList[e]["peso"],
-                quantity: this.personList[e]["cantidad"],
-                color_id:  this.personList[e]["color"],
+                weight: (this.personList[e]["peso"]!=='')?this.personList[e]["peso"]:0,
+                quantity: (this.personList[e]["cantidad"]!=='')?this.personList[e]["cantidad"]:0,
+                color_id:  this.personList[e]["color_id"],
                 subservice_id:  serviciosVan,
                 operation_type: this.personList[e]["tipo"],
                  
@@ -293,9 +312,9 @@ export class EntradasFormComponent implements OnInit {
               list.push({    
                 id: this.personList[e]["id"],
                 service_id: this.personList[e]["servicio_id"],
-                weight: this.personList[e]["peso"],
-                quantity: this.personList[e]["cantidad"],
-                color_id:  this.personList[e]["color"],
+                weight: (this.personList[e]["peso"]!=='')?this.personList[e]["peso"]:0,
+                quantity: (this.personList[e]["cantidad"]!=='')?this.personList[e]["cantidad"]:0,
+                color_id:  this.personList[e]["color_id"],
                 subservice_id:  serviciosVan,
                 operation_type: this.personList[e]["tipo"],
                  
@@ -352,9 +371,9 @@ export class EntradasFormComponent implements OnInit {
               list.push({
                  
                 service_id: this.personList[e]["servicio_id"],
-                weight: this.personList[e]["peso"],
-                quantity: this.personList[e]["cantidad"],
-                color_id:  this.personList[e]["color"],
+                weight: (this.personList[e]["peso"]!=='')?this.personList[e]["peso"]:0,
+                quantity: (this.personList[e]["cantidad"]!=='')?this.personList[e]["cantidad"]:0,
+                color_id:  this.personList[e]["color_id"],
                 subservice_id:  serviciosVan,
                 operation_type: this.personList[e]["tipo"],
                  
@@ -415,9 +434,21 @@ public addForm(id) {
   
   this.firstFormGroup.controls['client'].setValue('');
   this.firstFormGroup.controls['client_id'].setValue('');
-
   this.firstFormGroup.controls['sucursal'].setValue('');
   this.firstFormGroup.controls['sucursal_id'].setValue('');
+
+  this.myControl2.controls['myControl_ser'].setValue('');
+  this.myControl2.controls['myControl_ser_id'].setValue('');
+  this.myControl2.controls['peso'].setValue('');
+  this.myControl2.controls['cantidad'].setValue('');
+  this.myControl2.controls['myControl_color'].setValue('');
+  this.myControl2.controls['myControl_color_id'].setValue('');
+  this.myControl2.controls['myControl_sub'].setValue('');
+  this.myControl2.controls['tipo'].setValue('');
+  this.nameButtonAceptar = 'Agregar';
+  this.fruits2=[];
+  this.myControl2.controls["fruitCtrl2"].setValue('');
+
   var editDetail = [];
   this.idEdit = id;
   let dataEdit = [];
@@ -431,31 +462,31 @@ public addForm(id) {
     }
   });
   console.log(dataEdit[0]);
-  this.firstFormGroup.controls['client'].setValue(dataEdit[0]["cliente"]);
-  this.firstFormGroup.controls['client_id'].setValue(dataEdit[0]["cliente_id"]);
+  this.firstFormGroup.controls['client'].setValue(dataEdit[0]["client_name"]);
+  this.firstFormGroup.controls['client_id'].setValue(dataEdit[0]["client_id"]);
 
-  this.firstFormGroup.controls['sucursal'].setValue(dataEdit[0]["sucursal"]);
-  this.firstFormGroup.controls['sucursal_id'].setValue(dataEdit[0]["sucursal_id"]);
-
-
-  /*this.boardingsService.getAllCrewaId(this.idEdit).pipe()
-              .subscribe((value2: any) => {
-                Object.keys(value2.data).forEach(i => {
+  this.firstFormGroup.controls['sucursal'].setValue(dataEdit[0]["branch_name"]);
+  this.firstFormGroup.controls['sucursal_id'].setValue(dataEdit[0]["branch_id"]);
+ 
+                Object.keys(dataEdit[0].inputs).forEach(i => {
+                  
                 
                   this.personList.push(
+ 
                       {
-                      'id': value2.data[i].id,
-                      'name': value2.data[i].name,
-                      'passport_number': value2.data[i].passport_number,
-                      'date_from': fechaboat,
-                      'sex': vienesex,
-                      'nationality': value2.data[i].nationality,
-                      'boat_id': value2.data[i].boat_id,
-                      'file' : value2.data[i].file
-                     }
+                      'id': dataEdit[0].inputs[i].id,
+                      'peso': dataEdit[0].inputs[i].weight,
+                      'cantidad': dataEdit[0].inputs[i].quantity,
+                      'servicio': dataEdit[0].inputs[i].service_name,
+                      'servicio_id': dataEdit[0].inputs[i].service_id,
+                      'color': dataEdit[0].inputs[i].color_name,
+                      'color_id': dataEdit[0].inputs[i].color_id,
+                      'subservicio': dataEdit[0].inputs[i].subservices_tag,
+                      'tipo': dataEdit[0].inputs[i].operation_type,
+                      }
                   );
                     });
-              });*/
+             
 
 }  
 
@@ -480,7 +511,8 @@ remove(id: any) {
   this.myControl2.controls['myControl_ser_id'].setValue('');
   this.myControl2.controls['peso'].setValue('');
   this.myControl2.controls['cantidad'].setValue('');
-  this.myControl2.controls['color'].setValue('');
+  this.myControl2.controls['myControl_color'].setValue('');
+  this.myControl2.controls['myControl_color_id'].setValue('');
   this.myControl2.controls['myControl_sub'].setValue('');
   this.myControl2.controls['tipo'].setValue(''); 
   this.personList.splice(id, 1);
@@ -512,16 +544,16 @@ add() {
     this.misSubServicios += this.fruits2[i] + ",";
   });
   let serviciosVan = this.misSubServicios.substring(0, this.misSubServicios.length - 1);
+   
   this.personList.push({ 
     id: miid,
     servicio: form.value.myControl_ser,
     servicio_id: form.value.myControl_ser_id,
-
     peso: form.value.peso,
     cantidad: form.value.cantidad,
-    color:  form.value.color,
+    color:  form.value.myControl_color,
+    color_id:  form.value.myControl_color_id,
     subservicio:  serviciosVan,
-
     tipo: form.value.tipo,
   });
   console.log(this.personList);
@@ -529,18 +561,15 @@ add() {
 }
  edittri(id: any) {
   this.myControl2.controls['myControl_ser'].setValue(this.personList[id]["servicio"]);
-  this.myControl2.controls['myControl_ser_id'].setValue(this.personList[id]["servicio"]);
-
+  this.myControl2.controls['myControl_ser_id'].setValue(this.personList[id]["servicio_id"]);
   this.myControl2.controls['peso'].setValue(this.personList[id]["peso"]);
   this.myControl2.controls['cantidad'].setValue(this.personList[id]["cantidad"]);
-  this.myControl2.controls['color'].setValue(this.personList[id]["color"]);
+  this.myControl2.controls['myControl_color'].setValue(this.personList[id]["color"]);
+  this.myControl2.controls['myControl_color_id'].setValue(this.personList[id]["color_id"]);
   this.myControl2.controls['tipo'].setValue(this.personList[id]["tipo"]);
   let ss = (this.personList[id]["subservicio"])? this.personList[id]["subservicio"].split(","): "";
   this.fruits2 = (ss !== "") ? ss : [];
- 
   this.myControl2.controls["fruitCtrl2"].setValue(this.fruits2);
-
-
   this.nameButtonAceptar = 'Editar';
   this.idToUpdate = id;
   console.log(this.personList);
@@ -551,12 +580,11 @@ public clearInput() {
   /*this.myControl2.reset();*/
   this.myControl2.controls['myControl_ser'].setValue('');
   this.myControl2.controls['myControl_ser_id'].setValue('');
-
   this.myControl2.controls['peso'].setValue('');
   this.myControl2.controls['cantidad'].setValue('');
-  this.myControl2.controls['color'].setValue('');
+  this.myControl2.controls['myControl_color'].setValue('');
+  this.myControl2.controls['myControl_color_id'].setValue('');
   this.myControl2.controls['myControl_sub'].setValue('');
-
   this.myControl2.controls['tipo'].setValue('');
   this.nameButtonAceptar = 'Agregar';
   this.fruits2=[];
@@ -665,6 +693,29 @@ onSelectionChanged4(event: MatAutocompleteSelectedEvent) {
 private _filter4(name: string): Servicio[] {
   const filterValue4 = name.toLowerCase();
   return this.options4.filter(option => option.name.toLowerCase().indexOf(filterValue4) === 0 );
+}
+/*BUSCAR COLOR*///////////////////////////////////////////////////////////////////////////////////////////////
+
+displayFn5(color: Color): string {
+  return color && color.name ? color.name : '';
+}
+
+onSelectionChanged5(event: MatAutocompleteSelectedEvent) {
+  this.idsubservicio5 = 0;
+  let namesub5:string;
+  
+  const viene5= event.option.value;
+  this.idsubservicio5 = viene5.id ? viene5.id : 0;
+  namesub5 = viene5.name ? viene5.name : '';
+  //console.log(pla);
+  this.myControl2.controls['myControl_color'].setValue(namesub5);
+  this.myControl2.controls['myControl_color_id'].setValue(this.idsubservicio5);
+
+}
+
+private _filter5(name: string): Servicio[] {
+  const filterValue5 = name.toLowerCase();
+  return this.options5.filter(option => option.name.toLowerCase().indexOf(filterValue5) === 0 );
 }
 /////////////////////remover subservicios seleccionados tipo etiquetas
 buscarSubServicio(fruit2: string): void {
