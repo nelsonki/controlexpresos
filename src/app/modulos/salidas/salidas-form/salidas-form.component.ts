@@ -7,7 +7,7 @@ import {
   Output,
   EventEmitter
 } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 //import { TemplateMsg } from "../../../utils/const/message";
 import { ToastrService } from "ngx-toastr";
@@ -36,6 +36,10 @@ export interface Servicio {
   id: number;
   name: string;
 }
+export interface Color {
+  id: number;
+  name: string;
+}
 @Component({
   selector: 'app-salidas-form',
   templateUrl: './salidas-form.component.html',
@@ -53,6 +57,8 @@ export class SalidasFormComponent implements OnInit {
   public editField: string;
   public nameButtonAceptar: string = 'Agregar';
   public idToUpdate: number;
+  public idEdit: any;
+  public putSubmit: boolean = false;
 
   public visible = true;
   public selectable = true;
@@ -82,6 +88,21 @@ export class SalidasFormComponent implements OnInit {
   public options4: Array<any> = [];
   public idsubservicio4 = 0;
 
+  //buscar color
+  public filteredOptions5: Observable<Color[]>;
+  public options5: Array<any> = [];
+  public idsubservicio5 = 0;
+
+  readonly separatorKeysCodes2: number[] = [ENTER, COMMA];
+  public visible2 = true;
+  public selectable2 = true;
+  public removable2 = true;
+  public addOnBlur2 = true;
+  public statusValidPhone: boolean = false;
+  public fruits2: string[] = [];
+  public fruitCtrl2 = new FormControl();
+  public misSubServicios: any;
+
   public colores: Array<any> = [];
 
   public tipoRopa: Array<any> = [{
@@ -103,8 +124,9 @@ export class SalidasFormComponent implements OnInit {
       peso: '',
       cantidad: '',
       color:  '',
-      subservicio:  '',
-      subservicio_id:  '',
+      color_id:'',
+      subservicio:  [],
+      //subservicio_id:  '',
       tipo: '',
     }
   ];
@@ -124,31 +146,18 @@ export class SalidasFormComponent implements OnInit {
     this.myControl2 = this.formBuilder.group({
       peso: [''],
       cantidad: ['' ],
-      color:  ['' ],
+      myControl_color:  ['' ],
+      myControl_color_id:  ['' ],
+
       myControl_sub : [''],
-      myControl_sub_id : [''],
 
       myControl_ser : ['', [Validators.required ]],
       myControl_ser_id : ['', [Validators.required ]],
 
       tipo:  ['',  [Validators.required ] ],
+      fruitCtrl2: [""],
      });
-     this.colorServices.getList().pipe()
-      .subscribe((value) => {
-        
-        Object.keys(value['data']).forEach(i => {
-          this.colores.push(
-               {
-                 id: value['data'][i].id,
-                 color: value['data'][i].color,
-  
-                }
-  
-          );
-         
-            });
- 
-      });
+     
       /*BUSCAR SUB-SERVICIO*/
       this.subServiceServices.getList().pipe()
       .subscribe((value2) => {
@@ -192,12 +201,82 @@ export class SalidasFormComponent implements OnInit {
           map(value => typeof value === 'string' ? value : value.name),
           map(name => name ? this._filter4(name) : this.options4.slice())
       );
+      /*BUSCAR COLOR*/
+      this.colorServices.getList().pipe()
+      .subscribe((value) => {
+        
+        Object.keys(value['data']).forEach(i => {
+          this.options5.push(
+               {
+                 id: value['data'][i].id,
+                 name: value['data'][i].color,
+  
+                }
+  
+          );
+         
+            });
+ 
+      });
+      this.filteredOptions5  = this.myControl2.controls['myControl_color'].valueChanges.pipe(
+        startWith(''),
+          map(value => typeof value === 'string' ? value : value.name),
+          map(name => name ? this._filter5(name) : this.options5.slice())
+      );
   }
   public closeModal() {
     this.closeStatus = !this.closeStatus;
     this.statusCloseModal.emit(this.closeStatus);
   }
-  public addForm(id) {  
+  public addForm(id) { 
+    
+    this.myControl2.controls['myControl_ser'].setValue('');
+    this.myControl2.controls['myControl_ser_id'].setValue('');
+    this.myControl2.controls['peso'].setValue('');
+    this.myControl2.controls['cantidad'].setValue('');
+    this.myControl2.controls['myControl_color'].setValue('');
+    this.myControl2.controls['myControl_color_id'].setValue('');
+    this.myControl2.controls['myControl_sub'].setValue('');
+    this.myControl2.controls['tipo'].setValue('');
+    this.nameButtonAceptar = 'Agregar';
+    this.fruits2=[];
+    this.myControl2.controls["fruitCtrl2"].setValue('');
+  
+    var editDetail = [];
+    this.idEdit = id;
+    let dataEdit = [];
+    this.editSubmit = true;
+    this.putSubmit = true;
+    this.personList = [];
+    //console.warn(this.element)
+   /* Object.keys(this.element).forEach(i => {
+      if (this.element[i].id === id) {
+        dataEdit.push(this.element[i]);
+      }
+    });
+    console.log(dataEdit[0]);
+    
+     
+                  Object.keys(dataEdit[0].inputs).forEach(i => {
+                    
+                  
+                    this.personList.push(
+   
+                        {
+                        'id': dataEdit[0].inputs[i].id,
+                        'peso': dataEdit[0].inputs[i].weight,
+                        'cantidad': dataEdit[0].inputs[i].quantity,
+                        'servicio': dataEdit[0].inputs[i].service_name,
+                        'servicio_id': dataEdit[0].inputs[i].service_id,
+                        'color': dataEdit[0].inputs[i].color_name,
+                        'color_id': dataEdit[0].inputs[i].color_id,
+                        'subservicio': dataEdit[0].inputs[i].subservices_tag,
+                        'tipo': dataEdit[0].inputs[i].operation_type,
+                        }
+                    );
+                      });*/
+               
+ 
   } 
   
 reloadComponent() {
@@ -249,18 +328,21 @@ add() {
   }else{
     miid = this.personList[idv].id;
   }
-  
+  this.misSubServicios='';
+  Object.keys(this.fruits2).forEach(i => {
+    this.misSubServicios += this.fruits2[i] + ",";
+  });
+  let serviciosVan = this.misSubServicios.substring(0, this.misSubServicios.length - 1);
+   
   this.personList.push({ 
     id: miid,
     servicio: form.value.myControl_ser,
     servicio_id: form.value.myControl_ser_id,
-
     peso: form.value.peso,
     cantidad: form.value.cantidad,
-    color:  form.value.color,
-    subservicio:  form.value.myControl_sub,
-    subservicio_id:  form.value.myControl_sub_id,
-
+    color:  form.value.myControl_color,
+    color_id:  form.value.myControl_color_id,
+    subservicio:  serviciosVan,
     tipo: form.value.tipo,
   });
   console.log(this.personList);
@@ -268,17 +350,15 @@ add() {
 }
  edittri(id: any) {
   this.myControl2.controls['myControl_ser'].setValue(this.personList[id]["servicio"]);
-  this.myControl2.controls['myControl_ser_id'].setValue(this.personList[id]["servicio"]);
-
+  this.myControl2.controls['myControl_ser_id'].setValue(this.personList[id]["servicio_id"]);
   this.myControl2.controls['peso'].setValue(this.personList[id]["peso"]);
   this.myControl2.controls['cantidad'].setValue(this.personList[id]["cantidad"]);
-  this.myControl2.controls['color'].setValue(this.personList[id]["color"]);
-  this.myControl2.controls['myControl_sub'].setValue(this.personList[id]["subservicio"]);
-  this.myControl2.controls['myControl_sub_id'].setValue(this.personList[id]["subservicio"]);
-
+  this.myControl2.controls['myControl_color'].setValue(this.personList[id]["color"]);
+  this.myControl2.controls['myControl_color_id'].setValue(this.personList[id]["color_id"]);
   this.myControl2.controls['tipo'].setValue(this.personList[id]["tipo"]);
-
-
+  let ss = (this.personList[id]["subservicio"])? this.personList[id]["subservicio"].split(","): "";
+  this.fruits2 = (ss !== "") ? ss : [];
+  this.myControl2.controls["fruitCtrl2"].setValue(this.fruits2);
   this.nameButtonAceptar = 'Editar';
   this.idToUpdate = id;
   console.log(this.personList);
@@ -286,18 +366,18 @@ add() {
 
 
 public clearInput() {
-  /*this.myControl2.reset();*/
-  this.myControl2.controls['myControl_ser'].setValue('');
-  this.myControl2.controls['myControl_ser_id'].setValue('');
-
-  this.myControl2.controls['peso'].setValue('');
-  this.myControl2.controls['cantidad'].setValue('');
-  this.myControl2.controls['color'].setValue('');
-  this.myControl2.controls['myControl_sub'].setValue('');
-  this.myControl2.controls['myControl_sub_id'].setValue('');
-
-  this.myControl2.controls['tipo'].setValue('');
-  this.nameButtonAceptar = 'Agregar';
+   /*this.myControl2.reset();*/
+   this.myControl2.controls['myControl_ser'].setValue('');
+   this.myControl2.controls['myControl_ser_id'].setValue('');
+   this.myControl2.controls['peso'].setValue('');
+   this.myControl2.controls['cantidad'].setValue('');
+   this.myControl2.controls['myControl_color'].setValue('');
+   this.myControl2.controls['myControl_color_id'].setValue('');
+   this.myControl2.controls['myControl_sub'].setValue('');
+   this.myControl2.controls['tipo'].setValue('');
+   this.nameButtonAceptar = 'Agregar';
+   this.fruits2=[];
+   this.myControl2.controls["fruitCtrl2"].setValue('');
  
 }
   onSubmit(){}
@@ -317,8 +397,9 @@ onSelectionChanged(event: MatAutocompleteSelectedEvent) {
   this.idsubservicio = viene.id ? viene.id : 0;
   namesub = viene.name ? viene.name : '';
   //console.log(pla);
-  this.myControl2.controls['myControl_sub'].setValue(namesub);
-  this.myControl2.controls['myControl_sub_id'].setValue(this.idsubservicio);
+  this.myControl2.controls['myControl_sub'].setValue('');
+  this.buscarSubServicio(namesub)
+  this.fruits2.push(namesub);
 
 }
 private _filter(name: string): Servicio[] {
@@ -349,4 +430,45 @@ private _filter4(name: string): Servicio[] {
   const filterValue4 = name.toLowerCase();
   return this.options4.filter(option => option.name.toLowerCase().indexOf(filterValue4) === 0 );
 }
+/*BUSCAR COLOR*///////////////////////////////////////////////////////////////////////////////////////////////
+
+displayFn5(color: Color): string {
+  return color && color.name ? color.name : '';
+}
+
+onSelectionChanged5(event: MatAutocompleteSelectedEvent) {
+  this.idsubservicio5 = 0;
+  let namesub5:string;
+  
+  const viene5= event.option.value;
+  this.idsubservicio5 = viene5.id ? viene5.id : 0;
+  namesub5 = viene5.name ? viene5.name : '';
+  //console.log(pla);
+  this.myControl2.controls['myControl_color'].setValue(namesub5);
+  this.myControl2.controls['myControl_color_id'].setValue(this.idsubservicio5);
+
+}
+
+private _filter5(name: string): Servicio[] {
+  const filterValue5 = name.toLowerCase();
+  return this.options5.filter(option => option.name.toLowerCase().indexOf(filterValue5) === 0 );
+}
+/////////////////////remover subservicios seleccionados tipo etiquetas
+buscarSubServicio(fruit2: string): void {
+  const index = this.fruits2.indexOf(fruit2);
+  if (index >= 0) {
+      this.fruits2.splice(index, 1);
+  }
+  this.myControl2.controls["fruitCtrl2"].setValue(this.fruits2);
+}
+
+removePhone(fruit2: string): void {
+  const index = this.fruits2.indexOf(fruit2);
+  if (index >= 0) {
+      this.fruits2.splice(index, 1);
+  }
+  this.myControl2.controls["fruitCtrl2"].setValue(this.fruits2);
+}
+
+ 
 }

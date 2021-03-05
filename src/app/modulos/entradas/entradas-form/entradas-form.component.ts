@@ -303,7 +303,7 @@ export class EntradasFormComponent implements OnInit {
                 service_id: this.personList[e]["servicio_id"],
                 weight: (this.personList[e]["peso"]!=='')?this.personList[e]["peso"]:0,
                 quantity: (this.personList[e]["cantidad"]!=='')?this.personList[e]["cantidad"]:0,
-                color_id:  this.personList[e]["color_id"],
+                color_id:  (this.personList[e]["color_id"]!=='')?this.personList[e]["color_id"]:null,
                 subservice_id:  serviciosVan,
                 operation_type: this.personList[e]["tipo"],
                  
@@ -314,7 +314,7 @@ export class EntradasFormComponent implements OnInit {
                 service_id: this.personList[e]["servicio_id"],
                 weight: (this.personList[e]["peso"]!=='')?this.personList[e]["peso"]:0,
                 quantity: (this.personList[e]["cantidad"]!=='')?this.personList[e]["cantidad"]:0,
-                color_id:  this.personList[e]["color_id"],
+                color_id:  (this.personList[e]["color_id"]!=='')?this.personList[e]["color_id"]:null,
                 subservice_id:  serviciosVan,
                 operation_type: this.personList[e]["tipo"],
                  
@@ -373,7 +373,7 @@ export class EntradasFormComponent implements OnInit {
                 service_id: this.personList[e]["servicio_id"],
                 weight: (this.personList[e]["peso"]!=='')?this.personList[e]["peso"]:0,
                 quantity: (this.personList[e]["cantidad"]!=='')?this.personList[e]["cantidad"]:0,
-                color_id:  this.personList[e]["color_id"],
+                color_id:  (this.personList[e]["color_id"]!=='')?this.personList[e]["color_id"]:null,
                 subservice_id:  serviciosVan,
                 operation_type: this.personList[e]["tipo"],
                  
