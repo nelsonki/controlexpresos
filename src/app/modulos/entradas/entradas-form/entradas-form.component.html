@@ -9,69 +9,39 @@
                         Datos del Cliente y Sucursal
                     </mat-toolbar><br>
                     <div class="row">
-
                         <div class="form-group" class="width-form-groud col-12 col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <mat-form-field class="example-full-width ">
-                                <mat-label>Cliente(*)</mat-label>
-
-                                <input type="text" placeholder="Cliente(*)" aria-label="Number" matInput formControlName="client">
-                                <div class="typeahead--wrapper" *ngIf="openOptionClient">
-                                    <ul class="typeahead--ul">
-                                        <li *ngFor="let data of filteredOptions" (click)="
-                               setDataFormul($event,
-                                 data.id,
-                                 data.name
-                               )
-                             " class="typeahead--list">
-                                            <b>{{ data.name }}</b>
-                                        </li>
-                                    </ul>
-                                </div>
+                                <mat-label>Cliente (*)</mat-label>
+                                <input aria-label="Number" type="text" placeholder="Cliente" matInput formControlName="client" [matAutocomplete]="auto6">
+                                <mat-autocomplete (optionSelected)="onSelectionChanged6($event)" autoActiveFirstOption #auto6="matAutocomplete">
+                                    <mat-option *ngFor="let option  of filteredOptions6  | async" [value]="option">
+                                        {{ option.name }}
+                                    </mat-option>
+                                </mat-autocomplete>
                                 <mat-error *ngIf="submitted && f.client.errors">
-                                    <div *ngIf="f.client.errors.required">Por favor, seleccione un Cliente</div>
+                                    <div *ngIf="f.client.errors.required">
+                                        Por favor, seleccione un Cliente
+                                    </div>
                                 </mat-error>
                             </mat-form-field>
-
-                            <div>
-                                <button [disabled]="disabledButoon" matTooltip="Buscar" class="button-search" (click)="searchClient()">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                            </div>
                         </div>
-                        <input formControlName="client_id" matInput="" style="display: none;" />
-                        <div class="form-group" class="width-form-groud col-12 col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <!--<div class="form-group" class="width-form-groud col-12 col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <mat-form-field class="example-full-width ">
-                                <mat-label>Sucursal</mat-label>
-
-                                <input type="text" placeholder="Sucursal(*)" aria-label="Number" matInput formControlName="sucursal">
-                                <div class="typeahead--wrapper" *ngIf="openOptionClient2">
-                                    <ul class="typeahead--ul">
-                                        <li *ngFor="let data2 of filteredOptions2" (click)="
-                               setDataFormul2($event,
-                                 data2.id,
-                                 data2.name
-                               )
-                             " class="typeahead--list">
-                                            <b>{{ data2.name }}</b>
-                                        </li>
-                                    </ul>
-                                </div>
-
+                                <mat-label>Sucursal (*)</mat-label>
+                                <input aria-label="Number" type="text" placeholder="Servicio" matInput formControlName="myControl_ser" [matAutocomplete]="auto">
+                                <mat-autocomplete (optionSelected)="onSelectionChanged6($event)" autoActiveFirstOption #auto="matAutocomplete">
+                                    <mat-option *ngFor="let option  of filteredOptions4  | async" [value]="option">
+                                        {{ option.name }}
+                                    </mat-option>
+                                </mat-autocomplete>
+                                <mat-error *ngIf="submitted && f.client.errors">
+                                    <div *ngIf="f.client.errors.required">
+                                        Por favor, seleccione una Sucursal
+                                    </div>
+                                </mat-error>
                             </mat-form-field>
+                        </div>-->
 
-                            <div>
-                                <button [disabled]="disabledButoon" matTooltip="Buscar" class="button-search" (click)="searchClient2()">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                            </div>
-                        </div>
-                        <input formControlName="sucursal_id" matInput="" style="display: none;" />
-
-                        <!--
-                        <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
-                            <mat-label>Sucursal (*)</mat-label>
-                            <input matInput formControlName="sucursal" id="sucursal" type="text" />
-                        </mat-form-field>-->
 
                     </div>
 
