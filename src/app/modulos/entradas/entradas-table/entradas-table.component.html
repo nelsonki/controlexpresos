@@ -124,7 +124,7 @@
                                     <th>Tipo de Ropa</th>
                                     <th>Fecha y Hora</th>
 
-                                    <th colspan="2">Actions</th>
+                                    <th>Acciones</th>
 
                                 </tr>
                                 <ng-container *ngFor="let input of element.inputs; let id2 = index">
@@ -140,18 +140,22 @@
                                         <td>{{input.created_at}}</td>
 
                                         <td class="text-center">
-                                            <span class="table-remove">
-                                <a (click)="eliminarOp(input.id)">
-                                    <mdb-icon
-                                    fas
-                                    icon="trash-alt"
-                                    size="1.5x"
-                                    style="color:#CD6155"
-                                    matTooltip="Eliminar"
-                                    ></mdb-icon>
-                                </a>
-                                </span>
+                                            <div *ngIf="element.inputs.length>=2">
+                                                <span class="table-remove">
+                                                    <a (click)="eliminarOp(input.id)">
+                                                        <mdb-icon
+                                                        fas
+                                                        icon="trash-alt"
+                                                        size="1.5x"
+                                                        style="color:#CD6155"
+                                                        matTooltip="Eliminar"
+                                                        ></mdb-icon>
+                                                    </a>
+                                                </span>
+                                            </div>
                                         </td>
+
+
 
                                     </tr>
                                 </ng-container>
