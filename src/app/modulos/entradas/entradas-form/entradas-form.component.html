@@ -25,23 +25,24 @@
                                 </mat-error>
                             </mat-form-field>
                         </div>
-                        <!--<div class="form-group" class="width-form-groud col-12 col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div *ngIf="vieneSucursal" class="form-group" class="width-form-groud col-12 col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <mat-form-field class="example-full-width ">
-                                <mat-label>Sucursal (*)</mat-label>
-                                <input aria-label="Number" type="text" placeholder="Servicio" matInput formControlName="myControl_ser" [matAutocomplete]="auto">
-                                <mat-autocomplete (optionSelected)="onSelectionChanged6($event)" autoActiveFirstOption #auto="matAutocomplete">
-                                    <mat-option *ngFor="let option  of filteredOptions4  | async" [value]="option">
+                                <mat-label>Sucursal</mat-label>
+                                <input aria-label="Number" type="text" placeholder="Sucursal" matInput formControlName="sucursal" [matAutocomplete]="auto7">
+                                <mat-autocomplete (optionSelected)="onSelectionChanged7($event)" autoActiveFirstOption #auto7="matAutocomplete">
+                                    <mat-option *ngFor="let option  of filteredOptions7  | async" [value]="option">
                                         {{ option.name }}
                                     </mat-option>
                                 </mat-autocomplete>
-                                <mat-error *ngIf="submitted && f.client.errors">
-                                    <div *ngIf="f.client.errors.required">
-                                        Por favor, seleccione una Sucursal
-                                    </div>
-                                </mat-error>
-                            </mat-form-field>
-                        </div>-->
 
+                            </mat-form-field>
+                        </div>
+                        <div *ngIf="!vieneSucursal" class="form-group" class="width-form-groud col-12 col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="example-full-width ">
+                                <mat-label>No posee sucursal</mat-label>
+
+                            </div>
+                        </div>
 
                     </div>
 

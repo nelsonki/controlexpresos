@@ -28,6 +28,7 @@ import {ColorServices} from '../../color/color-services/color-services'
 import {SubServiceServices} from '../../sub-service/sub-service-services/sub-service-services'
 import {ServiceServices} from '../../service/service-services/service-services'
 import {ClientServices} from '../../client/client-services/client-services'
+import {BranchServices} from '../../branch/branch-services/branch-services'
 import {EntradasServices} from '../entradas-services/entradas-services'
 
 import {entradasMsg} from '../../../utils/const/message'
@@ -44,6 +45,10 @@ export interface Color {
   name: string;
 }
 export interface Cliente {
+  id: number;
+  name: string;
+}
+export interface Branches {
   id: number;
   name: string;
 }
@@ -116,6 +121,12 @@ export class EntradasFormComponent implements OnInit {
   public options6: Array<any> = [];
   public idsubservicio6 = 0;
 
+   //buscar branches
+   public filteredOptions7: Observable<Branches[]>;
+   public options7: Array<any> = [];
+   public idsubservicio7 = 0;
+   public vieneSucursal:boolean=false;
+
   readonly separatorKeysCodes2: number[] = [ENTER, COMMA];
   public visible2 = true;
   public selectable2 = true;
@@ -165,7 +176,8 @@ export class EntradasFormComponent implements OnInit {
     private http: HttpServices,
     private colorServices: ColorServices,
     private entradasServices: EntradasServices,
-    private clientServices: ClientServices
+    private clientServices: ClientServices,
+    private branchServices: BranchServices
    ) {     
       this.isLoading = true;
    }
@@ -260,6 +272,7 @@ export class EntradasFormComponent implements OnInit {
           map(value => typeof value === 'string' ? value : value.name),
           map(name => name ? this._filter5(name) : this.options5.slice())
       );
+
       /*BUSCAR CLIENTE*******************************/
       this.clientServices.getList()
       .subscribe((value) => {
@@ -281,6 +294,29 @@ export class EntradasFormComponent implements OnInit {
         startWith(''),
           map(value => typeof value === 'string' ? value : value.name),
           map(name => name ? this._filter6(name) : this.options6.slice())
+      );
+      /*BUSCAR sucursal*******************************/
+      this.options7=[];
+    this.branchServices.getListIdCliente(this.idsubservicio6)
+    .subscribe((value) => {
+       console.log(value)
+      Object.keys(value).forEach(i => {
+        this.options7.push(
+             {
+               id: value[i].id,
+               name: value[i].name,
+    
+              }
+    
+        );
+       
+          });
+    
+    });
+      this.filteredOptions7  = this.firstFormGroup.controls['sucursal'].valueChanges.pipe(
+        startWith(''),
+          map(value => typeof value === 'string' ? value : value.name),
+          map(name => name ? this._filter7(name) : this.options7.slice())
       );
   }
   public closeModal() {
@@ -512,8 +548,8 @@ public addForm(id) {
                       'cantidad': dataEdit[0].inputs[i].quantity,
                       'servicio': dataEdit[0].inputs[i].service_name,
                       'servicio_id': dataEdit[0].inputs[i].service_id,
-                      'color': dataEdit[0].inputs[i].color_name,
-                      'color_id': dataEdit[0].inputs[i].color_id,
+                      'color': (dataEdit[0].inputs[i].color_name!==null)?dataEdit[0].inputs[i].color_name:'',
+                      'color_id': (dataEdit[0].inputs[i].color_id!==null)?dataEdit[0].inputs[i].color_id:'',
                       'subservicio': dataEdit[0].inputs[i].subservices_tag,
                       'tipo': dataEdit[0].inputs[i].operation_type,
                       }
@@ -644,7 +680,6 @@ displayFn6(cliente: Cliente): string {
 onSelectionChanged6(event: MatAutocompleteSelectedEvent) {
   this.idsubservicio6 = 0;
   let namesub6:string;
-  
   const viene6= event.option.value;
   this.idsubservicio6 = viene6.id ? viene6.id : 0;
   namesub6 = viene6.name ? viene6.name : '';
@@ -652,60 +687,73 @@ onSelectionChanged6(event: MatAutocompleteSelectedEvent) {
   this.firstFormGroup.controls['client'].setValue(namesub6);
   this.firstFormGroup.controls['client_id'].setValue(this.idsubservicio6);
 
+  this.firstFormGroup.controls['sucursal'].setValue('');
+  this.firstFormGroup.controls['sucursal_id'].setValue('');
+  this.options7=[];
+  if(this.idsubservicio6 !==0){
+   
+    this.vieneSucursal=true;
+    /*BUSCAR sucursal*******************************/
+   
+    this.branchServices.getListIdCliente(this.idsubservicio6)
+    .subscribe((value) => {
+      console.log(value)
+
+      Object.keys(value).forEach(i => {
+        
+        this.options7.push(
+             {
+               id: value[i].id,
+               name: value[i].name,
+    
+              }
+    
+        );
+       
+          });
+
+    
+    });
+    this.filteredOptions7  = this.firstFormGroup.controls['sucursal'].valueChanges.pipe(
+      startWith(''),
+        map(value => typeof value === 'string' ? value : value.name),
+        map(name => name ? this._filter7(name) : this.options7.slice())
+    );
+  }else{
+    this.options7=[];
+    this.vieneSucursal=false;
+  }
+  
+
 }
 
 private _filter6(name: string): Cliente[] {
   const filterValue6 = name.toLowerCase();
   return this.options6.filter(option => option.name.toLowerCase().indexOf(filterValue6) === 0 );
 }
-/*buscar cliente*/
-/*public searchClient() {
-  this.api = environment.apiJakiro2;
-  let valueSearch = this.firstFormGroup.controls["client"].value;
-  if (valueSearch.trim() !== "") {
-    let enpoint = "clients/search/" + this.firstFormGroup.controls["client"].value;
-    this.http.doGet(this.api, enpoint).subscribe((data: any) => {
-      console.log(data);
-      if (data.length > 0) {
-        this.openOptionClient = true;
-        this.filteredOptions = data;
-      } else {
-        this.openOptionClient = false;
-        this.firstFormGroup.controls["client_id"].setValue("");
-        this.firstFormGroup.controls["client"].setValue("");
-      }
-    });
-  }
+ /*BUSCAR SUCURSALES*///////////////////////////////////////////////////////////////////////////////////////////////
+
+displayFn7(branches: Branches): string {
+  return branches && branches.name ? branches.name : '';
 }
-public setDataFormul(event, id, nombreComercial) {
-  this.openOptionClient = false;
-  this.firstFormGroup.controls["client_id"].setValue(id);
-  this.firstFormGroup.controls["client"].setValue(nombreComercial);
-}*/
-/*buscar sucursal*//////////////////////////////////////////////////////////////////////
-/*public searchClient2() {
-  this.api2 = environment.apiJakiro2;
-  let valueSearch2 = this.firstFormGroup.controls["sucursal"].value;
-  if (valueSearch2.trim() !== "") {
-    let enpoint = "branches/search/" + this.firstFormGroup.controls["sucursal"].value;
-    this.http.doGet(this.api2, enpoint).subscribe((data: any) => {
-      console.log(data);
-      if (data.length > 0) {
-        this.openOptionClient2 = true;
-        this.filteredOptions2 = data;
-      } else {
-        this.openOptionClient2 = false;
-        this.firstFormGroup.controls["sucursal_id"].setValue("");
-        this.firstFormGroup.controls["sucursal"].setValue("");
-      }
-    });
-  }
+
+onSelectionChanged7(event: MatAutocompleteSelectedEvent) {
+  this.idsubservicio7 = 0;
+  let namesub7:string;
+  
+  const viene7= event.option.value;
+  this.idsubservicio7 = viene7.id ? viene7.id : 0;
+  namesub7 = viene7.name ? viene7.name : '';
+  //console.log(pla);
+  this.firstFormGroup.controls['sucursal'].setValue(namesub7);
+  this.firstFormGroup.controls['sucursal_id'].setValue(this.idsubservicio7);
+
 }
-public setDataFormul2(event, id, nombreComercial) {
-  this.openOptionClient2 = false;
-  this.firstFormGroup.controls["sucursal_id"].setValue(id);
-  this.firstFormGroup.controls["sucursal"].setValue(nombreComercial);
-}*/
+
+private _filter7(name: string): Branches[] {
+  const filterValue7 = name.toLowerCase();
+  return this.options7.filter(option => option.name.toLowerCase().indexOf(filterValue7) === 0 );
+}
 /*BUSCAR SUB-SERVICIO*/
 
 displayFn(subservicio: Subservicio): string {

@@ -27,7 +27,6 @@ export class SalidasServices {
         let enpoint = 'outputs/index';
         return this.http.doGet(this.api, enpoint );
     }
-
     save(body) {
         let enpoint = 'outputs/store';
         return this.http.doPost(this.api, enpoint, body);
