@@ -88,7 +88,7 @@ export class EntradasTableComponent implements OnInit {
               color_name: value["data"][e].inputs[i].color_name,
               subservices_tag: value["data"][e].inputs[i].subservices_tag,
               operation_type: value["data"][e].inputs[i].operation_type,
-              created_at: value["data"][e].inputs[i].created_at,
+              created_at: value["data"][e].inputs[i].date_time,
             } ;                       
             this.element[e].inputs.push(this.data);
               });
