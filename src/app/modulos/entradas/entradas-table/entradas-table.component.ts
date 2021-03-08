@@ -147,7 +147,8 @@ export class EntradasTableComponent implements OnInit {
     this.titleModal = "Crear Entrada";
     this.form.personList = [];
     this.form.stepper.selectedIndex = 0;
-
+    this.form.idsubservicio6=0;
+    this.form.vieneSucursal =false;
   }
   showModal() {
     $("#basicModal").show();

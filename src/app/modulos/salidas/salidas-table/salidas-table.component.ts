@@ -6,7 +6,7 @@ import { ModalDirective } from "angular-bootstrap-md";
 import { ToastrService } from 'ngx-toastr';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {SalidasServices} from '../salidas-services/salidas-services'
-
+import {EntradasServices} from '../../entradas/entradas-services/entradas-services'
 import {SalidasFormComponent} from '../salidas-form/salidas-form.component'
 declare var $: any;
 
@@ -44,7 +44,8 @@ export class SalidasTableComponent implements OnInit {
     //public dialog: MatDialog,
     //public formBuilder: FormBuilder,
     public toasTer: ToastrService,
-    public salidasServices: SalidasServices
+    public salidasServices: SalidasServices,
+    public entradasServices: EntradasServices
   ) {
     //this.api = environment.apiInventory;
     this.titleModal = "Crear Salida";
@@ -55,7 +56,7 @@ export class SalidasTableComponent implements OnInit {
   }
   public loadAll(){ 
 
-    this.salidasServices.getList().subscribe((value) => {
+    this.entradasServices.getList().subscribe((value) => {
       this.data=[];
       this.element=[];
       console.log(value["data"])
@@ -65,18 +66,37 @@ export class SalidasTableComponent implements OnInit {
             const datos ={
               Item: "",
               "id":value["data"][e].id,
-              "cliente":value["data"][e].cliente,
-              "sucursal":value["data"][e].sucursal,
-              "usuario":value["data"][e].usuario,
-              "observacion":value["data"][e].observacion,
-
+              "client_name":value["data"][e].client_name,
+              "client_id":value["data"][e].client_id,
+              "branch_name":value["data"][e].branch_name,
+              "branch_id":value["data"][e].branch_id,
+              "observation":value["data"][e].observation,
+              "date_time": value["data"][e].date_time,
+              "inputs":[]
             };
-           this.data.push(datos);
-           this.element.push(datos);
+            this.element.push(datos);
+            Object.keys(value["data"][e].inputs).forEach(i => {
+            this.data =
+            {
+              id:value["data"][e].inputs[i].id,
+              weight: value["data"][e].inputs[i].weight,
+              quantity: value["data"][e].inputs[i].quantity,
+              service_id: value["data"][e].inputs[i].service_id,
+              service_name: value["data"][e].inputs[i].service_name,
+
+              color_id: value["data"][e].inputs[i].color_id,
+              color_name: value["data"][e].inputs[i].color_name,
+              subservices_tag: value["data"][e].inputs[i].subservices_tag,
+              operation_type: value["data"][e].inputs[i].operation_type,
+              created_at: value["data"][e].inputs[i].created_at,
+            } ;                       
+            this.element[e].inputs.push(this.data);
+              });
          });
-        Object.keys(this.element).forEach((i, index) => {
+         Object.keys(this.element).forEach((i, index) => {
           this.element[i].Item = index + 1;
        });
+       
         this.dataSource = new MatTableDataSource(this.element);
         this.dataSource.paginator = this.paginator;
         return this.dataSource;
