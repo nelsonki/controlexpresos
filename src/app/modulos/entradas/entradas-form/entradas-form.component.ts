@@ -296,11 +296,15 @@ export class EntradasFormComponent implements OnInit {
           map(name => name ? this._filter6(name) : this.options6.slice())
       );
       /*BUSCAR sucursal*******************************/
-      this.options7=[];
+  /*if(this.idsubservicio6!==0){
+   
+     this.options7=[];
     this.branchServices.getListIdCliente(this.idsubservicio6)
-    .subscribe((value) => {
+    .subscribe((value:any) => {
        console.log(value)
-      Object.keys(value).forEach(i => {
+       if(value.length > 0){
+          this.vieneSucursal=true;
+          Object.keys(value).forEach(i => {
         this.options7.push(
              {
                id: value[i].id,
@@ -311,6 +315,11 @@ export class EntradasFormComponent implements OnInit {
         );
        
           });
+       }else{
+        this.vieneSucursal=false;
+
+       }
+     
     
     });
       this.filteredOptions7  = this.firstFormGroup.controls['sucursal'].valueChanges.pipe(
@@ -318,6 +327,11 @@ export class EntradasFormComponent implements OnInit {
           map(value => typeof value === 'string' ? value : value.name),
           map(name => name ? this._filter7(name) : this.options7.slice())
       );
+  }
+   else{
+    this.vieneSucursal=false;
+
+   }*/
   }
   public closeModal() {
     this.closeStatus = !this.closeStatus;
@@ -692,13 +706,13 @@ onSelectionChanged6(event: MatAutocompleteSelectedEvent) {
   this.options7=[];
   if(this.idsubservicio6 !==0){
    
-    this.vieneSucursal=true;
-    /*BUSCAR sucursal*******************************/
-   
-    this.branchServices.getListIdCliente(this.idsubservicio6)
-    .subscribe((value) => {
+     /*BUSCAR sucursal*******************************/
+   this.branchServices.getListIdCliente(this.idsubservicio6)
+    .subscribe((value: any) => {
       console.log(value)
-
+      if(value.length > 0){
+      this.vieneSucursal=true;
+      
       Object.keys(value).forEach(i => {
         
         this.options7.push(
@@ -711,6 +725,11 @@ onSelectionChanged6(event: MatAutocompleteSelectedEvent) {
         );
        
           });
+      }else{
+         
+        this.vieneSucursal=false;
+      }
+     
 
     
     });
