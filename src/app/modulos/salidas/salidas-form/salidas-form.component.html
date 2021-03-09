@@ -82,11 +82,20 @@
 
                 </mat-form-field>
 
-                <div class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
-                    <button mat-raised-button color="primary" class="btn btn-accent " (click)="add()" [disabled]="!myControl2.valid ||  idsubservicio4===0">+</button>&nbsp; &nbsp;
-                    <button mat-raised-button color="primary" class="btn btn-accent " (click)="clearInput()" color="accent">Limpiar</button>&nbsp; &nbsp;
 
-                    <!--[disabled]="!myControl.valid" (click)="reset()"-->
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
+                            <button mat-raised-button color="primary" class="btn btn-accent " (click)="add()" [disabled]="!myControl2.valid ||  idsubservicio4===0">+</button>&nbsp; &nbsp;
+
+                        </div>
+
+                        <div class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
+                            <button mat-raised-button color="primary" class="btn btn-accent " (click)="clearInput()" color="accent">Limpiar</button>&nbsp; &nbsp;
+
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -112,8 +121,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!--
-                            <tr mdb TableCol *ngFor="let person of personList; let id = index">
+
+                            <tr mdb TableCol *ngFor="let person of personList_entradas; let id = index">
                                 <td class="text-center">
                                     {{ id + 1 }}
                                 </td>
@@ -140,7 +149,7 @@
                                 </td>
 
 
-                            </tr>-->
+                            </tr>
 
                         </tbody>
                     </table>
@@ -247,7 +256,9 @@
                                   </button>
                     </div>
                 </div>
-            </div><br><br>
+            </div>
+
+            <br><br>
 
 
         </div>

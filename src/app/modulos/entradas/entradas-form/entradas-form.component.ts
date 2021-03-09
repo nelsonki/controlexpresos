@@ -692,7 +692,7 @@ add() {
   this.myControl2.controls["fruitCtrl2"].setValue(this.fruits2);
   this.nameButtonAceptar = 'Editar';
   this.idToUpdate = id;
-  console.log(this.personList);
+  //console.log(this.personList);
 }
 
 
