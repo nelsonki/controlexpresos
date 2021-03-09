@@ -116,6 +116,20 @@ export class SalidasFormComponent implements OnInit {
   },
    
   ];
+  public personList_entradas: Array<any> = [
+    {
+      id: 0,
+      servicio: '',
+      servicio_id: '',
+      peso: '',
+      cantidad: '',
+      color:  '',
+      color_id:'',
+      subservicio:  [],
+      //subservicio_id:  '',
+      tipo: '',
+    }
+  ];
   public personList: Array<any> = [
     {
       id: 0,
@@ -247,9 +261,10 @@ export class SalidasFormComponent implements OnInit {
     let dataEdit = [];
     this.editSubmit = true;
     this.putSubmit = true;
+    this.personList_entradas = [];
     this.personList = [];
     //console.warn(this.element)
-   /* Object.keys(this.element).forEach(i => {
+    Object.keys(this.element).forEach(i => {
       if (this.element[i].id === id) {
         dataEdit.push(this.element[i]);
       }
@@ -260,7 +275,7 @@ export class SalidasFormComponent implements OnInit {
                   Object.keys(dataEdit[0].inputs).forEach(i => {
                     
                   
-                    this.personList.push(
+                    this.personList_entradas.push(
    
                         {
                         'id': dataEdit[0].inputs[i].id,
@@ -274,7 +289,7 @@ export class SalidasFormComponent implements OnInit {
                         'tipo': dataEdit[0].inputs[i].operation_type,
                         }
                     );
-                      });*/
+                      });
                
  
   } 
@@ -351,6 +366,7 @@ add() {
  edittri(id: any) {
   this.myControl2.controls['myControl_ser'].setValue(this.personList[id]["servicio"]);
   this.myControl2.controls['myControl_ser_id'].setValue(this.personList[id]["servicio_id"]);
+  this.idsubservicio4 = this.personList[id]["servicio_id"];
   this.myControl2.controls['peso'].setValue(this.personList[id]["peso"]);
   this.myControl2.controls['cantidad'].setValue(this.personList[id]["cantidad"]);
   this.myControl2.controls['myControl_color'].setValue(this.personList[id]["color"]);
