@@ -367,10 +367,10 @@ export class EntradasFormComponent implements OnInit {
         this.toasTer.error('No existe nacionalidad');
       }else{*/
       /////telefono
-      Object.keys(this.personList).forEach(i => {
+     /* Object.keys(this.personList).forEach(i => {
         this.misSubServicios += this.personList[i]["subservicio"] + ",";
       });
-      let serviciosVan = this.misSubServicios.substring(0, this.misSubServicios.length - 1);
+      let serviciosVan = this.misSubServicios.substring(0, this.misSubServicios.length - 1);*/
      
       if (this.putSubmit) {
           
@@ -387,7 +387,7 @@ export class EntradasFormComponent implements OnInit {
                 weight: (this.personList[e]["peso"]!=='')?this.personList[e]["peso"]:0,
                 quantity: (this.personList[e]["cantidad"]!=='')?this.personList[e]["cantidad"]:0,
                 color_id:  (this.personList[e]["color_id"]!=='')?this.personList[e]["color_id"]:null,
-                subservice_id:  serviciosVan,
+                subservice_id:  (this.personList[e]["subservicio"]!=='')?this.personList[e]["subservicio"]:'',
                 operation_type: this.personList[e]["tipo"],
                  
               });
@@ -398,7 +398,7 @@ export class EntradasFormComponent implements OnInit {
                 weight: (this.personList[e]["peso"]!=='')?this.personList[e]["peso"]:0,
                 quantity: (this.personList[e]["cantidad"]!=='')?this.personList[e]["cantidad"]:0,
                 color_id:  (this.personList[e]["color_id"]!=='')?this.personList[e]["color_id"]:null,
-                subservice_id:  serviciosVan,
+                subservice_id:  (this.personList[e]["subservicio"]!=='')?this.personList[e]["subservicio"]:'',
                 operation_type: this.personList[e]["tipo"],
                  
               });
@@ -457,7 +457,7 @@ export class EntradasFormComponent implements OnInit {
                 weight: (this.personList[e]["peso"]!=='')?this.personList[e]["peso"]:0,
                 quantity: (this.personList[e]["cantidad"]!=='')?this.personList[e]["cantidad"]:0,
                 color_id:  (this.personList[e]["color_id"]!=='')?this.personList[e]["color_id"]:null,
-                subservice_id:  serviciosVan,
+                subservice_id:  (this.personList[e]["subservicio"]!=='')?this.personList[e]["subservicio"]:'',
                 operation_type: this.personList[e]["tipo"],
                  
               });
@@ -538,7 +538,6 @@ public addForm(id) {
   this.editSubmit = true;
   this.putSubmit = true;
   this.personList = [];
-  //console.warn(this.element)
   Object.keys(this.element).forEach(i => {
     if (this.element[i].id === id) {
       dataEdit.push(this.element[i]);
@@ -547,9 +546,15 @@ public addForm(id) {
   console.log(dataEdit[0]);
   this.firstFormGroup.controls['client'].setValue(dataEdit[0]["client_name"]);
   this.firstFormGroup.controls['client_id'].setValue(dataEdit[0]["client_id"]);
-
+if(dataEdit[0]["branch_id"]>0){
+  this.vieneSucursal=true;
   this.firstFormGroup.controls['sucursal'].setValue(dataEdit[0]["branch_name"]);
   this.firstFormGroup.controls['sucursal_id'].setValue(dataEdit[0]["branch_id"]);
+}else{
+  this.vieneSucursal=false;
+  this.firstFormGroup.controls['sucursal'].setValue('');
+  this.firstFormGroup.controls['sucursal_id'].setValue('');
+}
  
                 Object.keys(dataEdit[0].inputs).forEach(i => {
                   
@@ -645,6 +650,7 @@ add() {
  edittri(id: any) {
   this.myControl2.controls['myControl_ser'].setValue(this.personList[id]["servicio"]);
   this.myControl2.controls['myControl_ser_id'].setValue(this.personList[id]["servicio_id"]);
+  this.idsubservicio4 = this.personList[id]["servicio_id"];
   this.myControl2.controls['peso'].setValue(this.personList[id]["peso"]);
   this.myControl2.controls['cantidad'].setValue(this.personList[id]["cantidad"]);
   this.myControl2.controls['myControl_color'].setValue(this.personList[id]["color"]);
