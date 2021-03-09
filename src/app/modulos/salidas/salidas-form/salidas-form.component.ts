@@ -22,6 +22,7 @@ import {map, startWith} from 'rxjs/operators';
 import {SubServiceServices} from '../../sub-service/sub-service-services/sub-service-services'
 import {ServiceServices} from '../../service/service-services/service-services'
 import {SalidasServices} from '../salidas-services/salidas-services'
+
 import {environment} from '../../../../environments/environment'
 import {HttpServices}from '../../../http/httpServices/httpServices'
 import {ColorServices} from '../../color/color-services/color-services'
@@ -102,6 +103,8 @@ export class SalidasFormComponent implements OnInit {
   public fruits2: string[] = [];
   public fruitCtrl2 = new FormControl();
   public misSubServicios: any;
+
+  public id_input:any;
 
   public colores: Array<any> = [];
 
@@ -241,6 +244,7 @@ export class SalidasFormComponent implements OnInit {
   public closeModal() {
     this.closeStatus = !this.closeStatus;
     this.statusCloseModal.emit(this.closeStatus);
+    this.reloadComponent();
   }
   public addForm(id) { 
     
@@ -270,8 +274,9 @@ export class SalidasFormComponent implements OnInit {
       }
     });
     console.log(dataEdit[0]);
-    
-     
+    this.id_input = dataEdit[0].id;
+    console.log(this.id_input);
+
                   Object.keys(dataEdit[0].inputs).forEach(i => {
                     
                   
@@ -396,7 +401,141 @@ public clearInput() {
    this.myControl2.controls["fruitCtrl2"].setValue('');
  
 }
-  onSubmit(){}
+  onSubmit(){
+    this.misSubServicios="";
+    
+     
+      if (this.putSubmit) {
+          
+          this.loading = true;
+          let listEnpti = [];
+          this.loading = true;
+          let list = [];
+          this.loading = true;
+          Object.keys(this.personList).forEach(e => {
+            if(this.personList[e]["id"] === 0){              
+              list.push({
+                id: 0,
+                service_id: this.personList[e]["servicio_id"],
+                weight: (this.personList[e]["peso"]!=='')?this.personList[e]["peso"]:0,
+                quantity: (this.personList[e]["cantidad"]!=='')?this.personList[e]["cantidad"]:0,
+                color_id:  (this.personList[e]["color_id"]!=='')?this.personList[e]["color_id"]:null,
+                subservice_id:  (this.personList[e]["subservicio"]!=='')?this.personList[e]["subservicio"]:'',
+                operation_type: this.personList[e]["tipo"],
+                 
+              });
+            }else{             
+              list.push({    
+                id: this.personList[e]["id"],
+                service_id: this.personList[e]["servicio_id"],
+                weight: (this.personList[e]["peso"]!=='')?this.personList[e]["peso"]:0,
+                quantity: (this.personList[e]["cantidad"]!=='')?this.personList[e]["cantidad"]:0,
+                color_id:  (this.personList[e]["color_id"]!=='')?this.personList[e]["color_id"]:null,
+                subservice_id:  (this.personList[e]["subservicio"]!=='')?this.personList[e]["subservicio"]:'',
+                operation_type: this.personList[e]["tipo"],
+                 
+              });
+            }
+            
+
+          });
+          listEnpti = list.filter(function (n) {
+            let value1 = n.service_id;
+            return value1 === ""  ;
+          });
+          if (listEnpti.length > 0) {
+            this.loading = false;
+            this.toasTer.error('No puede guardar campo vacios');
+  
+          }else {
+            if (this.personList.length === 0) {
+              this.loading = false;
+              this.toasTer.error('Debe agregar al menos 1 salida');
+  
+            }else {
+              
+              let bodyData = Object.assign({
+                "input_id": this.id_input,
+                "observation":  null ,
+                "moreOutputs": list
+              });  
+              console.warn(bodyData);
+              this.salidasServices.update(this.idEdit, bodyData).subscribe(
+                response => {
+                      this.toasTer.success(SalidasMsg.update);
+                      this.reloadComponent();
+                  },
+                  error => {
+                    this.loading = false;
+                    this.toasTer.error(SalidasMsg.errorProcess);
+                    this.loading = false;
+                  }
+                );
+              }
+          }
+  
+      }
+        else{
+        
+            let listEnpti = [];
+            this.loading = true;
+            let list = [];
+            this.loading = true;
+            Object.keys(this.personList).forEach(e => {
+               
+              list.push({
+                 
+                service_id: this.personList[e]["servicio_id"],
+                weight: (this.personList[e]["peso"]!=='')?this.personList[e]["peso"]:0,
+                quantity: (this.personList[e]["cantidad"]!=='')?this.personList[e]["cantidad"]:0,
+                color_id:  (this.personList[e]["color_id"]!=='')?this.personList[e]["color_id"]:null,
+                subservice_id:  (this.personList[e]["subservicio"]!=='')?this.personList[e]["subservicio"]:'',
+                operation_type: this.personList[e]["tipo"],
+                 
+              });
+            });
+            listEnpti = list.filter(function (n) {
+              let value1 = n.service_id;
+              let value2 = n.subservice_id;
+             
+              return value1 === "" ;
+            });
+            if (listEnpti.length > 0) {
+              this.loading = false;
+              this.toasTer.error('No puede guardar campo vacios');
+  
+            }else {
+              if (this.personList.length === 0) {
+                this.loading = false;
+                this.toasTer.error('Debe agregar al menos 1 salida');
+    
+              }else {
+            let bodyData = Object.assign({
+              "input_id": this.id_input,
+              "observation":  null ,
+              "moreOutputs": list
+            });
+            console.log(bodyData);
+            this.salidasServices.save(bodyData).subscribe(
+              response => {
+                    this.toasTer.success(SalidasMsg.save);
+                    this.reloadComponent();
+                },
+                error => {
+                  this.loading = false;
+                  this.toasTer.error(SalidasMsg.errorProcess);
+                  this.loading = false;
+                }
+              );
+              }
+            }
+           
+        } 
+       
+        
+          
+    
+  }
   get f() {
     return this.myControl2.controls;
   }
@@ -485,6 +624,7 @@ removePhone(fruit2: string): void {
   }
   this.myControl2.controls["fruitCtrl2"].setValue(this.fruits2);
 }
+
 
  
 }
