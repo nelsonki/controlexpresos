@@ -298,9 +298,8 @@ export class EntradasFormComponent implements OnInit {
           map(name => name ? this._filter6(name) : this.options6.slice())
       );
       /*BUSCAR sucursal*******************************/
-  if(this.idsubservicio6!==0){
    
-     this.options7=[];
+    this.options7=[];
     this.branchServices.getListIdCliente(this.idsubservicio6)
     .subscribe((value:any) => {
        console.log(value)
@@ -329,11 +328,7 @@ export class EntradasFormComponent implements OnInit {
           map(value => typeof value === 'string' ? value : value.name),
           map(name => name ? this._filter7(name) : this.options7.slice())
       );
-  }
-   else{
-    this.vieneSucursal=false;
-
-   }
+  
   }
   public closeModal() {
     this.closeStatus = !this.closeStatus;
@@ -552,6 +547,37 @@ public addForm(id) {
   this.firstFormGroup.controls['client'].setValue(dataEdit[0]["client_name"]);
   this.firstFormGroup.controls['client_id'].setValue(dataEdit[0]["client_id"]);
   this.idsubservicio6 = dataEdit[0]["client_id"];
+   /*BUSCAR sucursal*******************************/
+   
+   this.options7=[];
+   this.branchServices.getListIdCliente(this.idsubservicio6)
+   .subscribe((value:any) => {
+      console.log(value)
+      if(value.length > 0){
+         this.vieneSucursal=true;
+         Object.keys(value).forEach(i => {
+       this.options7.push(
+            {
+              id: value[i].id,
+              name: value[i].name,
+   
+             }
+   
+       );
+      
+         });
+      }else{
+       this.vieneSucursal=false;
+
+      }
+    
+   
+   });
+     this.filteredOptions7  = this.firstFormGroup.controls['sucursal'].valueChanges.pipe(
+       startWith(''),
+         map(value => typeof value === 'string' ? value : value.name),
+         map(name => name ? this._filter7(name) : this.options7.slice())
+     );
 if(dataEdit[0]["branch_id"]>0){
   this.vieneSucursal=true;
   this.firstFormGroup.controls['sucursal'].setValue(dataEdit[0]["branch_name"]);
