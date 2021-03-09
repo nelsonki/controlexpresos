@@ -13,6 +13,7 @@ import {colorMsg} from "../../../../utils/const/message";
 export class EntradasDeleteComponent implements OnInit {
   public id:any;
   public modulo:any;
+  public bandera:any;
 
   constructor(
       public dialogRef: MatDialogRef<EntradasDeleteComponent>,
@@ -23,6 +24,7 @@ export class EntradasDeleteComponent implements OnInit {
   ) {
       this.id = this.data[0];
       this.modulo = this.data[1];
+      this.bandera = this.data[2];
 
   }
   ngOnInit() {
@@ -31,11 +33,14 @@ export class EntradasDeleteComponent implements OnInit {
   }
 
 
-  public deleteRow(id) {
+  public deleteRow() {
       this.entradasServices.delete(this.id, this.modulo).subscribe(
         response => {
               this.toasTer.success(colorMsg.delete);
-              this.reloadComponent();
+              if(this.bandera!==1){
+                this.reloadComponent();
+
+              }
           },
           error => {
             this.toasTer.error(colorMsg.errorProcess);
