@@ -4,6 +4,9 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { ModalDirective } from "angular-bootstrap-md";
 import { ToastrService } from 'ngx-toastr';
+import { Router } from "@angular/router";
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {SalidasServices} from '../salidas-services/salidas-services'
 import {EntradasServices} from '../../entradas/entradas-services/entradas-services'
@@ -41,8 +44,8 @@ export class SalidasTableComponent implements OnInit {
   ngAfterViewInit() {
   }
   constructor(
-    //public dialog: MatDialog,
-    //public formBuilder: FormBuilder,
+    public dialog: MatDialog,
+    public router: Router,
     public toasTer: ToastrService,
     public salidasServices: SalidasServices,
     public entradasServices: EntradasServices
@@ -119,10 +122,19 @@ export class SalidasTableComponent implements OnInit {
     this.reset();
   }
   public closeModals(value) {
+    this.reloadComponent();
     this.basicModal.hide();
   }
   public openEdit(id) {
     this.titleModal = "Crear Salidas";
     this.form.addForm(id);
+  }
+  reloadComponent() {
+    const currentUrl = this.router.url;
+    const refreshUrl = currentUrl.indexOf("Boardings") > -1 ? "/" : "/";
+    this.router
+      .navigateByUrl(refreshUrl)
+      .then(() => this.router.navigateByUrl(currentUrl));
+    //this.producEdit = [];
   }
 } 

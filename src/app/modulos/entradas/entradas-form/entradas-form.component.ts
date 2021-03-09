@@ -298,7 +298,7 @@ export class EntradasFormComponent implements OnInit {
           map(name => name ? this._filter6(name) : this.options6.slice())
       );
       /*BUSCAR sucursal*******************************/
-  /*if(this.idsubservicio6!==0){
+  if(this.idsubservicio6!==0){
    
      this.options7=[];
     this.branchServices.getListIdCliente(this.idsubservicio6)
@@ -333,7 +333,7 @@ export class EntradasFormComponent implements OnInit {
    else{
     this.vieneSucursal=false;
 
-   }*/
+   }
   }
   public closeModal() {
     this.closeStatus = !this.closeStatus;
@@ -551,6 +551,7 @@ public addForm(id) {
   console.log(dataEdit[0]);
   this.firstFormGroup.controls['client'].setValue(dataEdit[0]["client_name"]);
   this.firstFormGroup.controls['client_id'].setValue(dataEdit[0]["client_id"]);
+  this.idsubservicio6 = dataEdit[0]["client_id"];
 if(dataEdit[0]["branch_id"]>0){
   this.vieneSucursal=true;
   this.firstFormGroup.controls['sucursal'].setValue(dataEdit[0]["branch_name"]);
