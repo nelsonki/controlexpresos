@@ -30,6 +30,7 @@ import {ServiceServices} from '../../service/service-services/service-services'
 import {ClientServices} from '../../client/client-services/client-services'
 import {BranchServices} from '../../branch/branch-services/branch-services'
 import {EntradasServices} from '../entradas-services/entradas-services'
+import {EntradasDeleteComponent} from '../dialog/entradas-delete/entradas-delete.component'
 
 import {entradasMsg} from '../../../utils/const/message'
 export interface Subservicio {
@@ -166,6 +167,7 @@ export class EntradasFormComponent implements OnInit {
     }
   ];
   constructor(
+
     private formBuilder: FormBuilder,
     public router: Router,
     public toasTer: ToastrService,
@@ -336,7 +338,10 @@ export class EntradasFormComponent implements OnInit {
   public closeModal() {
     this.closeStatus = !this.closeStatus;
     this.statusCloseModal.emit(this.closeStatus);
+    this.reloadComponent();
   }
+ 
+  
   onSubmit(){
     this.misSubServicios="";
     if ( this.firstFormGroup.invalid  ) {
@@ -594,17 +599,43 @@ changeValue(id: number, property: string, event: any) {
 public changeSelect(id: number, property: string, event: any,  value ) {
   this.editField =  value;
 }
-remove(id: any) {
-  this.myControl2.controls['myControl_ser'].setValue('');
-  this.myControl2.controls['myControl_ser_id'].setValue('');
-  this.myControl2.controls['peso'].setValue('');
-  this.myControl2.controls['cantidad'].setValue('');
-  this.myControl2.controls['myControl_color'].setValue('');
-  this.myControl2.controls['myControl_color_id'].setValue('');
-  this.myControl2.controls['myControl_sub'].setValue('');
-  this.myControl2.controls['tipo'].setValue(''); 
-  this.personList.splice(id, 1);
-  this.nameButtonAceptar = 'Agregar';
+remove(id_list: any, id_registro: any) {
+   if(id_registro!==0){
+    let modulo ="deleteOp";
+        const dialogRef = this.dialog.open(EntradasDeleteComponent, {
+         width: "450px",
+         data: [id_registro, modulo, 1]
+       });
+       dialogRef.afterClosed().subscribe(result => {
+         
+        const r = result;
+        console.log(r);
+        if(r){
+          this.myControl2.controls['myControl_ser'].setValue('');
+          this.myControl2.controls['myControl_ser_id'].setValue('');
+          this.myControl2.controls['peso'].setValue('');
+          this.myControl2.controls['cantidad'].setValue('');
+          this.myControl2.controls['myControl_color'].setValue('');
+          this.myControl2.controls['myControl_color_id'].setValue('');
+          this.myControl2.controls['myControl_sub'].setValue('');
+          this.myControl2.controls['tipo'].setValue(''); 
+          this.personList.splice(id_list, 1);
+          this.nameButtonAceptar = 'Agregar';
+        }
+        
+      });
+   }else{
+    this.myControl2.controls['myControl_ser'].setValue('');
+    this.myControl2.controls['myControl_ser_id'].setValue('');
+    this.myControl2.controls['peso'].setValue('');
+    this.myControl2.controls['cantidad'].setValue('');
+    this.myControl2.controls['myControl_color'].setValue('');
+    this.myControl2.controls['myControl_color_id'].setValue('');
+    this.myControl2.controls['myControl_sub'].setValue('');
+    this.myControl2.controls['tipo'].setValue(''); 
+    this.personList.splice(id_list, 1);
+    this.nameButtonAceptar = 'Agregar';
+   } 
 }
 
 add() {

@@ -6,6 +6,7 @@ import { ModalDirective } from "angular-bootstrap-md";
 import { ToastrService } from 'ngx-toastr';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {Router} from "@angular/router";
 
 import {EntradasServices} from '../entradas-services/entradas-services'
 import {EntradasFormComponent} from '../entradas-form/entradas-form.component'
@@ -40,10 +41,10 @@ export class EntradasTableComponent implements OnInit {
   expandedElement;
 
   ngAfterViewInit() {
-  }
+   }
   constructor(
     public dialog: MatDialog,
-    //public formBuilder: FormBuilder,
+    public router: Router,
     public toasTer: ToastrService,
     public entradasServices: EntradasServices
   ) {
@@ -155,8 +156,15 @@ export class EntradasTableComponent implements OnInit {
     this.reset();
   }
   public closeModals(value) {
+    this.reloadComponent();
     this.basicModal.hide();
+
   }
+  reloadComponent(){
+    const currentUrl = this.router.url;
+    const refreshUrl = currentUrl.indexOf('dashboard') > -1 ? '/' : '/';
+    this.router.navigateByUrl(refreshUrl).then(() => this.router.navigateByUrl(currentUrl));
+}
   public openEdit(id) {
     this.titleModal = "Modificar Entrada";
     this.form.addForm(id);
@@ -165,7 +173,7 @@ export class EntradasTableComponent implements OnInit {
     let modulo ="delete";
     this.dialog.open(EntradasDeleteComponent, {
      width: "450px",
-     data: [id, modulo]
+     data: [id, modulo,0]
    });
   
   }
@@ -173,7 +181,7 @@ export class EntradasTableComponent implements OnInit {
     let modulo ="deleteOp";
     this.dialog.open(EntradasDeleteComponent, {
      width: "450px",
-     data: [id, modulo]
+     data: [id, modulo,0]
    });
   
   }

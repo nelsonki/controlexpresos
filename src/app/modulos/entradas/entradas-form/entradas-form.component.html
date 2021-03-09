@@ -185,9 +185,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr mdb TableCol *ngFor="let person of personList; let id = index">
+                                    <tr mdb TableCol *ngFor="let person of personList; let id_list = index">
                                         <td class="text-center">
-                                            {{ id + 1 }}
+                                            {{ id_list + 1 }}
                                         </td>
                                         <td class="text-center">
                                             {{person.servicio }}
@@ -226,7 +226,7 @@
                                         <td class="text-center">
 
                                             <span class="table-remove" *ngIf="!loading">
-                                                            <a (click)="remove(id)">
+                                                            <a (click)="remove(id_list, person.id)">
                                                                 <mdb-icon
                                                                 fas
                                                                 icon="trash-alt"
