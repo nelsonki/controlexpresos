@@ -13,6 +13,7 @@ import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 //import { TemplatesService } from '../templates-services/templates.service';
 import {Observable} from 'rxjs';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
@@ -22,7 +23,7 @@ import {map, startWith} from 'rxjs/operators';
 import {SubServiceServices} from '../../sub-service/sub-service-services/sub-service-services'
 import {ServiceServices} from '../../service/service-services/service-services'
 import {SalidasServices} from '../salidas-services/salidas-services'
-
+import {SalidasDeleteComponent} from '../dialog/salidas-delete/salidas-delete.component'
 import {environment} from '../../../../environments/environment'
 import {HttpServices}from '../../../http/httpServices/httpServices'
 import {ColorServices} from '../../color/color-services/color-services'
@@ -109,13 +110,13 @@ export class SalidasFormComponent implements OnInit {
   public colores: Array<any> = [];
 
   public tipoRopa: Array<any> = [{
-    value: 'Nueva',
+    value: 'nueva',
   },
   {
-    value: 'Usada',
+    value: 'usada',
   },
   {
-    value: 'Desmanche',
+    value: 'desmanche',
   },
    
   ];
@@ -148,6 +149,8 @@ export class SalidasFormComponent implements OnInit {
     }
   ];
   constructor(
+    public dialog: MatDialog,
+
     private formBuilder: FormBuilder,
     public router: Router,
     public toasTer: ToastrService,
@@ -275,7 +278,7 @@ export class SalidasFormComponent implements OnInit {
     });
     console.log(dataEdit[0]);
     this.id_input = dataEdit[0].id;
-    console.log(this.id_input);
+    //console.log(this.id_input);
 
                   Object.keys(dataEdit[0].inputs).forEach(i => {
                     
@@ -288,13 +291,31 @@ export class SalidasFormComponent implements OnInit {
                         'cantidad': dataEdit[0].inputs[i].quantity,
                         'servicio': dataEdit[0].inputs[i].service_name,
                         'servicio_id': dataEdit[0].inputs[i].service_id,
-                        'color': dataEdit[0].inputs[i].color_name,
-                        'color_id': dataEdit[0].inputs[i].color_id,
+                        'color': (dataEdit[0].inputs[i].color_name!==null)?dataEdit[0].inputs[i].color_name:'',
+                        'color_id': (dataEdit[0].inputs[i].color_id!==null)?dataEdit[0].inputs[i].color_id:'',
                         'subservicio': dataEdit[0].inputs[i].subservices_tag,
                         'tipo': dataEdit[0].inputs[i].operation_type,
                         }
                     );
-                      });
+                  });
+                  Object.keys(dataEdit[0].outputs).forEach(i => {
+                    
+                  
+                    this.personList.push(
+   
+                        {
+                        'id': dataEdit[0].outputs[i].id,
+                        'peso': dataEdit[0].outputs[i].weight,
+                        'cantidad': dataEdit[0].outputs[i].quantity,
+                        'servicio': dataEdit[0].outputs[i].service_name,
+                        'servicio_id': dataEdit[0].outputs[i].service_id,
+                        'color': (dataEdit[0].outputs[i].color_name!==null)?dataEdit[0].outputs[i].color_name:'',
+                        'color_id': (dataEdit[0].outputs[i].color_id!==null)?dataEdit[0].outputs[i].color_id:'',
+                        'subservicio': dataEdit[0].outputs[i].subservices_tag,
+                        'tipo': dataEdit[0].outputs[i].operation_type,
+                        }
+                    );
+                  });
                
  
   } 
@@ -315,17 +336,43 @@ changeValue(id: number, property: string, event: any) {
 public changeSelect(id: number, property: string, event: any,  value ) {
   this.editField =  value;
 }
-remove(id: any) {
-  this.myControl2.controls['myControl_ser'].setValue('');
-  this.myControl2.controls['myControl_ser_id'].setValue('');
-  this.myControl2.controls['peso'].setValue('');
-  this.myControl2.controls['cantidad'].setValue('');
-  this.myControl2.controls['color'].setValue('');
-  this.myControl2.controls['myControl_sub'].setValue('');
-  this.myControl2.controls['myControl_sub_id'].setValue('');
-  this.myControl2.controls['tipo'].setValue(''); 
-  this.personList.splice(id, 1);
-  this.nameButtonAceptar = 'Agregar';
+remove(id_list: any, id_registro: any) {
+  if(id_registro!==0){
+   let modulo ="deleteOp";
+       const dialogRef = this.dialog.open(SalidasDeleteComponent, {
+        width: "450px",
+        data: [id_registro, modulo, 1]
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        
+       const r = result;
+       console.log(r);
+       if(r){
+         this.myControl2.controls['myControl_ser'].setValue('');
+         this.myControl2.controls['myControl_ser_id'].setValue('');
+         this.myControl2.controls['peso'].setValue('');
+         this.myControl2.controls['cantidad'].setValue('');
+         this.myControl2.controls['myControl_color'].setValue('');
+         this.myControl2.controls['myControl_color_id'].setValue('');
+         this.myControl2.controls['myControl_sub'].setValue('');
+         this.myControl2.controls['tipo'].setValue(''); 
+         this.personList.splice(id_list, 1);
+         this.nameButtonAceptar = 'Agregar';
+       }
+       
+     });
+  }else{
+   this.myControl2.controls['myControl_ser'].setValue('');
+   this.myControl2.controls['myControl_ser_id'].setValue('');
+   this.myControl2.controls['peso'].setValue('');
+   this.myControl2.controls['cantidad'].setValue('');
+   this.myControl2.controls['myControl_color'].setValue('');
+   this.myControl2.controls['myControl_color_id'].setValue('');
+   this.myControl2.controls['myControl_sub'].setValue('');
+   this.myControl2.controls['tipo'].setValue(''); 
+   this.personList.splice(id_list, 1);
+   this.nameButtonAceptar = 'Agregar';
+  } 
 }
 
 add() {
@@ -455,12 +502,10 @@ public clearInput() {
             }else {
               
               let bodyData = Object.assign({
-                "input_id": this.id_input,
-                "observation":  null ,
                 "moreOutputs": list
               });  
               console.warn(bodyData);
-              this.salidasServices.update(this.idEdit, bodyData).subscribe(
+              this.salidasServices.update(this.id_input, bodyData).subscribe(
                 response => {
                       this.toasTer.success(SalidasMsg.update);
                       this.reloadComponent();
@@ -475,63 +520,6 @@ public clearInput() {
           }
   
       }
-        else{
-        
-            let listEnpti = [];
-            this.loading = true;
-            let list = [];
-            this.loading = true;
-            Object.keys(this.personList).forEach(e => {
-               
-              list.push({
-                 
-                service_id: this.personList[e]["servicio_id"],
-                weight: (this.personList[e]["peso"]!=='')?this.personList[e]["peso"]:0,
-                quantity: (this.personList[e]["cantidad"]!=='')?this.personList[e]["cantidad"]:0,
-                color_id:  (this.personList[e]["color_id"]!=='')?this.personList[e]["color_id"]:null,
-                subservice_id:  (this.personList[e]["subservicio"]!=='')?this.personList[e]["subservicio"]:'',
-                operation_type: this.personList[e]["tipo"],
-                 
-              });
-            });
-            listEnpti = list.filter(function (n) {
-              let value1 = n.service_id;
-              let value2 = n.subservice_id;
-             
-              return value1 === "" ;
-            });
-            if (listEnpti.length > 0) {
-              this.loading = false;
-              this.toasTer.error('No puede guardar campo vacios');
-  
-            }else {
-              if (this.personList.length === 0) {
-                this.loading = false;
-                this.toasTer.error('Debe agregar al menos 1 salida');
-    
-              }else {
-            let bodyData = Object.assign({
-              "input_id": this.id_input,
-              "observation":  null ,
-              "moreOutputs": list
-            });
-            console.log(bodyData);
-            this.salidasServices.save(bodyData).subscribe(
-              response => {
-                    this.toasTer.success(SalidasMsg.save);
-                    this.reloadComponent();
-                },
-                error => {
-                  this.loading = false;
-                  this.toasTer.error(SalidasMsg.errorProcess);
-                  this.loading = false;
-                }
-              );
-              }
-            }
-           
-        } 
-       
         
           
     
@@ -596,11 +584,13 @@ onSelectionChanged5(event: MatAutocompleteSelectedEvent) {
   let namesub5:string;
   
   const viene5= event.option.value;
+  console.warn(viene5)
   this.idsubservicio5 = viene5.id ? viene5.id : 0;
   namesub5 = viene5.name ? viene5.name : '';
   //console.log(pla);
-  this.myControl2.controls['myControl_color'].setValue(namesub5);
-  this.myControl2.controls['myControl_color_id'].setValue(this.idsubservicio5);
+     this.myControl2.controls['myControl_color'].setValue(namesub5);
+    this.myControl2.controls['myControl_color_id'].setValue(this.idsubservicio5);
+  
 
 }
 
@@ -625,6 +615,13 @@ removePhone(fruit2: string): void {
   this.myControl2.controls["fruitCtrl2"].setValue(this.fruits2);
 }
 
-
+public validarVacio(filterValue: string){
+  const text= filterValue;
+  if(text ===''){
+    this.myControl2.controls['myControl_color'].setValue('');
+    this.myControl2.controls['myControl_color_id'].setValue('');
+  }
+  
+}
  
 }

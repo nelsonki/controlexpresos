@@ -103,7 +103,7 @@
                         <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
                             <mat-label>Color</mat-label>
 
-                            <input aria-label="Number" type="text" placeholder="Color" matInput formControlName="myControl_color" [matAutocomplete]="auto5">
+                            <input aria-label="Number" type="text" placeholder="Color" matInput formControlName="myControl_color" [matAutocomplete]="auto5" (blur)="validarVacio($event.target.value)">
                             <mat-autocomplete (optionSelected)="onSelectionChanged5($event)" autoActiveFirstOption #auto5="matAutocomplete">
                                 <!--[displayWith]="displayFn"-->
 
