@@ -921,7 +921,14 @@ removePhone(fruit2: string): void {
   }
   this.myControl2.controls["fruitCtrl2"].setValue(this.fruits2);
 }
-
+public validarVacio(filterValue: string){
+  const text= filterValue;
+  if(text ===''){
+    this.myControl2.controls['myControl_color'].setValue('');
+    this.myControl2.controls['myControl_color_id'].setValue('');
+  }
+  
+}
 }
 
 

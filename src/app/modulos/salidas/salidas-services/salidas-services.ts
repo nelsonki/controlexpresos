@@ -36,11 +36,17 @@ export class SalidasServices {
         let enpoint = 'outputs/update/'+id;
         return this.http.doPut(this.api, enpoint, body);
     }
-
-    delete(id) {
-        let enpoint = 'outputs/delete/'+id;
-        return this.http.doDelete(this.api, enpoint);
-     }
-
+ 
+    delete(id, modulo) {
+        if(modulo === "delete"){
+           let enpoint = 'outputs/delete/'+id;
+           return this.http.doDelete(this.api, enpoint); 
+       }
+       if(modulo === "deleteOp"){
+           let enpoint = 'outputs/deleteOp/'+id;
+           return this.http.doDelete(this.api, enpoint); 
+       }
+       
+    }
      
 }

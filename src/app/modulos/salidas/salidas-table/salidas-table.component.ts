@@ -11,6 +11,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import {SalidasServices} from '../salidas-services/salidas-services'
 import {EntradasServices} from '../../entradas/entradas-services/entradas-services'
 import {SalidasFormComponent} from '../salidas-form/salidas-form.component'
+import {SalidasDeleteComponent} from '../dialog/salidas-delete/salidas-delete.component'
 declare var $: any;
 
 @Component({
@@ -38,7 +39,7 @@ export class SalidasTableComponent implements OnInit {
   public titleModal: string;
   public element =[];
   public data;
-
+  public dataOut;
   expandedElement;
 
   ngAfterViewInit() {
@@ -59,8 +60,10 @@ export class SalidasTableComponent implements OnInit {
   }
   public loadAll(){ 
 
-    this.entradasServices.getList().subscribe((value) => {
+    this.salidasServices.getList().subscribe((value) => {
       this.data=[];
+      this.dataOut=[];
+
       this.element=[];
       console.log(value["data"])
       if (value["data"]){
@@ -75,7 +78,8 @@ export class SalidasTableComponent implements OnInit {
               "branch_id":value["data"][e].branch_id,
               "observation":value["data"][e].observation,
               "date_time": value["data"][e].date_time,
-              "inputs":[]
+              "inputs":[],
+              "outputs":[]
             };
             this.element.push(datos);
             Object.keys(value["data"][e].inputs).forEach(i => {
@@ -86,14 +90,29 @@ export class SalidasTableComponent implements OnInit {
               quantity: value["data"][e].inputs[i].quantity,
               service_id: value["data"][e].inputs[i].service_id,
               service_name: value["data"][e].inputs[i].service_name,
-
               color_id: value["data"][e].inputs[i].color_id,
               color_name: value["data"][e].inputs[i].color_name,
               subservices_tag: value["data"][e].inputs[i].subservices_tag,
               operation_type: value["data"][e].inputs[i].operation_type,
-              created_at: value["data"][e].inputs[i].created_at,
+              created_at: value["data"][e].inputs[i].date_time,
             } ;                       
             this.element[e].inputs.push(this.data);
+            });
+            Object.keys(value["data"][e].outputs).forEach(i => {
+              this.dataOut =
+              {
+                id:value["data"][e].outputs[i].id,
+                weight: value["data"][e].outputs[i].weight,
+                quantity: value["data"][e].outputs[i].quantity,
+                service_id: value["data"][e].outputs[i].service_id,
+                service_name: value["data"][e].outputs[i].service_name,
+                color_id: value["data"][e].outputs[i].color_id,
+                color_name: value["data"][e].outputs[i].color_name,
+                subservices_tag: value["data"][e].outputs[i].subservices_tag,
+                operation_type: value["data"][e].outputs[i].operation_type,
+                created_at: value["data"][e].outputs[i].date_time,
+              } ;                       
+              this.element[e].outputs.push(this.dataOut);
               });
          });
          Object.keys(this.element).forEach((i, index) => {
@@ -106,6 +125,7 @@ export class SalidasTableComponent implements OnInit {
       } else {
         this.toasTer.error(value["message"]);
         this.data = [];
+        this.dataOut = [];
         this.element=[];
         this.dataSource = new MatTableDataSource(this.element);
         this.dataSource.paginator = this.paginator;
@@ -114,8 +134,11 @@ export class SalidasTableComponent implements OnInit {
     });
     
   }
-  Refresh(){}
-  applyFilter(event){}
+  Refresh(){
+    this.loadAll();
+  }
+
+  
   reset(){}
   showModal() {
     $("#basicModal").show();
@@ -136,5 +159,19 @@ export class SalidasTableComponent implements OnInit {
       .navigateByUrl(refreshUrl)
       .then(() => this.router.navigateByUrl(currentUrl));
     //this.producEdit = [];
+  }
+  public applyFilter(filterValue: string){
+    this.dataSource.filter = filterValue.trim().toLocaleLowerCase();
+    Object.keys(this.dataSource.filteredData).forEach((i, index) => {
+      this.dataSource.filteredData[i].Item = index + 1;
+    });
+  }
+  eliminarOp(id){
+    let modulo ="deleteOp";
+    this.dialog.open(SalidasDeleteComponent, {
+     width: "450px",
+     data: [id, modulo,0]
+   });
+  
   }
 } 

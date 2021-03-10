@@ -41,7 +41,7 @@
                 <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
                     <mat-label>Color</mat-label>
 
-                    <input aria-label="Number" type="text" placeholder="Color" matInput formControlName="myControl_color" [matAutocomplete]="auto5">
+                    <input aria-label="Number" type="text" placeholder="Color" matInput formControlName="myControl_color" [matAutocomplete]="auto5" (blur)="validarVacio($event.target.value)">
                     <mat-autocomplete (optionSelected)="onSelectionChanged5($event)" autoActiveFirstOption #auto5="matAutocomplete">
                         <!--[displayWith]="displayFn"-->
 
@@ -180,9 +180,9 @@
                         </thead>
                         <tbody>
 
-                            <tr mdb TableCol *ngFor="let person of personList; let id = index">
+                            <tr mdb TableCol *ngFor="let person of personList; let id_list = index">
                                 <td class="text-center">
-                                    {{ id + 1 }}
+                                    {{ id_list + 1 }}
                                 </td>
                                 <td class="text-center">
                                     {{person.servicio }}
@@ -207,7 +207,7 @@
                                 </td>
                                 <td class="text-center">
                                     <span class="table-remove" *ngIf="!loading">
-                                                <a (click)="edittri(id)">
+                                                <a (click)="edittri(id_list)">
                                                     <mdb-icon
                                                     fas
                                                     icon="edit"
@@ -221,7 +221,7 @@
                                 <td class="text-center">
 
                                     <span class="table-remove" *ngIf="!loading">
-                                                            <a (click)="remove(id)">
+                                                            <a (click)="remove(id_list, person.id)">
                                                                 <mdb-icon
                                                                 fas
                                                                 icon="trash-alt"
