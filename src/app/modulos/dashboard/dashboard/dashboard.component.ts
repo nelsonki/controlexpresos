@@ -98,6 +98,10 @@ export class DashboardComponent implements OnInit  {
       this.router.navigate(['/Salidas']);
       this.drawer.close();
      }
+     listarProcesadas(){
+      this.router.navigate(['/Procesadas']);
+      this.drawer.close();
+     }
     ngOnInit(): void {
     this.showSuccess()
   }
