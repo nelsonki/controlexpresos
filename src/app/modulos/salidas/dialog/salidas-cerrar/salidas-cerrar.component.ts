@@ -6,17 +6,17 @@ import {SalidasServices} from "../../salidas-services/salidas-services";
 import {SalidasMsg} from "../../../../utils/const/message";
 
 @Component({
-  selector: 'app-salidas-delete',
-  templateUrl: './salidas-delete.component.html',
-  styleUrls: ['./salidas-delete.component.scss']
+  selector: 'app-salidas-cerrar',
+  templateUrl: './salidas-cerrar.component.html',
+  styleUrls: ['./salidas-cerrar.component.scss']
 })
-export class SalidasDeleteComponent implements OnInit {
+export class SalidasCerrarComponent implements OnInit {
   public id:any;
   public modulo:any;
   public bandera:any;
 
   constructor(
-      public dialogRef: MatDialogRef<SalidasDeleteComponent>,
+      public dialogRef: MatDialogRef<SalidasCerrarComponent>,
       public router: Router,
       public salidasServices: SalidasServices,
       public toasTer: ToastrService,
@@ -33,7 +33,7 @@ export class SalidasDeleteComponent implements OnInit {
   }
 
 
-  public deleteRow() {
+  public cerrarOperacion() {/*
       this.salidasServices.delete(this.id, this.modulo).subscribe(
         response => {
               this.toasTer.success(SalidasMsg.delete);
@@ -45,7 +45,7 @@ export class SalidasDeleteComponent implements OnInit {
           error => {
             this.toasTer.error(SalidasMsg.errorProcess);
           }
-        );
+        );*/
   }
 
   reloadComponent(){
