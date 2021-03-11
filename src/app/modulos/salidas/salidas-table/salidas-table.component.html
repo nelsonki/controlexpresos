@@ -91,9 +91,9 @@
                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Editar" (click)="openEdit(element.id); basicModal.show()">
                             <i class="fas fa-edit"></i>
                         </div>
-                        <!--<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Eliminar Embarque" (click)="remove(element.id)">
-            <i class="far fa-trash-alt"></i>
-            </div>-->
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Cerrar operación" (click)="cerrarOp(element.id)">
+                            <i class="fas fa-archive"></i>
+                        </div>
                         <!--
                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Eliminar" (click)="eliminar(element.id)">
                             <i class="far fa-trash-alt"></i>
@@ -204,7 +204,7 @@
             <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
         </table>
     </div>
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
 
     <!--
     <div class="btn-group">

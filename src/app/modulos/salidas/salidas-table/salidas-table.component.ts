@@ -12,6 +12,7 @@ import {SalidasServices} from '../salidas-services/salidas-services'
 import {EntradasServices} from '../../entradas/entradas-services/entradas-services'
 import {SalidasFormComponent} from '../salidas-form/salidas-form.component'
 import {SalidasDeleteComponent} from '../dialog/salidas-delete/salidas-delete.component'
+import {SalidasCerrarComponent} from '../dialog/salidas-cerrar/salidas-cerrar.component'
 declare var $: any;
 
 @Component({
@@ -171,6 +172,13 @@ export class SalidasTableComponent implements OnInit {
     this.dialog.open(SalidasDeleteComponent, {
      width: "450px",
      data: [id, modulo,0]
+   });
+  
+  }
+  cerrarOp(id){
+    this.dialog.open(SalidasCerrarComponent, {
+     width: "450px",
+     data: [id]
    });
   
   }

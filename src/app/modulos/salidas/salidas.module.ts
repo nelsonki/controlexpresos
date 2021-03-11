@@ -19,11 +19,12 @@ import { MaterialModule } from './../../material.module';
 import { SalidasTableComponent } from './salidas-table/salidas-table.component';
 import {SalidasRoutingModule} from './salidas-routing.module';
 import { SalidasFormComponent } from './salidas-form/salidas-form.component';
-import { SalidasDeleteComponent } from './dialog/salidas-delete/salidas-delete.component'
+import { SalidasDeleteComponent } from './dialog/salidas-delete/salidas-delete.component';
+import { SalidasCerrarComponent } from './dialog/salidas-cerrar/salidas-cerrar.component'
 
 
 @NgModule({
-  declarations: [SalidasTableComponent, SalidasFormComponent, SalidasDeleteComponent],
+  declarations: [SalidasTableComponent, SalidasFormComponent, SalidasDeleteComponent, SalidasCerrarComponent],
   imports: [
     CommonModule,
     SalidasRoutingModule,
