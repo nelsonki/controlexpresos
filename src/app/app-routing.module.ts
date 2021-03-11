@@ -36,6 +36,10 @@ const routes: Routes = [
           path: 'Salidas',
           loadChildren: () => import('./modulos/salidas/salidas.module').then(m => m.SalidasModule)
         },
+        {
+          path: 'Procesadas',
+          loadChildren: () => import('./modulos/processed/processed.module').then(m => m.ProcessedModule)
+        },
       ]
     }
 ];

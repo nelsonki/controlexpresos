@@ -33,19 +33,13 @@ export class SalidasCerrarComponent implements OnInit {
   }
 
 
-  public cerrarOperacion() {/*
-      this.salidasServices.delete(this.id, this.modulo).subscribe(
-        response => {
-              this.toasTer.success(SalidasMsg.delete);
-              if(this.bandera!==1){
-                this.reloadComponent();
-
-              }
-          },
-          error => {
-            this.toasTer.error(SalidasMsg.errorProcess);
-          }
-        );*/
+  public cerrarOperacion() {
+    let body;
+    this.salidasServices.procesar(this.id, body).pipe()
+    .subscribe((value: any) => {
+      this.toasTer.success(value.message);
+    });
+    this.reloadComponent();
   }
 
   reloadComponent(){

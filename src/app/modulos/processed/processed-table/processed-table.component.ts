@@ -8,17 +8,13 @@ import { Router } from "@angular/router";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {SalidasServices} from '../salidas-services/salidas-services'
-import {EntradasServices} from '../../entradas/entradas-services/entradas-services'
-import {SalidasFormComponent} from '../salidas-form/salidas-form.component'
-import {SalidasDeleteComponent} from '../dialog/salidas-delete/salidas-delete.component'
-import {SalidasCerrarComponent} from '../dialog/salidas-cerrar/salidas-cerrar.component'
+import {SalidasServices} from '../../salidas/salidas-services/salidas-services'
 declare var $: any;
 
 @Component({
-  selector: 'app-salidas-table',
-  templateUrl: './salidas-table.component.html',
-  styleUrls: ['./salidas-table.component.scss'],
+  selector: 'app-processed-table',
+  templateUrl: './processed-table.component.html',
+  styleUrls: ['./processed-table.component.scss'],  
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({height: '0px', minHeight: '0'})),
@@ -27,15 +23,14 @@ declare var $: any;
     ]),
   ],
 })
-export class SalidasTableComponent implements OnInit {
+export class ProcessedTableComponent implements OnInit {
 
-  @ViewChild(SalidasFormComponent) form: SalidasFormComponent;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('basicModal') basicModal: ModalDirective;
   @Output() onChange: EventEmitter<File> = new EventEmitter<File>();
 
-  displayedColumns: string[] = ['Item', 'ID', 'Cliente - Sucursal', 'Fecha - Hora', 'Usuario', 'Observación', 'Acciones'];
+  displayedColumns: string[] = ['Item', 'ID', 'Cliente - Sucursal', 'Fecha - Hora', 'Usuario', 'Observación'];
   dataSource;
   public titleModal: string;
   public element =[];
@@ -50,10 +45,9 @@ export class SalidasTableComponent implements OnInit {
     public router: Router,
     public toasTer: ToastrService,
     public salidasServices: SalidasServices,
-    public entradasServices: EntradasServices
   ) {
     //this.api = environment.apiInventory;
-    this.titleModal = "Crear Salida";
+   // this.titleModal = "Crear Salida";
   }
 
   ngOnInit() {
@@ -61,7 +55,7 @@ export class SalidasTableComponent implements OnInit {
   }
   public loadAll(){ 
 
-    this.salidasServices.getList().subscribe((value) => {
+    this.salidasServices.getOperaciones().subscribe((value) => {
       this.data=[];
       this.dataOut=[];
 
@@ -139,20 +133,11 @@ export class SalidasTableComponent implements OnInit {
     this.loadAll();
   }
 
-  
-  reset(){}
-  showModal() {
-    $("#basicModal").show();
-    this.reset();
-  }
   public closeModals(value) {
     this.reloadComponent();
     this.basicModal.hide();
   }
-  public openEdit(id) {
-    this.titleModal = "Crear Salidas";
-    this.form.addForm(id);
-  }
+
   reloadComponent() {
     const currentUrl = this.router.url;
     const refreshUrl = currentUrl.indexOf("Boardings") > -1 ? "/" : "/";
@@ -167,20 +152,5 @@ export class SalidasTableComponent implements OnInit {
       this.dataSource.filteredData[i].Item = index + 1;
     });
   }
-  eliminarOp(id){
-    let modulo ="deleteOp";
-    this.dialog.open(SalidasDeleteComponent, {
-     width: "450px",
-     data: [id, modulo,0]
-   });
-  
-  }
-  cerrarOp(id){
-    this.dialog.open(SalidasCerrarComponent, {
-     width: "450px",
-     data: [id]
-   });
-  
-  }
- 
+
 } 

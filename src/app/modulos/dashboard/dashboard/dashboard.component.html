@@ -76,7 +76,7 @@
 <span style="font-size: 15px; font-weight: bold;">Inspección</span>
 </button>
                     <mat-menu #menuInspe="matMenu">
-                        <button mat-menu-item><i class="fas fa-sticky-note"></i>&nbsp;Procesadas</button>
+                        <button mat-menu-item (click)="listarProcesadas()" mat-menu-item [routerLink]="['/Procesadas' ]" routerLinkActive="router-link-active"><i class="fas fa-sticky-note"></i>&nbsp;Procesadas</button>
                     </mat-menu>
                 </li>
                 <hr>
