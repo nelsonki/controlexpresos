@@ -83,7 +83,21 @@
                 <th mat-header-cell *matHeaderCellDef> Observación </th>
                 <td mat-cell *matCellDef="let element">{{element.observation}} </td>
             </ng-container>
+            <!-- Weight Column -->
+            <ng-container matColumnDef="Acciones">
+                <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                <td mat-cell *matCellDef="let element">
+                    <div class="row text-center purchase-width-actions">
 
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Imprimir operación" (click)="print(element.id)">
+                            <i class="fas fa-print"></i>
+                        </div>
+
+                    </div>
+
+
+                </td>
+            </ng-container>
             <ng-container matColumnDef="expandedDetail">
                 <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
                     <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">

@@ -9,6 +9,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {SalidasServices} from '../../salidas/salidas-services/salidas-services'
+import { environment } from '../../../../environments/environment';
+
 declare var $: any;
 
 @Component({
@@ -30,13 +32,14 @@ export class ProcessedTableComponent implements OnInit {
   @ViewChild('basicModal') basicModal: ModalDirective;
   @Output() onChange: EventEmitter<File> = new EventEmitter<File>();
 
-  displayedColumns: string[] = ['Item', 'ID', 'Cliente - Sucursal', 'Fecha - Hora', 'Usuario', 'Observación'];
+  displayedColumns: string[] = ['Item', 'ID', 'Cliente - Sucursal', 'Fecha - Hora', 'Usuario', 'Observación','Acciones'];
   dataSource;
   public titleModal: string;
   public element =[];
   public data;
   public dataOut;
   expandedElement;
+  public api: string;
 
   ngAfterViewInit() {
   }
@@ -48,6 +51,8 @@ export class ProcessedTableComponent implements OnInit {
   ) {
     //this.api = environment.apiInventory;
    // this.titleModal = "Crear Salida";
+   this.api = environment.apiJakiro2;
+
   }
 
   ngOnInit() {
@@ -152,5 +157,8 @@ export class ProcessedTableComponent implements OnInit {
       this.dataSource.filteredData[i].Item = index + 1;
     });
   }
+  print(id){
+    window.open( this.api + 'outputs/print/' + id);
 
+  }
 } 
