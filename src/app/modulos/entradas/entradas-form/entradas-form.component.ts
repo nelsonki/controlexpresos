@@ -7,7 +7,7 @@ import {
   FormGroupDirective,
   NgForm,
   MinLengthValidator
-} from '@angular/forms';
+} from '@angular/forms'; 
 import { MatStepper } from '@angular/material/stepper';
 import * as $ from 'jquery';
 import { ToastrService } from 'ngx-toastr';
@@ -441,7 +441,7 @@ export class EntradasFormComponent implements OnInit {
               }
           }
   
-        }else{
+      }else{
           if (this.firstFormGroup.invalid) {
             return;
           } else {
@@ -514,7 +514,11 @@ export class EntradasFormComponent implements OnInit {
     this.cd.detectChanges();
 }
 public addForm(id) {  
-  
+  this.firstFormGroup.controls['client'].setValue('0');
+  this.firstFormGroup.controls['client_id'].setValue('0');
+  this.firstFormGroup.controls['sucursal'].setValue('0');
+  this.firstFormGroup.controls['sucursal_id'].setValue('0');
+
   this.firstFormGroup.controls['client'].setValue('');
   this.firstFormGroup.controls['client_id'].setValue('');
   this.firstFormGroup.controls['sucursal'].setValue('');

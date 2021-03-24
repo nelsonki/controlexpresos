@@ -140,7 +140,37 @@ export class SalidasTableComponent implements OnInit {
   }
 
   
-  reset(){}
+  reset(){
+    /* this.form.myControl2.reset();*/
+    this.form.nameButtonAceptar = 'Agregar';
+    this.form.firstFormGroup.controls['client'].setValue('');
+    this.form.firstFormGroup.controls['client_id'].setValue('');
+    this.form.firstFormGroup.controls['sucursal'].setValue('');
+    this.form.firstFormGroup.controls['sucursal_id'].setValue('');
+ 
+    this.form.myControl2.controls['myControl_ser'].setValue('');
+    this.form.myControl2.controls['myControl_ser_id'].setValue('');
+
+    this.form.myControl2.controls['peso'].setValue('');
+    this.form.myControl2.controls['cantidad'].setValue('');
+    this.form.myControl2.controls['myControl_color'].setValue('');
+    this.form.myControl2.controls['myControl_color_id'].setValue('');
+
+    this.form.myControl2.controls['myControl_sub'].setValue('');
+    this.form.myControl2.controls['tipo'].setValue('');
+
+    this.form.fruits2=[];
+    this.form.myControl2.controls["fruitCtrl2"].setValue('');
+
+    this.form.putSubmit = false;
+    this.titleModal = "Crear Salida";
+    this.form.personList = [];
+    this.form.personList_entradas = [];
+    this.form.stepper.selectedIndex = 0;
+    this.form.idsubservicio6=0;
+    this.form.vieneSucursal =false;
+    this.form.validForm=true;
+  }
   showModal() {
     $("#basicModal").show();
     this.reset();
