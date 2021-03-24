@@ -13,6 +13,8 @@ import {EntradasServices} from '../../entradas/entradas-services/entradas-servic
 import {SalidasFormComponent} from '../salidas-form/salidas-form.component'
 import {SalidasDeleteComponent} from '../dialog/salidas-delete/salidas-delete.component'
 import {SalidasCerrarComponent} from '../dialog/salidas-cerrar/salidas-cerrar.component'
+import { environment } from '../../../../environments/environment';
+
 declare var $: any;
 
 @Component({
@@ -42,6 +44,7 @@ export class SalidasTableComponent implements OnInit {
   public data;
   public dataOut;
   expandedElement;
+  public api: string;
 
   ngAfterViewInit() {
   }
@@ -51,9 +54,12 @@ export class SalidasTableComponent implements OnInit {
     public toasTer: ToastrService,
     public salidasServices: SalidasServices,
     public entradasServices: EntradasServices
+    
+
   ) {
     //this.api = environment.apiInventory;
     this.titleModal = "Crear Salida";
+    this.api = environment.apiJakiro2;
   }
 
   ngOnInit() {
@@ -211,6 +217,10 @@ export class SalidasTableComponent implements OnInit {
      data: [id]
    });
   
+  }
+  print(id){
+    window.open( this.api + 'outputs/print/' + id);
+
   }
  
 } 
