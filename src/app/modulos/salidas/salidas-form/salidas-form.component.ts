@@ -9,6 +9,8 @@ import {
 } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { MatStepper } from '@angular/material/stepper';
+
 //import { TemplateMsg } from "../../../utils/const/message";
 import { ToastrService } from "ngx-toastr";
 //import { TemplatesService } from '../templates-services/templates.service';
@@ -23,6 +25,9 @@ import {map, startWith} from 'rxjs/operators';
 import {SubServiceServices} from '../../sub-service/sub-service-services/sub-service-services'
 import {ServiceServices} from '../../service/service-services/service-services'
 import {SalidasServices} from '../salidas-services/salidas-services'
+import {ClientServices} from '../../client/client-services/client-services'
+import {BranchServices} from '../../branch/branch-services/branch-services'
+
 import {SalidasDeleteComponent} from '../dialog/salidas-delete/salidas-delete.component'
 import {environment} from '../../../../environments/environment'
 import {HttpServices}from '../../../http/httpServices/httpServices'
@@ -42,6 +47,14 @@ export interface Color {
   id: number;
   name: string;
 }
+export interface Cliente {
+  id: number;
+  name: string;
+}
+export interface Branches {
+  id: number;
+  name: string;
+}
 @Component({
   selector: 'app-salidas-form',
   templateUrl: './salidas-form.component.html',
@@ -50,7 +63,9 @@ export interface Color {
 export class SalidasFormComponent implements OnInit {
   @Input() element: string  ;
   @Output() statusCloseModal = new EventEmitter();
-  
+  @ViewChild('stepper') stepper: MatStepper;
+
+  firstFormGroup: FormGroup;
   myControl2: FormGroup;
   public submitted = false;
   public loading: boolean = false;
@@ -61,6 +76,8 @@ export class SalidasFormComponent implements OnInit {
   public idToUpdate: number;
   public idEdit: any;
   public putSubmit: boolean = false;
+  isOptional = false;
+  public validForm: boolean = false;
 
   public visible = true;
   public selectable = true;
@@ -94,6 +111,17 @@ export class SalidasFormComponent implements OnInit {
   public filteredOptions5: Observable<Color[]>;
   public options5: Array<any> = [];
   public idsubservicio5 = 0;
+
+  //buscar cliente
+  public filteredOptions6: Observable<Cliente[]>;
+  public options6: Array<any> = [];
+  public idsubservicio6 = 0;
+  
+   //buscar branches
+   public filteredOptions7: Observable<Branches[]>;
+   public options7: Array<any> = [];
+   public idsubservicio7 = 0;
+   public vieneSucursal:boolean=false;
 
   readonly separatorKeysCodes2: number[] = [ENTER, COMMA];
   public visible2 = true;
@@ -159,10 +187,19 @@ export class SalidasFormComponent implements OnInit {
     private serviceServices: ServiceServices,
     private colorServices: ColorServices,
     private http: HttpServices,
-
+    private clientServices: ClientServices,
+    private branchServices: BranchServices
   ) { }
 
   ngOnInit() {
+    this.firstFormGroup = this.formBuilder.group({
+      client: ['', [Validators.required ]],
+      client_id: ['', [Validators.required ]],
+
+      sucursal: [''],
+      sucursal_id: [''],
+
+    });
     this.myControl2 = this.formBuilder.group({
       peso: [''],
       cantidad: ['' ],
@@ -243,14 +280,69 @@ export class SalidasFormComponent implements OnInit {
           map(value => typeof value === 'string' ? value : value.name),
           map(name => name ? this._filter5(name) : this.options5.slice())
       );
-  }
+      
+      /*BUSCAR CLIENTE*******************************/
+      this.clientServices.getList()
+      .subscribe((value) => {
+        
+        Object.keys(value['data']).forEach(i => {
+          this.options6.push(
+               {
+                 id: value['data'][i].id,
+                 name: value['data'][i].name,
+  
+                }
+  
+          );
+         
+            });
+ 
+      });
+      this.filteredOptions6  = this.firstFormGroup.controls['client'].valueChanges.pipe(
+        startWith(''),
+          map(value => typeof value === 'string' ? value : value.name),
+          map(name => name ? this._filter6(name) : this.options6.slice())
+      );
+      /*BUSCAR sucursal*******************************/
+   
+    this.options7=[];
+    this.branchServices.getListIdCliente(this.idsubservicio6)
+    .subscribe((value:any) => {
+       console.log(value)
+       if(value.length > 0){
+          this.vieneSucursal=true;
+          Object.keys(value).forEach(i => {
+        this.options7.push(
+             {
+               id: value[i].id,
+               name: value[i].name,
+    
+              }
+    
+        );
+       
+          });
+       }else{
+        this.vieneSucursal=false;
+
+       }
+     
+    
+    });
+      this.filteredOptions7  = this.firstFormGroup.controls['sucursal'].valueChanges.pipe(
+        startWith(''),
+          map(value => typeof value === 'string' ? value : value.name),
+          map(name => name ? this._filter7(name) : this.options7.slice())
+      );
+  }  
   public closeModal() {
     this.closeStatus = !this.closeStatus;
     this.statusCloseModal.emit(this.closeStatus);
     this.reloadComponent();
   }
   public addForm(id) { 
-    
+    this.validForm=false;
+
     this.myControl2.controls['myControl_ser'].setValue('');
     this.myControl2.controls['myControl_ser_id'].setValue('');
     this.myControl2.controls['peso'].setValue('');
@@ -486,7 +578,7 @@ public clearInput() {
             
 
           });
-          listEnpti = list.filter(function (n) {
+          listEnpti = list.filter(function (n) { 
             let value1 = n.service_id;
             return value1 === ""  ;
           });
@@ -519,6 +611,63 @@ public clearInput() {
               }
           }
   
+      }else{
+        if (this.firstFormGroup.invalid) {
+          return;
+        } else {
+          let listEnpti = [];
+          this.loading = true;
+          let list = [];
+          this.loading = true;
+          Object.keys(this.personList).forEach(e => {
+             
+            list.push({
+               
+                service_id: this.personList[e]["servicio_id"],
+                weight: (this.personList[e]["peso"]!=='')?this.personList[e]["peso"]:0,
+                quantity: (this.personList[e]["cantidad"]!=='')?this.personList[e]["cantidad"]:0,
+                color_id:  (this.personList[e]["color_id"]!=='')?this.personList[e]["color_id"]:null,
+                subservice_id:  (this.personList[e]["subservicio"]!=='')?this.personList[e]["subservicio"]:'',
+                operation_type: this.personList[e]["tipo"],
+               
+            });
+          });
+          listEnpti = list.filter(function (n) {
+            let value1 = n.service_id;
+            let value2 = n.subservice_id;
+           
+            return value1 === "" ;
+          });
+          if (listEnpti.length > 0) {
+            this.loading = false;
+            this.toasTer.error('No puede guardar campo vacios');
+
+          }else {
+            if (this.personList.length === 0) {
+              this.loading = false;
+              this.toasTer.error('Debe agregar al menos 1 salida');
+  
+            }else {
+          let bodyData = Object.assign({
+            "client_id": this.firstFormGroup.controls["client_id"].value,
+            "branch_id": (this.firstFormGroup.controls["sucursal_id"].value!=="") ? this.firstFormGroup.controls["sucursal_id"].value : null ,
+            "foo": list
+          });
+          console.log(bodyData);
+          this.salidasServices.save(bodyData).subscribe(
+            response => {
+                  this.toasTer.success(SalidasMsg.save);
+                  this.reloadComponent();
+              },
+              error => {
+                this.loading = false;
+                this.toasTer.error(SalidasMsg.errorProcess);
+                this.loading = false;
+              }
+            );
+            }
+          }
+        }
       }
         
           
@@ -527,7 +676,103 @@ public clearInput() {
   get f() {
     return this.myControl2.controls;
   }
+  public asigneStepper(stepper: MatStepper) {
+    this.stepper = stepper;
+  } 
+  public returnStepper(stepper: MatStepper) {
+    stepper.selectedIndex = 0;
+  }
+  public goForward(stepper: MatStepper) {
+    stepper.reset();
+  }
+/*BUSCAR CLIENTE*///////////////////////////////////////////////////////////////////////////////////////////////
+
+displayFn6(cliente: Cliente): string {
+  return cliente && cliente.name ? cliente.name : '';
+}
+
+onSelectionChanged6(event: MatAutocompleteSelectedEvent) {
+  this.idsubservicio6 = 0;
+  let namesub6:string;
+  const viene6= event.option.value;
+  this.idsubservicio6 = viene6.id ? viene6.id : 0;
+  namesub6 = viene6.name ? viene6.name : '';
+  //console.log(pla);
+  this.firstFormGroup.controls['client'].setValue(namesub6);
+  this.firstFormGroup.controls['client_id'].setValue(this.idsubservicio6);
+
+  this.firstFormGroup.controls['sucursal'].setValue('');
+  this.firstFormGroup.controls['sucursal_id'].setValue('');
+  this.options7=[];
+  if(this.idsubservicio6 !==0){
    
+     /*BUSCAR sucursal*******************************/
+   this.branchServices.getListIdCliente(this.idsubservicio6)
+    .subscribe((value: any) => {
+      console.log(value)
+      if(value.length > 0){
+      this.vieneSucursal=true;
+      
+      Object.keys(value).forEach(i => {
+        
+        this.options7.push(
+             {
+               id: value[i].id,
+               name: value[i].name,
+    
+              }
+    
+        );
+       
+          });
+      }else{
+         
+        this.vieneSucursal=false;
+      }
+     
+
+    
+    });
+    this.filteredOptions7  = this.firstFormGroup.controls['sucursal'].valueChanges.pipe(
+      startWith(''),
+        map(value => typeof value === 'string' ? value : value.name),
+        map(name => name ? this._filter7(name) : this.options7.slice())
+    );
+  }else{
+    this.options7=[];
+    this.vieneSucursal=false;
+  }
+  
+
+}
+
+private _filter6(name: string): Cliente[] {
+  const filterValue6 = name.toLowerCase();
+  return this.options6.filter(option => option.name.toLowerCase().indexOf(filterValue6) === 0 );
+}
+ /*BUSCAR SUCURSALES*///////////////////////////////////////////////////////////////////////////////////////////////
+
+displayFn7(branches: Branches): string {
+  return branches && branches.name ? branches.name : '';
+}
+
+onSelectionChanged7(event: MatAutocompleteSelectedEvent) {
+  this.idsubservicio7 = 0;
+  let namesub7:string;
+  
+  const viene7= event.option.value;
+  this.idsubservicio7 = viene7.id ? viene7.id : 0;
+  namesub7 = viene7.name ? viene7.name : '';
+  //console.log(pla);
+  this.firstFormGroup.controls['sucursal'].setValue(namesub7);
+  this.firstFormGroup.controls['sucursal_id'].setValue(this.idsubservicio7);
+
+}
+
+private _filter7(name: string): Branches[] {
+  const filterValue7 = name.toLowerCase();
+  return this.options7.filter(option => option.name.toLowerCase().indexOf(filterValue7) === 0 );
+}
 /*BUSCAR SUB-SERVICIO*/
 
 displayFn(subservicio: Subservicio): string {
