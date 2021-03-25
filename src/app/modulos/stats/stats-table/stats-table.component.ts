@@ -29,6 +29,8 @@ export class StatsTableComponent implements OnInit {
   public xAxis;
   public element: any;
   public graphicData = [];
+  public graphicData2 = [];
+
   public dateNow = new Date();
   public selected: any;
   columnsToDisplay = [
@@ -48,14 +50,14 @@ export class StatsTableComponent implements OnInit {
     this.selected = this.dateNow.getFullYear().toString();
     
     this.formUser = fb.group({
-      searchDateByYear: ['2019'],
+      searchDateByYear: ['2021'],
       searchDateByMonth: [],
       toogleDate: [true]
     });
     this.formUser.controls['searchDateByYear'].setValue(this.selected);
 
     this.formPay = fb.group({
-      searchDateByYear: ['2019'],
+      searchDateByYear: ['2021'],
       searchDateByMonth: [],
       toogleDate2: [true]
     });
@@ -119,7 +121,7 @@ export class StatsTableComponent implements OnInit {
         days.push(i);
       }
       this.xAxis = days; 
-      this.statsServices.getDashboardData(this.formUser.value.searchDateByMonth, this.formUser.value.searchDateByYear, 'dias','weight').subscribe((response: any) => {
+      this.statsServices.getDashboardData(this.formUser.value.searchDateByMonth, this.formUser.value.searchDateByYear, 'dias','quantity').subscribe((response: any) => {
         this.graphicData = [{
             data: response,
             name: "Operaciones de salidas Registradas",
@@ -135,7 +137,7 @@ export class StatsTableComponent implements OnInit {
       });
     } else {
       this.xAxis = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
-      this.statsServices.getDashboardData(this.formUser.value.searchDateByMonth, this.formUser.value.searchDateByYear, 'annio','weight').subscribe((response: any) => {
+      this.statsServices.getDashboardData(this.formUser.value.searchDateByMonth, this.formUser.value.searchDateByYear, 'annio','quantity').subscribe((response: any) => {
         this.graphicData = [
           {
             name: "Operaciones de salidas Registradas",
@@ -176,8 +178,8 @@ export class StatsTableComponent implements OnInit {
         days.push(i);
       }
       this.xAxis = days; 
-      this.statsServices.getDashboardData(this.formPay.value.searchDateByMonth, this.formPay.value.searchDateByYear, 'dias','quantity').subscribe((response: any) => {
-        this.graphicData = [{
+      this.statsServices.getDashboardData(this.formPay.value.searchDateByMonth, this.formPay.value.searchDateByYear, 'dias','weight').subscribe((response: any) => {
+        this.graphicData2 = [{
             data: response,
             name: "Pesos",
           }
@@ -187,24 +189,24 @@ export class StatsTableComponent implements OnInit {
 
       }, () => {
 
-        console.log(this.graphicData);
-        this.makeGraph('Total de pesos por día, mes ' + this.getMonthByNumber(this.formPay.value.searchDateByMonth) + ' ' + this.formPay.value.searchDateByYear, this.xAxis, 'Cantidad ', this.graphicData);
+        console.log(this.graphicData2);
+        this.makeGraph('Total de pesos por día, mes ' + this.getMonthByNumber(this.formPay.value.searchDateByMonth) + ' ' + this.formPay.value.searchDateByYear, this.xAxis, 'Cantidad ', this.graphicData2);
       });
     } else {
       this.xAxis = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
-      this.statsServices.getDashboardData(this.formPay.value.searchDateByMonth, this.formPay.value.searchDateByYear, 'annio','quantity').subscribe((response: any) => {
-        this.graphicData = [
+      this.statsServices.getDashboardData(this.formPay.value.searchDateByMonth, this.formPay.value.searchDateByYear, 'annio','weight').subscribe((response: any) => {
+        this.graphicData2 = [
           {
             name: "Pesos",
-            data: response.Pagos
+            data: response
           }
         ];
         console.log(response)
       }, (error: any) => {
 
       }, () => {
-        console.log(this.graphicData);
-        this.makeGraph('Total de pesos por día, año ' + this.formPay.value.searchDateByYear, this.xAxis, 'Cantidad ', this.graphicData);
+        console.log(this.graphicData2);
+        this.makeGraph('Total de pesos por día, año ' + this.formPay.value.searchDateByYear, this.xAxis, 'Cantidad', this.graphicData2);
 
       });
     }

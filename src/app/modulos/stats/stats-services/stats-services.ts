@@ -50,9 +50,9 @@ export class StatsServices {
         console.log(month, year, filter, parametro);
         let endpoint = '';
         if (filter === "annio") {
-          endpoint = `dashboard/index/${month}/${parametro}`;
+          endpoint = `dashboard/index2/${parametro}/${year}`;
         } else {
-          endpoint = `dashboard/index/${month}/${parametro}`;
+          endpoint = `dashboard/index/${parametro}/${month}/${year}`;
         }
         return this._http.get(this.api + endpoint, { headers: this.autorization });
       }
