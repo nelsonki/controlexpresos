@@ -67,7 +67,7 @@ export class DashboardComponent implements OnInit  {
       this.toastr.success('Hola Bienvenido', 'Jakiro2!');
     }
     dashboard() {
-      this.router.navigate(['/']);
+      this.router.navigate(['/Stats']);
       this.drawer.close();
     }
     listarClientes() {

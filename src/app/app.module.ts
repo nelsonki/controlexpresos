@@ -33,12 +33,15 @@ import {ServiceServices} from '../app/modulos/service/service-services/service-s
 import {SubServiceServices} from '../app/modulos/sub-service/sub-service-services/sub-service-services'
 import {EntradasServices} from '../app/modulos/entradas/entradas-services/entradas-services'
 import {SalidasServices} from '../app/modulos/salidas/salidas-services/salidas-services'
+import {StatsServices} from '../app/modulos/stats/stats-services/stats-services'
 
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { DashboardComponent } from './modulos/dashboard/dashboard/dashboard.component';
+import { importType } from '@angular/compiler/src/output/output_ast';
+import { ChartModule } from 'angular-highcharts';
 
   registerLocaleData(localeEs);
 
@@ -48,6 +51,7 @@ import { DashboardComponent } from './modulos/dashboard/dashboard/dashboard.comp
     DashboardComponent,
    ],
   imports: [
+    
     LoadingBarHttpClientModule,
     LoadingBarModule,
     HttpClientModule,
@@ -69,8 +73,8 @@ import { DashboardComponent } from './modulos/dashboard/dashboard/dashboard.comp
     MDBBootstrapModule.forRoot(),
     ModalModule, ButtonsModule, WavesModule,
     MatDatepickerModule,
-    MatAutocompleteModule
- 
+    MatAutocompleteModule,
+   ChartModule,
     
   ],
   exports: [
@@ -91,7 +95,9 @@ import { DashboardComponent } from './modulos/dashboard/dashboard/dashboard.comp
     ServiceServices,
     SubServiceServices,
     EntradasServices,
-    SalidasServices
+    SalidasServices,
+    StatsServices
+
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],

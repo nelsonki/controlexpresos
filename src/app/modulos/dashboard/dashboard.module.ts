@@ -6,7 +6,8 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MaterialModule } from '../../material.module';
- 
+import { ChartModule } from 'angular-highcharts';
+
 @NgModule({
   declarations: [DashboardComponent],
   imports: [
@@ -14,7 +15,8 @@ import { MaterialModule } from '../../material.module';
     DashboardRoutingModule,
     MaterialModule,
     MatToolbarModule,
-    MatMenuModule
+    MatMenuModule,
+    ChartModule
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA]
 
