@@ -1,0 +1,118 @@
+<div class="container-fluid">
+    <br>
+    <mat-card>
+        <form [formGroup]="formUser">
+            <br>
+            <div class="row">
+                <div class="col-md-6">
+                    <div>
+                        &nbsp;
+                        <mat-form-field>
+                            <mat-select [(value)]="selected" formControlName="searchDateByYear" placeholder="Seleccione el año">
+
+                                <mat-option value="2021">2021</mat-option>
+                                <mat-option value="2022">2022</mat-option>
+                                <mat-option value="2023">2023</mat-option>
+                                <mat-option value="2024">2024</mat-option>
+                                <mat-option value="2025">2025</mat-option>
+                                <mat-option value="2026">2026</mat-option>
+                                <mat-option value="2027">2027</mat-option>
+                                <mat-option value="2028">2028</mat-option>
+                                <mat-option value="2029">2029</mat-option>
+                                <mat-option value="2030">2030</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        &nbsp;
+                        <mat-form-field *ngIf="!checkedDate">
+                            <mat-select formControlName="searchDateByMonth" placeholder="Seleccione el mes">
+                                <mat-option value="01">Enero</mat-option>
+                                <mat-option value="02">Febrero</mat-option>
+                                <mat-option value="03">Marzo</mat-option>
+                                <mat-option value="04">Abril</mat-option>
+                                <mat-option value="05">Mayo</mat-option>
+                                <mat-option value="06">Junio</mat-option>
+                                <mat-option value="07">Julio</mat-option>
+                                <mat-option value="08">Agosto</mat-option>
+                                <mat-option value="09">Septiembre</mat-option>
+                                <mat-option value="10">Octubre</mat-option>
+                                <mat-option value="11">Noviembre</mat-option>
+                                <mat-option value="12">Diciembre</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        &nbsp;
+                        <button type="button" mat-raised-button color="primary" (click)="setFilterUser()">Filtrar</button>
+                    </div>
+                </div>
+                <div class="col-md-6 right">
+                    <mat-slide-toggle style="margin-top:20px;" formControlName="toogleDate" class="example-margin" color="primary" [checked]="checkedDate">
+                        {{ labelFiltroUser }}
+                    </mat-slide-toggle>
+                </div>
+            </div>
+        </form>
+    </mat-card>
+    <br>
+    <mat-card>
+        <div [chart]="chartUser"></div>
+    </mat-card>
+    <br>
+    <mat-card>
+        <form [formGroup]="formPay">
+            <br>
+            <div class="row">
+                <div class="col-md-6">
+                    <div>
+                        &nbsp;
+                        <mat-form-field>
+                            <mat-select [(value)]="selected" formControlName="searchDateByYear" placeholder="Seleccione el año">
+
+                                <mat-option value="2021">2021</mat-option>
+                                <mat-option value="2022">2022</mat-option>
+                                <mat-option value="2023">2023</mat-option>
+                                <mat-option value="2024">2024</mat-option>
+                                <mat-option value="2025">2025</mat-option>
+                                <mat-option value="2026">2026</mat-option>
+                                <mat-option value="2027">2027</mat-option>
+                                <mat-option value="2028">2028</mat-option>
+                                <mat-option value="2029">2029</mat-option>
+                                <mat-option value="2030">2030</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        &nbsp;
+                        <mat-form-field *ngIf="!checkedDate2">
+                            <mat-select formControlName="searchDateByMonth" placeholder="Seleccione el mes">
+                                <mat-option value="01">Enero</mat-option>
+                                <mat-option value="02">Febrero</mat-option>
+                                <mat-option value="03">Marzo</mat-option>
+                                <mat-option value="04">Abril</mat-option>
+                                <mat-option value="05">Mayo</mat-option>
+                                <mat-option value="06">Junio</mat-option>
+                                <mat-option value="07">Julio</mat-option>
+                                <mat-option value="08">Agosto</mat-option>
+                                <mat-option value="09">Septiembre</mat-option>
+                                <mat-option value="10">Octubre</mat-option>
+                                <mat-option value="11">Noviembre</mat-option>
+                                <mat-option value="12">Diciembre</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        &nbsp;
+                        <button type="button" mat-raised-button color="primary" (click)="setFilter()">Filtrar</button>
+                    </div>
+                </div>
+                <div class="col-md-6 right">
+                    <mat-slide-toggle style="margin-top:20px;" formControlName="toogleDate2" class="example-margin" color="primary" [checked]="checkedDate2">
+                        {{ labelFiltro }}
+                    </mat-slide-toggle>
+                </div>
+            </div>
+        </form>
+    </mat-card>
+    <br>
+    <mat-card>
+        <div [chart]="chart"></div>
+    </mat-card>
+
+
+
+
+</div>

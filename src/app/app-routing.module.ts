@@ -40,6 +40,10 @@ const routes: Routes = [
           path: 'Procesadas',
           loadChildren: () => import('./modulos/processed/processed.module').then(m => m.ProcessedModule)
         },
+        {
+          path: 'Stats',
+          loadChildren: () => import('./modulos/stats/stats.module').then(m => m.StatsModule)
+        },
       ]
     }
 ];

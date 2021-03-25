@@ -29,6 +29,8 @@ export class HttpServices {
         const url = api + endpoint;
         return this.http.delete(url, {headers: contentHeaders});
     }
- 
+    abrirDevice(url, env) {
+        return this.http.post(url, env);
+    }
 
 }
