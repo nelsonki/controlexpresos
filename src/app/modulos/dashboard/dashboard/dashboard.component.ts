@@ -47,6 +47,7 @@ export class DashboardComponent implements OnInit  {
     ) {
        this.name = 'JAKIRO2';
        console.log("hola bashboard")
+       
      }
   prepareRoute(outlet: RouterOutlet) {
 
@@ -65,6 +66,7 @@ export class DashboardComponent implements OnInit  {
     }
     showSuccess() {
       this.toastr.success('Hola Bienvenido', 'Jakiro2!');
+      this.router.navigate(['/Stats']);
     }
     dashboard() {
       this.router.navigate(['/Stats']);

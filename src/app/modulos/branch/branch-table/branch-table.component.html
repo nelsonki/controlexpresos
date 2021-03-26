@@ -4,7 +4,8 @@
         <nav class="navbar  navbar-expand-lg navbar-dark mat-toolbar mat-primary nav-padding-option">
             <div class="table-title-width">
                 <div>
-                    <img src="../../../../../assets/menuIcons/capital_w.png" height="38px" alt="" />
+                    <mat-icon height="38px">store</mat-icon>
+
                 </div>
                 <div>
                     &nbsp; Sucursales
@@ -113,8 +114,8 @@
 
     <div class="btn-group">
         <button id="boton" matTooltip="{{ titleModal }}" (click)="basicModal.show(); reset(); showModal()" mat-mini-fab color="primary" class="btn btn-fab" data-toggle="tooltip" data-placement="left" data-original-title="" title="" id="main">
-    <img src="assets/menuIcons/ballot_w.png" alt="" height="22px" />
-  </button>
+            <mat-icon height="22px">store</mat-icon>
+        </button>
     </div>
     <div id="modal" mdbModal #basicModal="mdbModal" class="modal fade right modal-scroll" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true" [config]='{backdrop: false, ignoreBackdropClick: false}' style="overflow: auto;">
         <div class="modal-dialog   modal-full-height modal-right" style="
@@ -125,7 +126,7 @@
                         <span aria-hidden="true"   class="client-buttom-close"> x </span>
                     </button>
                     <h4 class="modal-title w-100" id="myModalLabel">
-                        <mat-icon height="38px">anchor</mat-icon>
+                        <mat-icon height="38px">store</mat-icon>
                         {{ titleModal }}
                         <!--<img src="assets/menuIcons/tags.png" alt="" height="22px" /> {{ titleModal }}-->
                     </h4>
