@@ -89,7 +89,7 @@
                 <th mat-header-cell *matHeaderCellDef> Acciones </th>
                 <td mat-cell *matCellDef="let element">
                     <div class="row text-center purchase-width-actions">
-                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Editar" (click)="openEdit(element.id); basicModal.show()">
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Agregar salidas" (click)="openEdit(element.id); basicModal.show()">
                             <i class="fas fa-edit"></i>
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Cerrar operación" (click)="cerrarOp(element.id)">

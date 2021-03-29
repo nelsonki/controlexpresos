@@ -13,8 +13,8 @@
                             <mat-form-field class="example-full-width ">
                                 <mat-label>Cliente (*)</mat-label>
                                 <input aria-label="Number" type="text" placeholder="Cliente" matInput formControlName="client" [matAutocomplete]="auto6">
-                                <mat-autocomplete (optionSelected)="onSelectionChanged6($event)" autoActiveFirstOption #auto6="matAutocomplete">
-                                    <mat-option *ngFor="let option  of filteredOptions6  | async" [value]="option">
+                                <mat-autocomplete class="cliente" (optionSelected)="onSelectionChanged6($event)" autoActiveFirstOption #auto6="matAutocomplete">
+                                    <mat-option class="option_tipe" *ngFor="let option  of filteredOptions6  | async" [value]="option">
                                         {{ option.name }}
                                     </mat-option>
                                 </mat-autocomplete>
@@ -29,8 +29,8 @@
                             <mat-form-field class="example-full-width ">
                                 <mat-label>Sucursal</mat-label>
                                 <input aria-label="Number" type="text" placeholder="Sucursal" matInput formControlName="sucursal" [matAutocomplete]="auto7">
-                                <mat-autocomplete (optionSelected)="onSelectionChanged7($event)" autoActiveFirstOption #auto7="matAutocomplete">
-                                    <mat-option *ngFor="let option  of filteredOptions7  | async" [value]="option">
+                                <mat-autocomplete class="cliente" (optionSelected)="onSelectionChanged7($event)" autoActiveFirstOption #auto7="matAutocomplete">
+                                    <mat-option class="option_tipe" *ngFor="let option  of filteredOptions7  | async" [value]="option">
                                         {{ option.name }}
                                     </mat-option>
                                 </mat-autocomplete>
@@ -149,7 +149,7 @@
                             <div class="row">
 
                                 <div class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
-                                    <button mat-raised-button color="primary" class="btn btn-accent " (click)="add()" [disabled]="!myControl2.valid ||  idsubservicio4===0">+</button>&nbsp; &nbsp;
+                                    <button mat-raised-button color="primary" class="btn btn-accent " (click)="add()" [disabled]="!myControl2.valid ||  idsubservicio4===0">Agregar</button>&nbsp; &nbsp;
 
                                 </div>
 
