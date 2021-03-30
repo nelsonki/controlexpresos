@@ -32,6 +32,11 @@ export class BranchServices {
         let enpoint = 'branches/search/'+id;
         return this.http.doGet(this.api, enpoint );
     }
+    getListIdClienteSinEntrada(id) {
+        //branches/search/{nombre de la sucursal}/{id del cliente}
+        let enpoint = 'branches/sort/'+id;
+        return this.http.doGet(this.api, enpoint );
+    }
     save(body) {
         let enpoint = 'branches/store';
         return this.http.doPost(this.api, enpoint, body);
