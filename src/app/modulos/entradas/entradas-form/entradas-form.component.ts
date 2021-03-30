@@ -1,4 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit, EventEmitter, ViewChild,   Input,   Output, } from '@angular/core';
+import {SelectionModel} from '@angular/cdk/collections';
+import {MatTableDataSource} from '@angular/material/table';
+
 import {
   FormBuilder,
   FormGroup,
@@ -22,6 +25,7 @@ import {map, startWith} from 'rxjs/operators';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import {MatPaginator} from '@angular/material/paginator';
 
 import {HttpServices}from '../../../http/httpServices/httpServices'
 import {ColorServices} from '../../color/color-services/color-services'
@@ -59,6 +63,11 @@ export interface Branches {
   styleUrls: ['./entradas-form.component.scss']
 })
 export class EntradasFormComponent implements OnInit {
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  displayedColumns: string[] = [ 'Nombre'];
+  dataSource;
+  dataSourceSucursal;
   @Input() element: string  ;
   @Output() statusCloseModal = new EventEmitter();
   @ViewChild('stepper') stepper: MatStepper;
@@ -89,6 +98,7 @@ export class EntradasFormComponent implements OnInit {
 
   firstFormGroup: FormGroup;
   myControl2: FormGroup;
+  secondsFormGroup: FormGroup;
   public nameButtonAceptar: string = 'Agregar';
   public idToUpdate: number;
 
@@ -138,6 +148,7 @@ export class EntradasFormComponent implements OnInit {
   public fruitCtrl2 = new FormControl();
   public misSubServicios: any;
 
+  public flag: boolean = false;
   public colores: Array<any> = [];
  
  
@@ -189,6 +200,10 @@ export class EntradasFormComponent implements OnInit {
       client: ['', [Validators.required ]],
       client_id: ['', [Validators.required ]],
 
+    
+    });
+    this.secondsFormGroup = this.formBuilder.group({
+      
       sucursal: [''],
       sucursal_id: [''],
 
@@ -276,20 +291,25 @@ export class EntradasFormComponent implements OnInit {
       );
 
       /*BUSCAR CLIENTE*******************************/
-      this.clientServices.getList()
+      this.clientServices.getListSinEntradas()
       .subscribe((value) => {
         
-        Object.keys(value['data']).forEach(i => {
+        Object.keys(value).forEach(i => {
           this.options6.push(
                {
-                 id: value['data'][i].id,
-                 name: value['data'][i].name,
+                 id: value[i].id,
+                 name: value[i].name,
   
                 }
   
           );
-         
-            });
+          /*Object.keys(this.options6).forEach((i, index) => {
+            this.options6[i].Item = index + 1;
+         });*/
+          this.dataSource = new MatTableDataSource(this.options6);
+          this.dataSource.paginator = this.paginator;
+          return this.dataSource;
+        });
  
       });
       this.filteredOptions6  = this.firstFormGroup.controls['client'].valueChanges.pipe(
@@ -300,7 +320,7 @@ export class EntradasFormComponent implements OnInit {
       /*BUSCAR sucursal*******************************/
    
     this.options7=[];
-    this.branchServices.getListIdCliente(this.idsubservicio6)
+    this.branchServices.getListIdClienteSinEntrada(this.idsubservicio6)
     .subscribe((value:any) => {
        console.log(value)
        if(value.length > 0){
@@ -314,7 +334,9 @@ export class EntradasFormComponent implements OnInit {
               }
     
         );
-       
+        this.dataSourceSucursal = new MatTableDataSource(this.options7);
+        this.dataSourceSucursal.paginator = this.paginator;
+        return this.dataSourceSucursal;
           });
        }else{
         this.vieneSucursal=false;
@@ -323,7 +345,7 @@ export class EntradasFormComponent implements OnInit {
      
     
     });
-      this.filteredOptions7  = this.firstFormGroup.controls['sucursal'].valueChanges.pipe(
+      this.filteredOptions7  = this.secondsFormGroup.controls['sucursal'].valueChanges.pipe(
         startWith(''),
           map(value => typeof value === 'string' ? value : value.name),
           map(name => name ? this._filter7(name) : this.options7.slice())
@@ -423,7 +445,7 @@ export class EntradasFormComponent implements OnInit {
               
               let bodyData = Object.assign({
                 "client_id": this.firstFormGroup.controls["client_id"].value,
-                "branch_id": (this.firstFormGroup.controls["sucursal_id"].value!=="") ? this.firstFormGroup.controls["sucursal_id"].value : null ,
+                "branch_id": (this.secondsFormGroup.controls["sucursal_id"].value!=="") ? this.secondsFormGroup.controls["sucursal_id"].value : null ,
                 "moreInputs": list
               });  
               //console.warn(bodyData);
@@ -480,7 +502,7 @@ export class EntradasFormComponent implements OnInit {
               }else {
             let bodyData = Object.assign({
               "client_id": this.firstFormGroup.controls["client_id"].value,
-              "branch_id": (this.firstFormGroup.controls["sucursal_id"].value!=="") ? this.firstFormGroup.controls["sucursal_id"].value : null ,
+              "branch_id": (this.secondsFormGroup.controls["sucursal_id"].value!=="") ? this.secondsFormGroup.controls["sucursal_id"].value : null ,
               "moreInputs": list
             });
             console.log(bodyData);
@@ -516,13 +538,13 @@ export class EntradasFormComponent implements OnInit {
 public addForm(id) {  
   this.firstFormGroup.controls['client'].setValue('0');
   this.firstFormGroup.controls['client_id'].setValue('0');
-  this.firstFormGroup.controls['sucursal'].setValue('0');
-  this.firstFormGroup.controls['sucursal_id'].setValue('0');
+  this.secondsFormGroup.controls['sucursal'].setValue('0');
+  this.secondsFormGroup.controls['sucursal_id'].setValue('0');
 
   this.firstFormGroup.controls['client'].setValue('');
   this.firstFormGroup.controls['client_id'].setValue('');
-  this.firstFormGroup.controls['sucursal'].setValue('');
-  this.firstFormGroup.controls['sucursal_id'].setValue('');
+  this.secondsFormGroup.controls['sucursal'].setValue('');
+  this.secondsFormGroup.controls['sucursal_id'].setValue('');
 
   this.myControl2.controls['myControl_ser'].setValue('');
   this.myControl2.controls['myControl_ser_id'].setValue('');
@@ -554,7 +576,7 @@ public addForm(id) {
    /*BUSCAR sucursal*******************************/
    
    this.options7=[];
-   this.branchServices.getListIdCliente(this.idsubservicio6)
+   this.branchServices.getListIdClienteSinEntrada(this.idsubservicio6)
    .subscribe((value:any) => {
       console.log(value)
       if(value.length > 0){
@@ -577,19 +599,19 @@ public addForm(id) {
     
    
    });
-     this.filteredOptions7  = this.firstFormGroup.controls['sucursal'].valueChanges.pipe(
+     this.filteredOptions7  = this.secondsFormGroup.controls['sucursal'].valueChanges.pipe(
        startWith(''),
          map(value => typeof value === 'string' ? value : value.name),
          map(name => name ? this._filter7(name) : this.options7.slice())
      );
 if(dataEdit[0]["branch_id"]>0){
   this.vieneSucursal=true;
-  this.firstFormGroup.controls['sucursal'].setValue(dataEdit[0]["branch_name"]);
-  this.firstFormGroup.controls['sucursal_id'].setValue(dataEdit[0]["branch_id"]);
+  this.secondsFormGroup.controls['sucursal'].setValue(dataEdit[0]["branch_name"]);
+  this.secondsFormGroup.controls['sucursal_id'].setValue(dataEdit[0]["branch_id"]);
 }else{
   this.vieneSucursal=false;
-  this.firstFormGroup.controls['sucursal'].setValue('');
-  this.firstFormGroup.controls['sucursal_id'].setValue('');
+  this.secondsFormGroup.controls['sucursal'].setValue('');
+  this.secondsFormGroup.controls['sucursal_id'].setValue('');
 }
  
                 Object.keys(dataEdit[0].inputs).forEach(i => {
@@ -769,13 +791,13 @@ onSelectionChanged6(event: MatAutocompleteSelectedEvent) {
   this.firstFormGroup.controls['client'].setValue(namesub6);
   this.firstFormGroup.controls['client_id'].setValue(this.idsubservicio6);
 
-  this.firstFormGroup.controls['sucursal'].setValue('');
-  this.firstFormGroup.controls['sucursal_id'].setValue('');
+  this.secondsFormGroup.controls['sucursal'].setValue('');
+  this.secondsFormGroup.controls['sucursal_id'].setValue('');
   this.options7=[];
   if(this.idsubservicio6 !==0){
    
      /*BUSCAR sucursal*******************************/
-   this.branchServices.getListIdCliente(this.idsubservicio6)
+   this.branchServices.getListIdClienteSinEntrada(this.idsubservicio6)
     .subscribe((value: any) => {
       console.log(value)
       if(value.length > 0){
@@ -791,7 +813,9 @@ onSelectionChanged6(event: MatAutocompleteSelectedEvent) {
               }
     
         );
-       
+        this.dataSourceSucursal = new MatTableDataSource(this.options7);
+        this.dataSourceSucursal.paginator = this.paginator;
+        return this.dataSourceSucursal;
           });
       }else{
          
@@ -801,7 +825,7 @@ onSelectionChanged6(event: MatAutocompleteSelectedEvent) {
 
     
     });
-    this.filteredOptions7  = this.firstFormGroup.controls['sucursal'].valueChanges.pipe(
+    this.filteredOptions7  = this.secondsFormGroup.controls['sucursal'].valueChanges.pipe(
       startWith(''),
         map(value => typeof value === 'string' ? value : value.name),
         map(name => name ? this._filter7(name) : this.options7.slice())
@@ -832,8 +856,8 @@ onSelectionChanged7(event: MatAutocompleteSelectedEvent) {
   this.idsubservicio7 = viene7.id ? viene7.id : 0;
   namesub7 = viene7.name ? viene7.name : '';
   //console.log(pla);
-  this.firstFormGroup.controls['sucursal'].setValue(namesub7);
-  this.firstFormGroup.controls['sucursal_id'].setValue(this.idsubservicio7);
+  this.secondsFormGroup.controls['sucursal'].setValue(namesub7);
+  this.secondsFormGroup.controls['sucursal_id'].setValue(this.idsubservicio7);
 
 }
 
@@ -933,6 +957,68 @@ public validarVacio(filterValue: string){
   }
   
 }
+//////////////////////////////////////////TABLA Y SELECTOR DE CLIENTES/////////////////////////////////
+public selectUsers(event: any, options6: any) {
+ 
+  this.idsubservicio6 = 0;
+  this.idsubservicio6 = options6.id ? options6.id : 0;
+
+  this.firstFormGroup.controls['client'].setValue(options6.name);
+  this.firstFormGroup.controls['client_id'].setValue(this.idsubservicio6);
+  this.secondsFormGroup.controls['sucursal'].setValue('');
+  this.secondsFormGroup.controls['sucursal_id'].setValue('');
+  this.options7=[];
+  if(this.idsubservicio6 !==0){
+   
+     /*BUSCAR sucursal*******************************/
+   this.branchServices.getListIdClienteSinEntrada(this.idsubservicio6)
+    .subscribe((value: any) => {
+       if(value.length > 0){
+      this.vieneSucursal=true;
+      
+      Object.keys(value).forEach(i => {
+        
+        this.options7.push(
+             {
+               id: value[i].id,
+               name: value[i].name,
+    
+              }
+    
+        );
+        this.dataSourceSucursal = new MatTableDataSource(this.options7);
+        this.dataSourceSucursal.paginator = this.paginator;
+        return this.dataSourceSucursal;
+          });
+      }else{
+         
+        this.vieneSucursal=false;
+      }
+     
+
+    
+    });
+    this.filteredOptions7  = this.secondsFormGroup.controls['sucursal'].valueChanges.pipe(
+      startWith(''),
+        map(value => typeof value === 'string' ? value : value.name),
+        map(name => name ? this._filter7(name) : this.options7.slice())
+    );
+  }else{
+    this.options7=[];
+    this.vieneSucursal=false;
+  }
+  //user.flag = !user.flag;
+  
+
+}
+     /*BUSCAR sucursal*******************************/
+
+public selectSucursal(event: any, options7: any) {
+  this.idsubservicio7 = 0;
+  this.idsubservicio7 = options7.id ? options7.id : 0;
+  this.secondsFormGroup.controls['sucursal'].setValue(options7.name);
+  this.secondsFormGroup.controls['sucursal_id'].setValue(this.idsubservicio7);
+}
 }
 
-
+ 

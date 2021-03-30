@@ -127,8 +127,8 @@ export class EntradasTableComponent implements OnInit {
     this.form.nameButtonAceptar = 'Agregar';
     this.form.firstFormGroup.controls['client'].setValue('');
     this.form.firstFormGroup.controls['client_id'].setValue('');
-    this.form.firstFormGroup.controls['sucursal'].setValue('');
-    this.form.firstFormGroup.controls['sucursal_id'].setValue('');
+    this.form.secondsFormGroup.controls['sucursal'].setValue('');
+    this.form.secondsFormGroup.controls['sucursal_id'].setValue('');
  
     this.form.myControl2.controls['myControl_ser'].setValue('');
     this.form.myControl2.controls['myControl_ser_id'].setValue('');

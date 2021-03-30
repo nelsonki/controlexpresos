@@ -110,17 +110,25 @@
         font-size: 30px;
     }
     
+    .selected {
+        background-color: #B0BED9
+    }
+    
     .option_tipe {
+        cursor: pointer;
         font-size: 20px;
         background-color: #ebebeb;
         margin: 3px;
-        border-radius: 10px;
         border: 1px solid rgb(202, 202, 202) !important;
     }
     
     .option_tipe:hover {
         font-size: 22px;
         background-color: #c9c9ca;
+    }
+    
+    .option_tipe::selection {
+        background-color: #B0BED9
     }
     
      ::ng-deep .mat-autocomplete-panel.cliente {
@@ -357,4 +365,40 @@
         display: block;
         font-weight: 700;
         font-size: 10px;
+    }
+    
+    //tabla
+    .prod-scroll-table {
+        top: 10px;
+        padding: 3px;
+        height: 100%;
+        overflow: auto;
+        margin-top: -20px;
+        border-radius: 10px;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.3) inset;
+    }
+    
+    .prod-scroll-table::-webkit-scrollbar {
+        margin-right: 0px;
+        background-color: #dcdcdc;
+        border-radius: 6px;
+        width: 8px;
+        height: 10px;
+    }
+    
+    .prod-scroll-table::-webkit-scrollbar-track {
+        box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+    }
+    
+    .prod-scroll-table::-webkit-scrollbar-thumb {
+        border: 1px #eee solid;
+        border-radius: 12px;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.3) inset;
+        -webit-transition: all 0.3s ease-out;
+        transition: all 0.3s ease-out;
+    }
+    
+    .prod-scroll-table::-webkit-scrollbar-thumb:window-inactive {
+        background: #bbb;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.3) inset;
     }
