@@ -959,8 +959,7 @@ public validarVacio(filterValue: string){
 }
 //////////////////////////////////////////TABLA Y SELECTOR DE CLIENTES/////////////////////////////////
 public selectUsers(event: any, options6: any) {
- 
-  this.idsubservicio6 = 0;
+   this.idsubservicio6 = 0;
   this.idsubservicio6 = options6.id ? options6.id : 0;
 
   this.firstFormGroup.controls['client'].setValue(options6.name);
