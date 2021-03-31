@@ -303,9 +303,6 @@ export class EntradasFormComponent implements OnInit {
                 }
   
           );
-          /*Object.keys(this.options6).forEach((i, index) => {
-            this.options6[i].Item = index + 1;
-         });*/
           this.dataSource = new MatTableDataSource(this.options6);
           this.dataSource.paginator = this.paginator;
           return this.dataSource;
@@ -957,6 +954,7 @@ public validarVacio(filterValue: string){
   }
   
 }
+
 //////////////////////////////////////////TABLA Y SELECTOR DE CLIENTES/////////////////////////////////
 public selectUsers(event: any, options6: any) {
    this.idsubservicio6 = 0;

@@ -32,7 +32,7 @@ export class ProcessedTableComponent implements OnInit {
   @ViewChild('basicModal') basicModal: ModalDirective;
   @Output() onChange: EventEmitter<File> = new EventEmitter<File>();
 
-  displayedColumns: string[] = ['Item', 'ID', 'Cliente - Sucursal', 'Fecha - Hora', 'Usuario', 'Observación','Acciones'];
+  displayedColumns: string[] = ['Item', 'ID', 'Cliente - Sucursal', 'Fecha Procesada', 'Usuario', 'Observación','Acciones'];
   dataSource;
   public titleModal: string;
   public element =[];
