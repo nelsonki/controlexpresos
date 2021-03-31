@@ -10,6 +10,8 @@ import {
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { MatStepper } from '@angular/material/stepper';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
 
 //import { TemplateMsg } from "../../../utils/const/message";
 import { ToastrService } from "ngx-toastr";
@@ -62,11 +64,17 @@ export interface Branches {
 })
 export class SalidasFormComponent implements OnInit {
   @Input() element: string  ;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   @Output() statusCloseModal = new EventEmitter();
   @ViewChild('stepper') stepper: MatStepper;
 
+  displayedColumns: string[] = [ 'Nombre'];
+  dataSource;
+  dataSourceSucursal;
+
   firstFormGroup: FormGroup;
   myControl2: FormGroup;
+  secondsFormGroup:FormGroup;
   public submitted = false;
   public loading: boolean = false;
   public editSubmit: boolean = false;
@@ -195,7 +203,10 @@ export class SalidasFormComponent implements OnInit {
     this.firstFormGroup = this.formBuilder.group({
       client: ['', [Validators.required ]],
       client_id: ['', [Validators.required ]],
-
+ 
+    });
+    this.secondsFormGroup = this.formBuilder.group({
+      
       sucursal: [''],
       sucursal_id: [''],
 
@@ -282,19 +293,21 @@ export class SalidasFormComponent implements OnInit {
       );
       
       /*BUSCAR CLIENTE*******************************/
-      this.clientServices.getList()
+      this.clientServices.getListSinEntradas()
       .subscribe((value) => {
         
-        Object.keys(value['data']).forEach(i => {
+        Object.keys(value).forEach(i => {
           this.options6.push(
                {
-                 id: value['data'][i].id,
-                 name: value['data'][i].name,
+                 id: value[i].id,
+                 name: value[i].name,
   
                 }
   
           );
-         
+          this.dataSource = new MatTableDataSource(this.options6);
+          this.dataSource.paginator = this.paginator;
+          return this.dataSource;
             });
  
       });
@@ -320,7 +333,9 @@ export class SalidasFormComponent implements OnInit {
               }
     
         );
-       
+        this.dataSourceSucursal = new MatTableDataSource(this.options7);
+        this.dataSourceSucursal.paginator = this.paginator;
+        return this.dataSourceSucursal;
           });
        }else{
         this.vieneSucursal=false;
@@ -329,7 +344,7 @@ export class SalidasFormComponent implements OnInit {
      
     
     });
-      this.filteredOptions7  = this.firstFormGroup.controls['sucursal'].valueChanges.pipe(
+      this.filteredOptions7  = this.secondsFormGroup.controls['sucursal'].valueChanges.pipe(
         startWith(''),
           map(value => typeof value === 'string' ? value : value.name),
           map(name => name ? this._filter7(name) : this.options7.slice())
@@ -650,7 +665,7 @@ public clearInput() {
             }else {
           let bodyData = Object.assign({
             "client_id": this.firstFormGroup.controls["client_id"].value,
-            "branch_id": (this.firstFormGroup.controls["sucursal_id"].value!=="") ? this.firstFormGroup.controls["sucursal_id"].value : null ,
+            "branch_id": (this.secondsFormGroup.controls["sucursal_id"].value!=="") ? this.secondsFormGroup.controls["sucursal_id"].value : null ,
             "foo": list
           });
           console.log(bodyData);
@@ -701,8 +716,8 @@ onSelectionChanged6(event: MatAutocompleteSelectedEvent) {
   this.firstFormGroup.controls['client'].setValue(namesub6);
   this.firstFormGroup.controls['client_id'].setValue(this.idsubservicio6);
 
-  this.firstFormGroup.controls['sucursal'].setValue('');
-  this.firstFormGroup.controls['sucursal_id'].setValue('');
+  this.secondsFormGroup.controls['sucursal'].setValue('');
+  this.secondsFormGroup.controls['sucursal_id'].setValue('');
   this.options7=[];
   if(this.idsubservicio6 !==0){
    
@@ -723,7 +738,7 @@ onSelectionChanged6(event: MatAutocompleteSelectedEvent) {
               }
     
         );
-       
+  
           });
       }else{
          
@@ -733,7 +748,7 @@ onSelectionChanged6(event: MatAutocompleteSelectedEvent) {
 
     
     });
-    this.filteredOptions7  = this.firstFormGroup.controls['sucursal'].valueChanges.pipe(
+    this.filteredOptions7  = this.secondsFormGroup.controls['sucursal'].valueChanges.pipe(
       startWith(''),
         map(value => typeof value === 'string' ? value : value.name),
         map(name => name ? this._filter7(name) : this.options7.slice())
@@ -764,8 +779,8 @@ onSelectionChanged7(event: MatAutocompleteSelectedEvent) {
   this.idsubservicio7 = viene7.id ? viene7.id : 0;
   namesub7 = viene7.name ? viene7.name : '';
   //console.log(pla);
-  this.firstFormGroup.controls['sucursal'].setValue(namesub7);
-  this.firstFormGroup.controls['sucursal_id'].setValue(this.idsubservicio7);
+  this.secondsFormGroup.controls['sucursal'].setValue(namesub7);
+  this.secondsFormGroup.controls['sucursal_id'].setValue(this.idsubservicio7);
 
 }
 
@@ -869,4 +884,65 @@ public validarVacio(filterValue: string){
   
 }
  
+//////////////////////////////////////////TABLA Y SELECTOR DE CLIENTES/////////////////////////////////
+public selectUsers(event: any, options6: any) {
+  this.idsubservicio6 = 0;
+ this.idsubservicio6 = options6.id ? options6.id : 0;
+
+ this.firstFormGroup.controls['client'].setValue(options6.name);
+ this.firstFormGroup.controls['client_id'].setValue(this.idsubservicio6);
+ this.secondsFormGroup.controls['sucursal'].setValue('');
+ this.secondsFormGroup.controls['sucursal_id'].setValue('');
+ this.options7=[];
+ if(this.idsubservicio6 !==0){
+  
+    /*BUSCAR sucursal*******************************/
+  this.branchServices.getListIdClienteSinEntrada(this.idsubservicio6)
+   .subscribe((value: any) => {
+      if(value.length > 0){
+     this.vieneSucursal=true;
+     
+     Object.keys(value).forEach(i => {
+       
+       this.options7.push(
+            {
+              id: value[i].id,
+              name: value[i].name,
+   
+             }
+   
+       );
+       this.dataSourceSucursal = new MatTableDataSource(this.options7);
+       this.dataSourceSucursal.paginator = this.paginator;
+       return this.dataSourceSucursal;
+         });
+     }else{
+        
+       this.vieneSucursal=false;
+     }
+    
+
+   
+   });
+   this.filteredOptions7  = this.secondsFormGroup.controls['sucursal'].valueChanges.pipe(
+     startWith(''),
+       map(value => typeof value === 'string' ? value : value.name),
+       map(name => name ? this._filter7(name) : this.options7.slice())
+   );
+ }else{
+   this.options7=[];
+   this.vieneSucursal=false;
+ }
+ //user.flag = !user.flag;
+ 
+
+}
+    /*BUSCAR sucursal*******************************/
+
+public selectSucursal(event: any, options7: any) {
+ this.idsubservicio7 = 0;
+ this.idsubservicio7 = options7.id ? options7.id : 0;
+ this.secondsFormGroup.controls['sucursal'].setValue(options7.name);
+ this.secondsFormGroup.controls['sucursal_id'].setValue(this.idsubservicio7);
+}
 }
