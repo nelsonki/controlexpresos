@@ -771,7 +771,13 @@ public returnStepper(stepper: MatStepper) {
 public goForward(stepper: MatStepper) {
   stepper.reset();
 }
-
+public goNext(stepper: MatStepper) {
+  stepper.next();
+}
+goBack(stepper: MatStepper){
+  stepper.previous();
+}
+ 
 /*BUSCAR CLIENTE*///////////////////////////////////////////////////////////////////////////////////////////////
 
 displayFn6(cliente: Cliente): string {
@@ -1006,7 +1012,7 @@ public selectUsers(event: any, options6: any) {
   }
   //user.flag = !user.flag;
   
-
+  this.goNext(this.stepper)
 }
      /*BUSCAR sucursal*******************************/
 
