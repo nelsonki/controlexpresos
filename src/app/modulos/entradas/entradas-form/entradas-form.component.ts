@@ -227,7 +227,7 @@ export class EntradasFormComponent implements OnInit {
       /*BUSCAR SUB-SERVICIO*/
       this.subServiceServices.getList().pipe()
       .subscribe((value2) => {
-        //console.log(value2["data"])
+        console.log(value2["data"])
         Object.keys(value2["data"]).forEach(i => {
           this.options2.push(
                {
@@ -349,6 +349,8 @@ export class EntradasFormComponent implements OnInit {
       );
   
   }
+
+  
   public closeModal() {
     this.closeStatus = !this.closeStatus;
     this.statusCloseModal.emit(this.closeStatus);
