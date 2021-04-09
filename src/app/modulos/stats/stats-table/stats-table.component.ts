@@ -149,7 +149,7 @@ export class StatsTableComponent implements OnInit {
 
       }, () => {
         //console.log(this.graphicData);
-        this.makeGraphUser('Total de Operaciones de salidas por día, año ' + this.formUser.value.searchDateByYear, this.xAxis, 'Cantidad', this.graphicData);
+        this.makeGraphUser('Total de Operaciones de salidas por mes, año ' + this.formUser.value.searchDateByYear, this.xAxis, 'Cantidad', this.graphicData);
 
       });
     }
@@ -206,7 +206,7 @@ export class StatsTableComponent implements OnInit {
 
       }, () => {
         console.log(this.graphicData2);
-        this.makeGraph('Total de pesos por día, año ' + this.formPay.value.searchDateByYear, this.xAxis, 'Cantidad', this.graphicData2);
+        this.makeGraph('Total de pesos por mes, año ' + this.formPay.value.searchDateByYear, this.xAxis, 'Cantidad', this.graphicData2);
 
       });
     }
