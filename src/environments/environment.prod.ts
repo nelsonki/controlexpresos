@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiJakiro2: 'https://jakiro2.zippyttech.com/api/'
+  apiJakiro2: 'https://qajakiro2.zippyttech.com/api/'
 
 };
