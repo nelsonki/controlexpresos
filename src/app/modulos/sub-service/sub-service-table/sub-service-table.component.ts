@@ -77,7 +77,7 @@ export class SubServiceTableComponent implements OnInit {
     
   }
   public openEdit(id) {
-    this.titleModal = "Modificar Sub-servicio";
+    this.titleModal = "Modificar Sub Servicio";
     this.form.addForm(id);
   }
   eliminar(id){
@@ -91,7 +91,7 @@ reset(){
   
   this.form.firstform.controls["name"].setValue("");
 
-  this.titleModal = "Crear Color";
+  this.titleModal = "Crear Sub Servicio";
   //this.form.putSubmit = false;
   this.form.editSubmit = false;
 } 
