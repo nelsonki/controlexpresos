@@ -104,7 +104,7 @@ public applyFilter(filterValue: string){
     this.form.firstform.controls["nombre"].setValue("");
     this.form.firstform.controls["margen"].setValue("");
 
-    this.titleModal = "Crear Color";
+    this.titleModal = "Crear Servicio";
     //this.form.putSubmit = false;
     this.form.editSubmit = false;
   } 
