@@ -16,7 +16,7 @@ dev_backup_job:
 dev_build_job:
   stage: build
   script:
-    - sed -i -e "s;^\s*apiJakiro2:.* apiJakiro2:'https://qajakiro2.zippyttech.com/api/',;g" src/environments/environment.prod.ts
+    - sed -i -e "s;^\s*apiJakiro2:.* apiJakiro2:'https://devjakiro2.zippyttech.com/api/',;g" src/environments/environment.prod.ts
     - docker build -t devtrack-front .
   when: on_success
   tags:
@@ -109,7 +109,7 @@ prod_backup_job:
 prod_build_job:
   stage: build
   script:
-    - sed -i -e "s;^\s*apiJakiro2:.* apiJakiro2:'https://qajakiro2.zippyttech.com/api/',;g" src/environments/environment.prod.ts
+    - sed -i -e "s;^\s*apiJakiro2:.* apiJakiro2:'https://jakiro2.zippyttech.com/api/',;g" src/environments/environment.prod.ts
     - docker build -t track-front .
   when: on_success
   tags:
