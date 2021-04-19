@@ -153,7 +153,8 @@ export class SalidasTableComponent implements OnInit {
     this.form.firstFormGroup.controls['client_id'].setValue('');
     this.form.secondsFormGroup.controls['sucursal'].setValue('');
     this.form.secondsFormGroup.controls['sucursal_id'].setValue('');
- 
+    this.form.treeFormGroup.controls['observacion'].setValue('');
+
     this.form.myControl2.controls['myControl_ser'].setValue('');
     this.form.myControl2.controls['myControl_ser_id'].setValue('');
 

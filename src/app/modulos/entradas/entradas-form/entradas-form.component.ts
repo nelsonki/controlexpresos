@@ -73,6 +73,7 @@ export class EntradasFormComponent implements OnInit {
   @ViewChild('stepper') stepper: MatStepper;
 
   public firstform: FormGroup ;
+  public treeFormGroup: FormGroup;
   public submitted = false;
   public loading: boolean = false;
   public editSubmit: boolean = false;
@@ -208,6 +209,11 @@ export class EntradasFormComponent implements OnInit {
       sucursal_id: [''],
 
     });
+    this.treeFormGroup = this.formBuilder.group({
+      
+      observacion: [''],
+
+    });
     this.myControl2 = this.formBuilder.group({
       peso: [''],
       cantidad: ['' ],
@@ -317,7 +323,7 @@ export class EntradasFormComponent implements OnInit {
       /*BUSCAR sucursal*******************************/
    
     this.options7=[];
-    this.branchServices.getListIdClienteSinEntrada(this.idsubservicio6)
+    this.branchServices.getListIdCliente(this.idsubservicio6)
     .subscribe((value:any) => {
        console.log(value)
        if(value.length > 0){
@@ -839,7 +845,7 @@ onSelectionChanged6(event: MatAutocompleteSelectedEvent) {
     this.options7=[];
     this.vieneSucursal=false;
   }
-  
+  this.goNext(this.stepper)
 
 }
 

@@ -72,9 +72,10 @@ export class SalidasFormComponent implements OnInit {
   dataSource;
   dataSourceSucursal;
 
-  firstFormGroup: FormGroup;
-  myControl2: FormGroup;
-  secondsFormGroup:FormGroup;
+  public firstFormGroup: FormGroup;
+  public myControl2: FormGroup;
+  public secondsFormGroup:FormGroup;
+  public treeFormGroup:FormGroup;
   public submitted = false;
   public loading: boolean = false;
   public editSubmit: boolean = false;
@@ -209,6 +210,11 @@ export class SalidasFormComponent implements OnInit {
       
       sucursal: [''],
       sucursal_id: [''],
+
+    });
+    this.treeFormGroup = this.formBuilder.group({
+      
+      observacion: [''],
 
     });
     this.myControl2 = this.formBuilder.group({
@@ -700,6 +706,12 @@ public clearInput() {
   public goForward(stepper: MatStepper) {
     stepper.reset();
   }
+  public goNext(stepper: MatStepper) {
+    stepper.next();
+  }
+  goBack(stepper: MatStepper){
+    stepper.previous();
+  }
 /*BUSCAR CLIENTE*///////////////////////////////////////////////////////////////////////////////////////////////
 
 displayFn6(cliente: Cliente): string {
@@ -722,7 +734,7 @@ onSelectionChanged6(event: MatAutocompleteSelectedEvent) {
   if(this.idsubservicio6 !==0){
    
      /*BUSCAR sucursal*******************************/
-   this.branchServices.getListIdCliente(this.idsubservicio6)
+   this.branchServices.getListIdClienteSinEntrada(this.idsubservicio6)
     .subscribe((value: any) => {
       console.log(value)
       if(value.length > 0){
@@ -738,7 +750,9 @@ onSelectionChanged6(event: MatAutocompleteSelectedEvent) {
               }
     
         );
-  
+        this.dataSourceSucursal = new MatTableDataSource(this.options7);
+        this.dataSourceSucursal.paginator = this.paginator;
+        return this.dataSourceSucursal;
           });
       }else{
          
@@ -757,7 +771,7 @@ onSelectionChanged6(event: MatAutocompleteSelectedEvent) {
     this.options7=[];
     this.vieneSucursal=false;
   }
-  
+  this.goNext(this.stepper)
 
 }
 
@@ -935,7 +949,7 @@ public selectUsers(event: any, options6: any) {
  }
  //user.flag = !user.flag;
  
-
+ this.goNext(this.stepper)
 }
     /*BUSCAR sucursal*******************************/
 
