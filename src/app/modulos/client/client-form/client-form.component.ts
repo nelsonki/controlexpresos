@@ -162,7 +162,7 @@ export class ClientFormComponent implements OnInit {
               },
               error => {
                 if (error["status"] === 422) {
-                  this.toasTer.error('Ya existe este DNI de cliente');
+                  this.toasTer.error('Ya existe este cliente');
                   this.loading = false;
 
                 }else{
@@ -199,7 +199,7 @@ export class ClientFormComponent implements OnInit {
                  
                 error => {
                   if (error["status"] === 422) {
-                    this.toasTer.error('Ya existe este DNI de cliente');
+                    this.toasTer.error('Ya existe este cliente');
                     this.loading = false;
 
                   }else{
