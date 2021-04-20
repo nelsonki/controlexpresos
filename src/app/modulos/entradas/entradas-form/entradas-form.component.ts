@@ -450,6 +450,7 @@ export class EntradasFormComponent implements OnInit {
               
               let bodyData = Object.assign({
                 "client_id": this.firstFormGroup.controls["client_id"].value,
+                "observation": this.treeFormGroup.controls["observacion"].value,
                 "branch_id": (this.secondsFormGroup.controls["sucursal_id"].value!=="") ? this.secondsFormGroup.controls["sucursal_id"].value : null ,
                 "moreInputs": list
               });  
@@ -507,6 +508,7 @@ export class EntradasFormComponent implements OnInit {
               }else {
             let bodyData = Object.assign({
               "client_id": this.firstFormGroup.controls["client_id"].value,
+              "observation": this.treeFormGroup.controls["observacion"].value,
               "branch_id": (this.secondsFormGroup.controls["sucursal_id"].value!=="") ? this.secondsFormGroup.controls["sucursal_id"].value : null ,
               "moreInputs": list
             });
@@ -550,6 +552,7 @@ public addForm(id) {
   this.firstFormGroup.controls['client_id'].setValue('');
   this.secondsFormGroup.controls['sucursal'].setValue('');
   this.secondsFormGroup.controls['sucursal_id'].setValue('');
+  this.treeFormGroup.controls["observacion"].setValue('');
 
   this.myControl2.controls['myControl_ser'].setValue('');
   this.myControl2.controls['myControl_ser_id'].setValue('');
@@ -577,6 +580,8 @@ public addForm(id) {
   console.log(dataEdit[0]);
   this.firstFormGroup.controls['client'].setValue(dataEdit[0]["client_name"]);
   this.firstFormGroup.controls['client_id'].setValue(dataEdit[0]["client_id"]);
+  this.treeFormGroup.controls["observacion"].setValue(dataEdit[0]["observation"]);
+
   this.idsubservicio6 = dataEdit[0]["client_id"];
    /*BUSCAR sucursal*******************************/
    
@@ -869,7 +874,7 @@ onSelectionChanged7(event: MatAutocompleteSelectedEvent) {
   //console.log(pla);
   this.secondsFormGroup.controls['sucursal'].setValue(namesub7);
   this.secondsFormGroup.controls['sucursal_id'].setValue(this.idsubservicio7);
-
+  this.goNext(this.stepper)
 }
 
 private _filter7(name: string): Branches[] {
@@ -1029,6 +1034,7 @@ public selectSucursal(event: any, options7: any) {
   this.idsubservicio7 = options7.id ? options7.id : 0;
   this.secondsFormGroup.controls['sucursal'].setValue(options7.name);
   this.secondsFormGroup.controls['sucursal_id'].setValue(this.idsubservicio7);
+  this.goNext(this.stepper)
 }
 }
 
