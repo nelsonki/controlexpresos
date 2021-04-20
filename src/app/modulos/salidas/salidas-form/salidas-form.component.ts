@@ -671,6 +671,7 @@ public clearInput() {
             }else {
           let bodyData = Object.assign({
             "client_id": this.firstFormGroup.controls["client_id"].value,
+            "observation": this.treeFormGroup.controls["observacion"].value,
             "branch_id": (this.secondsFormGroup.controls["sucursal_id"].value!=="") ? this.secondsFormGroup.controls["sucursal_id"].value : null ,
             "foo": list
           });
@@ -795,7 +796,7 @@ onSelectionChanged7(event: MatAutocompleteSelectedEvent) {
   //console.log(pla);
   this.secondsFormGroup.controls['sucursal'].setValue(namesub7);
   this.secondsFormGroup.controls['sucursal_id'].setValue(this.idsubservicio7);
-
+  this.goNext(this.stepper)
 }
 
 private _filter7(name: string): Branches[] {
@@ -958,5 +959,6 @@ public selectSucursal(event: any, options7: any) {
  this.idsubservicio7 = options7.id ? options7.id : 0;
  this.secondsFormGroup.controls['sucursal'].setValue(options7.name);
  this.secondsFormGroup.controls['sucursal_id'].setValue(this.idsubservicio7);
+ this.goNext(this.stepper)
 }
 }
