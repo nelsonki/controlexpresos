@@ -103,6 +103,7 @@ export class EntradasFormComponent implements OnInit {
   public nameButtonAceptar: string = 'Agregar';
   public idToUpdate: number;
 
+
   /*public api;
   openOptionClient: boolean = false;
   filteredOptions: Observable<string[]>;
@@ -152,6 +153,7 @@ export class EntradasFormComponent implements OnInit {
   public flag: boolean = false;
   public colores: Array<any> = [];
  
+  public totalProductos=0;
  
   public tipoRopa: Array<any> = [{
     value: 'nueva',
@@ -543,6 +545,7 @@ export class EntradasFormComponent implements OnInit {
     this.cd.detectChanges();
 }
 public addForm(id) {  
+  this.totalProductos=0;
   this.firstFormGroup.controls['client'].setValue('0');
   this.firstFormGroup.controls['client_id'].setValue('0');
   this.secondsFormGroup.controls['sucursal'].setValue('0');
@@ -625,7 +628,7 @@ if(dataEdit[0]["branch_id"]>0){
 }
  
                 Object.keys(dataEdit[0].inputs).forEach(i => {
-                  
+                  this.totalProductos = this.totalProductos + dataEdit[0].inputs[i].quantity;
                 
                   this.personList.push(
  
@@ -641,7 +644,7 @@ if(dataEdit[0]["branch_id"]>0){
                       'tipo': dataEdit[0].inputs[i].operation_type,
                       }
                   );
-                    });
+                });
              
 
 }  
@@ -662,7 +665,7 @@ changeValue(id: number, property: string, event: any) {
 public changeSelect(id: number, property: string, event: any,  value ) {
   this.editField =  value;
 }
-remove(id_list: any, id_registro: any) {
+remove(id_list: any, id_registro: any, cantidad:any) {
    if(id_registro!==0){
     let modulo ="deleteOp";
         const dialogRef = this.dialog.open(EntradasDeleteComponent, {
@@ -683,10 +686,12 @@ remove(id_list: any, id_registro: any) {
           this.myControl2.controls['myControl_sub'].setValue('');
           this.myControl2.controls['tipo'].setValue(''); 
           this.personList.splice(id_list, 1);
+          this.totalProductos = this.totalProductos - cantidad;
           this.nameButtonAceptar = 'Agregar';
         }
         
       });
+      
    }else{
     this.myControl2.controls['myControl_ser'].setValue('');
     this.myControl2.controls['myControl_ser_id'].setValue('');
@@ -697,6 +702,7 @@ remove(id_list: any, id_registro: any) {
     this.myControl2.controls['myControl_sub'].setValue('');
     this.myControl2.controls['tipo'].setValue(''); 
     this.personList.splice(id_list, 1);
+    this.totalProductos = this.totalProductos - cantidad;
     this.nameButtonAceptar = 'Agregar';
    } 
 }
@@ -726,7 +732,7 @@ add() {
     this.misSubServicios += this.fruits2[i] + ",";
   });
   let serviciosVan = this.misSubServicios.substring(0, this.misSubServicios.length - 1);
-   
+  this.totalProductos = this.totalProductos + form.value.cantidad;
   this.personList.push({ 
     id: miid,
     servicio: form.value.myControl_ser,
