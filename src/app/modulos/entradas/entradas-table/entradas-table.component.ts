@@ -151,7 +151,7 @@ export class EntradasTableComponent implements OnInit {
     this.form.stepper.selectedIndex = 0;
     this.form.idsubservicio6=0;
     this.form.vieneSucursal =false;
- 
+    this.form.totalProductos=0;
   }
   showModal() {
     $("#basicModal").show();
