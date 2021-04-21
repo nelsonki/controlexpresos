@@ -323,7 +323,7 @@
                                         <td class="text-center">
 
                                             <span class="table-remove" *ngIf="!loading">
-                                                            <a (click)="remove(id_list, person.id)">
+                                                            <a (click)="remove(id_list, person.id, person.cantidad)">
                                                                 <mdb-icon
                                                                 fas
                                                                 icon="trash-alt"
@@ -335,7 +335,32 @@
                                                             </span>
                                         </td>
                                     </tr>
+                                    <tr mdb TableCol>
+                                        <td class="text-center" colspan="2">
+                                            Total de productos
+                                        </td>
 
+                                        <td class="text-center">
+
+                                        </td>
+                                        <td class="text-center">
+                                            {{totalProductos }}
+                                        </td>
+                                        <td class="text-center">
+
+                                        </td>
+                                        <td class="text-center">
+                                        </td>
+                                        <td class="text-center">
+                                        </td>
+                                        <td class="text-center">
+
+
+                                        </td>
+                                        <td class="text-center">
+
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
 
