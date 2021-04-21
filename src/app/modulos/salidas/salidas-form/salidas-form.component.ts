@@ -375,7 +375,8 @@ export class SalidasFormComponent implements OnInit {
     this.nameButtonAceptar = 'Agregar';
     this.fruits2=[];
     this.myControl2.controls["fruitCtrl2"].setValue('');
-  
+    this.treeFormGroup.controls["observacion"].setValue('');
+
     var editDetail = [];
     this.idEdit = id;
     let dataEdit = [];
@@ -389,6 +390,8 @@ export class SalidasFormComponent implements OnInit {
         dataEdit.push(this.element[i]);
       }
     });
+    this.treeFormGroup.controls["observacion"].setValue(dataEdit[0]["observation"]);
+
     console.log(dataEdit[0]);
     this.id_input = dataEdit[0].id;
     //console.log(this.id_input);
@@ -615,6 +618,7 @@ public clearInput() {
             }else {
               
               let bodyData = Object.assign({
+                "observation": this.treeFormGroup.controls["observacion"].value,
                 "moreOutputs": list
               });  
               console.warn(bodyData);
