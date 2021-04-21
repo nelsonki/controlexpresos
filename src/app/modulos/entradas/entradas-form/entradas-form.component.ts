@@ -713,38 +713,64 @@ add() {
   }else{
     if (this.nameButtonAceptar === 'Agregar') {
     this.handleSubmit(this.myControl2, null );
+    
   } else {
     this.handleSubmit(this.myControl2, this.idToUpdate);
-    this.personList.splice(this.idToUpdate, 1);
+    //this.personList.splice(this.idToUpdate, 1);
 
   }
   }
  }
  handleSubmit(form: FormGroup, idv?: number){
-  let miid;
-  if ( idv == null){
-    miid = 0;
-  }else{
-    miid = this.personList[idv].id;
-  }
+
+  let miid; 
   this.misSubServicios='';
   Object.keys(this.fruits2).forEach(i => {
     this.misSubServicios += this.fruits2[i] + ",";
   });
   let serviciosVan = this.misSubServicios.substring(0, this.misSubServicios.length - 1);
-  this.totalProductos = this.totalProductos + form.value.cantidad;
-  this.personList.push({ 
-    id: miid,
-    servicio: form.value.myControl_ser,
-    servicio_id: form.value.myControl_ser_id,
-    peso: form.value.peso,
-    cantidad: form.value.cantidad,
-    color:  form.value.myControl_color,
-    color_id:  form.value.myControl_color_id,
-    subservicio:  serviciosVan,
-    tipo: form.value.tipo,
+
+  if ( idv == null){
+
+    miid = 0;
+    this.personList.push({ 
+      id: miid,
+      servicio: form.value.myControl_ser,
+      servicio_id: form.value.myControl_ser_id,
+      peso: form.value.peso,
+      cantidad: form.value.cantidad,
+      color:  form.value.myControl_color,
+      color_id:  form.value.myControl_color_id,
+      subservicio:  serviciosVan,
+      tipo: form.value.tipo,
+    });
+  }else{
+
+    miid = this.personList[idv].id;
+    this.personList.map(function(dato){
+      if(dato.id === miid){
+        dato.id= miid,
+        dato.servicio= form.value.myControl_ser,
+        dato.servicio_id= form.value.myControl_ser_id,
+        dato.peso= form.value.peso,
+        dato.cantidad= form.value.cantidad,
+        dato.color=  form.value.myControl_color,
+        dato.color_id=  form.value.myControl_color_id,
+        dato.subservicio=  serviciosVan,
+        dato.tipo= form.value.tipo
+      }
+        
+      
+    });
+  }
+ 
+
+
+
+  this.totalProductos=0;
+  Object.keys(this.personList).forEach(i => {
+    this.totalProductos = this.totalProductos + this.personList[i].cantidad;
   });
-  console.log(this.personList);
   this.clearInput();
 }
  edittri(id: any) {
@@ -761,7 +787,9 @@ add() {
   this.myControl2.controls["fruitCtrl2"].setValue(this.fruits2);
   this.nameButtonAceptar = 'Editar';
   this.idToUpdate = id;
-  //console.log(this.personList);
+  console.log(this.personList);
+  //this.totalProductos = this.totalProductos - this.personList[id]["cantidad"];
+   
 }
 
 
