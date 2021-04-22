@@ -718,8 +718,7 @@ public clearInput() {
                 operation_type: this.personList[e]["tipo"],
                
             });
-            this.totalPesoSalida= this.totalPesoSalida + this.personList[e]["peso"];
-
+ 
           });
           listEnpti = list.filter(function (n) {
             let value1 = n.service_id;
@@ -737,11 +736,7 @@ public clearInput() {
               this.toasTer.error('Debe agregar al menos 1 salida');
   
             }else {
-              if (this.totalPesoSalida>this.totalPesoEntrada) {
-                this.toasTer.error('La salida no se puede guardar porque tiene peso mayor a la entrada');
-                this.loading = false;
-
-              }else{
+               
                   let bodyData = Object.assign({
                     "client_id": this.firstFormGroup.controls["client_id"].value,
                     "observation": this.treeFormGroup.controls["observacion"].value,
@@ -763,7 +758,7 @@ public clearInput() {
                         
                       }
                     );
-            }
+            
             }
           }
         }
