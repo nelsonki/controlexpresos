@@ -628,9 +628,16 @@ public clearInput() {
                       this.reloadComponent();
                   },
                   error => {
-                    this.loading = false;
-                    this.toasTer.error(SalidasMsg.errorProcess);
-                    this.loading = false;
+                    if (error["status"] === 418) {
+                      this.toasTer.error('La salida no se puede guardar porque tiene peso mayor a la entrada');
+                      this.loading = false;
+    
+                    }else{
+                      this.loading = false;
+                      this.toasTer.error(SalidasMsg.errorProcess);
+                      this.loading = false;
+                    }
+                    
                   }
                 );
               }
@@ -686,9 +693,16 @@ public clearInput() {
                   this.reloadComponent();
               },
               error => {
-                this.loading = false;
-                this.toasTer.error(SalidasMsg.errorProcess);
-                this.loading = false;
+                if (error["status"] === 418) {
+                  this.toasTer.error('La salida no se puede guardar porque tiene peso mayor a la entrada');
+                  this.loading = false;
+
+                }else{
+                  this.loading = false;
+                  this.toasTer.error(SalidasMsg.errorProcess);
+                  this.loading = false;
+                }
+                
               }
             );
             }
