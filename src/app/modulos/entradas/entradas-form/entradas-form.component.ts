@@ -732,7 +732,7 @@ add() {
       if(list.servicio_id=== form.value.myControl_ser_id && list.color_id===  form.value.myControl_color_id &&  list.tipo=== form.value.tipo && list.subservicio===  serviciosVan){
         list.servicio= form.value.myControl_ser,
         list.servicio_id= form.value.myControl_ser_id,
-        list.peso= list.peso + form.value.peso,
+        list.peso= list.peso + parseFloat(form.value.peso),
         list.cantidad= list.cantidad + form.value.cantidad,
         list.color=  form.value.myControl_color,
         list.color_id=  form.value.myControl_color_id,
@@ -762,7 +762,7 @@ add() {
         list.id= miid,
         list.servicio= form.value.myControl_ser,
         list.servicio_id= form.value.myControl_ser_id,
-        list.peso=  form.value.peso,
+        list.peso=  parseFloat(form.value.peso),
         list.cantidad=  form.value.cantidad,
         list.color=  form.value.myControl_color,
         list.color_id=  form.value.myControl_color_id,
