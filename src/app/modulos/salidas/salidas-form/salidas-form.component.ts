@@ -145,7 +145,8 @@ export class SalidasFormComponent implements OnInit {
   public id_input:any;
 
   public colores: Array<any> = [];
-
+  public totalPesoEntrada=0;
+  public totalPesoSalida =0;
   public tipoRopa: Array<any> = [{
     value: 'nueva',
   },
@@ -362,6 +363,8 @@ export class SalidasFormComponent implements OnInit {
     this.reloadComponent();
   }
   public addForm(id) { 
+    this.totalPesoEntrada=0;
+    this.totalPesoSalida=0;
     this.validForm=false;
 
     this.myControl2.controls['myControl_ser'].setValue('');
@@ -413,6 +416,7 @@ export class SalidasFormComponent implements OnInit {
                         'tipo': dataEdit[0].inputs[i].operation_type,
                         }
                     );
+                    this.totalPesoEntrada = this.totalPesoEntrada + parseFloat(dataEdit[0].inputs[i].weight);
                   });
                   Object.keys(dataEdit[0].outputs).forEach(i => {
                     
@@ -497,38 +501,83 @@ add() {
   }else{
     if (this.nameButtonAceptar === 'Agregar') {
     this.handleSubmit(this.myControl2, null );
+    
   } else {
     this.handleSubmit(this.myControl2, this.idToUpdate);
-    this.personList.splice(this.idToUpdate, 1);
+    //this.personList.splice(this.idToUpdate, 1);
 
   }
   }
  }
  handleSubmit(form: FormGroup, idv?: number){
-  let miid;
-  if ( idv == null){
-    miid = 0;
-  }else{
-    miid = this.personList[idv].id;
-  }
+   let encuentra =0;
+   let encuentra2 =0;
+   let miid; 
   this.misSubServicios='';
   Object.keys(this.fruits2).forEach(i => {
     this.misSubServicios += this.fruits2[i] + ",";
   });
   let serviciosVan = this.misSubServicios.substring(0, this.misSubServicios.length - 1);
-   
-  this.personList.push({ 
-    id: miid,
-    servicio: form.value.myControl_ser,
-    servicio_id: form.value.myControl_ser_id,
-    peso: form.value.peso,
-    cantidad: form.value.cantidad,
-    color:  form.value.myControl_color,
-    color_id:  form.value.myControl_color_id,
-    subservicio:  serviciosVan,
-    tipo: form.value.tipo,
-  });
-  console.log(this.personList);
+
+  if ( idv == null){
+    miid = 0;     
+    for (let list of this.personList){
+      if(list.servicio_id=== form.value.myControl_ser_id && list.color_id===  form.value.myControl_color_id &&  list.tipo=== form.value.tipo && list.subservicio===  serviciosVan){
+        list.servicio= form.value.myControl_ser,
+        list.servicio_id= form.value.myControl_ser_id,
+        list.peso= list.peso + form.value.peso,
+        list.cantidad= list.cantidad + form.value.cantidad,
+        list.color=  form.value.myControl_color,
+        list.color_id=  form.value.myControl_color_id,
+        list.subservicio=  serviciosVan,
+        list.tipo= form.value.tipo,
+        encuentra=1;
+      }
+    }
+    if(encuentra ==0){
+      this.personList.push({ 
+        id: miid,
+        servicio: form.value.myControl_ser,
+        servicio_id: form.value.myControl_ser_id,
+        peso: form.value.peso,
+        cantidad: form.value.cantidad,
+        color:  form.value.myControl_color,
+        color_id:  form.value.myControl_color_id,
+        subservicio:  serviciosVan,
+        tipo: form.value.tipo,
+      });
+    }
+  }else{
+
+    miid = this.personList[idv].id;
+    for (let list of this.personList){
+      if(list.id=== miid && list.servicio_id=== form.value.myControl_ser_id && list.color_id===  form.value.myControl_color_id &&  list.tipo=== form.value.tipo && list.subservicio===  serviciosVan){
+        list.id= miid,
+        list.servicio= form.value.myControl_ser,
+        list.servicio_id= form.value.myControl_ser_id,
+        list.peso=  form.value.peso,
+        list.cantidad=  form.value.cantidad,
+        list.color=  form.value.myControl_color,
+        list.color_id=  form.value.myControl_color_id,
+        list.subservicio=  serviciosVan,
+        list.tipo= form.value.tipo,
+        encuentra2=1;
+      }
+    }
+    if(encuentra2 ==0){
+      this.personList.push({ 
+        id: miid,
+        servicio: form.value.myControl_ser,
+        servicio_id: form.value.myControl_ser_id,
+        peso: form.value.peso,
+        cantidad: form.value.cantidad,
+        color:  form.value.myControl_color,
+        color_id:  form.value.myControl_color_id,
+        subservicio:  serviciosVan,
+        tipo: form.value.tipo,
+      });
+    }
+  }
   this.clearInput();
 }
  edittri(id: any) {
@@ -565,6 +614,8 @@ public clearInput() {
  
 }
   onSubmit(){
+    this.totalPesoSalida=0;
+    console.log(this.totalPesoEntrada)
     this.misSubServicios="";
     
      
@@ -599,9 +650,11 @@ public clearInput() {
                  
               });
             }
-            
+            this.totalPesoSalida= this.totalPesoSalida +  parseFloat(this.personList[e]["peso"]);
 
           });
+          console.log(this.totalPesoSalida)
+
           listEnpti = list.filter(function (n) { 
             let value1 = n.service_id;
             return value1 === ""  ;
@@ -616,7 +669,11 @@ public clearInput() {
               this.toasTer.error('Debe agregar al menos 1 salida');
   
             }else {
-              
+              if (this.totalPesoSalida>this.totalPesoEntrada) {
+                this.toasTer.error('La salida no se puede guardar porque tiene peso mayor a la entrada');
+                this.loading = false;
+
+              }else{
               let bodyData = Object.assign({
                 "observation": this.treeFormGroup.controls["observacion"].value,
                 "moreOutputs": list
@@ -628,18 +685,16 @@ public clearInput() {
                       this.reloadComponent();
                   },
                   error => {
-                    if (error["status"] === 418) {
-                      this.toasTer.error('La salida no se puede guardar porque tiene peso mayor a la entrada');
-                      this.loading = false;
-    
-                    }else{
+                     
                       this.loading = false;
                       this.toasTer.error(SalidasMsg.errorProcess);
                       this.loading = false;
-                    }
+                    
                     
                   }
                 );
+
+                }
               }
           }
   
@@ -663,6 +718,8 @@ public clearInput() {
                 operation_type: this.personList[e]["tipo"],
                
             });
+            this.totalPesoSalida= this.totalPesoSalida + this.personList[e]["peso"];
+
           });
           listEnpti = list.filter(function (n) {
             let value1 = n.service_id;
@@ -680,31 +737,33 @@ public clearInput() {
               this.toasTer.error('Debe agregar al menos 1 salida');
   
             }else {
-          let bodyData = Object.assign({
-            "client_id": this.firstFormGroup.controls["client_id"].value,
-            "observation": this.treeFormGroup.controls["observacion"].value,
-            "branch_id": (this.secondsFormGroup.controls["sucursal_id"].value!=="") ? this.secondsFormGroup.controls["sucursal_id"].value : null ,
-            "foo": list
-          });
-          console.log(bodyData);
-          this.salidasServices.save(bodyData).subscribe(
-            response => {
-                  this.toasTer.success(SalidasMsg.save);
-                  this.reloadComponent();
-              },
-              error => {
-                if (error["status"] === 418) {
-                  this.toasTer.error('La salida no se puede guardar porque tiene peso mayor a la entrada');
-                  this.loading = false;
+              if (this.totalPesoSalida>this.totalPesoEntrada) {
+                this.toasTer.error('La salida no se puede guardar porque tiene peso mayor a la entrada');
+                this.loading = false;
 
-                }else{
-                  this.loading = false;
-                  this.toasTer.error(SalidasMsg.errorProcess);
-                  this.loading = false;
-                }
-                
-              }
-            );
+              }else{
+                  let bodyData = Object.assign({
+                    "client_id": this.firstFormGroup.controls["client_id"].value,
+                    "observation": this.treeFormGroup.controls["observacion"].value,
+                    "branch_id": (this.secondsFormGroup.controls["sucursal_id"].value!=="") ? this.secondsFormGroup.controls["sucursal_id"].value : null ,
+                    "foo": list
+                  });
+                  console.log(bodyData);
+                  this.salidasServices.save(bodyData).subscribe(
+                    response => {
+                          this.toasTer.success(SalidasMsg.save);
+                          this.reloadComponent();
+                      },
+                      error => {
+                         
+                          this.loading = false;
+                          this.toasTer.error(SalidasMsg.errorProcess);
+                          this.loading = false;
+                         
+                        
+                      }
+                    );
+            }
             }
           }
         }
