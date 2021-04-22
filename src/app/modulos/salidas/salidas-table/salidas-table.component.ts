@@ -177,6 +177,10 @@ export class SalidasTableComponent implements OnInit {
     this.form.idsubservicio6=0;
     this.form.vieneSucursal =false;
     this.form.validForm=true;
+    this.form.totalPesoEntrada=0;
+    this.form.totalPesoSalida=0;
+
+    
   }
   showModal() {
     $("#basicModal").show();
