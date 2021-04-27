@@ -518,7 +518,8 @@ add() {
     this.misSubServicios += this.fruits2[i] + ",";
   });
   let serviciosVan = this.misSubServicios.substring(0, this.misSubServicios.length - 1);
-  let pesoVan =(form.value.peso===NaN || form.value.peso===' ' || form.value.peso==='')?0:form.value.peso;
+  let pesoVan =(form.value.peso===NaN || form.value.peso===' ' || form.value.peso==='' || form.value.peso=== null)?0:form.value.peso;
+  let cantidadVan =(form.value.cantidad===NaN || form.value.cantidad===' ' || form.value.cantidad==='' || form.value.cantidad=== null)?0:form.value.cantidad;
 
   if ( idv == null){
     miid = 0;     
@@ -527,7 +528,7 @@ add() {
         list.servicio= form.value.myControl_ser,
         list.servicio_id= form.value.myControl_ser_id,
         list.peso= parseFloat(list.peso) + parseFloat(pesoVan),
-        list.cantidad= list.cantidad + form.value.cantidad,
+        list.cantidad= list.cantidad + cantidadVan,
         list.color=  form.value.myControl_color,
         list.color_id=  form.value.myControl_color_id,
         list.subservicio=  serviciosVan,
@@ -541,7 +542,7 @@ add() {
         servicio: form.value.myControl_ser,
         servicio_id: form.value.myControl_ser_id,
         peso: parseFloat(pesoVan),
-        cantidad: form.value.cantidad,
+        cantidad: cantidadVan,
         color:  form.value.myControl_color,
         color_id:  form.value.myControl_color_id,
         subservicio:  serviciosVan,
@@ -557,7 +558,7 @@ add() {
         list.servicio= form.value.myControl_ser,
         list.servicio_id= form.value.myControl_ser_id,
         list.peso=  parseFloat(pesoVan),
-        list.cantidad=  form.value.cantidad,
+        list.cantidad=  cantidadVan,
         list.color=  form.value.myControl_color,
         list.color_id=  form.value.myControl_color_id,
         list.subservicio=  serviciosVan,
@@ -571,7 +572,7 @@ add() {
         servicio: form.value.myControl_ser,
         servicio_id: form.value.myControl_ser_id,
         peso: parseFloat(pesoVan),
-        cantidad: form.value.cantidad,
+        cantidad: cantidadVan,
         color:  form.value.myControl_color,
         color_id:  form.value.myControl_color_id,
         subservicio:  serviciosVan,
