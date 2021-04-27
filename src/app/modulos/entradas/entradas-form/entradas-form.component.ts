@@ -725,14 +725,17 @@ add() {
     this.misSubServicios += this.fruits2[i] + ",";
   });
   let serviciosVan = this.misSubServicios.substring(0, this.misSubServicios.length - 1);
-
-  if ( idv == null){
+  let pesoVan =(form.value.peso===NaN || form.value.peso===' ' || form.value.peso==='')?0:form.value.peso;
+  console.log(pesoVan)
+   if ( idv == null){
     miid = 0;     
     for (let list of this.personList){
+      
       if(list.servicio_id=== form.value.myControl_ser_id && list.color_id===  form.value.myControl_color_id &&  list.tipo=== form.value.tipo && list.subservicio===  serviciosVan){
         list.servicio= form.value.myControl_ser,
         list.servicio_id= form.value.myControl_ser_id,
-        list.peso= parseFloat(list.peso) + parseFloat(form.value.peso),
+        
+        list.peso= parseFloat(list.peso) + parseFloat(pesoVan),
         list.cantidad= list.cantidad + form.value.cantidad,
         list.color=  form.value.myControl_color,
         list.color_id=  form.value.myControl_color_id,
@@ -746,7 +749,7 @@ add() {
         id: miid,
         servicio: form.value.myControl_ser,
         servicio_id: form.value.myControl_ser_id,
-        peso: parseFloat(form.value.peso),
+        peso: parseFloat(pesoVan),
         cantidad: form.value.cantidad,
         color:  form.value.myControl_color,
         color_id:  form.value.myControl_color_id,
@@ -762,7 +765,7 @@ add() {
         list.id= miid,
         list.servicio= form.value.myControl_ser,
         list.servicio_id= form.value.myControl_ser_id,
-        list.peso=  parseFloat(form.value.peso),
+        list.peso=  parseFloat(pesoVan),
         list.cantidad=  form.value.cantidad,
         list.color=  form.value.myControl_color,
         list.color_id=  form.value.myControl_color_id,
@@ -776,7 +779,7 @@ add() {
         id: miid,
         servicio: form.value.myControl_ser,
         servicio_id: form.value.myControl_ser_id,
-        peso: parseFloat(form.value.peso),
+        peso: parseFloat(pesoVan),
         cantidad: form.value.cantidad,
         color:  form.value.myControl_color,
         color_id:  form.value.myControl_color_id,
