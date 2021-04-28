@@ -64,7 +64,6 @@ export interface Branches {
 })
 export class EntradasFormComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
-
   displayedColumns: string[] = [ 'Nombre'];
   dataSource;
   dataSourceSucursal;
@@ -85,7 +84,7 @@ export class EntradasFormComponent implements OnInit {
   public addOnBlur = true;
   public taskList = [];
 
-   isLinear = false;
+  isLinear = false;
   public editField: string;
   public allProduct: string[] = [];
   isOptional = false;
@@ -310,11 +309,11 @@ export class EntradasFormComponent implements OnInit {
                 }
   
           );
-          this.dataSource = new MatTableDataSource(this.options6);
+         
+        });
+  this.dataSource = new MatTableDataSource(this.options6);
           this.dataSource.paginator = this.paginator;
           return this.dataSource;
-        });
- 
       });
       this.filteredOptions6  = this.firstFormGroup.controls['client'].valueChanges.pipe(
         startWith(''),
@@ -338,10 +337,11 @@ export class EntradasFormComponent implements OnInit {
               }
     
         );
-        this.dataSourceSucursal = new MatTableDataSource(this.options7);
+        
+          });
+          this.dataSourceSucursal = new MatTableDataSource(this.options7);
         this.dataSourceSucursal.paginator = this.paginator;
         return this.dataSourceSucursal;
-          });
        }else{
         this.vieneSucursal=false;
 
@@ -881,10 +881,11 @@ onSelectionChanged6(event: MatAutocompleteSelectedEvent) {
               }
     
         );
-        this.dataSourceSucursal = new MatTableDataSource(this.options7);
+        
+          });
+          this.dataSourceSucursal = new MatTableDataSource(this.options7);
         this.dataSourceSucursal.paginator = this.paginator;
         return this.dataSourceSucursal;
-          });
       }else{
          
         this.vieneSucursal=false;
@@ -1054,10 +1055,11 @@ public selectUsers(event: any, options6: any) {
               }
     
         );
-        this.dataSourceSucursal = new MatTableDataSource(this.options7);
+       
+          }); 
+          this.dataSourceSucursal = new MatTableDataSource(this.options7);
         this.dataSourceSucursal.paginator = this.paginator;
         return this.dataSourceSucursal;
-          });
       }else{
          
         this.vieneSucursal=false;

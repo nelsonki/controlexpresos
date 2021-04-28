@@ -37,7 +37,7 @@ export class SalidasTableComponent implements OnInit {
   @ViewChild('basicModal') basicModal: ModalDirective;
   @Output() onChange: EventEmitter<File> = new EventEmitter<File>();
 
-  displayedColumns: string[] = ['Item', 'ID', 'Cliente - Sucursal', 'Fecha - Hora', 'Usuario', 'Observación', 'Acciones'];
+  displayedColumns: string[] = ['Item', 'ID', 'Cliente - Sucursal', 'Fecha - Hora', 'Usuario',  'Acciones'];
   dataSource;
   public titleModal: string;
   public element =[];
@@ -84,6 +84,7 @@ export class SalidasTableComponent implements OnInit {
               "branch_name":value["data"][e].branch_name,
               "branch_id":value["data"][e].branch_id,
               "observation":value["data"][e].observation,
+              "obs_out":value["data"][e].obs_out,
               "date_time": value["data"][e].date_time,
               "inputs":[],
               "outputs":[]
