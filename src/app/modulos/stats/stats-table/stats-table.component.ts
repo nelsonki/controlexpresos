@@ -92,8 +92,8 @@ export class StatsTableComponent implements OnInit {
 
     
     //  OBTENEMOS EL LISTADO DE ABRIDORES
-    let accountData = JSON.parse(localStorage.getItem("info"));
-    let logAccount = accountData.account;
+    //let accountData = JSON.parse(localStorage.getItem("info"));
+    //let logAccount = accountData.account;
 
     this.setFilterUser();
     this.setFilter();
