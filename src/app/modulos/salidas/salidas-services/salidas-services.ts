@@ -23,8 +23,30 @@ export class SalidasServices {
         }*/
     }
 
-    getList() {
-        let enpoint = 'outputs/index';
+    getList(fechaInicio?, fechaFin?) {
+        let enpoint;
+
+    if(fechaInicio==="" && fechaFin===""){
+        enpoint = 'outputs/index';
+    }else{
+        if(fechaInicio === fechaFin){
+            enpoint = 'outputs/index/?day='+fechaInicio;
+       }else{
+            enpoint = 'outputs/index/?interval='+fechaInicio+"_"+fechaFin;
+        }  
+    }
+       
+
+        return this.http.doGet(this.api, enpoint );
+    }
+    getList2(fechaInicio?, fechaFin?) {
+        let enpoint;
+    if(fechaInicio === fechaFin){
+         enpoint = 'outputs/index/'+fechaInicio+"_"+fechaFin;
+    }else{
+         enpoint = 'outputs/index/'+fechaInicio;
+
+    }
         return this.http.doGet(this.api, enpoint );
     }
     getOperaciones()

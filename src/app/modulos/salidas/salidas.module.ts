@@ -22,10 +22,11 @@ import {SalidasRoutingModule} from './salidas-routing.module';
 import { SalidasFormComponent } from './salidas-form/salidas-form.component';
 import { SalidasDeleteComponent } from './dialog/salidas-delete/salidas-delete.component';
 import { SalidasCerrarComponent } from './dialog/salidas-cerrar/salidas-cerrar.component'
-
+import { DateRangeComponent } from './date-range/date-range.component';
+import { NgxMatDrpModule } from './date-range/modules/ngx-mat-drp/ngx-mat-drp.module';
 
 @NgModule({
-  declarations: [SalidasTableComponent, SalidasFormComponent, SalidasDeleteComponent, SalidasCerrarComponent],
+  declarations: [SalidasTableComponent, SalidasFormComponent, SalidasDeleteComponent, SalidasCerrarComponent, DateRangeComponent],
   imports: [
     CommonModule,
     SalidasRoutingModule,
@@ -43,7 +44,8 @@ import { SalidasCerrarComponent } from './dialog/salidas-cerrar/salidas-cerrar.c
     MatFormFieldModule,
     MatToolbarModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxMatDrpModule
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA,
     NO_ERRORS_SCHEMA]
