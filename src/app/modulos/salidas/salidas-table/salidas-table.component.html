@@ -17,11 +17,14 @@
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto col-lg-8 col-md-9 col-sm-9 col-xs-9">
                     <li class="nav-item active button-li-top col-lg-2 col-md-1 col-sm-1 col-xs-1">
-                        <a class="pointer" (click)="Refresh()">
+                        <a class="pointer" (click)="Refresh()" style="margin-top: 10px;">
                             <button *ngIf="true" mat-mini-fab color="white" matTooltip="Refrescar Tabla" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-sync-alt"></i>
-              </button>
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
                         </a>
+                    </li>
+                    <li class="nav-item button-li-top col-lg-2 col-md-1 col-sm-1 col-xs-1">
+                        <app-date-range (dateNow)="DateFilter($event)"></app-date-range>
                     </li>
                 </ul>
                 <span class="navbar-text button-li-top">

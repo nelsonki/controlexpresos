@@ -42,6 +42,8 @@ import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { DashboardComponent } from './modulos/dashboard/dashboard/dashboard.component';
 import { importType } from '@angular/compiler/src/output/output_ast';
 import { ChartModule } from 'angular-highcharts';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
   registerLocaleData(localeEs);
 
@@ -75,7 +77,10 @@ import { ChartModule } from 'angular-highcharts';
     MatDatepickerModule,
     MatAutocompleteModule,
    ChartModule,
-    
+   CalendarModule.forRoot({
+    provide: DateAdapter,
+    useFactory: adapterFactory
+  }),
   ],
   exports: [
     MaterialModule,
