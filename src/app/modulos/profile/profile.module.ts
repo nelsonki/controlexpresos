@@ -21,14 +21,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 
 
 @NgModule({
   declarations: [ProfileComponent],
   imports: [
     CommonModule,
-    BrowserModule,
     ProfileRoutingModule,
     ModalModule,
     ButtonsModule,
