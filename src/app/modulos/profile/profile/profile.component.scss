@@ -1,0 +1,55 @@
+.inputfile {
+    /* visibility: hidden etc. wont work */
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.inputfile:focus+label {
+    /* keyboard navigation */
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+}
+
+.inputfile+label * {
+    pointer-events: none;
+}
+
+label[for="file"],
+label[for="file1"],
+label[for="file2"] {
+    font-size: 12px;
+    font-weight: 300;
+    color: #fff;
+    background-color: #000;
+    display: inline-block;
+    transition: all .5s;
+    cursor: pointer;
+    padding: 5px 10px !important;
+    margin: 5px 10px !important;
+    width: fit-content;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.example-small-box,
+.example-large-box {
+    display: flex;
+    justify-content: center;
+    margin: 16px;
+    padding: 16px;
+    border-radius: 1px;
+}
+
+.example-large-box {
+    height: auto;
+    width: auto;
+}
+
+.mat-label {
+    color: #6c757d;
+    font-weight: 400;
+}

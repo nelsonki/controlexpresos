@@ -44,6 +44,7 @@ import { importType } from '@angular/compiler/src/output/output_ast';
 import { ChartModule } from 'angular-highcharts';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+//import { ProfileComponent } from './modulos/profile/profile/profile.component';
 
   registerLocaleData(localeEs);
 
@@ -51,6 +52,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
   declarations: [
     AppComponent,
     DashboardComponent,
+    //ProfileComponent
    ],
   imports: [
     
