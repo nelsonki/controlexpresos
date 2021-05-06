@@ -27,6 +27,10 @@ export class DashboardComponent implements OnInit  {
 
   @ViewChild('drawer') 'drawer': MatDrawer;
   public name;
+  public userProfileImage;
+  public userLoggedSocial;
+  public userLoggedIN;
+
   links = [
     {
       name: "Inicio",
@@ -60,10 +64,7 @@ export class DashboardComponent implements OnInit  {
       this.drawer.close();
   
     }
-    goToMenu() {
-      //this.router.navigateByUrl('/dashboard/menu');
-      this.router.navigateByUrl('');
-    }
+    
     showSuccess() {
       this.toastr.success('Hola Bienvenido', 'Jakiro2!');
       this.router.navigate(['/Stats']);
@@ -106,6 +107,69 @@ export class DashboardComponent implements OnInit  {
      }
     ngOnInit(): void {
     this.showSuccess()
+    $(document).ready(function () {
+      $('.leftmenutrigger').on('click', function (e) {
+        $('.right-side-nav').toggleClass("open");
+        e.preventDefault();
+      });
+    });
+    //this.localService.getJsonValue('info');
+    //let info = this.localService.getJsonValue('info');
+    /*if (info) {
+      if (info.user !== undefined) {
+        this.userLoggedIN = (info.user.username === undefined) ? info.user : info.user.username;
+      } else {
+        this.userLoggedSocial = info.User.username;
+      }
+
+    } else {
+      this.router.navigateByUrl('');
+    }*/
+    //this.localService.getJsonValue('image');
+    let image = "";
+    if (image !== undefined) {
+      //image
+      this.userProfileImage = '../../../../assets/userProfile.png'
+    } else {
+      this.userProfileImage = '../../../../assets/userProfile.png'
+
+    }
+  }
+
+  goToMenu() {
+    //this.router.navigateByUrl('/dashboard/menu');
+    this.router.navigateByUrl('');
+  }
+  endSession() {
+    //this.localService.clearToken();
+    //this.localService.removeKey('info');
+    //this.router.navigateByUrl('/login');
+  }
+ 
+  
+  goToProfile() {
+    this.router.navigate(['/profile']);
+    this.drawer.close();
+
+    //this.router.navigateByUrl('/dashboard/profile');
+  }
+  checkRole() {
+/*
+    let info = this.localService.getJsonValue('info');
+    if (info.roles) {
+      if (info.roles.toLowerCase() === 'usuario') {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      if (info.User.roles[0].name.toLowerCase() === 'usuario') {
+        return true;
+      } else {
+        return false;
+      }
+    }
+*/
   }
   
  

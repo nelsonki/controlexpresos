@@ -5,9 +5,47 @@
        <mat-icon>menu</mat-icon>
     </button>
 
-
-
     <span class="example-spacer"></span>
+    <div class="profile_user">
+        <ng-container *ngIf="userLoggedIN === undefined">
+            <button mat-button [matMenuTriggerFor]="menu">
+      <span style="font-size:12px; font-weight: bold;color: white;">
+        <span style=" width:100%">
+        <span >
+          <img style="border-radius:50%"    width="25px" height="25px" [src]="userProfileImage" alt="">
+         
+        </span>
+        <ng-container >
+          &nbsp;{{ userLoggedSocial }} Usuario Logueado
+        </ng-container>
+    
+      </span>
+      </span>
+    </button>
+        </ng-container>
+        <ng-container *ngIf="userLoggedIN !== undefined">
+            <button mat-button [matMenuTriggerFor]="menu">
+      <span style="font-size:12px; font-weight: bold;color: white;">
+        <span style=" width:100%">
+        <span >
+          <img    width="25px" height="25px" [src]="userProfileImage" alt="">
+         
+        </span>
+        <ng-container >
+          &nbsp; {{ userLoggedIN }} Usuario
+        </ng-container>
+     
+      </span>
+      </span>
+    </button>
+        </ng-container>
+
+        <mat-menu #menu="matMenu">
+            <button (click)="goToProfile()" mat-menu-item><i class="fas fa-id-badge"></i>&nbsp;Ver perfil</button>
+            <button (click)="endSession()" mat-menu-item><i class="fas fa-sign-out-alt"></i>&nbsp;Salir</button>
+        </mat-menu>
+    </div>
+
 
 </mat-toolbar>
 <mat-drawer-container class="example-container" autosize style="width: 100%; height: 100vh;">
@@ -31,6 +69,11 @@
 <span style="font-size: 15px; font-weight: bold;">Catálogos</span>
 </button>
                     <mat-menu #menuCatalogo="matMenu">
+                        <!--
+                                                    <button (click)="goToProfile()" mat-menu-item [routerLink]="['/profile' ]" routerLinkActive="router-link-active"><mat-icon>supervisor_account</mat-icon>&nbsp;Usuario</button>
+
+                        -->
+
                         <button (click)="listarClientes()" mat-menu-item [routerLink]="['/Client' ]" routerLinkActive="router-link-active"><mat-icon>supervisor_account</mat-icon>&nbsp;Clientes</button>
                         <button (click)="listarBranch()" mat-menu-item [routerLink]="['/Branch' ]" routerLinkActive="router-link-active"><mat-icon>store</mat-icon>&nbsp;Sucursales</button>
                     </mat-menu>
