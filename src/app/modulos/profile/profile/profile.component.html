@@ -55,31 +55,29 @@
 
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
+                                        <div class="col-md-6">
+                                            <div style="font-size:9px; color:red;" *ngIf="form.get('name').touched && form.get('name').hasError('required')">El nombre es requerido</div>
 
-                                <div class="col-md-6">
-                                    <div style="font-size:9px; color:red;" *ngIf="form.get('name').touched && form.get('name').hasError('required')">El nombre es requerido</div>
+                                            <div class="input-group form-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                </div>
+                                                <input autocomplete="true" type="text" class="form-control" formControlName="name" placeholder="Nombres(*)">
+                                            </div>
 
-                                    <div class="input-group form-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
                                         </div>
-                                        <input autocomplete="true" type="text" class="form-control" formControlName="name" placeholder="Nombres(*)">
-                                    </div>
 
+                                    </div>
                                 </div>
+
 
 
                                 <div class="row">
                                     <hr>
                                 </div>
 
-                                <div class="col-md-6">
-                                    <!--<button mat-raised-button color="accent" style="color:white !important" matStepperNext (click)="checkFormOnStep() " class="btn btn-accent profile-buttom-cancel">Siguiente</button>-->
 
-                                </div>
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="row">
                                         <div class="col-md-6" style="text-align: left;">
                                             <button mat-raised-button color="primary" (click)="submitUpdateProfile()" class="btn btn-accent">Guardar</button>

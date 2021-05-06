@@ -24,7 +24,7 @@ export class ProfileComponent implements OnInit {
   identificacion: FormGroup;
   public loadImg: any = '';
   public source: string = '';
-  public profileImage;
+  public profileImage=null;
 
   public userName;
   public account;
@@ -157,7 +157,7 @@ submitUpdateProfile() {
      
 }
 goToMenu(){
-  this.router.navigateByUrl('/dashboard/stats');
+  this.router.navigate(['/Stats']);
 }
 
 
