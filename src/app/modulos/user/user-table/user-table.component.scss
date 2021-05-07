@@ -1,0 +1,499 @@
+table {
+    width: 100%;
+}
+
+tr.example-detail-row {
+    height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+    background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+    background: #efefef;
+}
+
+.example-element-row td {
+    border-bottom-width: 0;
+}
+
+.example-element-detail {
+    overflow: hidden;
+    display: flex;
+}
+
+.example-element-diagram {
+    min-width: 80px;
+    border: 2px solid black;
+    padding: 8px;
+    font-weight: lighter;
+    margin: 8px 0;
+    height: 104px;
+}
+
+.example-element-symbol {
+    font-weight: bold;
+    font-size: 40px;
+    line-height: normal;
+}
+
+.example-element-description {
+    padding: 16px;
+}
+
+.example-element-description-attribution {
+    opacity: 0.5;
+}
+
+
+/* CSS TABLA*/
+
+.button-li-top {
+    margin-top: 2px;
+    display: inline-flex;
+}
+
+.nav-padding-option {
+    padding-left: 18px;
+}
+
+@media (min-width: 992px) {
+    .navbar-expand-lg .navbar-collapse {
+        display: flex !important;
+        flex-basis: auto;
+        height: 52px !important;
+    }
+}
+
+.option-avanzados {
+    list-style: none;
+    display: inline-flex;
+}
+
+.button-li-advance {
+    margin-top: 9px;
+}
+
+.width-opction-avance {
+    width: 640px;
+}
+
+@media (max-height: 850px) and (max-width: 1350px) {
+    .width-opction-avance {
+        width: 0px;
+        margin-left: -61px;
+    }
+}
+
+.nav-menu-top {
+    margin-top: 20px;
+    margin-bottom: 24px;
+}
+
+.opAut-button-excel {
+    background-color: #008000;
+}
+
+.opAut-button-pdf {
+    background-color: #d50000;
+}
+
+table {
+    width: 100%;
+}
+
+
+/* Structure */
+
+.tableWid {
+    position: relative;
+    margin: 0 auto;
+}
+
+@media (max-height: 850px) and (max-width: 1350px) {
+    .tableWid {
+        width: 700px;
+    }
+}
+
+.example-detail-row {
+    height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+    background: #f5f5f5;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+    background: #efefef;
+}
+
+.example-element-row td {
+    border-bottom-width: 0;
+}
+
+.example-element-detail {
+    overflow: hidden;
+    display: flex;
+}
+
+.example-element-symbol {
+    font-weight: bold;
+    font-size: 40px;
+    line-height: normal;
+}
+
+.example-element-description {
+    padding: 16px;
+}
+
+.example-element-description-attribution {
+    opacity: 0.5;
+}
+
+.mat-form-field {
+    width: 100% !important;
+}
+
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+
+.title-table {
+    width: 100%;
+    min-width: 100%;
+    font-weight: 390;
+    color: #ffffff;
+    box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0), 0px 8px 10px 1px rgba(0, 0, 0, 0), 0px 3px 14px 2px rgba(0, 0, 0, 0);
+}
+
+.prod-input-filter {
+    float: right;
+}
+
+.boton-excel {
+    background-color: transparent;
+    border: 1px solid transparent;
+    font-size: 23px;
+}
+
+.prod-filter-buttom {
+    display: inline-flex;
+    width: 372px;
+    float: right;
+    margin-top: 16px;
+}
+
+.title-table {
+    width: 100%;
+    min-width: 100%;
+    box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.table-spacer {
+    flex: 1 1 auto;
+}
+
+.brower-select {
+    width: 155px;
+    padding: 26px 1px 1px 12px;
+}
+
+.title-table {
+    width: 100%;
+    min-width: 100%;
+    box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0), 0px 8px 10px 1px rgba(0, 0, 0, 0), 0px 3px 14px 2px rgba(0, 0, 0, 0);
+}
+
+.icon-item {
+    font-size: 19px;
+    margin-left: 14px;
+}
+
+tr.example-detail-row {
+    height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+    background: #f5f5f5;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+    background: #efefef;
+}
+
+.example-element-row td {
+    border-bottom-width: 0;
+}
+
+.example-element-detail {
+    overflow: hidden;
+    display: flex;
+}
+
+.example-element-diagram {
+    min-width: 100%;
+    border: 2px solid transparent;
+    padding: 8px;
+    margin: 8px 0;
+    height: 100%;
+}
+
+.example-element-symbol {
+    font-weight: bold;
+    font-size: 20px;
+    line-height: normal;
+}
+
+.example-element-description {
+    padding: 16px;
+}
+
+.example-element-description-attribution {
+    opacity: 0.5;
+}
+
+.btn-group-sm .btn-fab {
+    position: fixed !important;
+    right: 29px;
+}
+
+.btn-group .btn-fab {
+    position: fixed !important;
+    right: 20px;
+}
+
+.btn-group-masive .btn-fab {
+    position: fixed !important;
+    right: 70px;
+}
+
+a.pointer {
+    padding: 5px;
+}
+
+.prod-buttom-edit {
+    cursor: pointer;
+}
+
+.prod-button-excel {
+    background-color: #008000;
+}
+
+.prod-button-pdf {
+    background-color: #d50000;
+}
+
+.prod-buttom-close {
+    color: #ffffff;
+}
+
+.prod-header {
+    background-color: #3f4f63;
+    width: 100%;
+    height: 250px;
+    margin-top: -16px;
+}
+
+.prod-icon {
+    color: #ffff !important;
+    font-size: 120px !important;
+    padding: 56px 128px !important;
+    margin: 0 auto !important;
+}
+
+.info-box-table {
+    display: block;
+    height: 36px;
+    min-height: 30px;
+    background: #fff;
+    width: 100%;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+    margin-bottom: 15px;
+}
+
+.info-box-icon-table {
+    display: block;
+    float: left;
+    height: 36px;
+    min-height: 30px;
+    width: 30px;
+    text-align: center;
+    font-size: 25px;
+    line-height: auto;
+    align-items: center;
+    margin: 0 auto;
+    background: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 2px 0 0 2px;
+}
+
+.info-box-content-table {
+    padding: 5px;
+    margin-left: 30px;
+}
+
+.info-box-text-table {
+    text-transform: uppercase;
+    display: block;
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.info-box-number-table {
+    display: block;
+    font-weight: 700;
+    font-size: 10px;
+}
+
+.width100 {
+    width: 100%;
+}
+
+.col-center {
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.modal-backdrop {
+    z-index: 1040 !important;
+}
+
+.modal-dialog {
+    margin: 2px auto;
+    z-index: 1100 !important;
+}
+
+.modal-background {
+    display: none;
+}
+
+.container.prod-container-table {
+    max-width: 1300px !important;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.prod-th-color-text {
+    background-color: white;
+    color: black;
+}
+
+.prod-scroll-table {
+    height: 100%;
+    overflow: auto;
+    margin-top: -20px;
+}
+
+.prod-scroll-table::-webkit-scrollbar {
+    margin-right: 0px;
+    background-color: #dcdcdc;
+    border-radius: 6px;
+    width: 8px;
+    height: 10px;
+}
+
+.prod-scroll-table::-webkit-scrollbar-track {
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+}
+
+.prod-scroll-table::-webkit-scrollbar-thumb {
+    border: 1px #eee solid;
+    border-radius: 12px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3) inset;
+    -webit-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+}
+
+.prod-scroll-table::-webkit-scrollbar-thumb:window-inactive {
+    background: #bbb;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3) inset;
+}
+
+.prod-conten-nav {
+    padding: 6px;
+}
+
+.links-content {
+    height: 21px !important;
+}
+
+.prod-option-top {
+    margin-top: 11px;
+    margin-left: 17px;
+}
+
+ul {
+    width: 100%;
+}
+
+li {
+    margin-left: 17px;
+    padding: 5px;
+}
+
+@media screen and (max-width: 600px) {
+    .prod-display-opcion {
+        display: inline;
+    }
+}
+
+@media (max-width: 850px) {
+    td {
+        padding: 6px !important;
+    }
+}
+
+@media (max-width: 850px) {
+    th {
+        padding: 6px !important;
+    }
+}
+
+td.mat-cell:first-of-type,
+td.mat-footer-cell:first-of-type,
+th.mat-header-cell:first-of-type {
+    padding-left: 32px !important;
+}
+
+.btn-group-sm .btn-fab {
+    position: fixed !important;
+    right: 29px;
+}
+
+.btn-group .btn-fab {
+    position: fixed !important;
+    right: 20px;
+    bottom: 60px;
+}
+
+.modal-scroll {
+    overflow: auto !important;
+}
+
+.mat-toolbar.mat-accent {
+    color: #ffffff !important;
+}
+
+.card {
+    box-shadow: 0 2px 5px 0 #ffffff, 0 2px 10px 0 rgba(255, 255, 255, 1) !important;
+    border: 0 !important;
+    font-weight: 400 !important;
+    height: 284px;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.table-title-width {
+    margin-left: 10px;
+    width: 320px;
+    display: inherit;
+}

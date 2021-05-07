@@ -69,11 +69,8 @@
 <span style="font-size: 15px; font-weight: bold;">Catálogos</span>
 </button>
                     <mat-menu #menuCatalogo="matMenu">
-                        <!--
-                                                    <button (click)="goToProfile()" mat-menu-item [routerLink]="['/profile' ]" routerLinkActive="router-link-active"><mat-icon>supervisor_account</mat-icon>&nbsp;Usuario</button>
 
-                        -->
-
+                        <button (click)="listarUsuarios()" mat-menu-item [routerLink]="['/user' ]" routerLinkActive="router-link-active"><mat-icon>supervisor_account</mat-icon>&nbsp;Usuarios</button>
                         <button (click)="listarClientes()" mat-menu-item [routerLink]="['/Client' ]" routerLinkActive="router-link-active"><mat-icon>supervisor_account</mat-icon>&nbsp;Clientes</button>
                         <button (click)="listarBranch()" mat-menu-item [routerLink]="['/Branch' ]" routerLinkActive="router-link-active"><mat-icon>store</mat-icon>&nbsp;Sucursales</button>
                     </mat-menu>
