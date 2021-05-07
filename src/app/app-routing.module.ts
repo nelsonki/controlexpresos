@@ -5,12 +5,24 @@ import {DashboardComponent} from './../app/modulos/dashboard/dashboard/dashboard
 
 const routes: Routes = [
   {
-      path: '',
+    path: 'login',
+    loadChildren: () => import('./modulos/login/login.module').then(m => m.LoginModule)
+  },
+  {
+    path: '',
+    loadChildren: () => import('./modulos/login/login.module').then(m => m.LoginModule)
+  },
+  {
+      path: 'dashboard',
       component: DashboardComponent,
        children:
       [
         //canActivate: [CanActivateViaAuthGuard], 
         //{ path: 'profile', component: ProfileComponent },
+        {
+          path: 'user',
+          loadChildren: () => import('./modulos/user/user.module').then(m => m.UserModule)
+        },
         {
           path: 'profile',
           loadChildren: () => import('./modulos/profile/profile.module').then(m => m.ProfileModule)

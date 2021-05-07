@@ -67,52 +67,53 @@ export class DashboardComponent implements OnInit  {
     
     showSuccess() {
       this.toastr.success('Hola Bienvenido', 'Jakiro2!');
-      this.router.navigate(['/Stats']);
+      this.router.navigate(['/dashboard/Stats']);
+ 
     }
     dashboard() {
-      this.router.navigate(['/Stats']);
+      this.router.navigate(['/dashboard/Stats']);
       this.drawer.close();
     }
     listarClientes() {
-     this.router.navigate(['/Client']);
+     this.router.navigate(['/dashboard/Client']);
      this.drawer.close();
     }
     listarBranch() {
-      this.router.navigate(['/Branch']);
+      this.router.navigate(['/dashboard/Branch']);
       this.drawer.close();
      }
      listarColores() {
-      this.router.navigate(['/Color']);
+      this.router.navigate(['/dashboard/Color']);
       this.drawer.close();
      }
      listarServices() {
-      this.router.navigate(['/Service']);
+      this.router.navigate(['/dashboard/Service']);
       this.drawer.close();
      }
      listarSubServices() {
-      this.router.navigate(['/Sub-service']);
+      this.router.navigate(['/dashboard/Sub-service']);
       this.drawer.close();
      }
     listarEntradas() {
-      this.router.navigate(['/Entradas']);
+      this.router.navigate(['/dashboard/Entradas']);
       this.drawer.close();
      }
      listarSalidas() {
-      this.router.navigate(['/Salidas']);
+      this.router.navigate(['/dashboard/Salidas']);
       this.drawer.close();
      }
      listarProcesadas(){
-      this.router.navigate(['/Procesadas']);
+      this.router.navigate(['/dashboard/Procesadas']);
       this.drawer.close();
      }
     ngOnInit(): void {
-    this.showSuccess()
-    $(document).ready(function () {
+    //this.showSuccess()
+   /* $(document).ready(function () {
       $('.leftmenutrigger').on('click', function (e) {
         $('.right-side-nav').toggleClass("open");
         e.preventDefault();
       });
-    });
+    });*/
     //this.localService.getJsonValue('info');
     //let info = this.localService.getJsonValue('info');
     /*if (info) {
@@ -143,15 +144,19 @@ export class DashboardComponent implements OnInit  {
   endSession() {
     //this.localService.clearToken();
     //this.localService.removeKey('info');
-    //this.router.navigateByUrl('/login');
+    this.router.navigateByUrl('/login');
   }
  
   
   goToProfile() {
-    this.router.navigate(['/profile']);
+    this.router.navigate(['/dashboard/profile']);
     this.drawer.close();
 
     //this.router.navigateByUrl('/dashboard/profile');
+  }
+  listarUsuarios(){
+    this.router.navigate(['/dashboard/user']);
+    this.drawer.close();
   }
   checkRole() {
 /*

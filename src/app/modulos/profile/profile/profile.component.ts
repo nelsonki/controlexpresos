@@ -157,7 +157,7 @@ submitUpdateProfile() {
      
 }
 goToMenu(){
-  this.router.navigate(['/Stats']);
+  this.router.navigate(['/dashboard/Stats']);
 }
 
 
