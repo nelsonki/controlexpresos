@@ -19,7 +19,7 @@ export class HttpService {
     this.local = this.localService.getJsonValue('info');
     if (this.local !== null) {
       this.autorization = new HttpHeaders({
-        'Authorization': 'Bearer ' + this.local.token,
+        'Authorization': 'Bearer ' + this.local.session.original.token,
         'x-timezone': 'America/Caracas,-04:00'
       });
     }
@@ -75,15 +75,15 @@ export class HttpService {
   getUser(api) {
     var info = this.localService.getJsonValue('info');
     //console.log('the info', info)
-    if (info.user !== undefined) {
-      this.userName = (info.user.username !== undefined) ? info.user.username : info.user;
+    if (info !== undefined) {
+      this.userName = (info.fullname !== undefined) ? info.fullname : info;
 
     } else {
-      this.userName = (info.User.username !== undefined) ? info.User.username : info.user;
+      this.userName = (info.fullname !== undefined) ? info.fullname : info;
 
     }
 
-    let endpoint = api + 'users/' + this.userName;
+    let endpoint = api + 'users/search/' + this.userName;
     //console.log(endpoint)
     return this.httpService.get(endpoint, { headers: this.autorization });
   }
@@ -94,14 +94,14 @@ export class HttpService {
   
   checkRole() {
     let info = this.localService.getJsonValue('info');
-    if (info.roles) {
-      if (info.roles.toLowerCase() === 'usuario') {
+    if (info.rol) {
+      if (info.rol.toLowerCase() === 'admin') {
         return true;
       } else {
         return false;
       }
     } else {
-      if (info.User.roles[0].name.toLowerCase() === 'usuario') {
+      if (info.User.rol[0].name.toLowerCase() === 'admin') {
         return true;
       } else {
         return false;

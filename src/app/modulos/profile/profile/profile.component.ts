@@ -11,6 +11,8 @@ import { environment } from './../../../../environments/environment';
 //import { ICustomerType } from '../../../modules/settings/models/customer-type';
 //import { IActivities } from '../../../modules/settings/models/activities';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import { LocalService } from '../../../http/httpServices/local-service.service';
+import { HttpService } from '../../../http/httpServices/http.service';
 
 @Component({
   selector: 'app-profile',
@@ -43,12 +45,6 @@ export class ProfileComponent implements OnInit {
  // public activities: IActivities[];
   public idAct: number;
   public states: any[] = [];
-  public codeContry:any;
-  public codePhoneContry:any;
-  public initialCountry: string = "{initialCountry: 'us'}";
-  public hasErrorPhone: boolean = true;
-  public numberPhone:any;
-  public colorCoords: string = "primary";
  
   inputObj: any;
   public coordinate: any = [];
@@ -60,9 +56,9 @@ export class ProfileComponent implements OnInit {
 
   constructor(public router: Router, 
               public toaster: ToastrService,
-              //public http: HttpService, 
+              public http: HttpService, 
               private formBuilder: FormBuilder, 
-              //public localService: LocalService,
+              public localService: LocalService,
               public cd: ChangeDetectorRef,
               //public clientService: ClientService,
               public dialog: MatDialog
@@ -73,7 +69,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
 
     this.form = this.formBuilder.group({
-      dni : [''],
+      //dni : [''],
       name : ['', Validators.required],
       email : ['', Validators.required],
      });
@@ -81,12 +77,12 @@ export class ProfileComponent implements OnInit {
       password : ['', Validators.required],
       repeatPassword : ['', Validators.required]
      });
-   // let info = this.localService.getJsonValue('info');
-    //this.apiUser = environment.users;
+    let info = this.localService.getJsonValue('info');
+    this.apiUser = environment.apiJakiro2;
 
     this.getUserData();
     //this.profileImage = this.localService.getJsonValue('image');
-    //this.userRole = info.roles;
+    this.userRole = info.rol;
     
  
   }
@@ -96,14 +92,15 @@ export class ProfileComponent implements OnInit {
     return (a > b ? -1 : 1) * (isAsc ? 1 : -1);
 }
   
-getUserData(){/*
+getUserData(){
     this.http.getUser(this.apiUser).subscribe(( data: any ) => {
-      this.userName = data.Usuario.username;
-      this.form.controls['dni'].setValue(data.Usuario.dni);
-      this.form.controls['name'].setValue(data.Usuario.name);
-      this.form.controls['email'].setValue(data.Usuario.email);
-      this.profileImage = this.localService.getJsonValue('image');
-     });*/
+      console.log(data[0])
+      this.userName = data[0].fullname;
+      //this.form.controls['dni'].setValue(data.Usuario.dni);
+      this.form.controls['name'].setValue(data[0].fullname);
+      this.form.controls['email'].setValue(data[0].email);
+      //this.profileImage = this.localService.getJsonValue('image');
+     });
   }
   
 updateSource($event: Event) {
@@ -129,7 +126,7 @@ submitUpdateProfile() {
      if ( this.formPass.get('password').value === '') {
        body = {
         email: this.form.controls['email'].value,
-        dni: this.form.controls['dni'].value,
+        //dni: this.form.controls['dni'].value,
         name: this.form.controls['name'].value,
         image: (this.profileImage === '') ? 'null' : this.profileImage,
       };
@@ -138,7 +135,7 @@ submitUpdateProfile() {
      } else {
         body = {
         email: this.form.controls['email'].value,
-        dni: this.form.controls['dni'].value,
+        //dni: this.form.controls['dni'].value,
         name: this.form.controls['name'].value,
         image: (this.profileImage === '') ? 'null' : this.profileImage,
         newPassword: this.formPass.controls['repeatPassword'].value

@@ -34,6 +34,7 @@ import {SubServiceServices} from '../app/modulos/sub-service/sub-service-service
 import {EntradasServices} from '../app/modulos/entradas/entradas-services/entradas-services'
 import {SalidasServices} from '../app/modulos/salidas/salidas-services/salidas-services'
 import {StatsServices} from '../app/modulos/stats/stats-services/stats-services'
+import {UserServices} from '../app/modulos/user/user-services/user-services'
 
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
@@ -103,7 +104,8 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
     SubServiceServices,
     EntradasServices,
     SalidasServices,
-    StatsServices
+    StatsServices,
+    UserServices
 
   ],
   bootstrap: [AppComponent],

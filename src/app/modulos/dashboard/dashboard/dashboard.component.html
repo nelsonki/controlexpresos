@@ -7,22 +7,7 @@
 
     <span class="example-spacer"></span>
     <div class="profile_user">
-        <ng-container *ngIf="userLoggedIN === undefined">
-            <button mat-button [matMenuTriggerFor]="menu">
-      <span style="font-size:12px; font-weight: bold;color: white;">
-        <span style=" width:100%">
-        <span >
-          <img style="border-radius:50%"    width="25px" height="25px" [src]="userProfileImage" alt="">
-         
-        </span>
-        <ng-container >
-          &nbsp;{{ userLoggedSocial }} Usuario Logueado
-        </ng-container>
-    
-      </span>
-      </span>
-    </button>
-        </ng-container>
+
         <ng-container *ngIf="userLoggedIN !== undefined">
             <button mat-button [matMenuTriggerFor]="menu">
       <span style="font-size:12px; font-weight: bold;color: white;">
@@ -32,7 +17,7 @@
          
         </span>
         <ng-container >
-          &nbsp; {{ userLoggedIN }} Usuario
+          &nbsp; {{ userLoggedIN }}  
         </ng-container>
      
       </span>
