@@ -7,7 +7,7 @@ import { ModalDirective } from "angular-bootstrap-md";
 import { ToastrService } from "ngx-toastr";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 //import {SubServiceDeleteComponent} from '../dialog/sub-service-delete/sub-service-delete.component'
-//import {SubServiceServices} from '../sub-service-services/sub-service-services'
+import {UserServices} from '../user-services/user-services'
 //import {SubServiceFormComponent} from '../sub-service-form/sub-service-form.component'
 declare var $: any;
 
@@ -33,7 +33,7 @@ export class UserTableComponent implements OnInit {
     public dialog: MatDialog,
     //public formBuilder: FormBuilder,
     public toasTer: ToastrService,
-    //public subServiceServices: SubServiceServices
+    public userServices: UserServices
   ) {
      //this.api = environment.apiInventory;
     this.titleModal = "Crear Usuario";
@@ -43,8 +43,8 @@ export class UserTableComponent implements OnInit {
     this.loadAll()
   }
   public loadAll(){ 
-/*
-    this.subServiceServices.getList().subscribe((value) => {
+
+    this.userServices.getList().subscribe((value) => {
       this.data=[];
       this.element=[];
      // console.log(value["data"])
@@ -55,6 +55,7 @@ export class UserTableComponent implements OnInit {
               Item: "",
               "id":value["data"][e].id,
               "name":value["data"][e].name,
+              "email":value["data"][e].email,
 
             };
            this.data.push(datos);
@@ -75,7 +76,7 @@ export class UserTableComponent implements OnInit {
         return this.dataSource;
       }
     });
-    */
+    
   }
   public openEdit(id) {
     this.titleModal = "Modificar Usuario";

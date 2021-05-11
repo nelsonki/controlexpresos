@@ -87,6 +87,7 @@ export class HttpService {
     //console.log(endpoint)
     return this.httpService.get(endpoint, { headers: this.autorization });
   }
+  
   getAccountData(api, endpoint) {
     let url = api + endpoint;
     return this.httpService.get(url);
