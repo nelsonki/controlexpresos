@@ -61,3 +61,12 @@ export const SalidasMsg = {
     getAllFail: 'Ha ocurrido un error al obtener la salida',
     errorProcess: 'Proceso rechazado'
 };
+export const userMsg = {
+    save: 'Registro creado de forma exitosa',
+    update: 'Registro modificado de forma exitosa',
+    delete: 'Registro eliminado de forma exitosa',
+    get: 'Usuario encontrado',
+    getFail: 'Ha ocurrido un error al obtener el usuario',
+    getAllFail: 'Ha ocurrido un error al obtener el usuario',
+    errorProcess: 'Proceso rechazado'
+};

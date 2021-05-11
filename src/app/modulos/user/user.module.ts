@@ -23,9 +23,10 @@ import { MaterialModule } from './../../material.module';
 //import { SubServiceDeleteComponent } from './dialog/sub-service-delete/sub-service-delete.component'
 
 import { UserTableComponent } from './user-table/user-table.component';
-import {UserRoutingModule} from './user-routing.module'
+import {UserRoutingModule} from './user-routing.module';
+import { UserFormComponent } from './user-form/user-form.component'
 @NgModule({
-  declarations: [UserTableComponent ],
+  declarations: [UserTableComponent, UserFormComponent ],
   imports: [
     CommonModule,
     UserRoutingModule, 

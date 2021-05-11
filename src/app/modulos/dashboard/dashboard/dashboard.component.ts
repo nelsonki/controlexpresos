@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { RouterOutlet } from '@angular/router';
 import { MatDrawer } from '@angular/material/sidenav';
 import { ToastrService } from 'ngx-toastr';
+import { LocalService } from '../../../http/httpServices/local-service.service';
 
 
 
@@ -46,6 +47,7 @@ export class DashboardComponent implements OnInit  {
     }
   ];
   constructor(
+    public localService: LocalService,
     private toastr: ToastrService,
     public router: Router,
     ) {
@@ -108,24 +110,24 @@ export class DashboardComponent implements OnInit  {
      }
     ngOnInit(): void {
     //this.showSuccess()
-   /* $(document).ready(function () {
+   $(document).ready(function () {
       $('.leftmenutrigger').on('click', function (e) {
         $('.right-side-nav').toggleClass("open");
         e.preventDefault();
       });
-    });*/
+    });
     //this.localService.getJsonValue('info');
-    //let info = this.localService.getJsonValue('info');
-    /*if (info) {
+    let info = this.localService.getJsonValue('info');
+    if (info) {
       if (info.user !== undefined) {
-        this.userLoggedIN = (info.user.username === undefined) ? info.user : info.user.username;
+        this.userLoggedIN = (info.fullname === undefined) ? info : info.fullname;
       } else {
-        this.userLoggedSocial = info.User.username;
+        this.userLoggedIN = info.fullname;
       }
 
     } else {
       this.router.navigateByUrl('');
-    }*/
+    }
     //this.localService.getJsonValue('image');
     let image = "";
     if (image !== undefined) {
@@ -142,8 +144,8 @@ export class DashboardComponent implements OnInit  {
     this.router.navigateByUrl('');
   }
   endSession() {
-    //this.localService.clearToken();
-    //this.localService.removeKey('info');
+    this.localService.clearToken();
+    this.localService.removeKey('info');
     this.router.navigateByUrl('/login');
   }
  

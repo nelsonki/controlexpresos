@@ -86,6 +86,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
             this.localService.setJsonValue('info', data);
             this.localService.setJsonValue('iduserlog', data.id);
              console.log(this.localService)
+             this.router.navigate(['/dashboard/Stats'])
           //}
 
        
