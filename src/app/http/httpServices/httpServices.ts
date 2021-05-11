@@ -1,33 +1,46 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { contentHeaders } from './headers/headers';
+import { LocalService } from './local-service.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class HttpServices {
- 
+    private autorization: any;
+    public userName;
+      public local;
     constructor(
-        private http: HttpClient
+        private http: HttpClient,
+        public localService: LocalService
     ) {
+        // let info = JSON.parse(localStorage.getItem('info'));
+    //let info = this.localService.getJsonValue('info');
+    this.local = this.localService.getJsonValue('info');
+    if (this.local !== null) {
+      this.autorization = new HttpHeaders({
+        'Authorization': 'Bearer ' + this.local.session.original.token,
+        'x-timezone': 'America/Caracas,-04:00'
+      });
+    }
     }
 
     doGet(api: string, endpoint: string) {
         const url = api + endpoint;
-        return this.http.get(url, {headers: contentHeaders });
+        return this.http.get(url, {headers: this.autorization  });
     }
 
     doPost(api: string, endpoint: string, body:any) {
         const url = api + endpoint;
-        return this.http.post(url, body, {headers: contentHeaders});
+        return this.http.post(url, body, {headers: this.autorization });
     }
 
     doPut(api: string, endpoint: string, body:any) {
         const url = api + endpoint;
-        return this.http.put(url, body, {headers: contentHeaders});
+        return this.http.put(url, body, {headers: this.autorization });
     }
 
     doDelete(api: string, endpoint: string) {
         const url = api + endpoint;
-        return this.http.delete(url, {headers: contentHeaders});
+        return this.http.delete(url, {headers: this.autorization });
     }
     abrirDevice(url, env) {
         return this.http.post(url, env);
