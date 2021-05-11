@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog,
     //public afAuth: AngularFireAuth,
     public localService: LocalService,
-     //public authService: AuthService
+    public authService: AuthService
     ) { }
 
   ngOnInit(): void {
@@ -75,27 +75,21 @@ export class LoginComponent implements OnInit, AfterViewInit {
     } 
     if (this.form.valid) { 
       this.http.doPost('login', object, this.api).subscribe((data: any) => {
-        console.log(data);
-         /*
-        if (data.user.account) {
+        console.log(data);        
+      
          
-          if (data.user.status === 2) {
+          /*if (data.user.status === 2) {
             this.toastr.error('Usuario bloqueado, consulte al administrador', 'Error');
           } else if (data.user.roles[0].id != 1 && data.user.roles[0].id != 9 && data.user.roles[0].id != 10) {
             this.toastr.error('Acceso no autorizado', 'Error');
-          } else {
+          } else {*/
             this.localService.setJsonValue('info', data);
-            this.localService.setJsonValue('iduserlog', data.user.id);
-            //this.getClientId(data.user.username, data.user.account)
-             
-          }
+            this.localService.setJsonValue('iduserlog', data.id);
+             console.log(this.localService)
+          //}
 
-        } else {
-          this.accountUser = data.account;
-          this.infoAccount.push({ accountUser: this.accountUser, data: object });
-          //this.openMultiAccount(this.infoAccount);
-        }
-         if (data.user.image) {
+       
+        /* if (data.user.image) {
           this.localService.setJsonValue('image', data.user.image);
 
         } else {
