@@ -21,7 +21,7 @@ export class UserTableComponent implements OnInit {
   //@ViewChild(SubServiceFormComponent) form: SubServiceFormComponent;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  displayedColumns: string[] = ['Item',  'Nombre', 'Correo'];
+  displayedColumns: string[] = ['Item',  'Nombre', 'Correo', 'Rol'];
   dataSource;
   public titleModal: string;
   public element; 
@@ -47,15 +47,16 @@ export class UserTableComponent implements OnInit {
     this.userServices.getList().subscribe((value) => {
       this.data=[];
       this.element=[];
-     // console.log(value["data"])
+      console.log(value["data"])
       if (value["data"]){
         this.element = [];
         Object.keys(value["data"]).forEach(e => {
             const datos ={
               Item: "",
               "id":value["data"][e].id,
-              "name":value["data"][e].name,
+              "name":value["data"][e].fullname,
               "email":value["data"][e].email,
+              "rol":value["data"][e].rol,
 
             };
            this.data.push(datos);

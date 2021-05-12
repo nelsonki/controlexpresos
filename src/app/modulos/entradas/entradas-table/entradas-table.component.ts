@@ -73,6 +73,7 @@ export class EntradasTableComponent implements OnInit {
               "branch_id":value["data"][e].branch_id,
               "observation":value["data"][e].observation,
               "date_time": value["data"][e].date_time,
+              "user":value["data"][e].user,
               "inputs":[]
             };
             this.element.push(datos);
