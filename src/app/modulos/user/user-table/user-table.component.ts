@@ -6,9 +6,9 @@ import {MatTableDataSource} from '@angular/material/table';
 import { ModalDirective } from "angular-bootstrap-md";
 import { ToastrService } from "ngx-toastr";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-//import {SubServiceDeleteComponent} from '../dialog/sub-service-delete/sub-service-delete.component'
+import {UserDeleteComponent} from '../dialog/user-delete/user-delete.component'
 import {UserServices} from '../user-services/user-services'
-//import {SubServiceFormComponent} from '../sub-service-form/sub-service-form.component'
+import {UserFormComponent} from '../user-form/user-form.component'
 declare var $: any;
 
 @Component({
@@ -18,10 +18,10 @@ declare var $: any;
 })
 export class UserTableComponent implements OnInit {
   @ViewChild('basicModal') basicModal: ModalDirective;
-  //@ViewChild(SubServiceFormComponent) form: SubServiceFormComponent;
+  @ViewChild(UserFormComponent) form: UserFormComponent;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  displayedColumns: string[] = ['Item',  'Nombre', 'Correo', 'Rol'];
+  displayedColumns: string[] = ['Item',  'Nombre', 'Correo', 'Rol', 'Acciones'];
   dataSource;
   public titleModal: string;
   public element; 
@@ -31,7 +31,6 @@ export class UserTableComponent implements OnInit {
   }
   constructor(
     public dialog: MatDialog,
-    //public formBuilder: FormBuilder,
     public toasTer: ToastrService,
     public userServices: UserServices
   ) {
@@ -81,22 +80,26 @@ export class UserTableComponent implements OnInit {
   }
   public openEdit(id) {
     this.titleModal = "Modificar Usuario";
-    //this.form.addForm(id);
+    this.form.addForm(id);
   }
-  eliminar(id){/*
-    this.dialog.open(SubServiceDeleteComponent, {
+  eliminar(id){
+     this.dialog.open(UserDeleteComponent, {
      width: "450px",
      data: id
-   });*/
+   });
   
 }
-reset(){/*
-  
-  this.form.firstform.controls["name"].setValue("");
+reset(){
+  this.form.firstform.controls["nombre"].setValue("");
+  this.form.firstform.controls["email"].setValue("");
+  this.form.firstform.controls["rol"].setValue('');
+  this.form.firstform.controls["clave"].setValue("");
+  this.form.firstform.controls["rclave"].setValue("");
 
-  this.titleModal = "Crear Sub Servicio";
-  //this.form.putSubmit = false;
-  this.form.editSubmit = false;*/
+  this.titleModal = "Crear Usuario";
+  this.form.putSubmit = false;
+  this.form.editSubmit = false;
+  this.form.loading = false;
 } 
 Refresh(){
   this.loadAll();

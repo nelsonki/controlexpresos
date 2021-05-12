@@ -79,9 +79,11 @@ export class UserFormComponent implements OnInit {
         dataEdit.push(this.element[i]);
       }
     });
-    //console.log(dataEdit[0]);
+    console.log(dataEdit[0]);
     this.firstform.controls["nombre"].setValue(dataEdit[0]["name"]);
-    this.firstform.controls["margen"].setValue(dataEdit[0]["error_range"]);
+    this.firstform.controls["email"].setValue(dataEdit[0]["email"]);
+    this.firstform.controls["rol"].setValue(dataEdit[0]["rol"]);
+
 
   }
   public closeModal() {
@@ -178,7 +180,7 @@ onSubmit(){
       .navigateByUrl(refreshUrl)
       .then(() => this.router.navigateByUrl(currentUrl));
    } 
-    get f() {
+get f() {
     return this.firstform.controls;
   }
 }
