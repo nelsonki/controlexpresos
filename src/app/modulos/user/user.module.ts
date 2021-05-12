@@ -24,9 +24,10 @@ import { MaterialModule } from './../../material.module';
 
 import { UserTableComponent } from './user-table/user-table.component';
 import {UserRoutingModule} from './user-routing.module';
-import { UserFormComponent } from './user-form/user-form.component'
+import { UserFormComponent } from './user-form/user-form.component';
+import { UserDeleteComponent } from './dialog/user-delete/user-delete.component'
 @NgModule({
-  declarations: [UserTableComponent, UserFormComponent ],
+  declarations: [UserTableComponent, UserFormComponent, UserDeleteComponent ],
   imports: [
     CommonModule,
     UserRoutingModule, 

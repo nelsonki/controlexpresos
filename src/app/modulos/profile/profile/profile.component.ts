@@ -13,6 +13,7 @@ import { environment } from './../../../../environments/environment';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { LocalService } from '../../../http/httpServices/local-service.service';
 import { HttpService } from '../../../http/httpServices/http.service';
+import { userMsg } from "../../../utils/const/message";
 
 @Component({
   selector: 'app-profile',
@@ -34,7 +35,7 @@ export class ProfileComponent implements OnInit {
   public apiUser;
 
   public userdni;
-  public username;
+  public iduser;
   public userlastname;
   public userphone;
   public useraddress;
@@ -55,13 +56,14 @@ export class ProfileComponent implements OnInit {
   @Output() statusCloseModal = new EventEmitter();
 
   constructor(public router: Router, 
-              public toaster: ToastrService,
+              public toasTer: ToastrService,
               public http: HttpService, 
               private formBuilder: FormBuilder, 
               public localService: LocalService,
               public cd: ChangeDetectorRef,
               //public clientService: ClientService,
-              public dialog: MatDialog
+              public dialog: MatDialog,
+
               ) {
 
               }
@@ -96,6 +98,8 @@ getUserData(){
     this.http.getUser(this.apiUser).subscribe(( data: any ) => {
       console.log(data[0])
       this.userName = data[0].fullname;
+      this.iduser = data[0].id;
+
       //this.form.controls['dni'].setValue(data.Usuario.dni);
       this.form.controls['name'].setValue(data[0].fullname);
       this.form.controls['email'].setValue(data[0].email);
@@ -126,8 +130,8 @@ submitUpdateProfile() {
      if ( this.formPass.get('password').value === '') {
        body = {
         email: this.form.controls['email'].value,
-        //dni: this.form.controls['dni'].value,
-        name: this.form.controls['name'].value,
+        rol: this.userRole,
+        fullname: this.form.controls['name'].value,
         image: (this.profileImage === '') ? 'null' : this.profileImage,
       };
        this.profileImage = body.image;
@@ -135,27 +139,36 @@ submitUpdateProfile() {
      } else {
         body = {
         email: this.form.controls['email'].value,
-        //dni: this.form.controls['dni'].value,
-        name: this.form.controls['name'].value,
+        rol: this.userRole,
+        fullname: this.form.controls['name'].value,
         image: (this.profileImage === '') ? 'null' : this.profileImage,
-        newPassword: this.formPass.controls['repeatPassword'].value
+        password: this.formPass.controls['repeatPassword'].value
       };
         this.profileImage = body.image;
 
      }
-     /*this.http.doPut(this.apiUser, 'users', body,  this.userName).subscribe( (data: any) => {
-      if(data.status == 200) {
-          this.toaster.success('La información ha sido modificada de forma exitosa');
-
-      }
-  }, (error: any) => {
-        (error.error.message) ? this.toaster.error(error.error.message) : this.toaster.error('Proceso rechazado');
-  });*/
+     this.http.doPut(this.apiUser, 'users/update', body,  this.iduser).subscribe(  
+       response => {
+      this.toasTer.success(userMsg.update);
+      this.reloadComponent();
+    },
+    error => {
+       
+        this.toasTer.error(userMsg.errorProcess);
+       
+    });  
+         
      
 }
 goToMenu(){
   this.router.navigate(['/dashboard/Stats']);
 }
 
-
+reloadComponent() {
+  const currentUrl = this.router.url;
+  const refreshUrl = currentUrl.indexOf("dashboard") > -1 ? "/" : "/";
+  this.router
+    .navigateByUrl(refreshUrl)
+    .then(() => this.router.navigateByUrl(currentUrl));
+ }
 } 
