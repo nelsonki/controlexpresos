@@ -43,6 +43,13 @@ export class UserFormComponent implements OnInit {
   public idEdit: any;
 
   public api;
+  public roles:  any[]= [
+    {value:'operador'},
+    {value:'admin'}
+  ]
+  
+
+  
 
   constructor(
     private formBuilder: FormBuilder,
@@ -56,6 +63,10 @@ export class UserFormComponent implements OnInit {
     this.firstform = this.formBuilder.group({ 
       nombre: ["", Validators.required],
       email: ["", Validators.required],
+      rol: ["", Validators.required],
+      clave: ["", Validators.required],
+      rclave: ["", Validators.required],
+
     });
   }
   public addForm(id) {  
@@ -87,10 +98,14 @@ onSubmit(){
       
       this.loading = true;
       let bodyData = Object.assign({
-        "name": this.firstform.controls["nombre"].value,
-        "error_range": this.firstform.controls["margen"].value,
+        "fullname": this.firstform.controls["nombre"].value,
+        "email": this.firstform.controls["email"].value,
+        "rol": this.firstform.controls["rol"].value,
+        "password": this.firstform.controls["clave"].value,
 
       });
+      let repeatPass = this.firstform.controls["rclave"].value;
+            if ( bodyData.password === repeatPass ) {
          // console.warn(bodyData);
           this.userServices.update(this.idEdit, bodyData).subscribe(
             response => {
@@ -99,7 +114,7 @@ onSubmit(){
               },
               error => {
                 if (error["status"] === 422) {
-                  this.toasTer.error('Ya existe este nombre de Servicio');
+                  this.toasTer.error('Ya existe ');
                   this.loading = false;
 
                 }else{
@@ -109,20 +124,24 @@ onSubmit(){
                 }
               }
             );
-            
+          }else{
+            this.toasTer.error('Las contraseñas no coinciden', 'Sistema Jakiro');
+
+          } 
        
       
     }
     else {
-     
-
           this.loading = true;
-          //let codFormatted = cod.trim().replace(/\s/g, "");//para que se usa
           let bodyData = Object.assign({
-            "name": this.firstform.controls["nombre"].value,
-            "error_range": this.firstform.controls["margen"].value,
+            "fullname": this.firstform.controls["nombre"].value,
+            "email": this.firstform.controls["email"].value,
+            "rol": this.firstform.controls["rol"].value,
+            "password": this.firstform.controls["clave"].value,
 
             });
+            let repeatPass = this.firstform.controls["rclave"].value;
+            if ( bodyData.password === repeatPass ) {
            // console.log(bodyData);
             this.userServices.save(bodyData).subscribe(
               response => {
@@ -131,7 +150,7 @@ onSubmit(){
                 },
                 error => {
                   if (error["status"] === 422) {
-                    this.toasTer.error('Ya existe este nombre de Servicio');
+                    this.toasTer.error('Ya existe ');
                     this.loading = false;
   
                   }else{
@@ -141,14 +160,17 @@ onSubmit(){
                   }
                 }
               );
-          
+              }else{
+                this.toasTer.error('Las contraseñas no coinciden', 'Sistema Jakiro');
+
+              }
 
         
 
 
       }
     }
-  }
+}
   reloadComponent() {
     const currentUrl = this.router.url;
     const refreshUrl = currentUrl.indexOf("dashboard") > -1 ? "/" : "/";

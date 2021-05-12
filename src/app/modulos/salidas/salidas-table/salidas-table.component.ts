@@ -92,6 +92,7 @@ public fechaFin="";
               "observation":value["data"][e].observation,
               "obs_out":value["data"][e].obs_out,
               "date_time": value["data"][e].date_time,
+              "user":value["data"][e].user,
               "inputs":[],
               "outputs":[]
             };

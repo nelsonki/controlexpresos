@@ -12,15 +12,44 @@
         </mat-form-field>
         <mat-form-field class="example-chip-list">
             <mat-label>Email(*)</mat-label>
-            <input matInput formControlName="email" type="email" />
+            <input matInput autocomplete="true" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" formControlName="email" type="email" />
             <mat-error *ngIf="submitted && f.email.errors">
                 <div *ngIf="f.email.errors.required">
                     Por Favor, Ingrese email
                 </div>
             </mat-error>
         </mat-form-field>
-
-
+        <mat-form-field class="example-chip-list">
+            <mat-label>Rol(*)</mat-label>
+            <mat-select formControlName="rol" placeholder="Rol">
+                <mat-option *ngFor="let act  of roles" [value]="act.value">
+                    {{act.value}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="submitted && f.rol.errors">
+                <div *ngIf="f.rol.errors.required">
+                    Por Favor, Ingrese rol
+                </div>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-chip-list">
+            <mat-label>Clave(*)</mat-label>
+            <input matInput formControlName="clave" type="password" />
+            <mat-error *ngIf="submitted && f.clave.errors">
+                <div *ngIf="f.clave.errors.required">
+                    Por Favor, Ingrese clave
+                </div>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-chip-list">
+            <mat-label>Repetir clave(*)</mat-label>
+            <input matInput formControlName="rclave" type="password" />
+            <mat-error *ngIf="submitted && f.rclave.errors">
+                <div *ngIf="f.rclave.errors.required">
+                    Por Favor, repetir clave
+                </div>
+            </mat-error>
+        </mat-form-field>
     </div>
 
 

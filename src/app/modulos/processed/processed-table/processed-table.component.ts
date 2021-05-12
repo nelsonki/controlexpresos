@@ -78,6 +78,8 @@ export class ProcessedTableComponent implements OnInit {
               "branch_id":value["data"][e].branch_id,
               "observation":value["data"][e].observation,
               "processed_time": value["data"][e].processed_time,
+              "user": value["data"][e].user,
+
               "inputs":[],
               "outputs":[]
             };
