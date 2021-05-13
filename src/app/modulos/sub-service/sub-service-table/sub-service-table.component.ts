@@ -7,7 +7,9 @@ import { ToastrService } from "ngx-toastr";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {SubServiceDeleteComponent} from '../dialog/sub-service-delete/sub-service-delete.component'
 import {SubServiceServices} from '../sub-service-services/sub-service-services'
-import {SubServiceFormComponent} from '../sub-service-form/sub-service-form.component'
+import {SubServiceFormComponent} from '../sub-service-form/sub-service-form.component';
+import { Router } from "@angular/router";
+
 declare var $: any;
 
 @Component({
@@ -32,7 +34,9 @@ export class SubServiceTableComponent implements OnInit {
     public dialog: MatDialog,
     //public formBuilder: FormBuilder,
     public toasTer: ToastrService,
-    public subServiceServices: SubServiceServices
+    public subServiceServices: SubServiceServices,
+    public router: Router
+
   ) {
      //this.api = environment.apiInventory;
     this.titleModal = "Crear Sub-servicio";
@@ -110,6 +114,16 @@ public applyFilter(filterValue: string){
     this.reset();
   }
   public closeModals(value) {
+    this.reloadComponent()
+
     this.basicModal.hide();
+  }
+  reloadComponent() {
+    const currentUrl = this.router.url;
+    const refreshUrl = currentUrl.indexOf("/dashboard/Sub-service") > -1 ? "/" : "/";
+    this.router
+      .navigateByUrl(refreshUrl)
+      .then(() => this.router.navigateByUrl(currentUrl));
+    //this.producEdit = [];
   }
 }

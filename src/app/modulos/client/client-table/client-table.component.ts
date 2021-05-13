@@ -11,6 +11,8 @@ import {ClientServices}from '../client-services/client-services'
 import {ClientDeleteComponent} from '../dialog/client-delete/client-delete.component'
 import {ClientCorreoComponent} from '../dialog/client-correo/client-correo.component'
 import {ClientPhoneComponent} from '../dialog/client-phone/client-phone.component'
+import { Router } from "@angular/router";
+
  declare var $: any;
 
 @Component({
@@ -34,7 +36,9 @@ export class ClientTableComponent implements OnInit {
     public dialog: MatDialog,
     //public formBuilder: FormBuilder,
     public toasTer: ToastrService,
-    public clientServices: ClientServices
+    public clientServices: ClientServices,
+    public router: Router
+
   ) {
      //this.api = environment.apiInventory;
     this.titleModal = "Crear Cliente";
@@ -131,7 +135,16 @@ export class ClientTableComponent implements OnInit {
     this.reset();
   }
   public closeModals(value) {
+    this.reloadComponent();
     this.basicModal.hide();
+  }
+  reloadComponent() {
+    const currentUrl = this.router.url;
+    const refreshUrl = currentUrl.indexOf("/dashboard/Client") > -1 ? "/" : "/";
+    this.router
+      .navigateByUrl(refreshUrl)
+      .then(() => this.router.navigateByUrl(currentUrl));
+    //this.producEdit = [];
   }
   eliminar(id){
     this.dialog.open(ClientDeleteComponent, {

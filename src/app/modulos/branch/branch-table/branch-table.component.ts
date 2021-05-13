@@ -9,6 +9,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import {BranchFormComponent} from '../branch-form/branch-form.component'
 import {BranchServices}from '../branch-services/branch-services'
 import {BranchDeleteComponent} from '../dialog/branch-delete/branch-delete.component'
+import { Router } from "@angular/router";
+
 declare var $: any;
 
 @Component({
@@ -33,7 +35,9 @@ export class BranchTableComponent implements OnInit {
     public dialog: MatDialog,
     //public formBuilder: FormBuilder,
     public toasTer: ToastrService,
-    public branchServices: BranchServices
+    public branchServices: BranchServices,
+    public router: Router
+
   ) {
      //this.api = environment.apiInventory;
     this.titleModal = "Crear Sucursal";
@@ -89,7 +93,16 @@ export class BranchTableComponent implements OnInit {
     this.reset();
   }
   public closeModals(value) {
+    this.reloadComponent();
     this.basicModal.hide();
+  }
+  reloadComponent() {
+    const currentUrl = this.router.url;
+    const refreshUrl = currentUrl.indexOf("/dashboard/Branch") > -1 ? "/" : "/";
+    this.router
+      .navigateByUrl(refreshUrl)
+      .then(() => this.router.navigateByUrl(currentUrl));
+    //this.producEdit = [];
   }
   public openEdit(id) {
     this.titleModal = "Modificar Sucursal";

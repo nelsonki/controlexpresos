@@ -9,6 +9,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import {UserDeleteComponent} from '../dialog/user-delete/user-delete.component'
 import {UserServices} from '../user-services/user-services'
 import {UserFormComponent} from '../user-form/user-form.component'
+import { Router } from "@angular/router";
+
 declare var $: any;
 
 @Component({
@@ -32,7 +34,9 @@ export class UserTableComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     public toasTer: ToastrService,
-    public userServices: UserServices
+    public userServices: UserServices,
+    public router: Router
+
   ) {
      //this.api = environment.apiInventory;
     this.titleModal = "Crear Usuario";
@@ -116,6 +120,15 @@ public applyFilter(filterValue: string){
     this.reset();
   }
   public closeModals(value) {
+    this.reloadComponent();
     this.basicModal.hide();
+  }
+  reloadComponent() {
+    const currentUrl = this.router.url;
+    const refreshUrl = currentUrl.indexOf("/dashboard/user") > -1 ? "/" : "/";
+    this.router
+      .navigateByUrl(refreshUrl)
+      .then(() => this.router.navigateByUrl(currentUrl));
+    //this.producEdit = [];
   }
 }
