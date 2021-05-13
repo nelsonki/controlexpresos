@@ -9,6 +9,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import {ColorServices} from '../color-services/color-services'
 import {ColorFormComponent} from '../color-form/color-form.component'
 import {ColorDeleteComponent} from '../dialog/color-delete/color-delete.component'
+import { Router } from "@angular/router";
+
 declare var $: any;
 
 @Component({
@@ -32,7 +34,9 @@ export class ColorTableComponent implements OnInit {
     public dialog: MatDialog,
     //public formBuilder: FormBuilder,
     public toasTer: ToastrService,
-    public colorServices: ColorServices
+    public colorServices: ColorServices,
+    public router: Router
+
   ) {
      //this.api = environment.apiInventory;
     this.titleModal = "Crear Color";
@@ -110,7 +114,16 @@ reset(){
     this.reset();
   }
   public closeModals(value) {
+    this.reloadComponent();
     this.basicModal.hide();
+  }
+  reloadComponent() {
+    const currentUrl = this.router.url;
+    const refreshUrl = currentUrl.indexOf("/dashboard/Color") > -1 ? "/" : "/";
+    this.router
+      .navigateByUrl(refreshUrl)
+      .then(() => this.router.navigateByUrl(currentUrl));
+    //this.producEdit = [];
   }
 }
  

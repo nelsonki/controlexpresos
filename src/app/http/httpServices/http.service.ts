@@ -74,7 +74,7 @@ export class HttpService {
   //https://devus.zippyttech.com/us/social/login
   getUser(api) {
     var info = this.localService.getJsonValue('info');
-    //console.log('the info', info)
+    console.log('the info', info)
     if (info !== undefined) {
       this.userName = (info.fullname !== undefined) ? info.fullname : info;
 

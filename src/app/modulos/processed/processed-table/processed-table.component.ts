@@ -147,7 +147,7 @@ export class ProcessedTableComponent implements OnInit {
 
   reloadComponent() {
     const currentUrl = this.router.url;
-    const refreshUrl = currentUrl.indexOf("Boardings") > -1 ? "/" : "/";
+    const refreshUrl = currentUrl.indexOf("/dashboard/Procesadas") > -1 ? "/" : "/";
     this.router
       .navigateByUrl(refreshUrl)
       .then(() => this.router.navigateByUrl(currentUrl));

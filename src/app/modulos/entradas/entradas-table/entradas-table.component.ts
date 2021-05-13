@@ -164,7 +164,7 @@ export class EntradasTableComponent implements OnInit {
   }
   reloadComponent(){
     const currentUrl = this.router.url;
-    const refreshUrl = currentUrl.indexOf('dashboard') > -1 ? '/' : '/';
+    const refreshUrl = currentUrl.indexOf('/dashboard/Entradas') > -1 ? '/' : '/';
     this.router.navigateByUrl(refreshUrl).then(() => this.router.navigateByUrl(currentUrl));
 }
   public openEdit(id) {

@@ -193,7 +193,7 @@ export class BranchFormComponent implements OnInit {
   }
   reloadComponent() {
     const currentUrl = this.router.url;
-    const refreshUrl = currentUrl.indexOf("dashboard") > -1 ? "/" : "/";
+    const refreshUrl = currentUrl.indexOf("/dashboard/Branch") > -1 ? "/" : "/";
     this.router
       .navigateByUrl(refreshUrl)
       .then(() => this.router.navigateByUrl(currentUrl));

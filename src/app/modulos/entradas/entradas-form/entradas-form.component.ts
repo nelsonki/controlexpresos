@@ -648,7 +648,7 @@ if(dataEdit[0]["branch_id"]>0){
 
 reloadComponent() {
   const currentUrl = this.router.url;
-  const refreshUrl = currentUrl.indexOf("Boardings") > -1 ? "/" : "/";
+  const refreshUrl = currentUrl.indexOf("/dashboard/Entradas") > -1 ? "/" : "/";
   this.router
     .navigateByUrl(refreshUrl)
     .then(() => this.router.navigateByUrl(currentUrl));

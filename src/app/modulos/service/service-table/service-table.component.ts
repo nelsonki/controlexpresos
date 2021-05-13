@@ -8,6 +8,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 
 import {ServiceServices} from '../service-services/service-services'
 import {ServiceFormComponent} from '../service-form/service-form.component'
+import { Router } from "@angular/router";
 
 import {ServiceDeleteComponent} from '../dialog/service-delete/service-delete.component'
 declare var $: any;
@@ -33,7 +34,9 @@ export class ServiceTableComponent implements OnInit {
     public dialog: MatDialog,
     //public formBuilder: FormBuilder,
     public toasTer: ToastrService,
-    public serviceServices: ServiceServices
+    public serviceServices: ServiceServices,
+    public router: Router,
+
   ) {
      //this.api = environment.apiInventory;
     this.titleModal = "Crear Servicio";
@@ -112,7 +115,17 @@ public applyFilter(filterValue: string){
     $("#basicModal").show();
     this.reset();
   }
+  
   public closeModals(value) {
+    this.reloadComponent()
     this.basicModal.hide();
+  }
+  reloadComponent() {
+    const currentUrl = this.router.url;
+    const refreshUrl = currentUrl.indexOf("/dashboard/Service") > -1 ? "/" : "/";
+    this.router
+      .navigateByUrl(refreshUrl)
+      .then(() => this.router.navigateByUrl(currentUrl));
+    //this.producEdit = [];
   }
 } 
