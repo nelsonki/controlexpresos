@@ -83,7 +83,7 @@ export class ProfileComponent implements OnInit {
     this.apiUser = environment.apiJakiro2;
 
     this.getUserData();
-    //this.profileImage = this.localService.getJsonValue('image');
+    this.profileImage = this.localService.getJsonValue('image');
     this.userRole = info.rol;
     
  
@@ -103,7 +103,7 @@ getUserData(){
       //this.form.controls['dni'].setValue(data.Usuario.dni);
       this.form.controls['name'].setValue(data[0].fullname);
       this.form.controls['email'].setValue(data[0].email);
-      //this.profileImage = this.localService.getJsonValue('image');
+      this.profileImage = this.localService.getJsonValue('image');
      });
   }
   

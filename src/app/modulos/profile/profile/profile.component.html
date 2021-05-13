@@ -17,11 +17,11 @@
                                             <div class="col-md-6" style="text-align: center;">
                                                 <img style="border-radius: 50%; width:120px; height: 120px;" [src]="profileImage" alt="">
                                                 <br> <input type="file" name="file" id="file" class="inputfile" accept="image/*" (change)="updateSource($event)">
-                                                <label for="file">Cargar Imágen</label>
+                                                <label for="file">Cambiar Imágen</label>
                                             </div>
                                             <div class="col-md-6" style="text-align: left; margin-top: 40px">
-                                                <h5><b>{{userName}}</b></h5>
-                                                <h6>{{userRole}}</h6>
+                                                <h2><b>{{userName}}</b></h2>
+                                                <h4>{{userRole}}</h4>
                                             </div>
                                         </div>
                                         <hr>
@@ -36,8 +36,8 @@
                                                 <label for="file">Cargar Imágen</label>
                                             </div>
                                             <div class="col-md-6" style="text-align: left; margin-top: 40px">
-                                                <h5><b>{{userName}}</b></h5>
-                                                <h6>{{userRole}}</h6>
+                                                <h2><b>{{userName}}</b></h2>
+                                                <h4>{{userRole}}</h4>
                                             </div>
                                         </div>
                                         <hr>
@@ -45,7 +45,6 @@
                                     <div class="row">
 
                                         <div class="col-md-6">
-                                            <div style="font-size:9px; color:red;" *ngIf="form.get('email').touched &&    form.get('email').hasError('required')">El correo electrónico es requerido</div>
 
                                             <div class="input-group form-group">
                                                 <div class="input-group-prepend">
@@ -54,9 +53,10 @@
                                                 <input autocomplete="true" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" type="text" class="form-control" formControlName="email" placeholder="Correo Electrónico(*)">
 
                                             </div>
+                                            <div style="font-size:9px; color:red;" *ngIf="form.get('email').touched &&    form.get('email').hasError('required')">El correo electrónico es requerido</div>
+
                                         </div>
                                         <div class="col-md-6">
-                                            <div style="font-size:9px; color:red;" *ngIf="form.get('name').touched && form.get('name').hasError('required')">El nombre es requerido</div>
 
                                             <div class="input-group form-group">
                                                 <div class="input-group-prepend">
@@ -64,6 +64,7 @@
                                                 </div>
                                                 <input autocomplete="true" type="text" class="form-control" formControlName="name" placeholder="Nombres(*)">
                                             </div>
+                                            <div style="font-size:9px; color:red;" *ngIf="form.get('name').touched && form.get('name').hasError('required')">El nombre es requerido</div>
 
                                         </div>
 
@@ -110,8 +111,8 @@
                                                 <img style="border-radius: 50%; width:120px; height: 120px;" [src]="profileImage" alt="">
                                             </div>
                                             <div class="col-md-6" style="text-align: left; margin-top: 40px">
-                                                <h5><b>{{userName}}</b></h5>
-                                                <h6>{{userRole}}</h6>
+                                                <h2><b>{{userName}}</b></h2>
+                                                <h4>{{userRole}}</h4>
                                             </div>
                                         </div>
                                         <hr>
@@ -123,18 +124,16 @@
                                             <div class="col-md-6" style="text-align: center;">
                                                 <i style="font-size:84px" class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
                                                 <br> <input type="file" name="file" id="file" class="inputfile">
-                                                <label for="file">Cargar Imágen</label>
                                             </div>
                                             <div class="col-md-6" style="text-align: left; margin-top: 40px">
-                                                <h5><b>{{userName}}</b></h5>
-                                                <h6>{{userRole}}</h6>
+                                                <h2><b>{{userName}}</b></h2>
+                                                <h4>{{userRole}}</h4>
                                             </div>
                                         </div>
                                         <hr>
                                     </ng-container>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <div style="font-size:9px; color:red;" *ngIf="formPass.get('password').touched && formPass.get('password').hasError('required')">La contraseña es requerido</div>
 
                                             <div class="input-group form-group">
                                                 <div class="input-group-prepend">
@@ -142,9 +141,10 @@
                                                 </div>
                                                 <input autocomplete="true" type="password" class="form-control" formControlName="password" placeholder="Contraseña(*)">
                                             </div>
+                                            <div style="font-size:9px; color:red;" *ngIf="formPass.get('password').touched && formPass.get('password').hasError('required')">La contraseña es requerido</div>
+
                                         </div>
                                         <div class="col-md-6">
-                                            <div style="font-size:9px; color:red;" *ngIf="formPass.get('repeatPassword').touched && formPass.get('repeatPassword').hasError('required')">Por favor repita la contraseña</div>
 
                                             <div class="input-group form-group">
                                                 <div class="input-group-prepend">
@@ -152,6 +152,8 @@
                                                 </div>
                                                 <input autocomplete="true" type="password" class="form-control" formControlName="repeatPassword" placeholder="Repita la contraseña(*)">
                                             </div>
+                                            <div style="font-size:9px; color:red;" *ngIf="formPass.get('repeatPassword').touched && formPass.get('repeatPassword').hasError('required')">Por favor repita la contraseña</div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -159,7 +161,7 @@
                                     <!-- <button mat-raised-button style="color:white !important" color="accent" matStepperPrevious class="btn btn-accent profile-buttom-cancel">Anterior</button>-->
 
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="row">
                                         <div class="col-md-6" style="text-align: left;">
                                             <button mat-raised-button color="primary" (click)="submitUpdateProfile()" class="btn btn-accent">Guardar</button>
