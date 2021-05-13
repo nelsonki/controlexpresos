@@ -23,7 +23,7 @@
             <mat-label>Rol(*)</mat-label>
             <mat-select formControlName="rol" placeholder="Rol">
                 <mat-option *ngFor="let act  of roles" [value]="act.value">
-                    {{act.value}}
+                    {{act.name}}
                 </mat-option>
             </mat-select>
             <mat-error *ngIf="submitted && f.rol.errors">
