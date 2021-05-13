@@ -127,7 +127,7 @@ projectImage(file: File) {
 
 submitUpdateProfile() {
      let body ;
-     if ( this.formPass.get('password').value === '') {
+      if ( this.formPass.get('password').value === '') {
        body = {
         email: this.form.controls['email'].value,
         rol: this.userRole,
@@ -135,7 +135,7 @@ submitUpdateProfile() {
         image: (this.profileImage === '') ? 'null' : this.profileImage,
       };
        this.profileImage = body.image;
-
+console.log(body)
      } else {
         body = {
         email: this.form.controls['email'].value,
@@ -145,6 +145,7 @@ submitUpdateProfile() {
         password: this.formPass.controls['repeatPassword'].value
       };
         this.profileImage = body.image;
+        console.log(body)
 
      }
      this.http.doPut(this.apiUser, 'users/update', body,  this.iduser).subscribe(  

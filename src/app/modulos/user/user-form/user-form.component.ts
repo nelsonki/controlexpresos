@@ -44,8 +44,8 @@ export class UserFormComponent implements OnInit {
 
   public api;
   public roles:  any[]= [
-    {value:'operador'},
-    {value:'admin'}
+    {value:'operador', name:'Operador'},
+    {value:'admin', name:'Admin'}
   ]
   
 
