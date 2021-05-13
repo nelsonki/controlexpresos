@@ -31,6 +31,7 @@ export class DashboardComponent implements OnInit  {
   public userProfileImage;
   public userLoggedSocial;
   public userLoggedIN;
+  public role;
 
   links = [
     {
@@ -53,7 +54,8 @@ export class DashboardComponent implements OnInit  {
     ) {
        this.name = 'JAKIRO2';
        console.log("hola bashboard")
-       
+       this.role = this.checkRole();
+
      }
   prepareRoute(outlet: RouterOutlet) {
 
@@ -161,22 +163,16 @@ export class DashboardComponent implements OnInit  {
     this.drawer.close();
   }
   checkRole() {
-/*
+
     let info = this.localService.getJsonValue('info');
-    if (info.roles) {
-      if (info.roles.toLowerCase() === 'usuario') {
+    if (info.rol) {
+      if (info.rol.toLowerCase() === 'admin') {
         return true;
       } else {
         return false;
       }
-    } else {
-      if (info.User.roles[0].name.toLowerCase() === 'usuario') {
-        return true;
-      } else {
-        return false;
-      }
-    }
-*/
+    }  
+
   }
   
  
