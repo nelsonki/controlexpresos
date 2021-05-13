@@ -90,13 +90,13 @@ export class LoginComponent implements OnInit, AfterViewInit {
           //}
 
        
-        /* if (data.user.image) {
-          this.localService.setJsonValue('image', data.user.image);
+         if (data.image) {
+          this.localService.setJsonValue('image', data.image);
 
         } else {
           this.localService.setJsonValue('image', '../../../../assets/userProfile.png');
 
-        }  */
+        }  
       }, (error) => {
         
           this.toastr.error('Error en las credenciales', 'Sistema Jakiro');

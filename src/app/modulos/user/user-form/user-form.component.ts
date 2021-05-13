@@ -127,7 +127,10 @@ onSubmit(){
               }
             );
           }else{
+            this.loading = false;
+
             this.toasTer.error('Las contraseñas no coinciden', 'Sistema Jakiro');
+            this.loading = false;
 
           } 
        
@@ -163,8 +166,10 @@ onSubmit(){
                 }
               );
               }else{
-                this.toasTer.error('Las contraseñas no coinciden', 'Sistema Jakiro');
+                this.loading = false;
 
+                this.toasTer.error('Las contraseñas no coinciden', 'Sistema Jakiro');
+                this.loading = false;
               }
 
         
