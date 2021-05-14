@@ -8,7 +8,7 @@ import { MatDrawer } from '@angular/material/sidenav';
 import { ToastrService } from 'ngx-toastr';
 import { LocalService } from '../../../http/httpServices/local-service.service';
 
-
+import {UserServices} from '../../user/user-services/user-services'
 
 declare var $: any;
 @Component({
@@ -49,6 +49,7 @@ export class DashboardComponent implements OnInit  {
   ];
   constructor(
     public localService: LocalService,
+    public userServices:UserServices,
     private toastr: ToastrService,
     public router: Router,
     ) {
@@ -136,7 +137,8 @@ export class DashboardComponent implements OnInit  {
       //image
       this.userProfileImage = image
     } else {
-      this.userProfileImage = '../../../../assets/userProfile.png'
+      this.userProfileImage = '../../assets/userProfile.png'
+      
 
     }
   }
@@ -146,11 +148,18 @@ export class DashboardComponent implements OnInit  {
     this.router.navigateByUrl('');
   }
   endSession() {
+    /*this.userServices.logout().pipe()
+    .subscribe((value: any) => {
+      this.toastr.success(value.msj);
+    });*/
     this.localService.clearToken();
     this.localService.removeKey('info');
     this.router.navigateByUrl('/login');
+    
   }
- 
+   
+   
+   
   
   goToProfile() {
     this.router.navigate(['/dashboard/profile']);
