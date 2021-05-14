@@ -120,44 +120,6 @@
                 </form>
             </mat-step>
         </div>
-        <mat-step [stepControl]="treeFormGroup">
-            <form [formGroup]="treeFormGroup">
-                <ng-template matStepLabel> Observación </ng-template>
-                <div class="form-group"><br>
-                    <mat-toolbar>
-                        Datos de Observación
-                    </mat-toolbar><br>
-                    <div class="row">
-
-                        <div class="form-group" class="width-form-groud col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <mat-form-field class="example-full-width ">
-                                <mat-label>Observación</mat-label>
-                                <input aria-label="Number" type="text" maxlength="100" placeholder="Observación" matInput formControlName="observacion">
-                            </mat-form-field>
-                        </div>
-
-
-                    </div>
-
-                </div>
-                <br><br>
-                <div class="user-margin-buttons">
-                    <div class="row">
-                        <div class="col-4 col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                            <button tabindex="-1" mat-raised-button color="accent" matStepperPrevious>
-                                <img src="../../../../../assets/menuIcons/back_w.png" height="36px" alt="">
-                              </button> </div>
-                        <div class="col-4 col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                            <button tabindex="-1" mat-raised-button color="accent" matStepperNext>
-                                <img src="../../../../../assets/menuIcons/next_w.png" height="36px" alt="">
-                              </button> </div>
-                    </div>
-                </div>
-
-
-
-            </form>
-        </mat-step>
         <mat-step [stepControl]="myControl2 " [optional]="isOptional">
 
             <form [formGroup]="myControl2" class="user-form-top">
@@ -400,30 +362,69 @@
                         </div>
                     </div>
 
-                    <div class="container">
-                        <div class="row">
-
-                            <div class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
-                                <button tabindex="-1" [disabled]="loading" mat-raised-button (click)="onSubmit()" color="primary">
-                                    <strong>Guardar</strong> 
-                                    </button>
-                            </div>
-
-                            <div class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
-                                <button tabindex="-1" [disabled]="loading" type="button" (click)="closeModal()" mat-raised-button color="accent" style="color:white" class="btn btn-accent">
-                                        
-                                    <strong>Cancelar</strong>
-                                  </button>
-                            </div>
-                        </div>
-                    </div>
 
                     <br><br>
+                    <div class="user-margin-buttons">
+                        <div class="row">
+                            <div class="col-4 col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <button tabindex="-1" mat-raised-button color="accent" matStepperPrevious>
+                                    <img src="../../../../../assets/menuIcons/back_w.png" height="36px" alt="">
+                                  </button> </div>
+                            <div class="col-4 col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <button tabindex="-1" mat-raised-button color="accent" matStepperNext>
+                                    <img src="../../../../../assets/menuIcons/next_w.png" height="36px" alt="">
+                                  </button> </div>
+                        </div>
+                    </div>
 
 
                 </div>
             </form>
         </mat-step>
+        <mat-step [stepControl]="treeFormGroup">
+            <form [formGroup]="treeFormGroup">
+                <ng-template matStepLabel> Observación </ng-template>
+                <div class="form-group"><br>
+                    <mat-toolbar>
+                        Datos de Observación
+                    </mat-toolbar><br>
+                    <div class="row">
+                        <div class="form-group" class="width-form-groud col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <mat-form-field class="example-full-width ">
+                                <mat-label>Observación</mat-label>
+                                <input aria-label="Number" type="text" maxlength="100" placeholder="Observación" matInput formControlName="observacion">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4 col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <button tabindex="-1" mat-raised-button color="accent" matStepperPrevious>
+                                <img src="../../../../../assets/menuIcons/back_w.png" height="36px" alt="">
+                              </button> </div>
+                        <div class="col-4 col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <button tabindex="-1" [disabled]="loading" mat-raised-button (click)="onSubmit()" color="primary">
+                                <strong>Guardar</strong> 
+                                </button>
+                        </div>
+
+                        <div class="col-4 col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <button tabindex="-1" type="button" (click)="closeModal()" mat-raised-button color="accent" style="color:white" class="btn btn-accent">
+                                    
+                                <strong>Cancelar</strong>
+                              </button>
+                        </div>
+                    </div>
+                </div>
+
+                <br><br>
+
+            </form>
+        </mat-step>
+
     </mat-horizontal-stepper>
 
 
