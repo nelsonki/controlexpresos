@@ -44,6 +44,10 @@ export class UserServices {
         let enpoint = 'users/delete/'+id;
         return this.http.doDelete(this.api, enpoint);
      }
+     logout(){
+        let enpoint = 'logout';
+        return this.http.doPost(this.api, enpoint,"");
+     }
 
      
 }
