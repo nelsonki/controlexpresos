@@ -222,10 +222,10 @@ export class EntradasFormComponent implements OnInit {
 
       myControl_sub : [''],
 
-      myControl_ser : ['', [Validators.required ]],
-      myControl_ser_id : ['', [Validators.required ]],
+      myControl_ser : ['' ],
+      myControl_ser_id : ['' ],
 
-      tipo:  ['',  [Validators.required ] ],
+      tipo:  [''  ],
       fruitCtrl2: [""],
 
      });
