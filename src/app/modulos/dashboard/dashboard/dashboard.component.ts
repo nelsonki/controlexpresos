@@ -132,12 +132,13 @@ export class DashboardComponent implements OnInit {
       this.router.navigateByUrl('');
     }
 
-    let image = this.localService.getJsonValue('image');;
+    let image = this.localService.getJsonValue('image');
+    console.log("imagen:"+image)
     if (image !== undefined) {
       //image
       this.userProfileImage = image
     } else {
-      this.userProfileImage = '../../assets/userProfile.png'
+      this.userProfileImage = '../../../../assets/userProfile.png'
 
 
     }

@@ -14,6 +14,7 @@ import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { LocalService } from '../../../http/httpServices/local-service.service';
 import { HttpService } from '../../../http/httpServices/http.service';
 import { userMsg } from "../../../utils/const/message";
+import { UserServices } from '../../user/user-services/user-services';
 
 @Component({
   selector: 'app-profile',
@@ -27,7 +28,7 @@ export class ProfileComponent implements OnInit {
   identificacion: FormGroup;
   public loadImg: any = '';
   public source: string = '';
-  public profileImage=null;
+  public profileImage;
 
   public userName;
   public account;
@@ -62,6 +63,8 @@ export class ProfileComponent implements OnInit {
               public localService: LocalService,
               public cd: ChangeDetectorRef,
               //public clientService: ClientService,
+              public userServices: UserServices,
+
               public dialog: MatDialog,
 
               ) {
@@ -126,38 +129,46 @@ projectImage(file: File) {
   }
 
 submitUpdateProfile() {
-     let body ;
+     let bodyData ;
       if ( this.formPass.get('password').value === '') {
-       body = {
-        email: this.form.controls['email'].value,
-        rol: this.userRole,
-        fullname: this.form.controls['name'].value,
-        image: (this.profileImage === '') ? 'null' : this.profileImage,
-      };
-       this.profileImage = body.image;
-console.log(body)
+        bodyData = {
+          fullname: this.form.controls['name'].value,
+          email: this.form.controls['email'].value,
+          rol: this.userRole,
+          image:(this.profileImage === '') ? 'null' : this.profileImage,
+  
+        };
+        
+       this.profileImage = bodyData.image;
+console.log(bodyData)
      } else {
-        body = {
+      bodyData = {
+        fullname: this.form.controls['name'].value,
         email: this.form.controls['email'].value,
         rol: this.userRole,
-        fullname: this.form.controls['name'].value,
-        image: (this.profileImage === '') ? 'null' : this.profileImage,
+        image:(this.profileImage === '') ? 'null' : this.profileImage,
         password: this.formPass.controls['repeatPassword'].value
+
       };
-        this.profileImage = body.image;
-        console.log(body)
+     
+        this.profileImage = bodyData.image;
+        console.log(bodyData)
 
      }
-     this.http.doPut(this.apiUser, 'users/update', body,  this.iduser).subscribe(  
-       response => {
-      this.toasTer.success(userMsg.update);
-      this.reloadComponent();
-    },
-    error => {
-       
-        this.toasTer.error(userMsg.errorProcess);
-       
-    });  
+     this.userServices.update(this.iduser, bodyData).subscribe(
+      response => {
+            this.toasTer.success(userMsg.update);
+            this.reloadComponent();
+        },
+        error => {
+          if (error["status"] === 422) {
+            this.toasTer.error('Ya existe ');
+
+          }else{
+            this.toasTer.error(userMsg.errorProcess);
+          }
+        }
+      );
          
      
 }
