@@ -150,7 +150,7 @@ export class DashboardComponent implements OnInit {
   endSession() {
     this.userServices.logout().pipe()
       .subscribe((value: any) => {
-        this.toastr.success(value.msj);
+        this.toastr.success("Sessión cerrada con exito");
         this.localService.clearToken();
         this.localService.removeKey('info');
         location.reload();
