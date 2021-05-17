@@ -80,10 +80,7 @@
                 <td mat-cell *matCellDef="let element">{{element.user}} </td>
             </ng-container>
             <!-- Weight Column -->
-            <ng-container matColumnDef="Observación">
-                <th mat-header-cell *matHeaderCellDef> Observación </th>
-                <td mat-cell *matCellDef="let element">{{element.observation}} </td>
-            </ng-container>
+
             <!-- Weight Column -->
             <ng-container matColumnDef="Acciones">
                 <th mat-header-cell *matHeaderCellDef> Acciones </th>
@@ -107,6 +104,7 @@
                             <table [dataSource]="dataSource" class="table table-bordered " style="width: 100%;">
                                 <caption>
                                     Listado de Operaciones de Entradas
+                                    <br> Observaciones de entrada: {{ element.observation }}
                                 </caption>
 
                                 <tr>
@@ -142,6 +140,7 @@
                             <table [dataSource]="dataSource" class="table table-bordered " style="width: 100%;">
                                 <caption>
                                     Listado de Operaciones de Salidas
+                                    <br> Observaciones de salida: {{ element.obs_out }}
                                 </caption>
 
                                 <tr>
