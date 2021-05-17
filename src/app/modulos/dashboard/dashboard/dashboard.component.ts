@@ -8,7 +8,7 @@ import { MatDrawer } from '@angular/material/sidenav';
 import { ToastrService } from 'ngx-toastr';
 import { LocalService } from '../../../http/httpServices/local-service.service';
 
-import {UserServices} from '../../user/user-services/user-services'
+import { UserServices } from '../../user/user-services/user-services'
 
 declare var $: any;
 @Component({
@@ -22,7 +22,7 @@ declare var $: any;
     animations.fader
   ]
 })
-export class DashboardComponent implements OnInit  {
+export class DashboardComponent implements OnInit {
 
 
 
@@ -49,71 +49,71 @@ export class DashboardComponent implements OnInit  {
   ];
   constructor(
     public localService: LocalService,
-    public userServices:UserServices,
+    public userServices: UserServices,
     private toastr: ToastrService,
     public router: Router,
-    ) {
-       this.name = 'JAKIRO2';
-       console.log("hola bashboard")
-       this.role = this.checkRole();
+  ) {
+    this.name = 'JAKIRO2';
+    console.log("hola bashboard")
+    this.role = this.checkRole();
 
-     }
+  }
   prepareRoute(outlet: RouterOutlet) {
 
-      return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
-    }
-    closeSidenav() {
-      $('.right-side-nav').toggleClass("open");
-    }
-    closeDrawer() {
-      this.drawer.close();
-  
-    }
-    
-    showSuccess() {
-      this.toastr.success('Hola Bienvenido', 'Jakiro2!');
-      this.router.navigate(['/dashboard/Stats']);
- 
-    }
-    dashboard() {
-      this.router.navigate(['/dashboard/Stats']);
-      this.drawer.close();
-    }
-    listarClientes() {
-     this.router.navigate(['/dashboard/Client']);
-     this.drawer.close();
-    }
-    listarBranch() {
-      this.router.navigate(['/dashboard/Branch']);
-      this.drawer.close();
-     }
-     listarColores() {
-      this.router.navigate(['/dashboard/Color']);
-      this.drawer.close();
-     }
-     listarServices() {
-      this.router.navigate(['/dashboard/Service']);
-      this.drawer.close();
-     }
-     listarSubServices() {
-      this.router.navigate(['/dashboard/Sub-service']);
-      this.drawer.close();
-     }
-    listarEntradas() {
-      this.router.navigate(['/dashboard/Entradas']);
-      this.drawer.close();
-     }
-     listarSalidas() {
-      this.router.navigate(['/dashboard/Salidas']);
-      this.drawer.close();
-     }
-     listarProcesadas(){
-      this.router.navigate(['/dashboard/Procesadas']);
-      this.drawer.close();
-     }
-    ngOnInit(): void {
+    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
+  }
+  closeSidenav() {
+    $('.right-side-nav').toggleClass("open");
+  }
+  closeDrawer() {
+    this.drawer.close();
+
+  }
+
+  showSuccess() {
+    this.toastr.success('Hola Bienvenido', 'Jakiro2!');
+    this.router.navigate(['/dashboard/Stats']);
+
+  }
+  dashboard() {
+    this.router.navigate(['/dashboard/Stats']);
+    this.drawer.close();
+  }
+  listarClientes() {
+    this.router.navigate(['/dashboard/Client']);
+    this.drawer.close();
+  }
+  listarBranch() {
+    this.router.navigate(['/dashboard/Branch']);
+    this.drawer.close();
+  }
+  listarColores() {
+    this.router.navigate(['/dashboard/Color']);
+    this.drawer.close();
+  }
+  listarServices() {
+    this.router.navigate(['/dashboard/Service']);
+    this.drawer.close();
+  }
+  listarSubServices() {
+    this.router.navigate(['/dashboard/Sub-service']);
+    this.drawer.close();
+  }
+  listarEntradas() {
+    this.router.navigate(['/dashboard/Entradas']);
+    this.drawer.close();
+  }
+  listarSalidas() {
+    this.router.navigate(['/dashboard/Salidas']);
+    this.drawer.close();
+  }
+  listarProcesadas() {
+    this.router.navigate(['/dashboard/Procesadas']);
+    this.drawer.close();
+  }
+  ngOnInit(): void {
     //this.showSuccess()
-   $(document).ready(function () {
+    $(document).ready(function () {
       $('.leftmenutrigger').on('click', function (e) {
         $('.right-side-nav').toggleClass("open");
         e.preventDefault();
@@ -131,14 +131,14 @@ export class DashboardComponent implements OnInit  {
     } else {
       this.router.navigateByUrl('');
     }
-    
+
     let image = this.localService.getJsonValue('image');;
     if (image !== undefined) {
       //image
       this.userProfileImage = image
     } else {
       this.userProfileImage = '../../assets/userProfile.png'
-      
+
 
     }
   }
@@ -148,26 +148,26 @@ export class DashboardComponent implements OnInit  {
     this.router.navigateByUrl('');
   }
   endSession() {
-    /*this.userServices.logout().pipe()
-    .subscribe((value: any) => {
-      this.toastr.success(value.msj);
-    });*/
-    this.localService.clearToken();
-    this.localService.removeKey('info');
-    this.router.navigateByUrl('/login');
-    
+    this.userServices.logout().pipe()
+      .subscribe((value: any) => {
+        this.toastr.success("Sessión cerrada con exito");
+        this.localService.clearToken();
+        this.localService.removeKey('info');
+        location.reload();
+        // this.router.navigateByUrl('/login');
+      });
   }
-   
-   
-   
-  
+
+
+
+
   goToProfile() {
     this.router.navigate(['/dashboard/profile']);
     this.drawer.close();
 
     //this.router.navigateByUrl('/dashboard/profile');
   }
-  listarUsuarios(){
+  listarUsuarios() {
     this.router.navigate(['/dashboard/user']);
     this.drawer.close();
   }
@@ -180,11 +180,11 @@ export class DashboardComponent implements OnInit  {
       } else {
         return false;
       }
-    }  
+    }
 
   }
-  
- 
+
+
 
 }
 
