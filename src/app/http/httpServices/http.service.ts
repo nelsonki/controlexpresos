@@ -36,7 +36,6 @@ export class HttpService {
 
   doGet(endpoint: string, api: string) {
     let url = api + endpoint;
-    //console.log(url);
     return this.httpService.get(url, { headers: this.autorization });
   }
 
@@ -74,7 +73,6 @@ export class HttpService {
   //https://devus.zippyttech.com/us/social/login
   getUser(api) {
     var info = this.localService.getJsonValue('info');
-    console.log('the info', info)
     if (info !== undefined) {
       this.userName = (info.fullname !== undefined) ? info.fullname : info;
 
@@ -82,12 +80,11 @@ export class HttpService {
       this.userName = (info.fullname !== undefined) ? info.fullname : info;
     }
 
-    let endpoint = api + 'users/search/' + this.userName;
+    let endpoint = api + 'users/search/' + info.id;
     let autorization = new HttpHeaders({
       'Authorization': 'Bearer ' + info.session.original.token,
       'x-timezone': 'America/Caracas,-04:00'
     });
-    console.log(this.autorization)
 
     return this.httpService.get(endpoint, { headers: autorization });
   }
