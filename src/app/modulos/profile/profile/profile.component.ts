@@ -43,6 +43,7 @@ export class ProfileComponent implements OnInit {
   public clientName;
   public clientname;
   public proveedor;
+  public base64=false;
   //public types: ICustomerType[];
  // public activities: IActivities[];
   public idAct: number;
@@ -88,7 +89,7 @@ export class ProfileComponent implements OnInit {
     this.getUserData();
     this.profileImage = this.localService.getJsonValue('image');
     this.userRole = info.rol;
-    
+    this.base64=false;
  
   }
 
@@ -98,6 +99,7 @@ export class ProfileComponent implements OnInit {
 }
   
 getUserData(){
+
     this.http.getUser(this.apiUser).subscribe(( data: any ) => {
       console.log(data[0])
       this.userName = data[0].fullname;
@@ -112,6 +114,7 @@ getUserData(){
   
 updateSource($event: Event) {
     this.projectImage($event.target['files'][0]);
+    this.base64=true;
 }
 
 projectImage(file: File) {
@@ -130,6 +133,7 @@ projectImage(file: File) {
 
 submitUpdateProfile() {
      let bodyData ;
+     if(this.base64 === true){
       if ( this.formPass.get('password').value === '') {
         bodyData = {
           fullname: this.form.controls['name'].value,
@@ -137,10 +141,10 @@ submitUpdateProfile() {
           rol: this.userRole,
           image:(this.profileImage === '') ? 'null' : this.profileImage,
   
-        };
-        
-       this.profileImage = bodyData.image;
-console.log(bodyData)
+        };        
+      this.profileImage = bodyData.image;
+      console.log("base64"+this.profileImage )
+
      } else {
       bodyData = {
         fullname: this.form.controls['name'].value,
@@ -150,28 +154,52 @@ console.log(bodyData)
         password: this.formPass.controls['repeatPassword'].value
 
       };
-     
-        this.profileImage = bodyData.image;
-        console.log(bodyData)
+      this.profileImage = bodyData.image;
+      console.log("base64"+this.profileImage )
 
      }
+     }else{
+      if ( this.formPass.get('password').value === '') {
+        bodyData = {
+          fullname: this.form.controls['name'].value,
+          email: this.form.controls['email'].value,
+          rol: this.userRole,
+  
+        };        
+      this.profileImage = this.profileImage;
+      console.log(this.profileImage )
+
+     } else {
+      bodyData = {
+        fullname: this.form.controls['name'].value,
+        email: this.form.controls['email'].value,
+        rol: this.userRole,
+        password: this.formPass.controls['repeatPassword'].value
+      };
+      this.profileImage = this.profileImage;
+      console.log(this.profileImage )
+     }
+     }
+  
+
+
+
+
      this.userServices.update(this.iduser, bodyData).subscribe(
       response => {
             this.toasTer.success(userMsg.update);
             this.reloadComponent();
         },
         error => {
-          if (error["status"] === 422) {
-            this.toasTer.error('Ya existe ');
-
-          }else{
+          
             this.toasTer.error(userMsg.errorProcess);
-          }
+          
         }
       );
          
      
 }
+
 goToMenu(){
   this.router.navigate(['/dashboard/Stats']);
 }
