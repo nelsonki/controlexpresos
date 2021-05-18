@@ -144,7 +144,7 @@ submitUpdateProfile() {
         };        
       this.profileImage = bodyData.image;
       console.log("base64"+this.profileImage )
-
+      this.localService.setJsonValue('image', this.profileImage)
      } else {
       bodyData = {
         fullname: this.form.controls['name'].value,
@@ -156,6 +156,7 @@ submitUpdateProfile() {
       };
       this.profileImage = bodyData.image;
       console.log("base64"+this.profileImage )
+      this.localService.setJsonValue('image', this.profileImage)
 
      }
      }else{
@@ -168,6 +169,7 @@ submitUpdateProfile() {
         };        
       this.profileImage = this.profileImage;
       console.log(this.profileImage )
+      this.localService.setJsonValue('image', this.profileImage)
 
      } else {
       bodyData = {
@@ -178,6 +180,8 @@ submitUpdateProfile() {
       };
       this.profileImage = this.profileImage;
       console.log(this.profileImage )
+      this.localService.setJsonValue('image', this.profileImage)
+
      }
      }
   
