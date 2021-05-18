@@ -275,8 +275,7 @@ public fechaFin="";
   
   }
   print(id){
-    window.open( this.api + 'outputs/print/' + id);
-
-  }
+    window.open( this.api + 'reports/print/' + id);
+   }
  
 } 
