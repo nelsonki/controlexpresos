@@ -46,6 +46,7 @@ import { ChartModule } from 'angular-highcharts';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 //import { ProfileComponent } from './modulos/profile/profile/profile.component';
+import { CanActivateViaAuthGuard } from './guard';
 
   registerLocaleData(localeEs);
 
@@ -105,7 +106,8 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
     EntradasServices,
     SalidasServices,
     StatsServices,
-    UserServices
+    UserServices,
+    CanActivateViaAuthGuard
 
   ],
   bootstrap: [AppComponent],

@@ -177,10 +177,14 @@ export class DashboardComponent implements OnInit {
     let info = this.localService.getJsonValue('info');
     if (info.rol) {
       if (info.rol.toLowerCase() === 'admin') {
-        return true;
-      } else {
-        return false;
+        return 1;
       }
+      if (info.rol.toLowerCase() === 'operador') {
+        return 2;
+      }
+      if (info.rol.toLowerCase() === 'op. entradas') {
+        return 3;
+      }  
     }
 
   }
