@@ -10,6 +10,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {SalidasServices} from '../../salidas/salidas-services/salidas-services'
 import { environment } from '../../../../environments/environment';
+import { DateRangeComponent } from '../date-range/date-range.component';
 
 declare var $: any;
 
@@ -31,8 +32,9 @@ export class ProcessedTableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('basicModal') basicModal: ModalDirective;
   @Output() onChange: EventEmitter<File> = new EventEmitter<File>();
+  @ViewChild(DateRangeComponent) dateRange: DateRangeComponent;
 
-  displayedColumns: string[] = ['Item', 'ID', 'Cliente - Sucursal', 'Fecha Procesada', 'Usuario', 'Acciones'];
+  displayedColumns: string[] = ['Item', 'ID', 'Cliente - Sucursal', 'Peso de entrada', 'Peso de salida', 'Fecha Procesada', 'Usuario', 'Acciones'];
   dataSource;
   public titleModal: string;
   public element =[];
@@ -40,7 +42,12 @@ export class ProcessedTableComponent implements OnInit {
   public dataOut;
   expandedElement;
   public api: string;
-
+  fechas:any;
+  public contInit:number = 0;
+public fechaInicio="";
+public fechaFin="";
+public total_weight_in=0;
+public total_weight_out=0;
   ngAfterViewInit() {
   }
   constructor(
@@ -56,11 +63,12 @@ export class ProcessedTableComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadAll();
+    this.loadAll(this.fechaInicio, this.fechaFin);
   }
-  public loadAll(){ 
-
-    this.salidasServices.getOperaciones().subscribe((value) => {
+  public loadAll(fInicio?, fFin?){ 
+    this.total_weight_in=0;
+    this.total_weight_out=0;
+    this.salidasServices.getOperaciones(fInicio, fFin).subscribe((value) => {
       this.data=[];
       this.dataOut=[];
 
@@ -79,7 +87,8 @@ export class ProcessedTableComponent implements OnInit {
               "observation":value["data"][e].observation,
               "processed_time": value["data"][e].processed_time,
               "user": value["data"][e].user,
-
+              "weight_in": value["data"][e].weight_in,
+              "weight_out": value["data"][e].weight_out,
               "inputs":[],
               "outputs":[]
             };
@@ -118,8 +127,15 @@ export class ProcessedTableComponent implements OnInit {
               });
          });
          Object.keys(this.element).forEach((i, index) => {
-          this.element[i].Item = index + 1;
+          this.total_weight_in = this.total_weight_in + parseFloat(this.element[i].weight_in) ;
+          this.total_weight_out = this.total_weight_out + parseFloat(this.element[i].weight_out) ;
+
        });
+       Object.keys(this.element).forEach((i, index) => {
+        this.element[i].Item = index + 1;
+
+     });
+     
        
         this.dataSource = new MatTableDataSource(this.element);
         this.dataSource.paginator = this.paginator;
@@ -137,7 +153,9 @@ export class ProcessedTableComponent implements OnInit {
     
   }
   Refresh(){
-    this.loadAll();
+    this.fechaInicio="";
+    this.fechaFin="";
+    this.loadAll(this.fechaInicio, this.fechaFin);
   }
 
   public closeModals(value) {
@@ -162,4 +180,44 @@ export class ProcessedTableComponent implements OnInit {
   print(id){
     window.open( this.api + 'reports/print/' + id);
   }
+    //*  FUNCION PARA EL FILTRADO DESDE EL SELECTOR DE FECHAS
+
+    public DateFilter(event) {
+      //const info = JSON.parse(localStorage.getItem('info'));
+      this.contInit = 0;
+      this.fechas = event;
+      const fechaInicio = this.convertFormat(this.fechas.fromDate);
+      const fechaFinal  = this.convertFormat(this.fechas.toDate);
+      //this.doWhere = 'where=[ {"op":"eq","field":"hg.account","value":' + info.account +'}, {"op":"bt", "field":"hg.created_at", "value":["' + fechaInicio + ' 01:00:00","' + fechaFinal + ' 23:59:59"]}]'
+      //this.doWhereReport = 'where=[ {"op":"eq","field":"hg.account","value":' + info.account +'}, {"op":"bt", "field":"hg.created_at", "value":["' + fechaInicio + ' 01:00:00","' + fechaFinal + ' 23:59:59"]}]'
+      //this.loadDataTable('historialgenerates?' + this.doWhere);
+      //this.paginator.pageIndex = 0;
+      console.log(fechaInicio +"_"+fechaFinal)
+      this.loadAll(fechaInicio, fechaFinal);
+    }
+    convertFormat(range){
+      var fecha = new Date(range)
+      var dia = fecha.getDate();
+      var mes = fecha.getMonth();
+      var anno = fecha.getFullYear();
+  
+      var fechaSearch;
+      if ( dia < 10 ) {
+        fechaSearch =  0 + (dia);
+      } else {
+        fechaSearch =  (dia);
+      }
+  
+      if (( mes + 1 ) < 10 ) {
+        fechaSearch = fechaSearch  + '-' + 0 + (mes + 1) + '-' + anno;
+      } else {
+        fechaSearch = fechaSearch  + '-' + (mes + 1) + '-' + anno;
+      }
+  
+      
+  
+      return fechaSearch;
+    }
+      //*  FUNCION PARA EL FILTRADO DESDE EL SELECTOR DE FECHAS
+  
 } 

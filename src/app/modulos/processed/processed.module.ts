@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+
 import { ModalModule, ButtonsModule, WavesModule } from 'angular-bootstrap-md';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -20,14 +22,15 @@ import { MaterialModule } from './../../material.module';
 
 import { ProcessedTableComponent } from './processed-table/processed-table.component';
 import {ProcessedRoutingModule} from '../processed/processed-routing.module'
+import { DateRangeComponent } from './date-range/date-range.component';
+import { NgxMatDrpModule } from './date-range/modules/ngx-mat-drp/ngx-mat-drp.module';
 
 
 @NgModule({
-  declarations: [ProcessedTableComponent],
+  declarations: [ProcessedTableComponent, DateRangeComponent],
   imports: [
     CommonModule,
     ProcessedRoutingModule,
-    CommonModule,
     ModalModule,
     ButtonsModule,
     WavesModule,
@@ -41,7 +44,10 @@ import {ProcessedRoutingModule} from '../processed/processed-routing.module'
     MatFormFieldModule,
     MatToolbarModule,
     MaterialModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+    NgxMatDrpModule
+  ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA,
+    NO_ERRORS_SCHEMA]
 })
 export class ProcessedModule { }
