@@ -43,6 +43,12 @@ tr.example-element-row:not(.example-expanded-row):active {
     line-height: normal;
 }
 
+.tpeso {
+    font-weight: normal;
+    font-size: 15px;
+    line-height: normal;
+}
+
 .example-element-description {
     padding: 16px;
 }
@@ -380,7 +386,17 @@ th.mat-header-cell:first-of-type {
 /* CSS TABLA*/
 
 .button-li-top {
-    margin-top: 2px;
+    margin-top: 20px;
+    display: inline-flex;
+}
+
+.button-li-top2 {
+    margin-top: 10px;
+    display: inline-flex;
+}
+
+.button-li-top3 {
+    margin-top: 35px;
     display: inline-flex;
 }
 
@@ -443,7 +459,7 @@ th.mat-header-cell:first-of-type {
 
 .table-title-width {
     margin-left: 10px;
-    width: 320px;
+    width: 150px;
     display: inherit;
 }
 

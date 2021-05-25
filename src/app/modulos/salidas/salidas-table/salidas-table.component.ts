@@ -39,7 +39,7 @@ export class SalidasTableComponent implements OnInit {
   @ViewChild('basicModal') basicModal: ModalDirective;
   @Output() onChange: EventEmitter<File> = new EventEmitter<File>();
 
-  displayedColumns: string[] = ['Item', 'ID', 'Cliente - Sucursal', 'Fecha - Hora', 'Usuario',  'Acciones'];
+  displayedColumns: string[] = ['Item', 'ID', 'Cliente - Sucursal', 'Fecha - Hora','Peso de salida', 'Usuario',  'Acciones'];
   dataSource;
   public titleModal: string;
   public element =[];
@@ -52,6 +52,8 @@ export class SalidasTableComponent implements OnInit {
   public contInit:number = 0;
 public fechaInicio="";
 public fechaFin="";
+public total_weight_in=0;
+public total_weight_out=0;
   ngAfterViewInit() {
   }
   constructor(
@@ -72,7 +74,8 @@ public fechaFin="";
     this.loadAll(this.fechaInicio, this.fechaFin);
   }
   public loadAll(fInicio?, fFin?){ 
-
+    this.total_weight_in=0;
+    this.total_weight_out=0;
     this.salidasServices.getList(fInicio, fFin).subscribe((value) => {
       this.data=[];
       this.dataOut=[];
@@ -93,6 +96,8 @@ public fechaFin="";
               "obs_out":value["data"][e].obs_out,
               "date_time": value["data"][e].date_time,
               "user":value["data"][e].user,
+              "weight_in": value["data"][e].weight_in,
+              "weight_out": value["data"][e].weight_out,
               "inputs":[],
               "outputs":[]
             };
@@ -131,6 +136,11 @@ public fechaFin="";
               });
          });
          Object.keys(this.element).forEach((i, index) => {
+          //this.total_weight_in = this.total_weight_in + parseFloat(this.element[i].weight_in) ;
+          this.total_weight_out = this.total_weight_out + parseFloat(this.element[i].weight_out) ;
+
+       });
+         Object.keys(this.element).forEach((i, index) => {
           this.element[i].Item = index + 1;
        });
        
@@ -150,6 +160,7 @@ public fechaFin="";
     
   }
   Refresh(){
+    
     this.fechaInicio="";
     this.fechaFin="";
     this.loadAll(this.fechaInicio, this.fechaFin);
