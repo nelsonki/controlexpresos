@@ -33,7 +33,7 @@ export class EntradasTableComponent implements OnInit {
   @ViewChild('basicModal') basicModal: ModalDirective;
   @Output() onChange: EventEmitter<File> = new EventEmitter<File>();
 
-  displayedColumns: string[] = ['Item', 'ID', 'Cliente - Sucursal', 'Fecha - Hora', 'Usuario', 'Acciones'];
+  displayedColumns: string[] = ['Item', 'ID', 'Cliente - Sucursal', 'Fecha - Hora', 'Peso de entrada', 'Usuario', 'Acciones'];
   dataSource;
   public titleModal: string;
   public element =[];
@@ -81,6 +81,8 @@ export class EntradasTableComponent implements OnInit {
               "observation":value["data"][e].observation,
               "date_time": value["data"][e].date_time,
               "user":value["data"][e].user,
+              "weight_in": value["data"][e].weight_in,
+
               "inputs":[]
             };
             this.element.push(datos);
@@ -100,10 +102,14 @@ export class EntradasTableComponent implements OnInit {
               created_at: value["data"][e].inputs[i].date_time,
 
             } ;  
-            this.total_weight_in = this.total_weight_in + parseFloat(value["data"][e].inputs[i].weight);                     
             this.element[e].inputs.push(this.data);
               });
          });
+         Object.keys(this.element).forEach((i, index) => {
+          this.total_weight_in = this.total_weight_in + parseFloat(this.element[i].weight_in) ;
+          //this.total_weight_out = this.total_weight_out + parseFloat(this.element[i].weight_out) ;
+
+       });
          Object.keys(this.element).forEach((i, index) => {
           this.element[i].Item = index + 1;
        });

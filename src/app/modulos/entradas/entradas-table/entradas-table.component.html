@@ -23,7 +23,7 @@
                             </button>
                         </a>
                     </li>
-                    <li class="nav-item  button-li-top2 col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <li class="nav-item  button-li-top2 col-lg-4 col-md-4 col-sm-4 col-xs-4">
                         <app-date-range (dateNow)="DateFilter($event)"></app-date-range>
                     </li>
                     <li class="nav-item   button-li-top3  col-lg-4 col-md-4 col-sm-4 col-xs-4 tpeso">
@@ -81,6 +81,10 @@
             <ng-container matColumnDef="Fecha - Hora">
                 <th mat-header-cell *matHeaderCellDef> Fecha - Hora </th>
                 <td mat-cell *matCellDef="let element"> {{element.date_time}}</td>
+            </ng-container>
+            <ng-container matColumnDef="Peso de entrada">
+                <th mat-header-cell *matHeaderCellDef> Peso de entrada</th>
+                <td mat-cell *matCellDef="let element" style="text-align:center"> {{element.weight_in}} </td>
             </ng-container>
             <!-- Weight Column -->
             <ng-container matColumnDef="Usuario">
