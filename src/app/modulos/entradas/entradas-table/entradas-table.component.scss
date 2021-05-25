@@ -2,107 +2,6 @@ table {
     width: 100%;
 }
 
-tr.example-detail-row {
-    height: 0;
-}
-
-tr.example-element-row:not(.example-expanded-row):hover {
-    background: whitesmoke;
-}
-
-tr.example-element-row:not(.example-expanded-row):active {
-    background: #efefef;
-}
-
-.example-element-row td {
-    border-bottom-width: 0;
-}
-
-.example-element-detail {
-    overflow: hidden;
-    display: flex;
-}
-
-.example-element-diagram {
-    min-width: 80px;
-    border: 2px solid black;
-    padding: 8px;
-    font-weight: lighter;
-    margin: 8px 0;
-    height: 104px;
-}
-
-.example-element-symbol {
-    font-weight: bold;
-    font-size: 40px;
-    line-height: normal;
-}
-
-.example-element-description {
-    padding: 16px;
-}
-
-.example-element-description-attribution {
-    opacity: 0.5;
-}
-
-
-/* CSS TABLA*/
-
-.button-li-top {
-    margin-top: 2px;
-    display: inline-flex;
-}
-
-.nav-padding-option {
-    padding-left: 18px;
-}
-
-@media (min-width: 992px) {
-    .navbar-expand-lg .navbar-collapse {
-        display: flex !important;
-        flex-basis: auto;
-        height: 52px !important;
-    }
-}
-
-.option-avanzados {
-    list-style: none;
-    display: inline-flex;
-}
-
-.button-li-advance {
-    margin-top: 9px;
-}
-
-.width-opction-avance {
-    width: 640px;
-}
-
-@media (max-height: 850px) and (max-width: 1350px) {
-    .width-opction-avance {
-        width: 0px;
-        margin-left: -61px;
-    }
-}
-
-.nav-menu-top {
-    margin-top: 20px;
-    margin-bottom: 24px;
-}
-
-.opAut-button-excel {
-    background-color: #008000;
-}
-
-.opAut-button-pdf {
-    background-color: #d50000;
-}
-
-table {
-    width: 100%;
-}
-
 
 /* Structure */
 
@@ -141,6 +40,12 @@ tr.example-element-row:not(.example-expanded-row):active {
 .example-element-symbol {
     font-weight: bold;
     font-size: 40px;
+    line-height: normal;
+}
+
+.tpeso {
+    font-weight: normal;
+    font-size: 15px;
     line-height: normal;
 }
 
@@ -255,21 +160,6 @@ tr.example-element-row:not(.example-expanded-row):active {
     opacity: 0.5;
 }
 
-.btn-group-sm .btn-fab {
-    position: fixed !important;
-    right: 29px;
-}
-
-.btn-group .btn-fab {
-    position: fixed !important;
-    right: 20px;
-}
-
-.btn-group-masive .btn-fab {
-    position: fixed !important;
-    right: 70px;
-}
-
 a.pointer {
     padding: 5px;
 }
@@ -283,7 +173,7 @@ a.pointer {
 }
 
 .prod-button-pdf {
-    background-color: #d50000;
+    background-color: #D50000;
 }
 
 .prod-buttom-close {
@@ -310,7 +200,7 @@ a.pointer {
     min-height: 30px;
     background: #fff;
     width: 100%;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
     border-radius: 2px;
     margin-bottom: 15px;
 }
@@ -326,8 +216,8 @@ a.pointer {
     line-height: auto;
     align-items: center;
     margin: 0 auto;
-    background: rgba(0, 0, 0, 0.2);
-    background-color: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, .2);
+    background-color: rgba(0, 0, 0, .2);
     border-radius: 2px 0 0 2px;
 }
 
@@ -409,8 +299,8 @@ a.pointer {
     border: 1px #eee solid;
     border-radius: 12px;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.3) inset;
-    -webit-transition: all 0.3s ease-out;
-    transition: all 0.3s ease-out;
+    -webit-transition: all .3s ease-out;
+    transition: all .3s ease-out;
 }
 
 .prod-scroll-table::-webkit-scrollbar-thumb:window-inactive {
@@ -476,7 +366,7 @@ th.mat-header-cell:first-of-type {
 }
 
 .modal-scroll {
-    overflow: auto !important;
+    overflow: auto;
 }
 
 .mat-toolbar.mat-accent {
@@ -487,13 +377,92 @@ th.mat-header-cell:first-of-type {
     box-shadow: 0 2px 5px 0 #ffffff, 0 2px 10px 0 rgba(255, 255, 255, 1) !important;
     border: 0 !important;
     font-weight: 400 !important;
-    height: 284px;
+    height: 333px;
     overflow: scroll;
     overflow-x: hidden;
 }
 
+
+/* CSS TABLA*/
+
+.button-li-top {
+    margin-top: 20px;
+    display: inline-flex;
+}
+
+.button-li-top2 {
+    margin-top: 10px;
+    display: inline-flex;
+}
+
+.button-li-top3 {
+    margin-top: 35px;
+    display: inline-flex;
+}
+
+.nav-padding-option {
+    padding-left: 18px;
+}
+
+.nav-padding-option {
+    padding-left: 18px;
+}
+
+@media (min-width: 992px) {
+    .navbar-expand-lg .navbar-collapse {
+        display: flex !important;
+        flex-basis: auto;
+        height: 52px !important;
+    }
+}
+
+.option-avanzados {
+    list-style: none;
+    display: inline-flex;
+}
+
+.button-li-advance {
+    margin-top: 9px;
+}
+
+.width-opction-avance {
+    width: 860px;
+}
+
+.button-li-advance {
+    margin-top: 9px;
+}
+
+.width-opction-avance {
+    width: 860px;
+}
+
+@media (max-height: 850px) and (max-width: 1350px) {
+    .width-opction-avance {
+        width: 0px;
+        margin-left: -61px;
+    }
+}
+
+.nav-menu-top {
+    margin-top: 20px;
+    margin-bottom: 24px;
+}
+
+.opAut-button-excel {
+    background-color: #008000;
+}
+
+.opAut-button-pdf {
+    background-color: #D50000;
+}
+
 .table-title-width {
     margin-left: 10px;
-    width: 320px;
+    width: 150px;
     display: inherit;
+}
+
+.pointer {
+    cursor: pointer;
 }

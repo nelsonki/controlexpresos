@@ -23,9 +23,11 @@ import {EntradasRoutingModule} from './entradas-routing.module';
 import { EntradasFormComponent } from './entradas-form/entradas-form.component';
 import { EntradasDeleteComponent } from './dialog/entradas-delete/entradas-delete.component'
 
+import { DateRangeComponent } from './date-range/date-range.component';
+import { NgxMatDrpModule } from './date-range/modules/ngx-mat-drp/ngx-mat-drp.module';
 
 @NgModule({
-  declarations: [EntradasTableComponent, EntradasFormComponent, EntradasDeleteComponent],
+  declarations: [EntradasTableComponent, EntradasFormComponent, EntradasDeleteComponent, DateRangeComponent],
   imports: [
     CommonModule,
     EntradasRoutingModule,
@@ -43,7 +45,8 @@ import { EntradasDeleteComponent } from './dialog/entradas-delete/entradas-delet
     MatFormFieldModule,
     MatToolbarModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxMatDrpModule
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA,
     NO_ERRORS_SCHEMA]

@@ -30,7 +30,6 @@ import { NgxMatDrpModule } from './date-range/modules/ngx-mat-drp/ngx-mat-drp.mo
   imports: [
     CommonModule,
     SalidasRoutingModule,
-    CommonModule,
     ModalModule,
     ButtonsModule,
     WavesModule,

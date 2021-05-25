@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import {AfterViewInit,  ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
@@ -40,6 +40,13 @@ export class EntradasTableComponent implements OnInit {
   data: any = [];
   expandedElement;
 
+  fechas:any;
+  public contInit:number = 0;
+  public fechaInicio="";
+  public fechaFin="";
+  public total_weight_in=0;
+  public total_weight_out=0;
+
   ngAfterViewInit() {
    }
   constructor(
@@ -53,11 +60,11 @@ export class EntradasTableComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadAll()
+    this.loadAll(this.fechaInicio, this.fechaFin)
   }
-  public loadAll(){ 
-
-    this.entradasServices.getList().subscribe((value) => {
+  public loadAll(fInicio?, fFin?){ 
+    this.total_weight_in=0;  
+    this.entradasServices.getList(fInicio, fFin).subscribe((value) => {
       this.data=[];
       this.element=[];
       console.log(value["data"])
@@ -91,13 +98,18 @@ export class EntradasTableComponent implements OnInit {
               subservices_tag: value["data"][e].inputs[i].subservices_tag,
               operation_type: value["data"][e].inputs[i].operation_type,
               created_at: value["data"][e].inputs[i].date_time,
-            } ;                       
+
+            } ;  
+            this.total_weight_in = this.total_weight_in + parseFloat(value["data"][e].inputs[i].weight);                     
             this.element[e].inputs.push(this.data);
               });
          });
          Object.keys(this.element).forEach((i, index) => {
           this.element[i].Item = index + 1;
        });
+       /*Object.keys(this.element).forEach((i, index) => {
+        //this.total_weight_in = this.total_weight_in + parseFloat(this.element[i].inputs[i].weight);
+      });*/
        
         this.dataSource = new MatTableDataSource(this.element);
         this.dataSource.paginator = this.paginator;
@@ -114,7 +126,9 @@ export class EntradasTableComponent implements OnInit {
     
   }
   Refresh(){
-    this.loadAll()
+    this.fechaInicio="";
+    this.fechaFin="";
+    this.loadAll(this.fechaInicio, this.fechaFin);
 
   }
   public applyFilter(filterValue: string){
@@ -187,4 +201,44 @@ export class EntradasTableComponent implements OnInit {
    });
   
   }
+   //*  FUNCION PARA EL FILTRADO DESDE EL SELECTOR DE FECHAS
+
+   public DateFilter(event) {
+    //const info = JSON.parse(localStorage.getItem('info'));
+    this.contInit = 0;
+    this.fechas = event;
+    const fechaInicio = this.convertFormat(this.fechas.fromDate);
+    const fechaFinal  = this.convertFormat(this.fechas.toDate);
+    //this.doWhere = 'where=[ {"op":"eq","field":"hg.account","value":' + info.account +'}, {"op":"bt", "field":"hg.created_at", "value":["' + fechaInicio + ' 01:00:00","' + fechaFinal + ' 23:59:59"]}]'
+    //this.doWhereReport = 'where=[ {"op":"eq","field":"hg.account","value":' + info.account +'}, {"op":"bt", "field":"hg.created_at", "value":["' + fechaInicio + ' 01:00:00","' + fechaFinal + ' 23:59:59"]}]'
+    //this.loadDataTable('historialgenerates?' + this.doWhere);
+    //this.paginator.pageIndex = 0;
+    console.log(fechaInicio +"_"+fechaFinal)
+    this.loadAll(fechaInicio, fechaFinal);
+  }
+  convertFormat(range){
+    var fecha = new Date(range)
+    var dia = fecha.getDate();
+    var mes = fecha.getMonth();
+    var anno = fecha.getFullYear();
+
+    var fechaSearch;
+    if ( dia < 10 ) {
+      fechaSearch =  0 + (dia);
+    } else {
+      fechaSearch =  (dia);
+    }
+
+    if (( mes + 1 ) < 10 ) {
+      fechaSearch = fechaSearch  + '-' + 0 + (mes + 1) + '-' + anno;
+    } else {
+      fechaSearch = fechaSearch  + '-' + (mes + 1) + '-' + anno;
+    }
+
+    
+
+    return fechaSearch;
+  }
+    //*  FUNCION PARA EL FILTRADO DESDE EL SELECTOR DE FECHAS
+
  }

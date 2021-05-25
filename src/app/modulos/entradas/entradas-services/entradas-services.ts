@@ -23,11 +23,26 @@ export class EntradasServices {
         }*/
     }
 
-    getList() {
+    /*getList() {
         let enpoint = 'inputs/index';
         return this.http.doGet(this.api, enpoint );
-    }
+    }*/
+    getList(fechaInicio?, fechaFin?) {
+        let enpoint;
 
+    if(fechaInicio==="" && fechaFin===""){
+        enpoint = 'inputs/index';
+    }else{
+        if(fechaInicio === fechaFin){
+            enpoint = 'inputs/index/?day='+fechaInicio;
+       }else{
+            enpoint = 'inputs/index/?interval='+fechaInicio+"_"+fechaFin;
+        }  
+    }
+       
+
+        return this.http.doGet(this.api, enpoint );
+    }
     save(body) {
         let enpoint = 'inputs/store';
         return this.http.doPost(this.api, enpoint, body);

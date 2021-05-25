@@ -39,6 +39,22 @@ export class SalidasServices {
 
         return this.http.doGet(this.api, enpoint );
     }
+    getOperaciones(fechaInicio?, fechaFin?) {
+        let enpoint;
+
+    if(fechaInicio==="" && fechaFin===""){
+        enpoint = 'outputs/index';
+    }else{
+        if(fechaInicio === fechaFin){
+            enpoint = 'outputs/index/processed/?day='+fechaInicio;
+       }else{
+            enpoint = 'outputs/index/processed/?interval='+fechaInicio+"_"+fechaFin;
+        }  
+    }
+       
+
+        return this.http.doGet(this.api, enpoint );
+    }
     getList2(fechaInicio?, fechaFin?) {
         let enpoint;
     if(fechaInicio === fechaFin){
@@ -49,11 +65,11 @@ export class SalidasServices {
     }
         return this.http.doGet(this.api, enpoint );
     }
-    getOperaciones()
+    /*getOperaciones()
     {
         let enpoint = 'outputs/index/processed';
         return this.http.doGet(this.api, enpoint );
-    }
+    }*/
     procesar(id, body){
         let enpoint = 'inputs/process/'+id;
         return this.http.doPut(this.api, enpoint, body);
