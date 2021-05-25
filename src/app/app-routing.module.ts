@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {DashboardComponent} from './../app/modulos/dashboard/dashboard/dashboard.component';
 //import { ProfileComponent } from './modulos/profile/profile/profile.component';
+import { CanActivateViaAuthGuard } from './guard';
 
 const routes: Routes = [
   {
@@ -20,47 +21,47 @@ const routes: Routes = [
         //canActivate: [CanActivateViaAuthGuard], 
         //{ path: 'profile', component: ProfileComponent },
         {
-          path: 'user',
+          path: 'user', canActivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard], 
           loadChildren: () => import('./modulos/user/user.module').then(m => m.UserModule)
         },
         {
-          path: 'profile',
+          path: 'profile',canActivate: [CanActivateViaAuthGuard],
           loadChildren: () => import('./modulos/profile/profile.module').then(m => m.ProfileModule)
         },
         {
-          path: 'Client',
+          path: 'Client',canActivate: [CanActivateViaAuthGuard],
           loadChildren: () => import('./modulos/client/client.module').then(m => m.ClientModule)
         },
         {
-          path: 'Branch',
+          path: 'Branch',canActivate: [CanActivateViaAuthGuard],
           loadChildren: () => import('./modulos/branch/branch.module').then(m => m.BranchModule)
         },
         {
-          path: 'Color',
+          path: 'Color',canActivate: [CanActivateViaAuthGuard],
           loadChildren: () => import('./modulos/color/color.module').then(m => m.ColorModule)
         },
         {
-          path: 'Service',
+          path: 'Service',canActivate: [CanActivateViaAuthGuard],
           loadChildren: () => import('./modulos/service/service.module').then(m => m.ServiceModule)
         },
         {
-          path: 'Sub-service',
+          path: 'Sub-service',canActivate: [CanActivateViaAuthGuard],
           loadChildren: () => import('./modulos/sub-service/sub-service.module').then(m => m.SubServiceModule)
         },
         {
-          path: 'Entradas',
+          path: 'Entradas',canActivate: [CanActivateViaAuthGuard],
           loadChildren: () => import('./modulos/entradas/entradas.module').then(m => m.EntradasModule)
         },
         {
-          path: 'Salidas',
+          path: 'Salidas',canActivate: [CanActivateViaAuthGuard],
           loadChildren: () => import('./modulos/salidas/salidas.module').then(m => m.SalidasModule)
         },
         {
-          path: 'Procesadas',
+          path: 'Procesadas',canActivate: [CanActivateViaAuthGuard],
           loadChildren: () => import('./modulos/processed/processed.module').then(m => m.ProcessedModule)
         },
         {
-          path: 'Stats',
+          path: 'Stats',canActivate: [CanActivateViaAuthGuard],
           loadChildren: () => import('./modulos/stats/stats.module').then(m => m.StatsModule)
         },
       ]

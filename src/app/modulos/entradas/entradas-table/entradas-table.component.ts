@@ -11,6 +11,8 @@ import {Router} from "@angular/router";
 import {EntradasServices} from '../entradas-services/entradas-services'
 import {EntradasFormComponent} from '../entradas-form/entradas-form.component'
 import {EntradasDeleteComponent} from '../dialog/entradas-delete/entradas-delete.component'
+import { LocalService } from '../../../http/httpServices/local-service.service';
+
 declare var $: any;
 
 @Component({
@@ -46,10 +48,13 @@ export class EntradasTableComponent implements OnInit {
   public fechaFin="";
   public total_weight_in=0;
   public total_weight_out=0;
+  public role;
 
   ngAfterViewInit() {
    }
   constructor(
+    public localService: LocalService,
+
     public dialog: MatDialog,
     public router: Router,
     public toasTer: ToastrService,
@@ -57,9 +62,12 @@ export class EntradasTableComponent implements OnInit {
   ) {
     //this.api = environment.apiInventory;
     this.titleModal = "Crear Entrada";
+    this.role = this.checkRole();
+
   }
 
   ngOnInit() {
+ 
     this.loadAll(this.fechaInicio, this.fechaFin)
   }
   public loadAll(fInicio?, fFin?){ 
@@ -246,5 +254,20 @@ export class EntradasTableComponent implements OnInit {
     return fechaSearch;
   }
     //*  FUNCION PARA EL FILTRADO DESDE EL SELECTOR DE FECHAS
+    checkRole() {
 
+      let info = this.localService.getJsonValue('info');
+      if (info.rol) {
+        if (info.rol.toLowerCase() === 'admin') {
+          return 1;
+        }
+        if (info.rol.toLowerCase() === 'operador') {
+          return 2;
+        }
+        if (info.rol.toLowerCase() === 'op. entradas') {
+          return 3;
+        }  
+      }
+  
+    }
  }

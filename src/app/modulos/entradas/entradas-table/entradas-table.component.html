@@ -94,7 +94,7 @@
             <!-- Weight Column -->
 
             <!-- Weight Column -->
-            <ng-container matColumnDef="Acciones">
+            <ng-container matColumnDef="Acciones" *ngIf="role=== 1 || role===2">
                 <th mat-header-cell *matHeaderCellDef> Acciones </th>
                 <td mat-cell *matCellDef="let element">
                     <div class="row text-center purchase-width-actions">
@@ -137,7 +137,7 @@
                                     <th>Acciones</th>
 
                                 </tr>
-                                <ng-container *ngFor="let input of element.inputs; let id2 = index">
+                                <ng-container *ngFor="let input of element.inputs; let id2 = index;">
                                     <tr>
 
                                         <td>{{id2+1}}</td>
@@ -149,7 +149,7 @@
                                         <td>{{input.operation_type}}</td>
                                         <td>{{input.created_at}}</td>
 
-                                        <td class="text-center">
+                                        <td class="text-center" *ngIf="role=== 1 || role===2">
                                             <div *ngIf="element.inputs.length>=2">
                                                 <span class="table-remove">
                                                     <a (click)="eliminarOp(input.id)">
