@@ -264,7 +264,7 @@ export class EntradasTableComponent implements OnInit {
         if (info.rol.toLowerCase() === 'operador') {
           return 2;
         }
-        if (info.rol.toLowerCase() === 'op. entradas') {
+        if (info.rol.toLowerCase() === 'op_entradas') {
           return 3;
         }  
       }
