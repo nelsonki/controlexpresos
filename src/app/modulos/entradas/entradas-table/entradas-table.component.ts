@@ -67,8 +67,10 @@ export class EntradasTableComponent implements OnInit {
   }
 
   ngOnInit() {
- 
-    this.loadAll(this.fechaInicio, this.fechaFin)
+    this.fechaInicio="";
+    this.fechaFin="";
+    this.total_weight_in=0; 
+    //this.loadAll(this.fechaInicio, this.fechaFin)
   }
   public loadAll(fInicio?, fFin?){ 
     this.total_weight_in=0;  
@@ -111,20 +113,15 @@ export class EntradasTableComponent implements OnInit {
 
             } ;  
             this.element[e].inputs.push(this.data);
-              });
+              }); 
          });
-         Object.keys(this.element).forEach((i, index) => {
-          this.total_weight_in = this.total_weight_in + parseFloat(this.element[i].weight_in) ;
-          //this.total_weight_out = this.total_weight_out + parseFloat(this.element[i].weight_out) ;
-
-       });
+         
          Object.keys(this.element).forEach((i, index) => {
           this.element[i].Item = index + 1;
+          this.total_weight_in = this.total_weight_in + parseFloat(this.element[i].weight_in) ;
+
        });
-       /*Object.keys(this.element).forEach((i, index) => {
-        //this.total_weight_in = this.total_weight_in + parseFloat(this.element[i].inputs[i].weight);
-      });*/
-       
+      
         this.dataSource = new MatTableDataSource(this.element);
         this.dataSource.paginator = this.paginator;
         return this.dataSource;
@@ -140,6 +137,7 @@ export class EntradasTableComponent implements OnInit {
     
   }
   Refresh(){
+
     this.fechaInicio="";
     this.fechaFin="";
     this.loadAll(this.fechaInicio, this.fechaFin);

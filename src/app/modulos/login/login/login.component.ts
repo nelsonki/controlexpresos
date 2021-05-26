@@ -70,7 +70,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     const formData = this.form.value;
     let object = {
       password: formData.password,
-      email: formData.username.trim(),
+      username: formData.username.trim(),
       // account: 9
     } 
     if (this.form.valid) { 
@@ -198,8 +198,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
               dni: '',
               role: '4',
               last_name: lastname,
-              username: this.resultFirebase.additionalUserInfo.profile.email,
-              email: this.resultFirebase.additionalUserInfo.profile.email,
+              username: this.resultFirebase.additionalUserInfo.profile.username,
+              username: this.resultFirebase.additionalUserInfo.profile.username,
               name: name
             };
             // tslint:disable-next-line: align

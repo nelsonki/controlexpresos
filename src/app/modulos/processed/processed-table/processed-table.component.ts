@@ -63,7 +63,12 @@ public total_weight_out=0;
   }
 
   ngOnInit() {
-    this.loadAll(this.fechaInicio, this.fechaFin);
+    this.fechaInicio="";
+    this.fechaFin="";
+    this.total_weight_in=0; 
+    this.total_weight_out=0;
+
+    //this.loadAll(this.fechaInicio, this.fechaFin);
   }
   public loadAll(fInicio?, fFin?){ 
     this.total_weight_in=0;

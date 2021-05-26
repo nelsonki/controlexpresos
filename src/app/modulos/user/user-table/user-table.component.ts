@@ -23,7 +23,7 @@ export class UserTableComponent implements OnInit {
   @ViewChild(UserFormComponent) form: UserFormComponent;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  displayedColumns: string[] = ['Item',  'Nombre', 'Correo', 'Rol', 'Acciones'];
+  displayedColumns: string[] = ['Item',  'Nombre', 'Usuario', 'Rol', 'Acciones'];
   dataSource;
   public titleModal: string;
   public element; 
@@ -64,7 +64,7 @@ export class UserTableComponent implements OnInit {
               Item: "",
               "id":value["data"][e].id,
               "name":value["data"][e].fullname,
-              "email":value["data"][e].email,
+              "username":value["data"][e].username,
               "rol":r,
 
             };
@@ -101,7 +101,7 @@ export class UserTableComponent implements OnInit {
 }
 reset(){
   this.form.firstform.controls["nombre"].setValue("");
-  this.form.firstform.controls["email"].setValue("");
+  this.form.firstform.controls["username"].setValue("");
   this.form.firstform.controls["rol"].setValue('');
   this.form.firstform.controls["clave"].setValue("");
   this.form.firstform.controls["rclave"].setValue("");
