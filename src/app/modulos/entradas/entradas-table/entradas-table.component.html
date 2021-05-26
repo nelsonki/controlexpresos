@@ -94,10 +94,11 @@
             <!-- Weight Column -->
 
             <!-- Weight Column -->
-            <ng-container matColumnDef="Acciones" *ngIf="role=== 1 || role===2">
+            <ng-container matColumnDef="Acciones">
                 <th mat-header-cell *matHeaderCellDef> Acciones </th>
                 <td mat-cell *matCellDef="let element">
-                    <div class="row text-center purchase-width-actions">
+
+                    <div class="row text-center purchase-width-actions" *ngIf="role=== 1 || role===2">
                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Editar" (click)="openEdit(element.id); basicModal.show()">
                             <i class="fas fa-edit"></i>
                         </div>

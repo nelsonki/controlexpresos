@@ -48,18 +48,24 @@ export class UserTableComponent implements OnInit {
   public loadAll(){ 
 
     this.userServices.getList().subscribe((value) => {
+      let r;
       this.data=[];
       this.element=[];
       console.log(value["data"])
       if (value["data"]){
         this.element = [];
         Object.keys(value["data"]).forEach(e => {
+          if(value["data"][e].rol=== "op_entradas"){
+            r = "op. entradas";
+          }else{
+            r = value["data"][e].rol;
+          }
             const datos ={
               Item: "",
               "id":value["data"][e].id,
               "name":value["data"][e].fullname,
               "email":value["data"][e].email,
-              "rol":value["data"][e].rol,
+              "rol":r,
 
             };
            this.data.push(datos);

@@ -21,31 +21,31 @@ const routes: Routes = [
         //canActivate: [CanActivateViaAuthGuard], 
         //{ path: 'profile', component: ProfileComponent },
         {
-          path: 'user', canActivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard], 
+          path: 'user', canActivate: [CanActivateViaAuthGuard], canDeactivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard],
           loadChildren: () => import('./modulos/user/user.module').then(m => m.UserModule)
         },
         {
-          path: 'profile',canActivate: [CanActivateViaAuthGuard],
+          path: 'profile',canActivate: [CanActivateViaAuthGuard], 
           loadChildren: () => import('./modulos/profile/profile.module').then(m => m.ProfileModule)
         },
         {
-          path: 'Client',canActivate: [CanActivateViaAuthGuard],
+          path: 'Client',canActivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard],
           loadChildren: () => import('./modulos/client/client.module').then(m => m.ClientModule)
         },
         {
-          path: 'Branch',canActivate: [CanActivateViaAuthGuard],
+          path: 'Branch',canActivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard],
           loadChildren: () => import('./modulos/branch/branch.module').then(m => m.BranchModule)
         },
         {
-          path: 'Color',canActivate: [CanActivateViaAuthGuard],
+          path: 'Color',canActivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard],
           loadChildren: () => import('./modulos/color/color.module').then(m => m.ColorModule)
         },
         {
-          path: 'Service',canActivate: [CanActivateViaAuthGuard],
+          path: 'Service',canActivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard],
           loadChildren: () => import('./modulos/service/service.module').then(m => m.ServiceModule)
         },
         {
-          path: 'Sub-service',canActivate: [CanActivateViaAuthGuard],
+          path: 'Sub-service',canActivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard],
           loadChildren: () => import('./modulos/sub-service/sub-service.module').then(m => m.SubServiceModule)
         },
         {
@@ -53,15 +53,15 @@ const routes: Routes = [
           loadChildren: () => import('./modulos/entradas/entradas.module').then(m => m.EntradasModule)
         },
         {
-          path: 'Salidas',canActivate: [CanActivateViaAuthGuard],
+          path: 'Salidas',canActivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard],
           loadChildren: () => import('./modulos/salidas/salidas.module').then(m => m.SalidasModule)
         },
         {
-          path: 'Procesadas',canActivate: [CanActivateViaAuthGuard],
+          path: 'Procesadas',canActivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard],
           loadChildren: () => import('./modulos/processed/processed.module').then(m => m.ProcessedModule)
         },
         {
-          path: 'Stats',canActivate: [CanActivateViaAuthGuard],
+          path: 'Stats',canActivate: [CanActivateViaAuthGuard],  
           loadChildren: () => import('./modulos/stats/stats.module').then(m => m.StatsModule)
         },
       ]

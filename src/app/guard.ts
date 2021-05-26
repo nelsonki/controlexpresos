@@ -21,7 +21,7 @@ export class CanActivateViaAuthGuard implements CanActivate, CanActivateChild, C
         }
         return true;
     }
-    canActivateChild() {
+     canDeactivate() {
         let info = this.localService.getJsonValue('info');
         // If the user is not logged in we'll send them back to the home page
         if (info.rol ==="operador" ) {
@@ -33,10 +33,10 @@ export class CanActivateViaAuthGuard implements CanActivate, CanActivateChild, C
         }
         return true;
     }
-    canDeactivate() {
+    canActivateChild() {
         let info = this.localService.getJsonValue('info');
         // If the user is not logged in we'll send them back to the home page
-        if (info.rol ==="op. entradas" ) {
+        if (info.rol ==="op_entradas" ) {
             console.log('No tiene acceso');
             this.toasTer.error('No tiene acceso a este módulo');
 

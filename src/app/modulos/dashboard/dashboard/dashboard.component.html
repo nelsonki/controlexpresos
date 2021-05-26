@@ -44,7 +44,7 @@
                         <span style=" font-family: Arial, Helvetica, sans-serif; font-weight: bold; padding-left: 6px"> Dashboard</span>
                     </a>
                 </li>
-                <hr>
+                <hr *ngIf="role===1 || role===2">
                 <li *ngIf="role===1 || role===2">
                     <button mat-button [matMenuTriggerFor]="menuCatalogo">
                         <mat-icon>folder_shared</mat-icon>
@@ -59,7 +59,7 @@
                         <button (click)="listarBranch()" mat-menu-item [routerLink]="['/Branch' ]" routerLinkActive="router-link-active"><mat-icon>store</mat-icon>&nbsp;Sucursales</button>
                     </mat-menu>
                 </li>
-                <hr>
+                <hr *ngIf="role===1 || role===2">
                 <li *ngIf="role===1 || role===2 ">
                     <button mat-button [matMenuTriggerFor]="menuInventario">
                         <mat-icon>assignment</mat-icon>
