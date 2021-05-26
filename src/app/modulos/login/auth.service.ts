@@ -11,7 +11,7 @@ import { environment } from '../../../environments/environment'
 
 export interface User {
   uid: string;
-  email: string;
+  username: string;
 
 }
 

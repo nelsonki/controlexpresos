@@ -64,7 +64,7 @@ export class UserFormComponent implements OnInit {
   ngOnInit() {
     this.firstform = this.formBuilder.group({ 
       nombre: ["", Validators.required],
-      email: ["", Validators.required],
+      username: ["", Validators.required],
       rol: ["", Validators.required],
       clave: ["", Validators.required],
       rclave: ["", Validators.required],
@@ -83,7 +83,7 @@ export class UserFormComponent implements OnInit {
     });
     console.log(dataEdit[0]);
     this.firstform.controls["nombre"].setValue(dataEdit[0]["name"]);
-    this.firstform.controls["email"].setValue(dataEdit[0]["email"]);
+    this.firstform.controls["username"].setValue(dataEdit[0]["username"]);
     this.firstform.controls["rol"].setValue(dataEdit[0]["rol"]);
 
 
@@ -103,7 +103,7 @@ onSubmit(){
       this.loading = true;
       let bodyData = Object.assign({
         "fullname": this.firstform.controls["nombre"].value,
-        "email": this.firstform.controls["email"].value,
+        "username": this.firstform.controls["username"].value,
         "rol": this.firstform.controls["rol"].value,
         "password": this.firstform.controls["clave"].value,
 
@@ -142,7 +142,7 @@ onSubmit(){
           this.loading = true;
           let bodyData = Object.assign({
             "fullname": this.firstform.controls["nombre"].value,
-            "email": this.firstform.controls["email"].value,
+            "username": this.firstform.controls["username"].value,
             "rol": this.firstform.controls["rol"].value,
             "password": this.firstform.controls["clave"].value,
 

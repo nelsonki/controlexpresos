@@ -51,10 +51,10 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                                 </div>
-                                                <input autocomplete="true" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" type="text" class="form-control" formControlName="email" placeholder="Correo Electrónico(*)">
+                                                <input autocomplete="true" type="text" class="form-control" formControlName="username" placeholder="Usuario(*)">
 
                                             </div>
-                                            <div style="font-size:9px; color:red;" *ngIf="form.get('email').touched &&    form.get('email').hasError('required')">El correo electrónico es requerido</div>
+                                            <div style="font-size:9px; color:red;" *ngIf="form.get('username').touched &&    form.get('username').hasError('required')">El usuario es requerido</div>
 
                                         </div>
                                         <div class="col-md-6">
@@ -63,7 +63,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fas fa-user"></i></span>
                                                 </div>
-                                                <input autocomplete="true" type="text" class="form-control" formControlName="name" placeholder="Nombres(*)">
+                                                <input autocomplete="true" type="text" class="form-control" formControlName="name" placeholder="Nombre(*)">
                                             </div>
                                             <div style="font-size:9px; color:red;" *ngIf="form.get('name').touched && form.get('name').hasError('required')">El nombre es requerido</div>
 

@@ -77,7 +77,7 @@ export class ProfileComponent implements OnInit {
     this.form = this.formBuilder.group({
       //dni : [''],
       name : ['', Validators.required],
-      email : ['', Validators.required],
+      username : ['', Validators.required],
      });
     this.formPass = this.formBuilder.group({
       password : ['', Validators.required],
@@ -107,7 +107,7 @@ getUserData(){
 
       //this.form.controls['dni'].setValue(data.Usuario.dni);
       this.form.controls['name'].setValue(data[0].fullname);
-      this.form.controls['email'].setValue(data[0].email);
+      this.form.controls['username'].setValue(data[0].username);
       this.profileImage = this.localService.getJsonValue('image');
      });
   }
@@ -137,7 +137,7 @@ submitUpdateProfile() {
       if ( this.formPass.get('password').value === '') {
         bodyData = {
           fullname: this.form.controls['name'].value,
-          email: this.form.controls['email'].value,
+          username: this.form.controls['username'].value,
           rol: this.userRole,
           image:(this.profileImage === '') ? 'null' : this.profileImage,
   
@@ -148,7 +148,7 @@ submitUpdateProfile() {
      } else {
       bodyData = {
         fullname: this.form.controls['name'].value,
-        email: this.form.controls['email'].value,
+        username: this.form.controls['username'].value,
         rol: this.userRole,
         image:(this.profileImage === '') ? 'null' : this.profileImage,
         password: this.formPass.controls['repeatPassword'].value
@@ -163,7 +163,7 @@ submitUpdateProfile() {
       if ( this.formPass.get('password').value === '') {
         bodyData = {
           fullname: this.form.controls['name'].value,
-          email: this.form.controls['email'].value,
+          username: this.form.controls['username'].value,
           rol: this.userRole,
   
         };        
@@ -174,7 +174,7 @@ submitUpdateProfile() {
      } else {
       bodyData = {
         fullname: this.form.controls['name'].value,
-        email: this.form.controls['email'].value,
+        username: this.form.controls['username'].value,
         rol: this.userRole,
         password: this.formPass.controls['repeatPassword'].value
       };

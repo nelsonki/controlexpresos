@@ -11,11 +11,11 @@
             </mat-error>
         </mat-form-field>
         <mat-form-field class="example-chip-list">
-            <mat-label>Email(*)</mat-label>
-            <input matInput autocomplete="true" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" formControlName="email" type="email" />
-            <mat-error *ngIf="submitted && f.email.errors">
-                <div *ngIf="f.email.errors.required">
-                    Por Favor, Ingrese email
+            <mat-label>Usuario(*)</mat-label>
+            <input matInput autocomplete="true" formControlName="username" type="username" />
+            <mat-error *ngIf="submitted && f.username.errors">
+                <div *ngIf="f.username.errors.required">
+                    Por Favor, Ingrese usuario
                 </div>
             </mat-error>
         </mat-form-field>
