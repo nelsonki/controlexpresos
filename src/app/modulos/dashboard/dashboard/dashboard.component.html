@@ -38,7 +38,7 @@
         <ul class="side-menu" style="list-style: none; ">
 
             <ng-container *ngIf="role===1 || role===2 || role===3">
-                <li style="padding-top: 15px; padding-left: 15px">
+                <li style="padding-top: 15px; padding-left: 15px" *ngIf="role===1 || role===2">
                     <a [routerLink]="['/Stats' ]" routerLinkActive="router-link-active" (click)="dashboard()">
                         <mat-icon>addchart</mat-icon>
                         <span style=" font-family: Arial, Helvetica, sans-serif; font-weight: bold; padding-left: 6px"> Dashboard</span>
