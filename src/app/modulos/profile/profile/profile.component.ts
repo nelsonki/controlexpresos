@@ -205,14 +205,27 @@ submitUpdateProfile() {
 }
 
 goToMenu(){
-  this.router.navigate(['/dashboard/Stats']);
-}
+  let info = this.localService.getJsonValue('info');
+  if(info.rol.toLowerCase() === 'op_entradas'){
+   this.router.navigate(['/dashboard/Entradas'])
+
+  }else{
+   this.router.navigate(['/dashboard/Stats'])
+
+  }}
 
 reloadComponent() {
+  let refreshUrl2;
   const currentUrl = this.router.url;
-  const refreshUrl = currentUrl.indexOf("/dashboard/Stats") > -1 ? "/" : "/";
+  let info = this.localService.getJsonValue('info');
+  if(info.rol.toLowerCase() === 'op_entradas'){
+   refreshUrl2 = currentUrl.indexOf("/dashboard/Entradas") > -1 ? "/" : "/";
+  }else{
+     refreshUrl2 = currentUrl.indexOf("/dashboard/Stats") > -1 ? "/" : "/";
+
+  }
   this.router
-    .navigateByUrl(refreshUrl)
+    .navigateByUrl(refreshUrl2)
     .then(() => this.router.navigateByUrl(currentUrl));
  }
 } 

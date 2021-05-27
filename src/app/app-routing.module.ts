@@ -61,7 +61,7 @@ const routes: Routes = [
           loadChildren: () => import('./modulos/processed/processed.module').then(m => m.ProcessedModule)
         },
         {
-          path: 'Stats',canActivate: [CanActivateViaAuthGuard],  
+          path: 'Stats',canActivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard], 
           loadChildren: () => import('./modulos/stats/stats.module').then(m => m.StatsModule)
         },
       ]
