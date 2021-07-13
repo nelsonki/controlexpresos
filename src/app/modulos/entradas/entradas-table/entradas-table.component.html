@@ -18,10 +18,12 @@
                 <ul class="navbar-nav mr-auto col-lg-9 col-md-9 col-sm-9 col-xs-9">
                     <li class="nav-item   button-li-top col-lg-1 col-md-1 col-sm-1 col-xs-1">
                         <a class="pointer" (click)="Refresh()">
-                            <button *ngIf="true" mat-mini-fab color="white" matTooltip="Refrescar Tabla" data-toggle="tooltip" data-placement="left">
-                                <i class="fas fa-sync-alt"></i>
+                            <button *ngIf="true" mat-mini-fab color="white" matTooltip="Operaciones en curso" data-toggle="tooltip" data-placement="left">
+                                <!--<i class="fas fa-sync-alt"></i>-->
+                                <img src="assets/menuIcons/programaciones.png" alt="" height="22px" />
                             </button>
                         </a>
+
                     </li>
                     <li class="nav-item  button-li-top2 col-lg-4 col-md-4 col-sm-4 col-xs-4">
                         <app-date-range (dateNow)="DateFilter($event)"></app-date-range>
