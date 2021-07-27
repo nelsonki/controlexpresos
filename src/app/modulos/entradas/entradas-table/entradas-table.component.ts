@@ -12,6 +12,7 @@ import {EntradasServices} from '../entradas-services/entradas-services'
 import {EntradasFormComponent} from '../entradas-form/entradas-form.component'
 import {EntradasDeleteComponent} from '../dialog/entradas-delete/entradas-delete.component'
 import { LocalService } from '../../../http/httpServices/local-service.service';
+import { environment } from '../../../../environments/environment';
 
 declare var $: any;
 
@@ -46,9 +47,11 @@ export class EntradasTableComponent implements OnInit {
   public contInit:number = 0;
   public fechaInicio="";
   public fechaFin="";
+
   public total_weight_in=0;
   public total_weight_out=0;
   public role;
+  public api: string;
 
   ngAfterViewInit() {
    }
@@ -58,17 +61,20 @@ export class EntradasTableComponent implements OnInit {
     public dialog: MatDialog,
     public router: Router,
     public toasTer: ToastrService,
-    public entradasServices: EntradasServices
+    public entradasServices: EntradasServices,
+    
   ) {
     //this.api = environment.apiInventory;
     this.titleModal = "Crear Entrada";
     this.role = this.checkRole();
+    this.api = environment.apiJakiro2;
 
   }
 
   ngOnInit() {
     this.fechaInicio="";
     this.fechaFin="";
+   
     this.total_weight_in=0; 
     //this.loadAll(this.fechaInicio, this.fechaFin)
   }
@@ -137,7 +143,7 @@ export class EntradasTableComponent implements OnInit {
     
   }
   Refresh(){
-
+ 
     this.fechaInicio="";
     this.fechaFin="";
     this.loadAll(this.fechaInicio, this.fechaFin);
@@ -221,6 +227,7 @@ export class EntradasTableComponent implements OnInit {
     this.fechas = event;
     const fechaInicio = this.convertFormat(this.fechas.fromDate);
     const fechaFinal  = this.convertFormat(this.fechas.toDate);
+   
     //this.doWhere = 'where=[ {"op":"eq","field":"hg.account","value":' + info.account +'}, {"op":"bt", "field":"hg.created_at", "value":["' + fechaInicio + ' 01:00:00","' + fechaFinal + ' 23:59:59"]}]'
     //this.doWhereReport = 'where=[ {"op":"eq","field":"hg.account","value":' + info.account +'}, {"op":"bt", "field":"hg.created_at", "value":["' + fechaInicio + ' 01:00:00","' + fechaFinal + ' 23:59:59"]}]'
     //this.loadDataTable('historialgenerates?' + this.doWhere);
@@ -228,6 +235,7 @@ export class EntradasTableComponent implements OnInit {
     console.log(fechaInicio +"_"+fechaFinal)
     this.loadAll(fechaInicio, fechaFinal);
   }
+
   convertFormat(range){
     var fecha = new Date(range)
     var dia = fecha.getDate();
@@ -250,7 +258,9 @@ export class EntradasTableComponent implements OnInit {
     
 
     return fechaSearch;
+    
   }
+  
     //*  FUNCION PARA EL FILTRADO DESDE EL SELECTOR DE FECHAS
     checkRole() {
 

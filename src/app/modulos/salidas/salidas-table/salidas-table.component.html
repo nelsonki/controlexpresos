@@ -16,13 +16,26 @@
       </button>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto col-lg-9 col-md-9 col-sm-9 col-xs-9">
-                    <li class="nav-item   button-li-top col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                    <li class="nav-item   button-li-top col-lg-1 col-md-1 col-sm-1 col-xs-1">
                         <a class="pointer" (click)="Refresh()">
                             <button *ngIf="true" mat-mini-fab color="white" matTooltip="Refrescar Tabla" data-toggle="tooltip" data-placement="left">
                                 <i class="fas fa-sync-alt"></i>
                             </button>
                         </a>
                     </li>
+                    <li class="nav-item   button-li-top col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                        <a class="pointer" (click)="exportTo()">
+                            <button class="opAut-button-excel" mat-mini-fab color="white" matTooltip="Exportar a Excel" data-toggle="tooltip" data-placement="left">
+                                <svg style="width:20px;height:20px;" viewBox="0 0 24 24">
+                                    <path fill="#ffff"
+                                      d="M6,2H14L20,8V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V4A2,2 0 0,1 6,2M13,3.5V9H18.5L13,3.5M17,11H13V13H14L12,14.67L10,13H11V11H7V13H8L11,15.5L8,18H7V20H11V18H10L12,16.33L14,18H13V20H17V18H16L13,15.5L16,13H17V11Z" />
+                                  </svg>
+                            </button>
+                        </a>
+
+                    </li>
+
+
                     <li class="nav-item  button-li-top2 col-lg-4 col-md-4 col-sm-4 col-xs-4">
                         <app-date-range (dateNow)="DateFilter($event)"></app-date-range>
                     </li>

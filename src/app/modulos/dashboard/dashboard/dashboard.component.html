@@ -73,7 +73,7 @@
                     </mat-menu>
                 </li>
                 <hr>
-                <li *ngIf="role===1 || role===2 || role===3">
+                <li *ngIf="role===1 || role===3">
                     <button mat-button [matMenuTriggerFor]="menuOpera">
                         <mat-icon>assignment_returned</mat-icon>
                     &nbsp;
@@ -81,11 +81,11 @@
                     </button>
                     <mat-menu #menuOpera="matMenu">
                         <button mat-menu-item (click)="listarEntradas()" mat-menu-item [routerLink]="['/Entradas' ]" routerLinkActive="router-link-active"><mat-icon>arrow_circle_down</mat-icon>&nbsp;Registrar entrada</button>
-                        <button *ngIf="role===1 || role===2" mat-menu-item (click)="listarSalidas()" mat-menu-item [routerLink]="['/Salidas' ]" routerLinkActive="router-link-active"><mat-icon>arrow_circle_up</mat-icon>&nbsp;Registrar Salida</button>
+                        <button *ngIf="role===1 " mat-menu-item (click)="listarSalidas()" mat-menu-item [routerLink]="['/Salidas' ]" routerLinkActive="router-link-active"><mat-icon>arrow_circle_up</mat-icon>&nbsp;Registrar Salida</button>
                     </mat-menu>
                 </li>
                 <hr>
-                <li *ngIf="role===1 || role===2 ">
+                <li *ngIf="role===1 ">
                     <button mat-button [matMenuTriggerFor]="menuInspe">
                         <mat-icon>assignment_turned_in</mat-icon>
                     &nbsp;

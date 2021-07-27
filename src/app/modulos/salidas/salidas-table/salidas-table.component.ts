@@ -50,10 +50,13 @@ export class SalidasTableComponent implements OnInit {
 
   fechas:any;
   public contInit:number = 0;
-public fechaInicio="";
-public fechaFin="";
-public total_weight_in=0;
-public total_weight_out=0;
+  public fechaInicio="";
+  public fechaFin="";
+  public fechaExcelInicio="";
+  public fechaExcelFin = "";
+
+  public total_weight_in=0;
+  public total_weight_out=0;
   ngAfterViewInit() {
   }
   constructor(
@@ -73,6 +76,8 @@ public total_weight_out=0;
   ngOnInit() {
     this.fechaInicio="";
     this.fechaFin="";
+    this.fechaExcelInicio="";
+    this.fechaExcelFin = "";
     this.total_weight_in=0; 
     //this.loadAll(this.fechaInicio, this.fechaFin);
   }
@@ -166,6 +171,8 @@ public total_weight_out=0;
     
     this.fechaInicio="";
     this.fechaFin="";
+    this.fechaExcelInicio="";
+    this.fechaExcelFin = "";
     this.loadAll(this.fechaInicio, this.fechaFin);
   }
 
@@ -177,6 +184,8 @@ public total_weight_out=0;
     this.fechas = event;
     const fechaInicio = this.convertFormat(this.fechas.fromDate);
     const fechaFinal  = this.convertFormat(this.fechas.toDate);
+    this.fechaExcelInicio=this.convertFormatYear(this.fechas.fromDate);
+    this.fechaExcelFin=this.convertFormatYear(this.fechas.toDate);
     //this.doWhere = 'where=[ {"op":"eq","field":"hg.account","value":' + info.account +'}, {"op":"bt", "field":"hg.created_at", "value":["' + fechaInicio + ' 01:00:00","' + fechaFinal + ' 23:59:59"]}]'
     //this.doWhereReport = 'where=[ {"op":"eq","field":"hg.account","value":' + info.account +'}, {"op":"bt", "field":"hg.created_at", "value":["' + fechaInicio + ' 01:00:00","' + fechaFinal + ' 23:59:59"]}]'
     //this.loadDataTable('historialgenerates?' + this.doWhere);
@@ -184,7 +193,44 @@ public total_weight_out=0;
     console.log(fechaInicio +"_"+fechaFinal)
     this.loadAll(fechaInicio, fechaFinal);
   }
+  public exportTo(){
+    
+    if(this.fechaExcelInicio !=="" && this.fechaExcelFin !==""){
+      window.open( this.api + 'reports/export/'+this.fechaExcelInicio+"_"+this.fechaExcelFin );
 
+    }else{
+          window.open( this.api + 'reports/export/' );
+
+    }
+  }
+  convertFormatYear(range){
+    var fecha = new Date(range)
+    var dia = fecha.getDate();
+    var mes = fecha.getMonth();
+    var anno = fecha.getFullYear();
+
+    var fechaSearch;
+
+    if (( mes + 1 ) < 10 ) {
+      fechaSearch =   anno + '-' + 0 + (mes + 1) ;
+    } else {
+      fechaSearch =   anno + '-' + (mes + 1)  ;
+    }
+
+
+    if ( dia < 10 ) {
+      fechaSearch = fechaSearch + '-' + 0 + (dia);
+    } else {
+      fechaSearch = fechaSearch + '-' + (dia);
+    }
+
+   
+
+    
+
+    return fechaSearch;
+
+  }
   convertFormat(range){
     var fecha = new Date(range)
     var dia = fecha.getDate();
