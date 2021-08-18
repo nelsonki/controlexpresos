@@ -115,14 +115,14 @@
                 <th mat-header-cell *matHeaderCellDef> Acciones </th>
                 <td mat-cell *matCellDef="let element">
                     <div class="row text-center purchase-width-actions">
-                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Agregar salidas" (click)="openEdit(element.id); basicModal.show()">
-                            <i class="fas fa-edit"></i>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Agregar Salidas Parciales" (click)="openEdit(element.id); basicModal.show()">
+                            <mat-icon height="28px">arrow_circle_up</mat-icon>
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Cerrar operación" (click)="cerrarOp(element.id)">
-                            <i class="fas fa-archive"></i>
+                            <mat-icon height="28px">archive</mat-icon>
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Imprimir operación" (click)="print(element.id)">
-                            <i class="fas fa-print"></i>
+                            <mat-icon height="28px">print</mat-icon>
                         </div>
                         <!--
                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Eliminar" (click)="eliminar(element.id)">
@@ -139,12 +139,14 @@
                 <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
                     <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
                         <div class="table-responsive">
-                            <br>
+
+                            <h3 class="text-center"> Listado de Operaciones de Entradas </h3>
+
                             <table [dataSource]="dataSource" class="table table-bordered " style="width: 100%;">
                                 <caption>
-                                    Listado de Operaciones de Entradas
-                                    <br> Observaciones de entrada: {{ element.observation }}
+                                    Observaciones de entrada: {{ element.observation }}
                                 </caption>
+
                                 <tr>
                                     <th>Item</th>
                                     <th>Peso</th>
@@ -173,37 +175,62 @@
                                 </ng-container>
 
                             </table><br>
-
+                            <h3 class="text-center"> Listado de Salidas Parciales </h3>
                             <table [dataSource]="dataSource" class="table table-bordered " style="width: 100%;">
                                 <caption>
-                                    Listado de Operaciones de Salidas
-                                    <br> Observaciones de salida: {{ element.obs_out }}
+                                    Observaciones de salida: {{ element.obs_out }}
                                 </caption>
-                                <tr>
-                                    <th>Item</th>
-                                    <th>Peso</th>
-                                    <th>Cantidad</th>
-                                    <th>Servicio</th>
-                                    <th>Color</th>
-                                    <th>Sub Servicio</th>
-                                    <th>Tipo de Ropa</th>
-                                    <th>Fecha y Hora</th>
-
-                                    <th colspan="2">Actions</th>
-
-                                </tr>
                                 <ng-container *ngFor="let output of element.outputs; let id2 = index">
-                                    <tr>
-                                        <td>{{id2+1}}</td>
-                                        <td>{{output.weight}}</td>
-                                        <td>{{output.quantity}}</td>
-                                        <td>{{output.service_name}}</td>
-                                        <td>{{output.color_name}}</td>
-                                        <td>{{output.subservices_tag}}</td>
-                                        <td>{{output.operation_type}}</td>
-                                        <td>{{output.created_at}}</td>
 
-                                        <td class="text-center">
+                                    <tr>
+
+                                        <th colspan="6">
+                                            Salida Parcial: {{output.group_id}}
+                                        </th>
+                                        <th>Acciones</th>
+                                        <th mat-cell>
+                                            <div class="row text-center purchase-width-actions">
+                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Editar Salida Parcial" (click)="openEdit(element.id); basicModal.show()">
+                                                    <i class="fas fa-edit"></i>
+                                                </div>
+
+                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Imprimir Salida Parcial" (click)="print(element.id)">
+                                                    <i class="fas fa-print"></i>
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Eliminar Salida Parcial" (click)="eliminar(element.id)">
+                                                    <i class="far fa-trash-alt"></i>
+                                                </div>
+                                            </div>
+
+                                        </th>
+
+                                    </tr>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Peso</th>
+                                        <th>Cantidad</th>
+                                        <th>Servicio</th>
+                                        <th>Color</th>
+                                        <th>Sub Servicio</th>
+                                        <th>Tipo de Ropa</th>
+                                        <th>Fecha y Hora</th>
+
+                                        <!--
+                                    <th colspan="2">Actions</th>-->
+
+                                    </tr>
+                                    <ng-container *ngFor="let output of element.outputs; let id2 = index">
+                                        <tr>
+                                            <td>{{id2+1}}</td>
+                                            <td>{{output.weight}}</td>
+                                            <td>{{output.quantity}}</td>
+                                            <td>{{output.service_name}}</td>
+                                            <td>{{output.color_name}}</td>
+                                            <td>{{output.subservices_tag}}</td>
+                                            <td>{{output.operation_type}}</td>
+                                            <td>{{output.created_at}}</td>
+
+                                            <!--<td class="text-center">
                                             <span class="table-remove">
                                 <a (click)="eliminarOp(output.id)">
                                     <mdb-icon
@@ -215,12 +242,15 @@
                                     ></mdb-icon>
                                 </a>
                                 </span>
-                                        </td>
+                                        </td>-->
 
-                                    </tr>
+                                        </tr>
+                                    </ng-container>
+                                    <br>
                                 </ng-container>
 
-                            </table><br>
+                            </table>
+                            <br>
                         </div>
 
 

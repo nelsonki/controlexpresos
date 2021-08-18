@@ -175,6 +175,7 @@ export class SalidasFormComponent implements OnInit {
   public personList: Array<any> = [
     {
       id: 0,
+      group_id:0,
       servicio: '',
       servicio_id: '',
       peso: '',
@@ -432,6 +433,7 @@ export class SalidasFormComponent implements OnInit {
 
         {
           'id': dataEdit[0].outputs[i].id,
+          'group_id': dataEdit[0].outputs[i].group_id,
           'peso': dataEdit[0].outputs[i].weight,
           'cantidad': dataEdit[0].outputs[i].quantity,
           'servicio': dataEdit[0].outputs[i].service_name,
@@ -639,6 +641,7 @@ export class SalidasFormComponent implements OnInit {
         if (this.personList[e]["id"] === 0) {
           list.push({
             id: 0,
+            group_id:0,
             service_id: this.personList[e]["servicio_id"],
             weight: (this.personList[e]["peso"] !== '') ? this.personList[e]["peso"] : 0,
             quantity: (this.personList[e]["cantidad"] !== '') ? this.personList[e]["cantidad"] : 0,
@@ -650,6 +653,7 @@ export class SalidasFormComponent implements OnInit {
         } else {
           list.push({
             id: this.personList[e]["id"],
+            group_id: this.personList[e]["group_id"], 
             service_id: this.personList[e]["servicio_id"],
             weight: (this.personList[e]["peso"] !== '') ? this.personList[e]["peso"] : 0,
             quantity: (this.personList[e]["cantidad"] !== '') ? this.personList[e]["cantidad"] : 0,
@@ -688,6 +692,7 @@ export class SalidasFormComponent implements OnInit {
               "moreOutputs": list
             });
             console.warn(bodyData);
+            
             this.salidasServices.update(this.id_input, bodyData).subscribe(
               response => {
                 this.toasTer.success(SalidasMsg.update);
@@ -718,7 +723,7 @@ export class SalidasFormComponent implements OnInit {
         Object.keys(this.personList).forEach(e => {
 
           list.push({
-
+            group_id: this.personList[e]["group_id"],
             service_id: this.personList[e]["servicio_id"],
             weight: (this.personList[e]["peso"] !== '') ? this.personList[e]["peso"] : 0,
             quantity: (this.personList[e]["cantidad"] !== '') ? this.personList[e]["cantidad"] : 0,
@@ -753,6 +758,7 @@ export class SalidasFormComponent implements OnInit {
               "foo": list
             });
             console.log(bodyData);
+            
             this.salidasServices.save(bodyData).subscribe(
               response => {
                 this.toasTer.success(SalidasMsg.save);
