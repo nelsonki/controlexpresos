@@ -84,6 +84,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
             this.toastr.error('Acceso no autorizado', 'Error');
           } else {*/
             this.localService.setJsonValue('info', data);
+            
             //this.localService.setJsonValue('iduserlog', data.id);
              console.log(this.localService)
              let info = this.localService.getJsonValue('info');

@@ -187,6 +187,8 @@ export class SalidasFormComponent implements OnInit {
       tipo: '',
     }
   ];
+  public ultimoGrupo=0;
+
   constructor(
     public dialog: MatDialog,
 
@@ -233,6 +235,12 @@ export class SalidasFormComponent implements OnInit {
       tipo: ['' ],
       fruitCtrl2: [""],
     });
+    
+    /*BUSCAR GRUPO*/
+    this.salidasServices.getLastGroup().pipe()
+    .subscribe((value2) => {
+      this.ultimoGrupo =  value2["max"] + 1
+     });
 
     /*BUSCAR SUB-SERVICIO*/
     this.subServiceServices.getList().pipe()
@@ -624,12 +632,14 @@ export class SalidasFormComponent implements OnInit {
     this.myControl2.controls["fruitCtrl2"].setValue('');
 
   }
+ 
   onSubmit() {
+    
+    console.log(this.ultimoGrupo)
+
     this.totalPesoSalida = 0;
-    console.log(this.totalPesoEntrada)
     this.misSubServicios = "";
-
-
+    //EDITAR
     if (this.putSubmit) {
 
       this.loading = true;
@@ -641,7 +651,7 @@ export class SalidasFormComponent implements OnInit {
         if (this.personList[e]["id"] === 0) {
           list.push({
             id: 0,
-            group_id:0,
+            group_id:this.ultimoGrupo,
             service_id: this.personList[e]["servicio_id"],
             weight: (this.personList[e]["peso"] !== '') ? this.personList[e]["peso"] : 0,
             quantity: (this.personList[e]["cantidad"] !== '') ? this.personList[e]["cantidad"] : 0,
@@ -666,7 +676,6 @@ export class SalidasFormComponent implements OnInit {
         this.totalPesoSalida = this.totalPesoSalida + parseFloat(this.personList[e]["peso"]);
 
       });
-      console.log(this.totalPesoSalida)
 
       listEnpti = list.filter(function (n) {
         let value1 = n.service_id;
@@ -713,6 +722,7 @@ export class SalidasFormComponent implements OnInit {
       }
 
     } else {
+      //CREAR
       if (this.firstFormGroup.invalid) {
         return;
       } else {
@@ -723,7 +733,7 @@ export class SalidasFormComponent implements OnInit {
         Object.keys(this.personList).forEach(e => {
 
           list.push({
-            group_id: this.personList[e]["group_id"],
+            group_id: this.ultimoGrupo,
             service_id: this.personList[e]["servicio_id"],
             weight: (this.personList[e]["peso"] !== '') ? this.personList[e]["peso"] : 0,
             quantity: (this.personList[e]["cantidad"] !== '') ? this.personList[e]["cantidad"] : 0,
@@ -778,7 +788,6 @@ export class SalidasFormComponent implements OnInit {
         }
       }
     }
-
 
 
   }

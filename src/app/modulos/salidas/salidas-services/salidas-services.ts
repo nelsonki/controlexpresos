@@ -65,6 +65,11 @@ export class SalidasServices {
     }
         return this.http.doGet(this.api, enpoint );
     }
+    getLastGroup()
+    {
+        let enpoint = 'outputs/lastGroupId';
+        return this.http.doGet(this.api, enpoint );
+    }
     /*getOperaciones()
     {
         let enpoint = 'outputs/index/processed';

@@ -107,7 +107,8 @@ export class SalidasTableComponent implements OnInit {
               "weight_in": value["data"][e].weight_in,
               "weight_out": value["data"][e].weight_out,
               "inputs":[],
-              "outputs":[]
+              "outputs":[],
+ 
             };
             this.element.push(datos);
             Object.keys(value["data"][e].inputs).forEach(i => {
@@ -130,6 +131,7 @@ export class SalidasTableComponent implements OnInit {
               this.dataOut =
               {
                 id:value["data"][e].outputs[i].id,
+                group_id: value["data"][e].outputs[i].group_id,
                 weight: value["data"][e].outputs[i].weight,
                 quantity: value["data"][e].outputs[i].quantity,
                 service_id: value["data"][e].outputs[i].service_id,
@@ -139,7 +141,8 @@ export class SalidasTableComponent implements OnInit {
                 subservices_tag: value["data"][e].outputs[i].subservices_tag,
                 operation_type: value["data"][e].outputs[i].operation_type,
                 created_at: value["data"][e].outputs[i].date_time,
-              } ;                       
+              } ; 
+                                     
               this.element[e].outputs.push(this.dataOut);
               });
          });
