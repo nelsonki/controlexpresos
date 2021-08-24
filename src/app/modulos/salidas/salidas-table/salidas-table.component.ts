@@ -108,7 +108,8 @@ export class SalidasTableComponent implements OnInit {
               "weight_out": value["data"][e].weight_out,
               "inputs":[],
               "outputs":[],
- 
+             
+
             };
             this.element.push(datos);
             Object.keys(value["data"][e].inputs).forEach(i => {
@@ -144,6 +145,7 @@ export class SalidasTableComponent implements OnInit {
               } ; 
                                      
               this.element[e].outputs.push(this.dataOut);
+
               });
          });
          Object.keys(this.element).forEach((i, index) => {

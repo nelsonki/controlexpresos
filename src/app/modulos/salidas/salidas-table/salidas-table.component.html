@@ -219,20 +219,20 @@
                                     <th colspan="2">Actions</th>-->
 
                                     </tr>
-                                    <!--
-                                    <ng-container *ngFor="let output of element.outputs; let id2 = index">-->
+                                    <ng-container *ngFor="let outputsG of element.outputs; let id2 = index">
+                                        <ng-container *ngIf="output.group_id ===outputsG.group_id  ">
 
-                                    <tr>
-                                        <td>{{id2+1}}</td>
-                                        <td>{{output.weight}}</td>
-                                        <td>{{output.quantity}}</td>
-                                        <td>{{output.service_name}}</td>
-                                        <td>{{output.color_name}}</td>
-                                        <td>{{output.subservices_tag}}</td>
-                                        <td>{{output.operation_type}}</td>
-                                        <td>{{output.created_at}}</td>
+                                            <tr>
+                                                <td>{{id2+1}}</td>
+                                                <td>{{outputsG.weight}}</td>
+                                                <td>{{outputsG.quantity}}</td>
+                                                <td>{{outputsG.service_name}}</td>
+                                                <td>{{outputsG.color_name}}</td>
+                                                <td>{{outputsG.subservices_tag}}</td>
+                                                <td>{{outputsG.operation_type}}</td>
+                                                <td>{{outputsG.created_at}}</td>
 
-                                        <!--<td class="text-center">
+                                                <!--<td class="text-center">
                                             <span class="table-remove">
                                             <a (click)="eliminarOp(output.id)">
                                                 <mdb-icon
@@ -246,11 +246,13 @@
                                             </span>
                                                     </td>-->
 
-                                    </tr>
+                                            </tr>
+                                        </ng-container>
 
-                                    <!-- 
-                                    </ng-container>-->
+
+                                    </ng-container>
                                     <br>
+
                                 </ng-container>
 
                             </table>
