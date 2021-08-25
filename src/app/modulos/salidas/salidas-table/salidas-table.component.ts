@@ -57,6 +57,8 @@ export class SalidasTableComponent implements OnInit {
 
   public total_weight_in=0;
   public total_weight_out=0;
+  public grupoID =[];
+  public resultGrupoID =[]
   ngAfterViewInit() {
   }
   constructor(
@@ -89,7 +91,7 @@ export class SalidasTableComponent implements OnInit {
       this.dataOut=[];
 
       this.element=[];
-      console.log(value["data"])
+      //console.log(value["data"])
       if (value["data"]){
         this.element = [];
         Object.keys(value["data"]).forEach(e => {
@@ -108,7 +110,10 @@ export class SalidasTableComponent implements OnInit {
               "weight_out": value["data"][e].weight_out,
               "inputs":[],
               "outputs":[],
-             
+              "grupos":{
+                
+              },
+
 
             };
             this.element.push(datos);
@@ -128,6 +133,8 @@ export class SalidasTableComponent implements OnInit {
             } ;                       
             this.element[e].inputs.push(this.data);
             });
+            this.grupoID=[]
+            this.resultGrupoID=[]
             Object.keys(value["data"][e].outputs).forEach(i => {
               this.dataOut =
               {
@@ -142,21 +149,48 @@ export class SalidasTableComponent implements OnInit {
                 subservices_tag: value["data"][e].outputs[i].subservices_tag,
                 operation_type: value["data"][e].outputs[i].operation_type,
                 created_at: value["data"][e].outputs[i].date_time,
-              } ; 
-                                     
+              } ;                                      
               this.element[e].outputs.push(this.dataOut);
 
-              });
+              this.grupoID.push(value["data"][e].outputs[i].group_id)
+            });  
+            const dataArr = new Set(this.grupoID);
+            this.resultGrupoID = [...dataArr];
+
+            //console.log(this.resultGrupoID)              
+            Object.keys(this.element).forEach((i, index) => {
+                this.element[i].Item = index + 1;
+            });
+            let i = 0; 
+            let grupo 
+            let bodyData
+            let lista=[]
+            if(this.element[e].outputs.length !==0){
+               do {               
+                  grupo =  this.element[e].outputs[i].group_id
+                  Object.keys(this.resultGrupoID).forEach((j, index) => {
+                    if(grupo === this.resultGrupoID[j]){                      
+                          lista.push(this.element[e].outputs[i])
+                          bodyData = Object.assign({
+                            "group_id": value["data"][e].outputs[i].group_id,
+                            "values":lista
+                          });  
+                          this.element[e].grupos[j]=bodyData;
+                    }                      
+                  });            
+                i += 1;
+               } while (i < this.element[e].outputs.length);
+              console.log(this.element[e]); 
+            }           
          });
+         
          Object.keys(this.element).forEach((i, index) => {
           //this.total_weight_in = this.total_weight_in + parseFloat(this.element[i].weight_in) ;
           this.total_weight_out = this.total_weight_out + parseFloat(this.element[i].weight_out) ;
 
        });
-         Object.keys(this.element).forEach((i, index) => {
-          this.element[i].Item = index + 1;
-       });
        
+       //console.log(this.element)
         this.dataSource = new MatTableDataSource(this.element);
         this.dataSource.paginator = this.paginator;
         return this.dataSource;
@@ -195,7 +229,7 @@ export class SalidasTableComponent implements OnInit {
     //this.doWhereReport = 'where=[ {"op":"eq","field":"hg.account","value":' + info.account +'}, {"op":"bt", "field":"hg.created_at", "value":["' + fechaInicio + ' 01:00:00","' + fechaFinal + ' 23:59:59"]}]'
     //this.loadDataTable('historialgenerates?' + this.doWhere);
     //this.paginator.pageIndex = 0;
-    console.log(fechaInicio +"_"+fechaFinal)
+    //console.log(fechaInicio +"_"+fechaFinal)
     this.loadAll(fechaInicio, fechaFinal);
   }
   public exportTo(){
