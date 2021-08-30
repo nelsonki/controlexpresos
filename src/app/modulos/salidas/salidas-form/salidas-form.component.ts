@@ -147,6 +147,7 @@ export class SalidasFormComponent implements OnInit {
   public colores: Array<any> = [];
   public totalPesoEntrada = 0;
   public totalPesoSalida = 0;
+  public idVieneGrupo=0;
   public tipoRopa: Array<any> = [{
     value: 'nueva',
   },
@@ -378,81 +379,160 @@ export class SalidasFormComponent implements OnInit {
     this.statusCloseModal.emit(this.closeStatus);
     this.reloadComponent();
   }
-  public addForm(id) {
-    this.totalPesoEntrada = 0;
-    this.totalPesoSalida = 0;
-    this.validForm = false;
-
-    this.myControl2.controls['myControl_ser'].setValue('');
-    this.myControl2.controls['myControl_ser_id'].setValue('');
-    this.myControl2.controls['peso'].setValue('');
-    this.myControl2.controls['cantidad'].setValue('');
-    this.myControl2.controls['myControl_color'].setValue('');
-    this.myControl2.controls['myControl_color_id'].setValue('');
-    this.myControl2.controls['myControl_sub'].setValue('');
-    this.myControl2.controls['tipo'].setValue('');
-    this.nameButtonAceptar = 'Agregar';
-    this.fruits2 = [];
-    this.myControl2.controls["fruitCtrl2"].setValue('');
-    this.treeFormGroup.controls["observacion"].setValue('');
-
-    var editDetail = [];
-    this.idEdit = id;
-    let dataEdit = [];
-    this.editSubmit = true;
-    this.putSubmit = true;
-    this.personList_entradas = [];
-    this.personList = [];
-    //console.warn(this.element)
-    Object.keys(this.element).forEach(i => {
-      if (this.element[i].id === id) {
-        dataEdit.push(this.element[i]);
-      }
-    });
-    this.treeFormGroup.controls["observacion"].setValue(dataEdit[0]["obs_out"]);
-
-    console.log(dataEdit[0]);
-    this.id_input = dataEdit[0].id;
-    //console.log(this.id_input);
-
-    Object.keys(dataEdit[0].inputs).forEach(i => {
-
-
-      this.personList_entradas.push(
-
-        {
-          'id': dataEdit[0].inputs[i].id,
-          'peso': dataEdit[0].inputs[i].weight,
-          'cantidad': dataEdit[0].inputs[i].quantity,
-          'servicio': dataEdit[0].inputs[i].service_name,
-          'servicio_id': dataEdit[0].inputs[i].service_id,
-          'color': (dataEdit[0].inputs[i].color_name !== null) ? dataEdit[0].inputs[i].color_name : '',
-          'color_id': (dataEdit[0].inputs[i].color_id !== null) ? dataEdit[0].inputs[i].color_id : '',
-          'subservicio': dataEdit[0].inputs[i].subservices_tag,
-          'tipo': dataEdit[0].inputs[i].operation_type,
+  public addForm(id, idGrupo?) {
+    if(idGrupo){
+      this.idVieneGrupo = idGrupo;
+      this.totalPesoEntrada = 0;
+      this.totalPesoSalida = 0;
+      this.validForm = false;
+      this.myControl2.controls['myControl_ser'].setValue('');
+      this.myControl2.controls['myControl_ser_id'].setValue('');
+      this.myControl2.controls['peso'].setValue('');
+      this.myControl2.controls['cantidad'].setValue('');
+      this.myControl2.controls['myControl_color'].setValue('');
+      this.myControl2.controls['myControl_color_id'].setValue('');
+      this.myControl2.controls['myControl_sub'].setValue('');
+      this.myControl2.controls['tipo'].setValue('');
+      this.nameButtonAceptar = 'Agregar';
+      this.fruits2 = [];
+      this.myControl2.controls["fruitCtrl2"].setValue('');
+      this.treeFormGroup.controls["observacion"].setValue('');
+  
+      var editDetail = [];
+      this.idEdit = id;
+      let dataEdit = [];
+      this.editSubmit = true;
+      this.putSubmit = true;
+      this.personList_entradas = [];
+      this.personList = [];
+      //console.warn(this.element)
+      Object.keys(this.element).forEach(i => {
+        if (this.element[i].id === id) {
+          dataEdit.push(this.element[i]);
         }
-      );
-      this.totalPesoEntrada = this.totalPesoEntrada + parseFloat(dataEdit[0].inputs[i].weight);
-    });
-    Object.keys(dataEdit[0].outputs).forEach(i => {
-
-
-      this.personList.push(
-
-        {
-          'id': dataEdit[0].outputs[i].id,
-          'group_id': dataEdit[0].outputs[i].group_id,
-          'peso': dataEdit[0].outputs[i].weight,
-          'cantidad': dataEdit[0].outputs[i].quantity,
-          'servicio': dataEdit[0].outputs[i].service_name,
-          'servicio_id': dataEdit[0].outputs[i].service_id,
-          'color': (dataEdit[0].outputs[i].color_name !== null) ? dataEdit[0].outputs[i].color_name : '',
-          'color_id': (dataEdit[0].outputs[i].color_id !== null) ? dataEdit[0].outputs[i].color_id : '',
-          'subservicio': dataEdit[0].outputs[i].subservices_tag,
-          'tipo': dataEdit[0].outputs[i].operation_type,
+      });
+      this.treeFormGroup.controls["observacion"].setValue(dataEdit[0]["obs_out"]);
+  
+      console.log(dataEdit[0]);
+      this.id_input = dataEdit[0].id;
+      //console.log(this.id_input);
+  
+      Object.keys(dataEdit[0].inputs).forEach(i => {
+  
+  
+        this.personList_entradas.push(
+  
+          {
+            'id': dataEdit[0].inputs[i].id,
+            'peso': dataEdit[0].inputs[i].weight,
+            'cantidad': dataEdit[0].inputs[i].quantity,
+            'servicio': dataEdit[0].inputs[i].service_name,
+            'servicio_id': dataEdit[0].inputs[i].service_id,
+            'color': (dataEdit[0].inputs[i].color_name !== null) ? dataEdit[0].inputs[i].color_name : '',
+            'color_id': (dataEdit[0].inputs[i].color_id !== null) ? dataEdit[0].inputs[i].color_id : '',
+            'subservicio': dataEdit[0].inputs[i].subservices_tag,
+            'tipo': dataEdit[0].inputs[i].operation_type,
+          }
+        );
+        this.totalPesoEntrada = this.totalPesoEntrada + parseFloat(dataEdit[0].inputs[i].weight);
+      });
+      Object.keys(dataEdit[0].outputs).forEach(i => {
+  
+        if(idGrupo===dataEdit[0].outputs[i].group_id){
+          this.personList.push(
+    
+            {
+              'id': dataEdit[0].outputs[i].id,
+              'group_id': dataEdit[0].outputs[i].group_id,
+              'peso': dataEdit[0].outputs[i].weight,
+              'cantidad': dataEdit[0].outputs[i].quantity,
+              'servicio': dataEdit[0].outputs[i].service_name,
+              'servicio_id': dataEdit[0].outputs[i].service_id,
+              'color': (dataEdit[0].outputs[i].color_name !== null) ? dataEdit[0].outputs[i].color_name : '',
+              'color_id': (dataEdit[0].outputs[i].color_id !== null) ? dataEdit[0].outputs[i].color_id : '',
+              'subservicio': dataEdit[0].outputs[i].subservices_tag,
+              'tipo': dataEdit[0].outputs[i].operation_type,
+            }
+          );
         }
-      );
-    });
+      });
+    }else{
+      this.totalPesoEntrada = 0;
+      this.totalPesoSalida = 0;
+      this.validForm = false;
+  
+      this.myControl2.controls['myControl_ser'].setValue('');
+      this.myControl2.controls['myControl_ser_id'].setValue('');
+      this.myControl2.controls['peso'].setValue('');
+      this.myControl2.controls['cantidad'].setValue('');
+      this.myControl2.controls['myControl_color'].setValue('');
+      this.myControl2.controls['myControl_color_id'].setValue('');
+      this.myControl2.controls['myControl_sub'].setValue('');
+      this.myControl2.controls['tipo'].setValue('');
+      this.nameButtonAceptar = 'Agregar';
+      this.fruits2 = [];
+      this.myControl2.controls["fruitCtrl2"].setValue('');
+      this.treeFormGroup.controls["observacion"].setValue('');
+  
+      var editDetail = [];
+      this.idEdit = id;
+      let dataEdit = [];
+      this.editSubmit = true;
+      this.putSubmit = true;
+      this.personList_entradas = [];
+      this.personList = [];
+      //console.warn(this.element)
+      Object.keys(this.element).forEach(i => {
+        if (this.element[i].id === id) {
+          dataEdit.push(this.element[i]);
+        }
+      });
+      this.treeFormGroup.controls["observacion"].setValue(dataEdit[0]["obs_out"]);
+  
+      console.log(dataEdit[0]);
+      this.id_input = dataEdit[0].id;
+      //console.log(this.id_input);
+  
+      Object.keys(dataEdit[0].inputs).forEach(i => {
+  
+  
+        this.personList_entradas.push(
+  
+          {
+            'id': dataEdit[0].inputs[i].id,
+            'peso': dataEdit[0].inputs[i].weight,
+            'cantidad': dataEdit[0].inputs[i].quantity,
+            'servicio': dataEdit[0].inputs[i].service_name,
+            'servicio_id': dataEdit[0].inputs[i].service_id,
+            'color': (dataEdit[0].inputs[i].color_name !== null) ? dataEdit[0].inputs[i].color_name : '',
+            'color_id': (dataEdit[0].inputs[i].color_id !== null) ? dataEdit[0].inputs[i].color_id : '',
+            'subservicio': dataEdit[0].inputs[i].subservices_tag,
+            'tipo': dataEdit[0].inputs[i].operation_type,
+          }
+        );
+        this.totalPesoEntrada = this.totalPesoEntrada + parseFloat(dataEdit[0].inputs[i].weight);
+      });
+      Object.keys(dataEdit[0].outputs).forEach(i => {
+  
+  
+        this.personList.push(
+  
+          {
+            'id': dataEdit[0].outputs[i].id,
+            'group_id': dataEdit[0].outputs[i].group_id,
+            'peso': dataEdit[0].outputs[i].weight,
+            'cantidad': dataEdit[0].outputs[i].quantity,
+            'servicio': dataEdit[0].outputs[i].service_name,
+            'servicio_id': dataEdit[0].outputs[i].service_id,
+            'color': (dataEdit[0].outputs[i].color_name !== null) ? dataEdit[0].outputs[i].color_name : '',
+            'color_id': (dataEdit[0].outputs[i].color_id !== null) ? dataEdit[0].outputs[i].color_id : '',
+            'subservicio': dataEdit[0].outputs[i].subservices_tag,
+            'tipo': dataEdit[0].outputs[i].operation_type,
+          }
+        );
+      });
+    }
+    
 
 
   }
@@ -649,17 +729,31 @@ export class SalidasFormComponent implements OnInit {
       this.loading = true;
       Object.keys(this.personList).forEach(e => {
         if (this.personList[e]["id"] === 0) {
-          list.push({
-            id: 0,
-            group_id:this.ultimoGrupo,
-            service_id: this.personList[e]["servicio_id"],
-            weight: (this.personList[e]["peso"] !== '') ? this.personList[e]["peso"] : 0,
-            quantity: (this.personList[e]["cantidad"] !== '') ? this.personList[e]["cantidad"] : 0,
-            color_id: (this.personList[e]["color_id"] !== '') ? this.personList[e]["color_id"] : null,
-            subservice_id: (this.personList[e]["subservicio"] !== '') ? this.personList[e]["subservicio"] : '',
-            operation_type: this.personList[e]["tipo"],
-
-          });
+          if (this.idVieneGrupo!==0) {
+            list.push({
+              id: 0,
+              group_id: this.idVieneGrupo, 
+              service_id: this.personList[e]["servicio_id"],
+              weight: (this.personList[e]["peso"] !== '') ? this.personList[e]["peso"] : 0,
+              quantity: (this.personList[e]["cantidad"] !== '') ? this.personList[e]["cantidad"] : 0,
+              color_id: (this.personList[e]["color_id"] !== '') ? this.personList[e]["color_id"] : null,
+              subservice_id: (this.personList[e]["subservicio"] !== '') ? this.personList[e]["subservicio"] : '',
+              operation_type: this.personList[e]["tipo"],
+  
+            });
+          }else{
+            list.push({
+              id: 0,
+              group_id:this.ultimoGrupo,
+              service_id: this.personList[e]["servicio_id"],
+              weight: (this.personList[e]["peso"] !== '') ? this.personList[e]["peso"] : 0,
+              quantity: (this.personList[e]["cantidad"] !== '') ? this.personList[e]["cantidad"] : 0,
+              color_id: (this.personList[e]["color_id"] !== '') ? this.personList[e]["color_id"] : null,
+              subservice_id: (this.personList[e]["subservicio"] !== '') ? this.personList[e]["subservicio"] : '',
+              operation_type: this.personList[e]["tipo"],
+  
+            });
+          }
         } else {
           list.push({
             id: this.personList[e]["id"],
@@ -686,7 +780,7 @@ export class SalidasFormComponent implements OnInit {
         this.toasTer.error('No puede guardar campo vacios');
 
       } else {
-        if (this.personList.length === 0) {
+        if (this.personList.length === 0 ) {
           this.loading = false;
           this.toasTer.error('Debe agregar al menos 1 salida');
 

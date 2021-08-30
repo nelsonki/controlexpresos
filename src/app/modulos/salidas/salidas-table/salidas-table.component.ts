@@ -57,8 +57,8 @@ export class SalidasTableComponent implements OnInit {
 
   public total_weight_in=0;
   public total_weight_out=0;
-  public grupoID =[];
-  public resultGrupoID =[]
+  //public grupoID =[];
+  //public resultGrupoID =[]
   ngAfterViewInit() {
   }
   constructor(
@@ -110,11 +110,7 @@ export class SalidasTableComponent implements OnInit {
               "weight_out": value["data"][e].weight_out,
               "inputs":[],
               "outputs":[],
-              "grupos":{
-                
-              },
-
-
+              "grupos":[],
             };
             this.element.push(datos);
             Object.keys(value["data"][e].inputs).forEach(i => {
@@ -133,8 +129,8 @@ export class SalidasTableComponent implements OnInit {
             } ;                       
             this.element[e].inputs.push(this.data);
             });
-            this.grupoID=[]
-            this.resultGrupoID=[]
+            //this.grupoID=[]
+            //this.resultGrupoID=[]
             Object.keys(value["data"][e].outputs).forEach(i => {
               this.dataOut =
               {
@@ -152,11 +148,10 @@ export class SalidasTableComponent implements OnInit {
               } ;                                      
               this.element[e].outputs.push(this.dataOut);
 
-              this.grupoID.push(value["data"][e].outputs[i].group_id)
+              //this.grupoID.push(value["data"][e].outputs[i].group_id)
             });  
-            const dataArr = new Set(this.grupoID);
-            this.resultGrupoID = [...dataArr];
-
+            //const dataArr = new Set(this.grupoID);
+            //this.resultGrupoID = [...dataArr];
             //console.log(this.resultGrupoID)              
             Object.keys(this.element).forEach((i, index) => {
                 this.element[i].Item = index + 1;
@@ -166,21 +161,31 @@ export class SalidasTableComponent implements OnInit {
             let bodyData
             let lista=[]
             if(this.element[e].outputs.length !==0){
-               do {               
-                  grupo =  this.element[e].outputs[i].group_id
-                  Object.keys(this.resultGrupoID).forEach((j, index) => {
-                    if(grupo === this.resultGrupoID[j]){                      
-                          lista.push(this.element[e].outputs[i])
-                          bodyData = Object.assign({
-                            "group_id": value["data"][e].outputs[i].group_id,
-                            "values":lista
-                          });  
-                          this.element[e].grupos[j]=bodyData;
-                    }                      
-                  });            
-                i += 1;
-               } while (i < this.element[e].outputs.length);
-              console.log(this.element[e]); 
+             // buscar los ids
+            let ids = [];
+            for (let values of this.element[e].outputs) {
+              ids.push(values.group_id)
+            }
+            //elimino repetidos
+            const dataArr = new Set(ids);
+            let resultId = [...dataArr];
+            let valueGroupId
+            //agrupo salidas por id
+            for (let data of resultId) {
+              valueGroupId = this.element[e].outputs.filter(function (e) {
+                return e.group_id == data;
+              });
+              //console.log(valueGroupId);
+              let dataEnd = Object.assign({}, {
+                group_id: data,
+                values: valueGroupId
+              });
+              this.element[e].grupos.push(dataEnd)
+              //this.element[e].grupos[data]=dataEnd;
+              //lista.push(dataEnd);
+            }
+            //console.log(lista);
+            console.log(this.element[e])              
             }           
          });
          
@@ -344,6 +349,10 @@ export class SalidasTableComponent implements OnInit {
     this.titleModal = "Crear Salidas";
     this.form.addForm(id);
   }
+  public openEditParcial(id, idGrupo) {
+    this.titleModal = "Editar Salida Parcial: "+idGrupo;
+    this.form.addForm(id, idGrupo);
+  }
   reloadComponent() {
     const currentUrl = this.router.url;
     const refreshUrl = currentUrl.indexOf("/dashboard/Salidas") > -1 ? "/" : "/";
@@ -376,5 +385,7 @@ export class SalidasTableComponent implements OnInit {
   print(id){
     window.open( this.api + 'reports/print/' + id);
    }
- 
+  printParcial(id,idGrupo){
+    window.open( this.api + 'reports/printPartialOutput/'+ id+'/'+idGrupo);
+   }
 } 

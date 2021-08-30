@@ -180,25 +180,26 @@
                                 <caption>
                                     Observaciones de salida: {{ element.obs_out }}
                                 </caption>
-                                <ng-container *ngFor="let output of element.outputs; let id2 = index">
+                                <ng-container *ngFor="let grupo of element.grupos; let id2 = index">
 
                                     <tr>
                                         <th colspan="6">
-                                            Salida Parcial: {{output.group_id}}
+                                            Salida Parcial: {{grupo.group_id}}
                                         </th>
                                         <th>Acciones</th>
                                         <th mat-cell>
                                             <div class="row text-center purchase-width-actions">
-                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Editar Salida Parcial" (click)="openEdit(output.id); basicModal.show()">
+                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Editar Salida Parcial" (click)="openEditParcial(element.id, grupo.group_id); basicModal.show()">
                                                     <i class="fas fa-edit"></i>
                                                 </div>
 
-                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Imprimir Salida Parcial" (click)="print(output.id)">
+                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Imprimir Salida Parcial" (click)="printParcial(element.id, grupo.group_id)">
                                                     <i class="fas fa-print"></i>
                                                 </div>
-                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Eliminar Salida Parcial" (click)="eliminarOp(output.id)">
+                                                <!--
+                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Eliminar Salida Parcial" (click)="eliminarOp(grupo.group_id)">
                                                     <i class="far fa-trash-alt"></i>
-                                                </div>
+                                                </div>-->
                                             </div>
 
                                         </th>
@@ -214,39 +215,27 @@
                                         <th>Tipo de Ropa</th>
                                         <th>Fecha y Hora</th>
 
-                                        <!--
-                                    <th colspan="2">Actions</th>-->
+
 
                                     </tr>
-                                    <ng-container *ngFor="let outputsG of element.outputs; let id2 = index">
-                                        <ng-container *ngIf="output.group_id ===outputsG.group_id  ">
 
-                                            <tr>
-                                                <td>{{id2+1}}</td>
-                                                <td>{{outputsG.weight}}</td>
-                                                <td>{{outputsG.quantity}}</td>
-                                                <td>{{outputsG.service_name}}</td>
-                                                <td>{{outputsG.color_name}}</td>
-                                                <td>{{outputsG.subservices_tag}}</td>
-                                                <td>{{outputsG.operation_type}}</td>
-                                                <td>{{outputsG.created_at}}</td>
 
-                                                <!--<td class="text-center">
-                                            <span class="table-remove">
-                                            <a (click)="eliminarOp(output.id)">
-                                                <mdb-icon
-                                                fas
-                                                icon="trash-alt"
-                                                size="1.5x"
-                                                style="color:#CD6155"
-                                                matTooltip="Eliminar"
-                                                ></mdb-icon>
-                                            </a>
-                                            </span>
-                                                    </td>-->
 
-                                            </tr>
-                                        </ng-container>
+                                    <ng-container *ngFor="let outputsG of grupo.values; let id2 = index">
+
+                                        <tr>
+                                            <td>{{id2+1}}</td>
+                                            <td>{{outputsG.weight}}</td>
+                                            <td>{{outputsG.quantity}}</td>
+                                            <td>{{outputsG.service_name}}</td>
+                                            <td>{{outputsG.color_name}}</td>
+                                            <td>{{outputsG.subservices_tag}}</td>
+                                            <td>{{outputsG.operation_type}}</td>
+                                            <td>{{outputsG.created_at}}</td>
+
+
+
+                                        </tr>
 
 
                                     </ng-container>
