@@ -375,6 +375,14 @@ export class SalidasTableComponent implements OnInit {
    });
   
   }
+  eliminarGrupo(idGrupo){
+    let modulo ="deleteGrupo";
+    this.dialog.open(SalidasDeleteComponent, {
+     width: "450px",
+     data: [idGrupo, modulo,0]
+   });
+  
+  }
   cerrarOp(id){
     this.dialog.open(SalidasCerrarComponent, {
      width: "450px",

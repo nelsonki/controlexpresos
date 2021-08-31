@@ -98,7 +98,10 @@ export class SalidasServices {
            let enpoint = 'outputs/deleteOp/'+id;
            return this.http.doDelete(this.api, enpoint); 
        }
-       
+       if(modulo === "deleteGrupo"){
+        let enpoint = 'outputs/deletePartials/'+id;
+        return this.http.doDelete(this.api, enpoint); 
+        }
     }
      
 }
