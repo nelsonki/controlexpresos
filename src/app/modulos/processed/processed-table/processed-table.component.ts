@@ -95,6 +95,8 @@ public total_weight_out=0;
               "weight_in": value["data"][e].weight_in,
               "weight_out": value["data"][e].weight_out,
               "status": value["data"][e].status,
+              "canceled_time": value["data"][e].canceled_time,
+              "cancel_reason": value["data"][e].cancel_reason,
               "inputs":[],
               "outputs":[]
             };
