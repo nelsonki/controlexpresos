@@ -13,7 +13,6 @@ dev_backup_job:
   only:
     - develop
 
-
 dev_build_job:
   stage: build
   script:
