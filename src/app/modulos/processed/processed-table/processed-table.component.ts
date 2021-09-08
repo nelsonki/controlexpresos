@@ -11,7 +11,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import {SalidasServices} from '../../salidas/salidas-services/salidas-services'
 import { environment } from '../../../../environments/environment';
 import { DateRangeComponent } from '../date-range/date-range.component';
-
+import {ProcessedCancelComponent} from '../dialog/processed-cancel/processed-cancel.component'
 declare var $: any;
 
 @Component({
@@ -34,7 +34,7 @@ export class ProcessedTableComponent implements OnInit {
   @Output() onChange: EventEmitter<File> = new EventEmitter<File>();
   @ViewChild(DateRangeComponent) dateRange: DateRangeComponent;
 
-  displayedColumns: string[] = ['Item', 'ID', 'Cliente - Sucursal', 'Peso de entrada', 'Peso de salida', 'Fecha Procesada', 'Usuario', 'Acciones'];
+  displayedColumns: string[] = ['Item', 'ID', 'Cliente - Sucursal', 'Peso de entrada', 'Peso de salida', 'Fecha Procesada','Fecha Cancelada','Status', 'Usuario', 'Acciones'];
   dataSource;
   public titleModal: string;
   public element =[];
@@ -94,6 +94,7 @@ public total_weight_out=0;
               "user": value["data"][e].user,
               "weight_in": value["data"][e].weight_in,
               "weight_out": value["data"][e].weight_out,
+              "status": value["data"][e].status,
               "inputs":[],
               "outputs":[]
             };
@@ -184,6 +185,15 @@ public total_weight_out=0;
   }
   print(id){
     window.open( this.api + 'reports/print/' + id);
+  }
+ 
+  cancel(id){
+    let modulo ="deleteOp";
+    this.dialog.open(ProcessedCancelComponent, {
+     width: "450px",
+     data: [id, modulo,0]
+   });
+  
   }
     //*  FUNCION PARA EL FILTRADO DESDE EL SELECTOR DE FECHAS
 

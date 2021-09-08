@@ -27,12 +27,12 @@ export class SalidasServices {
         let enpoint;
 
     if(fechaInicio==="" && fechaFin===""){
-        enpoint = 'outputs/index';
+        enpoint = 'outputs/index/in_course';
     }else{
         if(fechaInicio === fechaFin){
-            enpoint = 'outputs/index/?day='+fechaInicio;
+            enpoint = 'outputs/index/in_course?day='+fechaInicio;
        }else{
-            enpoint = 'outputs/index/?interval='+fechaInicio+"_"+fechaFin;
+            enpoint = 'outputs/index/in_course?interval='+fechaInicio+"_"+fechaFin;
         }  
     }
        
@@ -43,12 +43,12 @@ export class SalidasServices {
         let enpoint;
 
     if(fechaInicio==="" && fechaFin===""){
-        enpoint = 'outputs/index';
+        enpoint = 'outputs/index/processed';
     }else{
         if(fechaInicio === fechaFin){
-            enpoint = 'outputs/index/processed/?day='+fechaInicio;
+            enpoint = 'outputs/index/processed?day='+fechaInicio;
        }else{
-            enpoint = 'outputs/index/processed/?interval='+fechaInicio+"_"+fechaFin;
+            enpoint = 'outputs/index/processed?interval='+fechaInicio+"_"+fechaFin;
         }  
     }
        
@@ -58,9 +58,9 @@ export class SalidasServices {
     getList2(fechaInicio?, fechaFin?) {
         let enpoint;
     if(fechaInicio === fechaFin){
-         enpoint = 'outputs/index/'+fechaInicio+"_"+fechaFin;
+         enpoint = 'outputs/index/in_course/'+fechaInicio+"_"+fechaFin;
     }else{
-         enpoint = 'outputs/index/'+fechaInicio;
+         enpoint = 'outputs/index/in_course/'+fechaInicio;
 
     }
         return this.http.doGet(this.api, enpoint );
@@ -75,6 +75,10 @@ export class SalidasServices {
         let enpoint = 'outputs/index/processed';
         return this.http.doGet(this.api, enpoint );
     }*/
+    cancelarProcesadas(id, body){
+        let enpoint = 'inputs/cancel/'+id;
+        return this.http.doPut(this.api, enpoint, body);
+    }
     procesar(id, body){
         let enpoint = 'inputs/process/'+id;
         return this.http.doPut(this.api, enpoint, body);

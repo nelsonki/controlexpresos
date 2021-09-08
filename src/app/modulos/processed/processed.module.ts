@@ -24,10 +24,11 @@ import { ProcessedTableComponent } from './processed-table/processed-table.compo
 import {ProcessedRoutingModule} from '../processed/processed-routing.module'
 import { DateRangeComponent } from './date-range/date-range.component';
 import { NgxMatDrpModule } from './date-range/modules/ngx-mat-drp/ngx-mat-drp.module';
+import { ProcessedCancelComponent } from './dialog/processed-cancel/processed-cancel.component';
 
 
 @NgModule({
-  declarations: [ProcessedTableComponent, DateRangeComponent],
+  declarations: [ProcessedTableComponent, DateRangeComponent, ProcessedCancelComponent],
   imports: [
     CommonModule,
     ProcessedRoutingModule,

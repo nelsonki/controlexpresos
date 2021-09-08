@@ -92,6 +92,14 @@
                 <th mat-header-cell *matHeaderCellDef> Fecha Procesada </th>
                 <td mat-cell *matCellDef="let element"> {{element.processed_time}}</td>
             </ng-container>
+            <ng-container matColumnDef="Fecha Cancelada">
+                <th mat-header-cell *matHeaderCellDef> Fecha Cancelada </th>
+                <td mat-cell *matCellDef="let element"> {{element.canceled_time}}</td>
+            </ng-container>
+            <ng-container matColumnDef="Status">
+                <th mat-header-cell *matHeaderCellDef> Status </th>
+                <td mat-cell *matCellDef="let element"> {{element.status}}</td>
+            </ng-container>
             <!-- Weight Column -->
             <ng-container matColumnDef="Usuario">
                 <th mat-header-cell *matHeaderCellDef> Usuario </th>
@@ -109,8 +117,12 @@
                             <i class="fas fa-print"></i>
                         </div>
 
-                    </div>
 
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Cancelar operación" (click)="cancel(element.id)">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+
+                    </div>
 
                 </td>
             </ng-container>
@@ -159,6 +171,8 @@
                                 <caption>
                                     Listado de Operaciones de Salidas
                                     <br> Observaciones de salida: {{ element.obs_out }}
+                                    <br> Observaciones de cancelada: {{ element.cancel_reason }}
+
                                 </caption>
 
                                 <tr>

@@ -405,7 +405,7 @@ export class SalidasFormComponent implements OnInit {
       this.putSubmit = true;
       this.personList_entradas = [];
       this.personList = [];
-      //console.warn(this.element)
+      console.warn(this.element)
       Object.keys(this.element).forEach(i => {
         if (this.element[i].id === id) {
           dataEdit.push(this.element[i]);
@@ -621,8 +621,8 @@ export class SalidasFormComponent implements OnInit {
     if (idv == null) {
       miid = 0;
       for (let list of this.personList) {
-        if (list.servicio_id === form.value.myControl_ser_id && list.color_id === form.value.myControl_color_id && list.tipo === form.value.tipo && list.subservicio === serviciosVan) {
-          list.servicio = form.value.myControl_ser,
+        if (list.group_id == this.idVieneGrupo &&  list.servicio_id === form.value.myControl_ser_id && list.color_id === form.value.myControl_color_id && list.tipo === form.value.tipo && list.subservicio === serviciosVan) {
+            list.servicio = form.value.myControl_ser,
             list.servicio_id = form.value.myControl_ser_id,
             list.peso = parseFloat(list.peso) + parseFloat(pesoVan),
             list.cantidad = list.cantidad + cantidadVan,
@@ -650,7 +650,7 @@ export class SalidasFormComponent implements OnInit {
 
       miid = this.personList[idv].id;
       for (let list of this.personList) {
-        if (list.id === miid && list.servicio_id === form.value.myControl_ser_id && list.color_id === form.value.myControl_color_id && list.tipo === form.value.tipo && list.subservicio === serviciosVan) {
+        if (list.group_id == this.idVieneGrupo && list.id === miid && list.servicio_id === form.value.myControl_ser_id && list.color_id === form.value.myControl_color_id && list.tipo === form.value.tipo && list.subservicio === serviciosVan) {
           list.id = miid,
             list.servicio = form.value.myControl_ser,
             list.servicio_id = form.value.myControl_ser_id,

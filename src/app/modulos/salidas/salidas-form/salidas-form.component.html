@@ -290,6 +290,8 @@
                                 <thead>
                                     <tr>
                                         <th class="text-center">#</th>
+                                        <th class="text-center">Grupo</th>
+
                                         <th class="text-center">Servicio</th>
                                         <th class="text-center">Peso</th>
                                         <th class="text-center">Cantidad</th>
@@ -305,6 +307,9 @@
                                     <tr mdb TableCol *ngFor="let person of personList; let id_list = index">
                                         <td class="text-center">
                                             {{ id_list + 1 }}
+                                        </td>
+                                        <td class="text-center">
+                                            {{person.group_id }}
                                         </td>
                                         <td class="text-center">
                                             {{person.servicio }}

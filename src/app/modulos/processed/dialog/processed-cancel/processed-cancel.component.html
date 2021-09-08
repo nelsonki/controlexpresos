@@ -1,0 +1,28 @@
+<h5 class="text-center"> <i class="fas fa-exclamation-triangle"></i> ¿Está seguro de cancelar esta Operación?</h5>
+<mat-dialog-content class="mat-typography text-center">
+    <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel> Cliente </ng-template>
+        <div class="form-group"><br>
+
+            <div class="row">
+                <div class="form-group" class="width-form-groud col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <mat-form-field class="example-full-width ">
+                        <mat-label>Observación de la cancelación (*)</mat-label>
+                        <input aria-label="Number" type="text" placeholder="Observación de la cancelación" matInput formControlName="descripcion">
+
+                    </mat-form-field>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+    </form>
+
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-button mat-raised-button color="primary" [mat-dialog-close]="true" (click)="cancelarOperacion()">Si</button>
+    <button mat-button mat-raised-button color="accent" class="color-text" mat-dialog-close>No</button>
+</mat-dialog-actions>
