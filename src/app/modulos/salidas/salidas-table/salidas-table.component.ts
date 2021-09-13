@@ -170,22 +170,37 @@ export class SalidasTableComponent implements OnInit {
             const dataArr = new Set(ids);
             let resultId = [...dataArr];
             let valueGroupId
-            //agrupo salidas por id
-            for (let data of resultId) {
-              valueGroupId = this.element[e].outputs.filter(function (e) {
-                return e.group_id == data;
-              });
-              //console.log(valueGroupId);
+           let pesoParcial=0
+           let cantidadParcial=0
+
+             //agrupo salidas por id
+            for (let data of resultId) { 
+              
+              valueGroupId = this.element[e].outputs.filter(function (e) {  
+                if(e.group_id == data) {
+                  pesoParcial =   pesoParcial+ parseFloat(e.weight)
+                  cantidadParcial =   cantidadParcial+ parseFloat(e.quantity)
+
+                }
+
+                return e.group_id == data;  
+
+              }); 
+               //console.log(valueGroupId);
               let dataEnd = Object.assign({}, {
+                subPeso:pesoParcial,
+                subCantidad:cantidadParcial,
                 group_id: data,
                 values: valueGroupId
               });
+              pesoParcial=0
+              cantidadParcial=0
               this.element[e].grupos.push(dataEnd)
               //this.element[e].grupos[data]=dataEnd;
               //lista.push(dataEnd);
             }
             //console.log(lista);
-            console.log(this.element[e])              
+            //console.log(this.element[e])              
             }           
          });
          

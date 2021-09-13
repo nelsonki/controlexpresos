@@ -183,9 +183,9 @@
                                 <ng-container *ngFor="let grupo of element.grupos; let id2 = index">
 
                                     <tr>
-                                        <th colspan="6">
-                                            Salida Parcial: {{grupo.group_id}}
+                                        <th colspan="6"> Salida Parcial: {{grupo.group_id}}
                                         </th>
+
                                         <th>Acciones</th>
                                         <th mat-cell>
                                             <div class="row text-center purchase-width-actions">
@@ -239,6 +239,17 @@
 
 
                                     </ng-container>
+                                    <tr>
+                                        <th> Totales Parciales</th>
+                                        <th>{{grupo.subPeso}}</th>
+                                        <th>{{grupo.subCantidad}}</th>
+                                        <th colspan="5"> </th>
+
+
+
+
+
+                                    </tr>
                                     <br>
 
                                 </ng-container>

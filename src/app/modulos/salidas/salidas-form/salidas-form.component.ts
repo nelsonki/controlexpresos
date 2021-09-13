@@ -142,7 +142,18 @@ export class SalidasFormComponent implements OnInit {
   public fruitCtrl2 = new FormControl();
   public misSubServicios: any;
 
+  readonly separatorKeysCodes3: number[] = [ENTER, COMMA];
+  public visible3 = true;
+  public selectable3 = true;
+  public removable3 = true;
+  public addOnBlur3 = true;
+  public statusValidPhone3: boolean = false;
+  public fruits3: string[] = [];
+  public fruitCtrl3 = new FormControl();
+  public misSubServicios3: any;
+  
   public id_input: any;
+  keySearch: string;
 
   public colores: Array<any> = [];
   public totalPesoEntrada = 0;
@@ -235,6 +246,7 @@ export class SalidasFormComponent implements OnInit {
 
       tipo: ['' ],
       fruitCtrl2: [""],
+      fruitCtrl3: [""],
     });
     
     /*BUSCAR GRUPO*/
@@ -374,6 +386,58 @@ export class SalidasFormComponent implements OnInit {
       map(name => name ? this._filter7(name) : this.options7.slice())
     );
   }
+
+//precionar TECLA ENTER PARA OBSERVACION
+searchKeyCode(event, key) {
+   if (event.keyCode === 13) {
+    switch (key) {
+      case 'observacion':
+        this.keySearch = 'observacion';
+        let nombre: string
+        nombre = this.treeFormGroup.controls['observacion'].value
+        this.onSelectionChangedObser(nombre);
+        break;
+     
+      default:
+        break;
+    }
+  }
+
+}
+
+asignKey(value) {
+  this.keySearch = value;
+}
+
+onSelectionChangedObser(nombre) {
+  
+  console.log(nombre);
+  this.treeFormGroup.controls['observacion'].setValue('');
+  this.buscarSubServicio3(nombre)
+
+  this.fruits3.push(nombre);
+
+}
+ /////////////////////remover observacion seleccionados tipo etiquetas
+ buscarSubServicio3(fruit3: string): void {
+  const index = this.fruits3.indexOf(fruit3);
+  if (index >= 0) {
+    this.fruits3.splice(index, 1);
+  }
+  this.myControl2.controls["fruitCtrl3"].setValue(this.fruits3);
+}
+
+removePhone3(fruit3: string): void {
+  const index = this.fruits3.indexOf(fruit3);
+  if (index >= 0) {
+    this.fruits3.splice(index, 1);
+  }
+  this.myControl2.controls["fruitCtrl3"].setValue(this.fruits3);
+}
+/////////////////////remover subservicios seleccionados tipo etiquetas
+//precionar TECLA ENTER PARA OBSERVACION
+
+
   public closeModal() {
     this.closeStatus = !this.closeStatus;
     this.statusCloseModal.emit(this.closeStatus);
@@ -396,6 +460,10 @@ export class SalidasFormComponent implements OnInit {
       this.nameButtonAceptar = 'Agregar';
       this.fruits2 = [];
       this.myControl2.controls["fruitCtrl2"].setValue('');
+
+      this.fruits3 = [];
+      this.myControl2.controls["fruitCtrl3"].setValue('');
+
       this.treeFormGroup.controls["observacion"].setValue('');
   
       var editDetail = [];
@@ -411,7 +479,10 @@ export class SalidasFormComponent implements OnInit {
           dataEdit.push(this.element[i]);
         }
       });
-      this.treeFormGroup.controls["observacion"].setValue(dataEdit[0]["obs_out"]);
+      let ss = (dataEdit[0]["obs_out"]) ? dataEdit[0]["obs_out"].split(",") : "";
+      this.fruits3 = (ss !== "") ? ss : [];
+      this.myControl2.controls["fruitCtrl3"].setValue(this.fruits3);
+      //this.treeFormGroup.controls["observacion"].setValue(dataEdit[0]["obs_out"]);
   
       console.log(dataEdit[0]);
       this.id_input = dataEdit[0].id;
@@ -472,6 +543,8 @@ export class SalidasFormComponent implements OnInit {
       this.nameButtonAceptar = 'Agregar';
       this.fruits2 = [];
       this.myControl2.controls["fruitCtrl2"].setValue('');
+      this.fruits3 = [];
+      this.myControl2.controls["fruitCtrl3"].setValue('');
       this.treeFormGroup.controls["observacion"].setValue('');
   
       var editDetail = [];
@@ -487,8 +560,12 @@ export class SalidasFormComponent implements OnInit {
           dataEdit.push(this.element[i]);
         }
       });
-      this.treeFormGroup.controls["observacion"].setValue(dataEdit[0]["obs_out"]);
-  
+      
+      let ss = (dataEdit[0]["obs_out"]) ? dataEdit[0]["obs_out"].split(",") : "";
+      this.fruits3 = (ss !== "") ? ss : [];
+      this.myControl2.controls["fruitCtrl3"].setValue(this.fruits3);
+      //this.treeFormGroup.controls["observacion"].setValue(dataEdit[0]["obs_out"]);
+
       console.log(dataEdit[0]);
       this.id_input = dataEdit[0].id;
       //console.log(this.id_input);
@@ -790,8 +867,22 @@ export class SalidasFormComponent implements OnInit {
             this.loading = false;
 
           } else {
+            let miobser
+            if (this.fruits3.length === 0 ) {
+              miobser =this.treeFormGroup.controls["observacion"].value
+
+
+            }else{
+              this.misSubServicios3 = '';
+              Object.keys(this.fruits3).forEach(i => {
+                this.misSubServicios3 += this.fruits3[i] + ",";
+              });
+              let serviciosVan3 = this.misSubServicios3.substring(0, this.misSubServicios3.length - 1);
+              miobser = serviciosVan3
+            }
+
             let bodyData = Object.assign({
-              "observation": this.treeFormGroup.controls["observacion"].value,
+              "observation": miobser,
               "moreOutputs": list
             });
             console.warn(bodyData);
@@ -854,10 +945,21 @@ export class SalidasFormComponent implements OnInit {
             this.toasTer.error('Debe agregar al menos 1 salida');
 
           } else {
+            let miobser
+            if (this.fruits3.length === 0 ) {
+              miobser =this.treeFormGroup.controls["observacion"].value
 
+            }else{
+              this.misSubServicios3 = '';
+              Object.keys(this.fruits3).forEach(i => {
+                this.misSubServicios3 += this.fruits3[i] + ",";
+              });
+              let serviciosVan3 = this.misSubServicios3.substring(0, this.misSubServicios3.length - 1);
+              miobser = serviciosVan3
+            }
             let bodyData = Object.assign({
               "client_id": this.firstFormGroup.controls["client_id"].value,
-              "observation": this.treeFormGroup.controls["observacion"].value,
+              "observation": miobser,
               "branch_id": (this.secondsFormGroup.controls["sucursal_id"].value !== "") ? this.secondsFormGroup.controls["sucursal_id"].value : null,
               "foo": list
             });
@@ -1012,6 +1114,7 @@ export class SalidasFormComponent implements OnInit {
     this.fruits2.push(namesub);
 
   }
+
   private _filter(name: string): Servicio[] {
     const filterValue = name.toLowerCase();
     return this.options2.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
@@ -1081,6 +1184,7 @@ export class SalidasFormComponent implements OnInit {
     }
     this.myControl2.controls["fruitCtrl2"].setValue(this.fruits2);
   }
+  /////////////////////remover subservicios seleccionados tipo etiquetas
 
   public validarVacio(filterValue: string) {
     const text = filterValue;

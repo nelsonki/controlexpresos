@@ -34,7 +34,7 @@ export class ProcessedTableComponent implements OnInit {
   @Output() onChange: EventEmitter<File> = new EventEmitter<File>();
   @ViewChild(DateRangeComponent) dateRange: DateRangeComponent;
 
-  displayedColumns: string[] = ['Item', 'ID', 'Cliente - Sucursal', 'Peso de entrada', 'Peso de salida', 'Fecha Procesada','Fecha Cancelada','Status', 'Usuario', 'Acciones'];
+  displayedColumns: string[] = ['Item', 'ID', 'Cliente - Sucursal', 'Peso de entrada', 'Peso de salida', 'Fecha Procesada','Fecha Anulada','Status', 'Usuario', 'Acciones'];
   dataSource;
   public titleModal: string;
   public element =[];

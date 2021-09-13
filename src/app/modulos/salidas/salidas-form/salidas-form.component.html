@@ -397,10 +397,39 @@
                         <div class="form-group" class="width-form-groud col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <mat-form-field class="example-full-width ">
                                 <mat-label>Observación</mat-label>
-                                <input aria-label="Number" type="text" maxlength="100" placeholder="Observación" matInput formControlName="observacion">
+                                <input (keydown)="searchKeyCode($event, 'observacion')" name="observacion" aria-label="Number" type="text" maxlength="100" placeholder="Observación" matInput formControlName="observacion">
                             </mat-form-field>
                         </div>
+                        <mat-form-field class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 example-chip-list">
+                            <mat-chip-list #chipList3 aria-label="Fruit3 selection3">
+                                <mat-chip *ngFor="let fruit3 of fruits3" [selectable]="selectable3" [removable]="removable3" (removed)="removePhone3(fruit3)">
+                                    {{ fruit3 }}
+                                    <mat-icon matChipRemove *ngIf="removable3">cancel</mat-icon><br/>
+                                </mat-chip>
+
+                                <input placeholder="Lista de Observaciones" #fruitInput [formControl]="fruitCtrl3" [matChipInputFor]="chipList3" [matChipInputSeparatorKeyCodes]="separatorKeysCodes3" [matChipInputAddOnBlur]="addOnBlur3" onkeydown="return false" />
+                            </mat-chip-list>
+
+                        </mat-form-field>
+                        <div>
+                            <span class="text-menssag-span"> <i>Agrega multiples observaciones presionando "Enter"</i> </span>
+
+                        </div>
                     </div>
+
+                    <!--
+                    <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
+                        <mat-label>Seleccionar Sub Servicio</mat-label>
+
+                        <input aria-label="Number" type="text" placeholder="Seleccionar Sub Servicio" matInput formControlName="myControl_sub" [matAutocomplete]="auto2">
+                        <mat-autocomplete (optionSelected)="onSelectionChanged($event)" autoActiveFirstOption #auto2="matAutocomplete">
+
+                    <mat-option *ngFor="let option  of filteredOptions3  | async" [value]="option">
+                        {{ option.name }}
+                    </mat-option>
+                    </mat-autocomplete>
+                    </mat-form-field>
+                    -->
                 </div>
 
 
@@ -411,7 +440,7 @@
                                 <img src="../../../../../assets/menuIcons/back_w.png" height="36px" alt="">
                               </button> </div>
                         <div class="col-4 col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                            <button tabindex="-1" [disabled]="loading" mat-raised-button (click)="onSubmit()" color="primary">
+                            <button type="button" tabindex="-1" [disabled]="loading" mat-raised-button (click)="onSubmit()" color="primary">
                                 <strong>Guardar</strong> 
                                 </button>
                         </div>
