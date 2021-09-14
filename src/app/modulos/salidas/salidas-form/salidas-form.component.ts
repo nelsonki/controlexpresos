@@ -154,6 +154,7 @@ export class SalidasFormComponent implements OnInit {
   
   public id_input: any;
   keySearch: string;
+  public contarNuevos = false;
 
   public colores: Array<any> = [];
   public totalPesoEntrada = 0;
@@ -803,10 +804,23 @@ removePhone3(fruit3: string): void {
       let listEnpti = [];
       this.loading = true;
       let list = [];
+      let listNuevos = [];
       this.loading = true;
       Object.keys(this.personList).forEach(e => {
         if (this.personList[e]["id"] === 0) {
+          this.contarNuevos=true;
           if (this.idVieneGrupo!==0) {
+            listNuevos.push({
+              id: 0,
+              group_id: this.idVieneGrupo, 
+              service_id: this.personList[e]["servicio_id"],
+              weight: (this.personList[e]["peso"] !== '') ? this.personList[e]["peso"] : 0,
+              quantity: (this.personList[e]["cantidad"] !== '') ? this.personList[e]["cantidad"] : 0,
+              color_id: (this.personList[e]["color_id"] !== '') ? this.personList[e]["color_id"] : null,
+              subservice_id: (this.personList[e]["subservicio"] !== '') ? this.personList[e]["subservicio"] : '',
+              operation_type: this.personList[e]["tipo"],
+  
+            });
             list.push({
               id: 0,
               group_id: this.idVieneGrupo, 
@@ -819,6 +833,17 @@ removePhone3(fruit3: string): void {
   
             });
           }else{
+            listNuevos.push({
+              id: 0,
+              group_id:this.ultimoGrupo,
+              service_id: this.personList[e]["servicio_id"],
+              weight: (this.personList[e]["peso"] !== '') ? this.personList[e]["peso"] : 0,
+              quantity: (this.personList[e]["cantidad"] !== '') ? this.personList[e]["cantidad"] : 0,
+              color_id: (this.personList[e]["color_id"] !== '') ? this.personList[e]["color_id"] : null,
+              subservice_id: (this.personList[e]["subservicio"] !== '') ? this.personList[e]["subservicio"] : '',
+              operation_type: this.personList[e]["tipo"],
+  
+            });
             list.push({
               id: 0,
               group_id:this.ultimoGrupo,
@@ -880,11 +905,19 @@ removePhone3(fruit3: string): void {
               let serviciosVan3 = this.misSubServicios3.substring(0, this.misSubServicios3.length - 1);
               miobser = serviciosVan3
             }
-
-            let bodyData = Object.assign({
-              "observation": miobser,
-              "moreOutputs": list
-            });
+            let bodyData
+            if(this.contarNuevos==true){
+              bodyData = Object.assign({
+                "observation": miobser,
+                "moreOutputs": listNuevos
+              }); 
+            }else{
+              bodyData = Object.assign({
+                "observation": miobser,
+                "moreOutputs": list
+              });
+            }
+            
             console.warn(bodyData);
             
             this.salidasServices.update(this.id_input, bodyData).subscribe(

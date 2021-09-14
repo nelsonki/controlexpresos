@@ -210,7 +210,7 @@ export class SalidasTableComponent implements OnInit {
 
        });
        
-       //console.log(this.element)
+       console.log(this.element)
         this.dataSource = new MatTableDataSource(this.element);
         this.dataSource.paginator = this.paginator;
         return this.dataSource;
