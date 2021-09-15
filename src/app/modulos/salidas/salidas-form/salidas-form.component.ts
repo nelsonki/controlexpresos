@@ -729,7 +729,7 @@ removePhone3(fruit3: string): void {
       miid = this.personList[idv].id;
       for (let list of this.personList) {
         if (list.group_id == this.idVieneGrupo && list.id === miid && list.servicio_id === form.value.myControl_ser_id && list.color_id === form.value.myControl_color_id && list.tipo === form.value.tipo && list.subservicio === serviciosVan) {
-          list.id = miid,
+            list.id = miid,
             list.servicio = form.value.myControl_ser,
             list.servicio_id = form.value.myControl_ser_id,
             list.peso = parseFloat(pesoVan),
@@ -807,9 +807,68 @@ removePhone3(fruit3: string): void {
       let listNuevos = [];
       this.loading = true;
       Object.keys(this.personList).forEach(e => {
+        if (this.idVieneGrupo!==0) {//viene del boton de salidas parciales
+
+          if (this.personList[e]["id"] === 0) {
+            list.push({
+              id: 0,
+              group_id: this.idVieneGrupo, 
+              service_id: this.personList[e]["servicio_id"],
+              weight: (this.personList[e]["peso"] !== '') ? this.personList[e]["peso"] : 0,
+              quantity: (this.personList[e]["cantidad"] !== '') ? this.personList[e]["cantidad"] : 0,
+              color_id: (this.personList[e]["color_id"] !== '') ? this.personList[e]["color_id"] : null,
+              subservice_id: (this.personList[e]["subservicio"] !== '') ? this.personList[e]["subservicio"] : '',
+              operation_type: this.personList[e]["tipo"],
+  
+            });
+          }else{
+            list.push({
+              id: this.personList[e]["id"],
+              group_id:this.idVieneGrupo,
+              service_id: this.personList[e]["servicio_id"],
+              weight: (this.personList[e]["peso"] !== '') ? this.personList[e]["peso"] : 0,
+              quantity: (this.personList[e]["cantidad"] !== '') ? this.personList[e]["cantidad"] : 0,
+              color_id: (this.personList[e]["color_id"] !== '') ? this.personList[e]["color_id"] : null,
+              subservice_id: (this.personList[e]["subservicio"] !== '') ? this.personList[e]["subservicio"] : '',
+              operation_type: this.personList[e]["tipo"],
+  
+            });
+
+          }
+
+        }else{ 
+          if (this.personList[e]["id"] === 0) {
+            listNuevos.push({
+              id: 0,
+              group_id:this.ultimoGrupo,
+              service_id: this.personList[e]["servicio_id"],
+              weight: (this.personList[e]["peso"] !== '') ? this.personList[e]["peso"] : 0,
+              quantity: (this.personList[e]["cantidad"] !== '') ? this.personList[e]["cantidad"] : 0,
+              color_id: (this.personList[e]["color_id"] !== '') ? this.personList[e]["color_id"] : null,
+              subservice_id: (this.personList[e]["subservicio"] !== '') ? this.personList[e]["subservicio"] : '',
+              operation_type: this.personList[e]["tipo"],
+  
+            });
+          }else{
+            list.push({
+              id: this.personList[e]["id"],
+              group_id: this.personList[e]["group_id"], 
+              service_id: this.personList[e]["servicio_id"],
+              weight: (this.personList[e]["peso"] !== '') ? this.personList[e]["peso"] : 0,
+              quantity: (this.personList[e]["cantidad"] !== '') ? this.personList[e]["cantidad"] : 0,
+              color_id: (this.personList[e]["color_id"] !== '') ? this.personList[e]["color_id"] : null,
+              subservice_id: (this.personList[e]["subservicio"] !== '') ? this.personList[e]["subservicio"] : '',
+              operation_type: this.personList[e]["tipo"],
+  
+            });
+          }
+
+        }
+        /*
         if (this.personList[e]["id"] === 0) {
-          this.contarNuevos=true;
           if (this.idVieneGrupo!==0) {
+             this.contarNuevos=true;
+
             listNuevos.push({
               id: 0,
               group_id: this.idVieneGrupo, 
@@ -857,7 +916,7 @@ removePhone3(fruit3: string): void {
             });
           }
         } else {
-          list.push({
+           list.push({
             id: this.personList[e]["id"],
             group_id: this.personList[e]["group_id"], 
             service_id: this.personList[e]["servicio_id"],
@@ -868,7 +927,7 @@ removePhone3(fruit3: string): void {
             operation_type: this.personList[e]["tipo"],
 
           });
-        }
+        }*/
         this.totalPesoSalida = this.totalPesoSalida + parseFloat(this.personList[e]["peso"]);
 
       });
@@ -906,7 +965,7 @@ removePhone3(fruit3: string): void {
               miobser = serviciosVan3
             }
             let bodyData
-            if(this.contarNuevos==true){
+            if(this.idVieneGrupo===0){
               bodyData = Object.assign({
                 "observation": miobser,
                 "moreOutputs": listNuevos
@@ -932,8 +991,7 @@ removePhone3(fruit3: string): void {
                 this.loading = false;
 
 
-              }
-            );
+              });
 
           }
         }
