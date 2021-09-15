@@ -31,6 +31,10 @@ export class ClientServices {
         let enpoint = 'clients/sort';
         return this.http.doGet(this.api, enpoint );
     }
+    getListClienteFiltro(cliente) {
+        let enpoint = 'clients/search/'+cliente;
+        return this.http.doGet(this.api, enpoint );
+    }
     save(body) {
         let enpoint = 'clients/store';
         return this.http.doPost(this.api, enpoint, body);

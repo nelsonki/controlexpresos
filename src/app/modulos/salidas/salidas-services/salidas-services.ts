@@ -23,22 +23,31 @@ export class SalidasServices {
         }*/
     }
 
-    getList(fechaInicio?, fechaFin?) {
-        let enpoint;
+    getList(fechaInicio?, fechaFin?, cliente?, sucursal?) {
+        let enpoint;  
+        let vieneCliente = (cliente?cliente:0)
+        let vieneSucursal = (sucursal?sucursal:0)
+        if ((fechaInicio && fechaFin) || vieneCliente || vieneSucursal) {
+    
+            if(fechaInicio==="" && fechaFin===""){
+                enpoint = `outputs/index/in_course?client_id=${vieneCliente}&branch_id=${vieneSucursal}`;
 
-    if(fechaInicio==="" && fechaFin===""){
-        enpoint = 'outputs/index/in_course';
-    }else{
-        if(fechaInicio === fechaFin){
-            enpoint = 'outputs/index/in_course?day='+fechaInicio;
-       }else{
-            enpoint = 'outputs/index/in_course?interval='+fechaInicio+"_"+fechaFin;
-        }  
-    }
-       
+            }else{
+                if(fechaInicio === fechaFin){ 
+                    enpoint = `outputs/index/in_course?day=${fechaInicio}&client_id=${vieneCliente}&branch_id=${vieneSucursal} `;
+               }else{
+                    enpoint = `outputs/index/in_course?interval=${fechaInicio}_${fechaFin}&client_id=${vieneCliente}&branch_id=${vieneSucursal}`;
+                }  
+            }
+        }else{
+            enpoint = 'outputs/index/in_course';
+        }
 
         return this.http.doGet(this.api, enpoint );
     }
+
+
+
     getOperaciones(fechaInicio?, fechaFin?) {
         let enpoint;
 

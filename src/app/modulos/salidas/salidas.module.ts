@@ -24,12 +24,15 @@ import { SalidasDeleteComponent } from './dialog/salidas-delete/salidas-delete.c
 import { SalidasCerrarComponent } from './dialog/salidas-cerrar/salidas-cerrar.component'
 import { DateRangeComponent } from './date-range/date-range.component';
 import { NgxMatDrpModule } from './date-range/modules/ngx-mat-drp/ngx-mat-drp.module';
+import { SalidasFiltroComponent } from './dialog/salidas-filtro/salidas-filtro.component';
+
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
-  declarations: [SalidasTableComponent, SalidasFormComponent, SalidasDeleteComponent, SalidasCerrarComponent, DateRangeComponent],
+  declarations: [SalidasTableComponent, SalidasFormComponent, SalidasDeleteComponent, SalidasCerrarComponent, DateRangeComponent, SalidasFiltroComponent],
   imports: [
     CommonModule,
-    SalidasRoutingModule,
+    SalidasRoutingModule, 
     ModalModule,
     ButtonsModule,
     WavesModule,
@@ -44,7 +47,8 @@ import { NgxMatDrpModule } from './date-range/modules/ngx-mat-drp/ngx-mat-drp.mo
     MatToolbarModule,
     MaterialModule,
     ReactiveFormsModule,
-    NgxMatDrpModule
+    NgxMatDrpModule,
+    MatDatepickerModule
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA,
     NO_ERRORS_SCHEMA]

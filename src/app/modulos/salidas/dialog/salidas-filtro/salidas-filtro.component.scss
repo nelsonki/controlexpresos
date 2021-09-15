@@ -1,0 +1,91 @@
+::ng-deep .cdk-overlay-container {
+    z-index: 1200 !important;
+}
+
+.width-form-groud {
+    display: inline-flex;
+    width: 100%;
+}
+
+.center-icon-search {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    cursor: pointer;
+}
+
+.typeahead--list {
+    list-style: none;
+    width: 100%;
+    min-width: 100%;
+    cursor: pointer;
+    border-bottom: 1px solid #eeeeee;
+    padding: 0.25em 0.625em;
+    font-size: 0.6rem;
+}
+
+.typeahead--ul>li:hover {
+    background-color: #bfdeff;
+}
+
+.typeahead--wrapper {
+    position: absolute;
+    z-index: 1000;
+    background-color: white;
+    // display:table;
+    border: 1px solid #ced4da;
+    width: 100%;
+    min-width: 100%;
+    -webkit-box-shadow: 3px 7px 10px -10px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 3px 7px 10px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 3px 7px 10px -10px rgba(0, 0, 0, 0.75);
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 170px;
+    white-space: nowrap;
+    //padding: 10px;
+    // border-radius: 25px;
+}
+
+.typeahead--ul {
+    padding: 0;
+    list-style-type: none;
+    display: table;
+    width: 100%;
+}
+
+.style-curso {
+    cursor: pointer;
+}
+
+.align-buttons {
+    text-align: right;
+}
+
+.button-search {
+    background-color: transparent;
+    border: 1px;
+}
+
+.example-h2 {
+    margin: 10px;
+}
+
+.example-section {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 60px;
+}
+
+.example-margin {
+    margin: 0 10px;
+}
+
+.example-chip-list {
+    width: 100%;
+}
+
+.padding-top-form {
+    padding-top: 0px !important;
+}

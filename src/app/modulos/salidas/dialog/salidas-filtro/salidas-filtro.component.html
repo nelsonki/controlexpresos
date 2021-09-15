@@ -1,0 +1,95 @@
+<form action="#" [formGroup]="formGroup">
+
+    <div class="modal-header">
+        <div class="modal-title h4">Busqueda Avanzada</div>
+    </div>
+    <div class="modal-body">
+
+
+        <div class="form-group row">
+            <label for="example-search-input" class="col-3 col-form-label">Cliente</label>
+            <div class=" col-9 ">
+                <div style="display: flex; " [ngClass]="{'spinner spinner-sm spinner-primary': loadingCliente }">
+                    <input type="search" class="form-control form-control form-control-solid" placeholder="Cliente" (keyup)="disableValidInput('clienteValid')" (click)="asignKey( 'cliente')" (keydown)="searchKeyCode($event, 'cliente')" formControlName="myControlCliente"
+                    />
+
+                    <button class="svg-icon svg-icon-lg center-icon-search button-search" [disabled]="searchButtonCliente" (click)="asignKey( 'cliente');searchCliente()"><i class="fas fa-search"></i></button>
+                    <span>
+                        <i class="quick-search-close ki ki-close icon-sm text-muted" [style.display]="'none'"></i>
+                    </span>
+                </div>
+
+                <div class="typeahead--wrapper" *ngIf="openOptionCliente">
+                    <div>
+                        <div class="font-size-sm text-primary  text-uppercase mb-1">
+                            Clientes
+                        </div>
+                        <div class="mb-10 typeahead--wrapper" (click)="setDataFormulClienteNull()">
+                            <ul class="typeahead--ul" (click)="setDataFormulClienteNull()">
+                                <li *ngFor="let data of filteredOptionsCliente" class="typeahead--list" (click)="setDataFormulCliente($event, data.id, data.name)">
+                                    <b>{{ data.name }} </b>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="example-search-input" class="col-3 col-form-label">Sucursal</label>
+            <div class=" col-9 ">
+                <div style="display: flex; " [ngClass]="{'spinner spinner-sm spinner-primary': loadingSucursal }">
+                    <input type="search" class="form-control form-control form-control-solid" placeholder="Sucursal" (keyup)="disableValidInput('sucursalValid')" (click)="asignKey( 'sucursal')" (keydown)="searchKeyCode($event, 'sucursal')" formControlName="myControlSucursal"
+                    />
+
+                    <button class="svg-icon svg-icon-lg center-icon-search button-search" [disabled]="searchButtonSucursal" (click)="asignKey( 'sucursal');searchSucursal()"><i class="fas fa-search"></i></button>
+                    <span>
+                                        <i class="quick-search-close ki ki-close icon-sm text-muted"
+                                            [style.display]="'none'"></i>
+                                    </span>
+                </div>
+
+                <div class="typeahead--wrapper" *ngIf="openOptionSucursal">
+                    <div>
+                        <div class="font-size-sm text-primary text-uppercase mb-2">
+                            Sucursales
+                        </div>
+                        <div class="mb-10 typeahead--wrapper" (click)="setDataFormulSucursalNull()">
+                            <ul class="typeahead--ul" (click)="setDataFormulSucursalNull()">
+                                <li *ngFor="let data of filteredOptionsSucursal" class="typeahead--list" (click)="setDataFormulSucursal($event, data.id, data.name)">
+                                    <b>{{ data.name }} </b>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="example-search-input" class="col-3 col-form-label">Intervalos</label>
+            <div class="col-9">
+                <mat-form-field class="example-form-field  " appearance="fill">
+                    <mat-label>Intervalos de fecha</mat-label>
+                    <mat-date-range-input [formGroup]="campaignOne" [rangePicker]="campaignOnePicker" [comparisonStart]="campaignOne.value.start" [comparisonEnd]="campaignOne.value.end">
+                        <input nameit matStartDate placeholder="Fecha inicio" formControlName="start2" (dateChange)="filterByDateStart($event, 'start')">
+                        <input nameit matEndDate placeholder="Fecha fin" formControlName="end2" (dateChange)="filterByDateEnd($event, 'end')">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+                </mat-form-field>
+            </div>
+        </div>
+
+    </div>
+
+
+    <mat-dialog-actions align="center">
+        <button mat-button mat-raised-button color="primary" [mat-dialog-close]="true" (click)="filtrarOperaciones()">Filtrar</button>
+        <button mat-button mat-raised-button color="accent" class="color-text" mat-dialog-close>Cancelar</button>
+    </mat-dialog-actions>
+
+
+
+
+
+</form>

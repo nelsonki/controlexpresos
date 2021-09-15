@@ -15,6 +15,7 @@ export class HttpServices {
         // let info = JSON.parse(localStorage.getItem('info'));
     //let info = this.localService.getJsonValue('info');
     this.local = this.localService.getJsonValue('info');
+    console.log(this.local)
     if (this.local !== null) {
       this.autorization = new HttpHeaders({
         'Authorization': 'Bearer ' + this.local.session.original.token,

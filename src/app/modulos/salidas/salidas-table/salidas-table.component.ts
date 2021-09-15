@@ -13,10 +13,12 @@ import {EntradasServices} from '../../entradas/entradas-services/entradas-servic
 import {SalidasFormComponent} from '../salidas-form/salidas-form.component'
 import {SalidasDeleteComponent} from '../dialog/salidas-delete/salidas-delete.component'
 import {SalidasCerrarComponent} from '../dialog/salidas-cerrar/salidas-cerrar.component'
+import {SalidasFiltroComponent} from '../dialog/salidas-filtro/salidas-filtro.component'
 import { environment } from '../../../../environments/environment';
 import { DateRangeComponent } from '../date-range/date-range.component';
 
 declare var $: any;
+const pad = (i: number): string => i < 10 ? `0${i}` : `${i}`;
 
 @Component({
   selector: 'app-salidas-table',
@@ -59,6 +61,14 @@ export class SalidasTableComponent implements OnInit {
   public total_weight_out=0;
   //public grupoID =[];
   //public resultGrupoID =[]
+
+  start_date;
+  end_date;
+  start_dateExp;
+  end_dateExp;
+  cliente=0;
+  sucursal=0;
+
   ngAfterViewInit() {
   }
   constructor(
@@ -76,6 +86,8 @@ export class SalidasTableComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.cliente=0;
+   this.sucursal=0;
     this.fechaInicio="";
     this.fechaFin="";
     this.fechaExcelInicio="";
@@ -83,10 +95,10 @@ export class SalidasTableComponent implements OnInit {
     this.total_weight_in=0; 
     //this.loadAll(this.fechaInicio, this.fechaFin);
   }
-  public loadAll(fInicio?, fFin?){ 
+  public loadAll(fInicio?, fFin?, vieneCliente?, vieneSucursal?){ 
     this.total_weight_in=0;
     this.total_weight_out=0;
-    this.salidasServices.getList(fInicio, fFin).subscribe((value) => {
+    this.salidasServices.getList(fInicio, fFin, vieneCliente, vieneSucursal).subscribe((value) => {
       this.data=[];
       this.dataOut=[];
 
@@ -254,11 +266,12 @@ export class SalidasTableComponent implements OnInit {
   }
   public exportTo(){
     
-    if(this.fechaExcelInicio !=="" && this.fechaExcelFin !==""){
-      window.open( this.api + 'reports/export/'+this.fechaExcelInicio+"_"+this.fechaExcelFin );
+    if((this.fechaExcelInicio !=="" && this.fechaExcelFin !=="") || this.cliente || this.sucursal){
+      
+      window.open( this.api + 'reports/export/'+this.fechaExcelInicio+"_"+this.fechaExcelFin+'?client_id='+this.cliente+'&branch_id='+this.sucursal );
 
     }else{
-          window.open( this.api + 'reports/export/' );
+          window.open( this.api + 'reports/export?client_id='+this.cliente+'&branch_id='+this.sucursal );
 
     }
   }
@@ -410,5 +423,65 @@ export class SalidasTableComponent implements OnInit {
    }
   printParcial(id,idGrupo){
     window.open( this.api + 'reports/printPartialOutput/'+ id+'/'+idGrupo);
-   }
+  }
+
+  filtrarOperacion(){
+    const modalRef = this.dialog.open(SalidasFiltroComponent, {
+      width: "500px",
+      //data: [id]
+    });
+    modalRef.afterClosed().subscribe(art => {
+      if (art != undefined)
+        this.superFiltro(art[0],art[1],art[2],art[3],art[4],art[5]);
+    });
+ 
+  }
+    superFiltro(dateStart?, keyStart?, dateEnd?, keyEnd?,  vieneCliente?, vieneSucursal?) {
+
+      
+
+      this.cliente = (vieneCliente)?vieneCliente:0;
+      this.sucursal = (vieneSucursal)?vieneSucursal:0;
+  
+      if(keyStart!==0 && keyEnd!==0){
+        this.start_date=this.toModel(dateStart)
+        this.end_date=this.toModel(dateEnd)
+        this.start_dateExp=this.toModelExportar(dateStart)
+        this.end_dateExp=this.toModelExportar(dateEnd)
+      } 
+      if(keyStart!==0 && keyEnd===0){
+        this.start_date=this.toModel(dateStart)
+        this.end_date=this.toModel(dateStart)
+        this.start_dateExp=this.toModelExportar(dateStart)
+        this.end_dateExp=this.toModelExportar(dateStart)
+      }
+      if(keyStart===0 && keyEnd!==0){
+        this.start_date=this.toModel(dateEnd)
+        this.end_date=this.toModel(dateEnd)
+        this.start_dateExp=this.toModelExportar(dateEnd)
+        this.end_dateExp=this.toModelExportar(dateEnd)
+      }
+      if(keyStart===0 && keyEnd===0){
+        this.start_date=0
+        this.end_date=0
+        this.start_dateExp=""
+        this.end_dateExp=""
+      }
+      this.fechaExcelInicio = this.start_dateExp
+      this.fechaExcelFin = this.end_dateExp
+      this.loadAll(this.start_date, this.end_date, this.cliente, this.sucursal );
+
+      console.log(this.start_date)
+      console.log(this.end_date)
+      console.log(this.cliente)
+      console.log(this.sucursal)
+    }
+    toModel(date: Date): string | null {
+      return date != null ? `${pad(date.getDate())}-${pad(date.getMonth()+1)}-${date.getFullYear()}` : null;
+    }
+    toModelExportar(date: Date): string | null {
+      return date != null ? `${date.getFullYear()}-${pad(date.getMonth()+1)}-${pad(date.getDate())}` : null;
+    }
+  
+
 } 
