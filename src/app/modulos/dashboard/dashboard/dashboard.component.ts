@@ -79,6 +79,15 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['/dashboard/Stats']);
     this.drawer.close();
   }
+  indicadores() {
+    this.router.navigate(['/dashboard/indicadores']);
+    this.drawer.close();
+  }
+
+  settings() {
+    this.router.navigate(['/dashboard/settings']);
+    this.drawer.close();
+  }
   listarClientes() {
     this.router.navigate(['/dashboard/Client']);
     this.drawer.close();
@@ -133,7 +142,7 @@ export class DashboardComponent implements OnInit {
     }
 
     let image = this.localService.getJsonValue('image');
-    console.log("imagen:"+image)
+    console.log("imagen:" + image)
     if (image !== undefined) {
       //image
       this.userProfileImage = image
@@ -184,7 +193,7 @@ export class DashboardComponent implements OnInit {
       }
       if (info.rol.toLowerCase() === 'op_entradas') {
         return 3;
-      }  
+      }
     }
 
   }

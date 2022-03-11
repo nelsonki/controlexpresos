@@ -96,6 +96,7 @@ export class HttpService {
 
   checkRole() {
     let info = this.localService.getJsonValue('info');
+    console.log(info)
     if (info.rol) {
       if (info.rol.toLowerCase() === 'admin') {
         return true;
