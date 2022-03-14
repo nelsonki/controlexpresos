@@ -4,7 +4,7 @@
         <form [formGroup]="formLibras">
             <br>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <div>
                         &nbsp;
                         <mat-form-field>
@@ -24,9 +24,9 @@
                             </mat-select>
                         </mat-form-field>
                         &nbsp;
-                        <mat-form-field *ngIf="!checkedDateLi">
-                            <mat-select (blur)="cargarDias()" formControlName="searchDateByMonthLi"
-                                placeholder="Seleccione el mes">
+                        <mat-form-field *ngIf="checkedDateLi==='mes' || checkedDateLi==='dia'">
+                            <mat-select (change)="cargarDias()" (blur)="cargarDias()"
+                                formControlName="searchDateByMonthLi" placeholder="Seleccione el mes">
                                 <mat-option value="01">Enero</mat-option>
                                 <mat-option value="02">Febrero</mat-option>
                                 <mat-option value="03">Marzo</mat-option>
@@ -42,9 +42,10 @@
                             </mat-select>
                         </mat-form-field>
                         &nbsp;
-                        <mat-form-field *ngIf="!checkedDateLi">
+                        <mat-form-field *ngIf="checkedDateLi==='dia'">
 
-                            <mat-select formControlName="searchDateByDayLi" id="searchDateByDayLi">
+                            <mat-select placeholder="Seleccione el díá" formControlName="searchDateByDayLi"
+                                id="searchDateByDayLi">
                                 <mat-option *ngFor="let day  of dayArray" [value]="day">
                                     {{day}}
                                 </mat-option>
@@ -53,14 +54,19 @@
                         </mat-form-field>
                         &nbsp;
                         <button type="button" mat-raised-button color="primary"
-                            (click)="setFilterLibras()">Filtrar</button>
+                            (click)="setFilterLibras()">Buscar</button>
                     </div>
                 </div>
-                <div class="col-md-6 right">
-                    <mat-slide-toggle style="margin-top:20px;" formControlName="toogleDateLi" class="example-margin"
-                        color="primary" [checked]="checkedDateLi">
-                        {{ labelFiltroLi }}
-                    </mat-slide-toggle>
+                <div class="col-md-4 right">
+
+                    <mat-form-field>
+                        <mat-select formControlName="toogleDateLi" placeholder="Filtrar  ">
+                            <mat-option value="year">por año</mat-option>
+                            <mat-option value="mes"> por mes</mat-option>
+                            <mat-option value="dia">por día</mat-option>
+
+                        </mat-select>
+                    </mat-form-field>
                 </div>
             </div>
         </form>

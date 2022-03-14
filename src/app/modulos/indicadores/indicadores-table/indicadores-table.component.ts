@@ -5,6 +5,7 @@ import { IndicadoresServices } from '../indicadores-services/indicadores-service
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Chart } from 'angular-highcharts';
+const pad = (i: number): string => i < 10 ? `0${i}` : `${i}`;
 
 declare var $: any;
 
@@ -17,7 +18,7 @@ export class IndicadoresTableComponent implements OnInit {
   public labelFiltroLi: String = 'Filtrar por año'
   public labelFiltroCo: String = 'Filtrar por año';
 
-  public checkedDateLi: Boolean = true;
+  public checkedDateLi = 'year';
   public checkedDateCo: Boolean = true;
 
   public abridorArray = [];
@@ -59,6 +60,7 @@ export class IndicadoresTableComponent implements OnInit {
       toogleDateLi: [true]
     });
     this.formLibras.controls['searchDateByYearLi'].setValue(this.selected);
+    this.formLibras.controls['toogleDateLi'].setValue('year');
 
     this.formConsumido = fb.group({
       searchDateByYearCo: ['2021'],
@@ -75,13 +77,28 @@ export class IndicadoresTableComponent implements OnInit {
 
   ngOnInit() {
     this.formLibras.controls['toogleDateLi'].valueChanges.subscribe((data: any) => {
-      if (data === false) {
-        this.labelFiltroLi = 'Filtrar por mes';
-        this.checkedDateLi = false;
-      } else {
-        this.labelFiltroLi = 'Filtrar por año';
-        this.checkedDateLi = true;
+      //console.log(data)
+      switch (data) {
+        case "year":
+          this.checkedDateLi = 'year';
+          break;
+        case "mes":
+          this.checkedDateLi = 'mes';
+          break;
+        case "dia":
+          this.checkedDateLi = 'dia';
+          break;
+        default:
+          break;
+
       }
+      /* if (data === false) {
+         this.labelFiltroLi = 'Filtrar por mes';
+         this.checkedDateLi = false;
+       } else {
+         this.labelFiltroLi = 'Filtrar por año';
+         this.checkedDateLi = true;
+       }*/
     });
 
     this.formConsumido.controls['toogleDateCo'].valueChanges.subscribe((data: any) => {
@@ -98,15 +115,15 @@ export class IndicadoresTableComponent implements OnInit {
   }
   cargarDias() {
 
-    if (this.formLibras.value.toogleDateLi === false) {
+    if (this.formLibras.value.toogleDateLi === 'mes' || this.formLibras.value.toogleDateLi === 'dia') {
       let days = []
       this.dayArray = []
       let month = 0;
       month = this.daysInMonth(this.formLibras.value.searchDateByMonthLi, this.formLibras.value.searchDateByYearLi)
       for (let i = 1; i <= month; i++) {
-        this.dayArray.push(i)
+        this.dayArray.push(pad(i))
       }
-      console.log(this.dayArray)
+      //console.log(this.dayArray)
 
     }
   }
@@ -121,45 +138,76 @@ export class IndicadoresTableComponent implements OnInit {
       this.toaster.warning("Por favor seleccione un año para consultar el mes")
       return false;
     }
-    if (this.formLibras.value.toogleDateLi === false && this.formLibras.value.searchDateByMonthLi === null) {
+    if (this.formLibras.value.toogleDateLi === 'mes' && this.formLibras.value.searchDateByMonthLi === null) {
       this.toaster.warning("Por favor seleccione un mes")
       return false;
     }
-    // si mes va vacio es null
-    if (this.formLibras.value.toogleDateLi === false) {
+    if (this.formLibras.value.toogleDateLi === 'dia' && this.formLibras.value.searchDateByMonthLi === null && this.formLibras.value.searchDateByYearLi !== null) {
+      this.toaster.warning("Por favor seleccione un mes para consultar el día")
+      return false;
+    }
+    if (this.formLibras.value.toogleDateLi === 'dia' && this.formLibras.value.searchDateByDayLi === null) {
+      this.toaster.warning("Por favor seleccione un dia")
+      return false;
+    }
+    if (this.formLibras.value.toogleDateLi === 'dia') {
       let days = []
       //this.dayArray = []
       month = this.daysInMonth(this.formLibras.value.searchDateByMonthLi, this.formLibras.value.searchDateByYearLi)
       for (let i = 1; i <= month; i++) {
-        console.log(this.dayArray)
         //this.dayArray.push(i)
-        days.push(i);
-      } console.log(this.dayArray)
+        days.push(pad(i));
+      }
       this.xAxis = days;
-      this.indicadoresServices.getIndicadoresdData(this.formLibras.value.searchDateByMonthLi, this.formLibras.value.searchDateByYearLi, 'dias', 'quantity').subscribe((response: any) => {
+      this.indicadoresServices.getIndicadoresdData(this.formLibras.value.searchDateByMonthLi, this.formLibras.value.searchDateByYearLi, this.formLibras.value.searchDateByDayLi, 'dias', 'quantity').subscribe((response: any) => {
         this.graphicData = [{
           data: response,
           name: "Libras por clientes",
         }
         ];
-        console.log(response)
+        //console.log(response)
       }, (error: any) => {
 
       }, () => {
 
-        console.log(this.graphicData);
+        //console.log(this.graphicData);
         this.makeGraphLibras('Total de libras por cliente de salidas por día, mes ' + this.getMonthByNumber(this.formLibras.value.searchDateByMonthLi) + ' ' + this.formLibras.value.searchDateByYearLi, this.xAxis, 'Cantidad', this.graphicData);
       });
-    } else {
+    }
+    if (this.formLibras.value.toogleDateLi === 'mes') {
+      let days = []
+      //this.dayArray = []
+      month = this.daysInMonth(this.formLibras.value.searchDateByMonthLi, this.formLibras.value.searchDateByYearLi)
+      for (let i = 1; i <= month; i++) {
+        //this.dayArray.push(i)
+        days.push(pad(i));
+      }
+      this.xAxis = days;
+      this.indicadoresServices.getIndicadoresdData(this.formLibras.value.searchDateByMonthLi, this.formLibras.value.searchDateByYearLi, this.formLibras.value.searchDateByDayLi, 'mes', 'quantity').subscribe((response: any) => {
+        this.graphicData = [{
+          data: response,
+          name: "Libras por clientes",
+        }
+        ];
+        // console.log(response)
+      }, (error: any) => {
+
+      }, () => {
+
+        // console.log(this.graphicData);
+        this.makeGraphLibras('Total de libras por cliente de salidas por día, mes ' + this.getMonthByNumber(this.formLibras.value.searchDateByMonthLi) + ' ' + this.formLibras.value.searchDateByYearLi, this.xAxis, 'Cantidad', this.graphicData);
+      });
+    }
+    if (this.formLibras.value.toogleDateLi === 'year') {
       this.xAxis = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
-      this.indicadoresServices.getIndicadoresdData(this.formLibras.value.searchDateByMonthLi, this.formLibras.value.searchDateByYearLi, 'annio', 'quantity').subscribe((response: any) => {
+      this.indicadoresServices.getIndicadoresdData(this.formLibras.value.searchDateByMonthLi, this.formLibras.value.searchDateByYearLi, this.formLibras.value.searchDateByDayLi, 'year', 'quantity').subscribe((response: any) => {
         this.graphicData = [
           {
             name: "Libras por clientes",
             data: response
           }
         ];
-        console.log(response)
+        //console.log(response)
       }, (error: any) => {
 
       }, () => {
@@ -220,6 +268,8 @@ export class IndicadoresTableComponent implements OnInit {
 
 
   makeGraphLibras(title?, xAxis?, yAxisText?, data?) {
+    console.log(data)
+    console.log(data[0]['data'])
     this.chartLibras = new Chart({
       chart: {
         plotBackgroundColor: null,
@@ -252,25 +302,7 @@ export class IndicadoresTableComponent implements OnInit {
         name: 'Libras',
         colorByPoint: true,
         type: undefined,
-        data: [{
-          name: 'HOSPITALES NACIONALES SA',
-          y: 61.41
-        }, {
-          name: 'HOTEL HARTIN TRADING SA',
-          y: 11.84
-        }, {
-          name: 'HOSPITAL SANTO TOMAS',
-          y: 10.85
-        }, {
-          name: 'HOSPITAL GENERAL MDS SA',
-          y: 4.67
-        }, {
-          name: 'HOSPITAL BRISAS',
-          y: 4.18
-        }, {
-          name: 'JEAN MICHELLE SA',
-          y: 1.64
-        }]
+        data: data[0]['data']
       }]
     });
   }

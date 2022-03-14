@@ -36,30 +36,20 @@ export class IndicadoresServices {
     return this.http.doGet(this.api, enpoint);
   }
 
-  /*getDashboardUser(month, year, filter) {  
-      console.log(month, year, filter);
-      let endpoint = '';
-      if (filter === "annio") {
-        endpoint = `dashboard/chart/${year}`;
-      } else {
-        endpoint = `dashboard/chart/${year}/${month}`;
-      }
-      return this._http.get(this.api + endpoint, { headers: this.autorization });
-  } */
-  getIndicadoresdData(month, year, filter, parametro) {
-    console.log(month, year, filter, parametro);
+  getIndicadoresdData(month, year, dia, filter, parametro) {
+    console.log(month, year, dia, filter, parametro);
     let endpoint = '';
     //https://qajakiro2.zippyttech.com/api/dashboard/cakeChart
-    if (filter === "annio") {
+    if (filter === "dias") {
+      endpoint = `dashboard/cakeChart?day=${year}-${month}-${dia}`;
+    }
+    if (filter === "year") {
       endpoint = `dashboard/cakeChart?year=${year}`;
-    } else {
+    }
+    if (filter === "mes") {
+
       endpoint = `dashboard/cakeChart?year=${year}&month=${month}`;
     }
     return this._http.get(this.api + endpoint, { headers: this.autorization });
   }
-  /*postdevice(env) {
-    let endpoint = `mng/v1/act`;
-    return this.http.abrirDevice(this.apiDevice + endpoint, env);
-  }*/
-
 }
