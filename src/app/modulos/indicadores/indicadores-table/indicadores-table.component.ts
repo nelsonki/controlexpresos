@@ -18,12 +18,12 @@ export class IndicadoresTableComponent implements OnInit {
   public labelFiltroLi: String = 'Filtrar por año'
   public labelFiltroCo: String = 'Filtrar por año';
 
-  public checkedDateLi = 'year';
-  public checkedDateCo: Boolean = true;
+  public checkedDateLi = 'dia';
+  public checkedDateCo = 'dia';
 
-  public abridorArray = [];
 
   public chartLibras;
+  public chartCo;
 
   public dataSource;
   public dataFilter: any;
@@ -35,15 +35,17 @@ export class IndicadoresTableComponent implements OnInit {
 
   public dateNow = new Date();
   public dayArray = [];
+  public dayArrayCo = [];
 
-  public selected: any;
-  columnsToDisplay = [
-    "Item",
-    "Nombre de Usuario",
-    "Tipo de Usuario",
-    "Vehículo",
-    "Fecha de entrada"
-  ];
+  public selectedLi: any;
+  public selectedMesLi: any;
+  public selectedDiaLi: any;
+
+  public selectedCo: any;
+  public selectedMesCo: any;
+  public selectedDiaCo: any;
+
+
   formLibras: FormGroup;
   formConsumido: FormGroup;
 
@@ -51,25 +53,40 @@ export class IndicadoresTableComponent implements OnInit {
     public toaster: ToastrService,
     public fb: FormBuilder,
     public indicadoresServices: IndicadoresServices) {
-    this.selected = this.dateNow.getFullYear().toString();
+    this.selectedLi = this.dateNow.getFullYear().toString();
+    this.selectedMesLi = pad(this.dateNow.getMonth() + 1).toString();
+    this.selectedDiaLi = this.dateNow.getDate().toString();
+
+    this.selectedCo = this.dateNow.getFullYear().toString();
+    this.selectedMesCo = pad(this.dateNow.getMonth() + 1).toString();
+    this.selectedDiaCo = this.dateNow.getDate().toString();
 
     this.formLibras = fb.group({
-      searchDateByYearLi: ['2021'],
+      searchDateByYearLi: ['2022'],
       searchDateByMonthLi: [],
       searchDateByDayLi: [],
-      toogleDateLi: [true]
+      toogleDateLi: ['dia']
     });
-    this.formLibras.controls['searchDateByYearLi'].setValue(this.selected);
-    this.formLibras.controls['toogleDateLi'].setValue('year');
+    this.formLibras.controls['searchDateByYearLi'].setValue(this.selectedLi);
+    this.formLibras.controls['searchDateByMonthLi'].setValue(this.selectedMesLi);
+    this.formLibras.controls['searchDateByDayLi'].setValue(this.selectedDiaLi);
+    this.cargarDias()
+
+    this.formLibras.controls['toogleDateLi'].setValue('dia');
 
     this.formConsumido = fb.group({
-      searchDateByYearCo: ['2021'],
+      searchDateByYearCo: ['2022'],
       searchDateByMonthCo: [],
-      toogleDateCo: [true]
+      searchDateByDayCo: [],
+      toogleDateCo: ['dia']
     });
-    this.formConsumido.controls['searchDateByYearCo'].setValue(this.selected);
 
+    this.formConsumido.controls['searchDateByYearCo'].setValue(this.selectedCo);
+    this.formConsumido.controls['searchDateByMonthCo'].setValue(this.selectedMesCo);
+    this.formConsumido.controls['searchDateByDayCo'].setValue(this.selectedDiaCo);
+    this.cargarDiasOps()
 
+    this.formConsumido.controls['toogleDateCo'].setValue('dia');
 
   }
   ngOnDestroy(): void {
@@ -77,7 +94,6 @@ export class IndicadoresTableComponent implements OnInit {
 
   ngOnInit() {
     this.formLibras.controls['toogleDateLi'].valueChanges.subscribe((data: any) => {
-      //console.log(data)
       switch (data) {
         case "year":
           this.checkedDateLi = 'year';
@@ -92,26 +108,29 @@ export class IndicadoresTableComponent implements OnInit {
           break;
 
       }
-      /* if (data === false) {
-         this.labelFiltroLi = 'Filtrar por mes';
-         this.checkedDateLi = false;
-       } else {
-         this.labelFiltroLi = 'Filtrar por año';
-         this.checkedDateLi = true;
-       }*/
+
     });
 
     this.formConsumido.controls['toogleDateCo'].valueChanges.subscribe((data: any) => {
-      if (data === false) {
-        this.labelFiltroCo = 'Filtrar por mes';
-        this.checkedDateCo = false;
-      } else {
-        this.labelFiltroCo = 'Filtrar por año';
-        this.checkedDateCo = true;
+      switch (data) {
+        case "year":
+          this.checkedDateCo = 'year';
+          break;
+        case "mes":
+          this.checkedDateCo = 'mes';
+          break;
+        case "dia":
+          this.checkedDateCo = 'dia';
+          break;
+        default:
+          break;
+
       }
     });
 
     this.setFilterLibras();
+    this.setFilterOps();
+
   }
   cargarDias() {
 
@@ -124,6 +143,21 @@ export class IndicadoresTableComponent implements OnInit {
         this.dayArray.push(pad(i))
       }
       //console.log(this.dayArray)
+
+    }
+
+  }
+  cargarDiasOps() {
+
+    if (this.formConsumido.value.toogleDateCo === 'mes' || this.formConsumido.value.toogleDateCo === 'dia') {
+      let days = []
+      this.dayArrayCo = []
+      let month = 0;
+      month = this.daysInMonth(this.formConsumido.value.searchDateByMonthCo, this.formConsumido.value.searchDateByYearCo)
+      for (let i = 1; i <= month; i++) {
+        this.dayArrayCo.push(pad(i))
+      }
+      //console.log(this.dayArrayCo)
 
     }
   }
@@ -167,11 +201,14 @@ export class IndicadoresTableComponent implements OnInit {
         ];
         //console.log(response)
       }, (error: any) => {
+        if (error.status == '404') {
+          this.toaster.error("No hay operaciones registradas")
 
+        }
       }, () => {
 
         //console.log(this.graphicData);
-        this.makeGraphLibras('Total de libras por cliente de salidas por día, mes ' + this.getMonthByNumber(this.formLibras.value.searchDateByMonthLi) + ' ' + this.formLibras.value.searchDateByYearLi, this.xAxis, 'Cantidad', this.graphicData);
+        this.makeGraphLibras('Total de libras por cliente de entradas para el día ' + this.formLibras.value.searchDateByDayLi + ', del mes ' + this.getMonthByNumber(this.formLibras.value.searchDateByMonthLi) + ' ' + this.formLibras.value.searchDateByYearLi, this.xAxis, 'Cantidad', this.graphicData);
       });
     }
     if (this.formLibras.value.toogleDateLi === 'mes') {
@@ -191,11 +228,14 @@ export class IndicadoresTableComponent implements OnInit {
         ];
         // console.log(response)
       }, (error: any) => {
+        if (error.status == '404') {
+          this.toaster.error("No hay operaciones registradas")
 
+        }
       }, () => {
 
         // console.log(this.graphicData);
-        this.makeGraphLibras('Total de libras por cliente de salidas por día, mes ' + this.getMonthByNumber(this.formLibras.value.searchDateByMonthLi) + ' ' + this.formLibras.value.searchDateByYearLi, this.xAxis, 'Cantidad', this.graphicData);
+        this.makeGraphLibras('Total de libras por cliente de entradas por  mes ' + this.getMonthByNumber(this.formLibras.value.searchDateByMonthLi) + ' ' + this.formLibras.value.searchDateByYearLi, this.xAxis, 'Cantidad', this.graphicData);
       });
     }
     if (this.formLibras.value.toogleDateLi === 'year') {
@@ -209,15 +249,122 @@ export class IndicadoresTableComponent implements OnInit {
         ];
         //console.log(response)
       }, (error: any) => {
+        if (error.status == '404') {
+          this.toaster.error("No hay operaciones registradas")
 
+        }
       }, () => {
         //console.log(this.graphicData);
-        this.makeGraphLibras('Total de libras por cliente de salidas por mes, año ' + this.formLibras.value.searchDateByYearLi, this.xAxis, 'Cantidad', this.graphicData);
+        this.makeGraphLibras('Total de libras por cliente de entradas por mes, año ' + this.formLibras.value.searchDateByYearLi, this.xAxis, 'Cantidad', this.graphicData);
 
       });
     }
   }
+  ////////////////////////////7/////////////////////////////
+  ////////////////////////////7/////////////////////////////
+  ////////////////////////////7/////////////////////////////
+  ////////////////////////////7/////////////////////////////
 
+  ////////////////////////////7/////////////////////////////
+  setFilterOps() {
+    let month = 0;
+    // recibe el objeto searchDateByYear, searchDateByMonth
+    if (this.formConsumido.value.searchDateByMonthCo === null && this.formConsumido.value.searchDateByYearCo === null) {
+      this.toaster.warning("Por favor seleccione un año y un mes")
+      return false;
+    }
+    if (this.formConsumido.value.searchDateByMonthCo !== null && this.formConsumido.value.searchDateByYearCo === null) {
+      this.toaster.warning("Por favor seleccione un año para consultar el mes")
+      return false;
+    }
+    if (this.formConsumido.value.toogleDateCo === 'mes' && this.formConsumido.value.searchDateByMonthCo === null) {
+      this.toaster.warning("Por favor seleccione un mes")
+      return false;
+    }
+    if (this.formConsumido.value.toogleDateCo === 'dia' && this.formConsumido.value.searchDateByMonthCo === null && this.formConsumido.value.searchDateByYearCo !== null) {
+      this.toaster.warning("Por favor seleccione un mes para consultar el día")
+      return false;
+    }
+    if (this.formConsumido.value.toogleDateCo === 'dia' && this.formConsumido.value.searchDateByDayCo === null) {
+      this.toaster.warning("Por favor seleccione un dia")
+      return false;
+    }
+    if (this.formConsumido.value.toogleDateCo === 'dia') {
+      let days = []
+      //this.dayArray = []
+      month = this.daysInMonth(this.formConsumido.value.searchDateByMonthCo, this.formConsumido.value.searchDateByYearCo)
+      for (let i = 1; i <= month; i++) {
+        //this.dayArray.push(i)
+        days.push(pad(i));
+      }
+      this.xAxis = days;
+      this.indicadoresServices.getIndicadoresdDataOps(this.formConsumido.value.searchDateByMonthCo, this.formConsumido.value.searchDateByYearCo, this.formConsumido.value.searchDateByDayCo, 'dias', 'quantity').subscribe((response: any) => {
+        this.graphicData2 = [{
+          data: response,
+          name: "Libras por clientes",
+        }
+        ];
+        //console.log(response)
+      }, (error: any) => {
+        if (error.status == '404') {
+          this.toaster.error("No hay operaciones registradas")
+
+        }
+      }, () => {
+
+        //console.log(this.graphicData2);
+        this.makeGraphCo('Total de consumido para el día ' + this.formConsumido.value.searchDateByDayCo + ', del mes ' + this.getMonthByNumber(this.formConsumido.value.searchDateByMonthCo) + ' ' + this.formConsumido.value.searchDateByYearCo, this.xAxis, 'Cantidad', this.graphicData2);
+      });
+    }
+    if (this.formConsumido.value.toogleDateCo === 'mes') {
+      let days = []
+      //this.dayArray = []
+      month = this.daysInMonth(this.formConsumido.value.searchDateByMonthCo, this.formConsumido.value.searchDateByYearCo)
+      for (let i = 1; i <= month; i++) {
+        //this.dayArray.push(i)
+        days.push(pad(i));
+      }
+      this.xAxis = days;
+      this.indicadoresServices.getIndicadoresdDataOps(this.formConsumido.value.searchDateByMonthCo, this.formConsumido.value.searchDateByYearCo, this.formConsumido.value.searchDateByDayCo, 'mes', 'quantity').subscribe((response: any) => {
+        this.graphicData2 = [{
+          data: response,
+          name: "Libras por clientes",
+        }
+        ];
+        // console.log(response)
+      }, (error: any) => {
+        if (error.status == '404') {
+          this.toaster.error("No hay operaciones registradas")
+
+        }
+      }, () => {
+
+        // console.log(this.graphicData2);
+        this.makeGraphCo('Total de consumido por  mes ' + this.getMonthByNumber(this.formConsumido.value.searchDateByMonthCo) + ' ' + this.formConsumido.value.searchDateByYearCo, this.xAxis, 'Cantidad', this.graphicData2);
+      });
+    }
+    if (this.formConsumido.value.toogleDateCo === 'year') {
+      this.xAxis = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
+      this.indicadoresServices.getIndicadoresdDataOps(this.formConsumido.value.searchDateByMonthCo, this.formConsumido.value.searchDateByYearCo, this.formConsumido.value.searchDateByDayCo, 'year', 'quantity').subscribe((response: any) => {
+        this.graphicData2 = [
+          {
+            name: "Libras por clientes",
+            data: response
+          }
+        ];
+        //console.log(response)
+      }, (error: any) => {
+        if (error.status == '404') {
+          this.toaster.error("No hay operaciones registradas")
+
+        }
+      }, () => {
+        //console.log(this.graphicData2);
+        this.makeGraphCo('Total de consumido por mes, año ' + this.formConsumido.value.searchDateByYearCo, this.xAxis, 'Cantidad', this.graphicData2);
+
+      });
+    }
+  }
 
 
   daysInMonth(month, year) {
@@ -268,8 +415,7 @@ export class IndicadoresTableComponent implements OnInit {
 
 
   makeGraphLibras(title?, xAxis?, yAxisText?, data?) {
-    console.log(data)
-    console.log(data[0]['data'])
+
     this.chartLibras = new Chart({
       chart: {
         plotBackgroundColor: null,
@@ -307,7 +453,44 @@ export class IndicadoresTableComponent implements OnInit {
     });
   }
 
+  makeGraphCo(title?, xAxis?, yAxisText?, data?) {
 
+    this.chartCo = new Chart({
+      chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+      },
+      title: {
+        text: title
+      },
+      tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+      },
+      accessibility: {
+        point: {
+          valueSuffix: '%'
+        }
+      },
+      plotOptions: {
+        pie: {
+          allowPointSelect: true,
+          cursor: 'pointer',
+          dataLabels: {
+            enabled: true,
+            format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+          }
+        }
+      },
+      series: [{
+        name: 'Consumido',
+        colorByPoint: true,
+        type: undefined,
+        data: data[0]['data']
+      }]
+    });
+  }
 
 
 }

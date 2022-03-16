@@ -8,7 +8,7 @@
                     <div>
                         &nbsp;
                         <mat-form-field>
-                            <mat-select [(value)]="selected" formControlName="searchDateByYearLi"
+                            <mat-select [(value)]="selectedLi" formControlName="searchDateByYearLi"
                                 placeholder="Seleccione el año">
 
                                 <mat-option value="2021">2021</mat-option>
@@ -25,7 +25,7 @@
                         </mat-form-field>
                         &nbsp;
                         <mat-form-field *ngIf="checkedDateLi==='mes' || checkedDateLi==='dia'">
-                            <mat-select (change)="cargarDias()" (blur)="cargarDias()"
+                            <mat-select [(value)]="selectedMesLi" (change)="cargarDias()" (blur)="cargarDias()"
                                 formControlName="searchDateByMonthLi" placeholder="Seleccione el mes">
                                 <mat-option value="01">Enero</mat-option>
                                 <mat-option value="02">Febrero</mat-option>
@@ -44,8 +44,8 @@
                         &nbsp;
                         <mat-form-field *ngIf="checkedDateLi==='dia'">
 
-                            <mat-select placeholder="Seleccione el díá" formControlName="searchDateByDayLi"
-                                id="searchDateByDayLi">
+                            <mat-select [(value)]="selectedDiaLi" placeholder="Seleccione el díá"
+                                formControlName="searchDateByDayLi" id="searchDateByDayLi">
                                 <mat-option *ngFor="let day  of dayArray" [value]="day">
                                     {{day}}
                                 </mat-option>
@@ -77,16 +77,17 @@
 
     </mat-card>
     <br>
-    <!--
+
     <mat-card>
-        <form [formGroup]="formPay">
+        <form [formGroup]="formConsumido">
             <br>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <div>
                         &nbsp;
                         <mat-form-field>
-                            <mat-select [(value)]="selected" formControlName="searchDateByYear" placeholder="Seleccione el año">
+                            <mat-select [(value)]="selectedCo" formControlName="searchDateByYearCo"
+                                placeholder="Seleccione el año">
 
                                 <mat-option value="2021">2021</mat-option>
                                 <mat-option value="2022">2022</mat-option>
@@ -101,8 +102,9 @@
                             </mat-select>
                         </mat-form-field>
                         &nbsp;
-                        <mat-form-field *ngIf="!checkedDate2">
-                            <mat-select formControlName="searchDateByMonth" placeholder="Seleccione el mes">
+                        <mat-form-field *ngIf="checkedDateCo==='mes' || checkedDateCo==='dia'">
+                            <mat-select [(value)]="selectedMesCo" (change)="cargarDias()" (blur)="cargarDias()"
+                                formControlName="searchDateByMonthCo" placeholder="Seleccione el mes">
                                 <mat-option value="01">Enero</mat-option>
                                 <mat-option value="02">Febrero</mat-option>
                                 <mat-option value="03">Marzo</mat-option>
@@ -118,23 +120,38 @@
                             </mat-select>
                         </mat-form-field>
                         &nbsp;
-                        <button type="button" mat-raised-button color="primary" (click)="setFilter()">Filtrar</button>
+                        <mat-form-field *ngIf="checkedDateCo==='dia'">
+
+                            <mat-select [(value)]="selectedDiaCo" placeholder="Seleccione el díá"
+                                formControlName="searchDateByDayCo" id="searchDateByDayCo">
+                                <mat-option *ngFor="let day  of dayArrayCo" [value]="day">
+                                    {{day}}
+                                </mat-option>
+                            </mat-select>
+
+                        </mat-form-field>
+                        &nbsp;
+                        <button type="button" mat-raised-button color="primary" (click)="setFilterOps()">Buscar</button>
                     </div>
                 </div>
-                <div class="col-md-6 right">
-                    <mat-slide-toggle style="margin-top:20px;" formControlName="toogleDate2" class="example-margin" color="primary" [checked]="checkedDate2">
-                        {{ labelFiltro }}
-                    </mat-slide-toggle>
+                <div class="col-md-4 right">
+
+                    <mat-form-field>
+                        <mat-select formControlName="toogleDateCo" placeholder="Filtrar  ">
+                            <!--<mat-option value="year">por año</mat-option>
+                            <mat-option value="mes"> por mes</mat-option>-->
+                            <mat-option value="dia">por día</mat-option>
+
+                        </mat-select>
+                    </mat-form-field>
                 </div>
             </div>
         </form>
     </mat-card>
     <br>
     <mat-card>
-        <div [chart]="chart"></div>
+        <div [chart]="chartCo"></div>
+
     </mat-card>
-
-
--->
-
+    <br>
 </div>

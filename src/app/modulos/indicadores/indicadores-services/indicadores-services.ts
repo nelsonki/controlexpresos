@@ -52,4 +52,21 @@ export class IndicadoresServices {
     }
     return this._http.get(this.api + endpoint, { headers: this.autorization });
   }
+  getIndicadoresdDataOps(month, year, dia, filter, parametro) {
+    console.log(month, year, dia, filter, parametro);
+    let endpoint = '';
+    //https://qajakiro2.zippyttech.com/api/dashboard/cakeChart
+    if (filter === "dias") {
+      endpoint = `dashboard/cakeChartOpsByDay?day=${year}-${month}-${dia}`;
+    }
+    /*
+    if (filter === "year") {
+      endpoint = `dashboard/cakeChart?year=${year}`;
+    }
+    if (filter === "mes") {
+
+      endpoint = `dashboard/cakeChart?year=${year}&month=${month}`;
+    }*/
+    return this._http.get(this.api + endpoint, { headers: this.autorization });
+  }
 }
