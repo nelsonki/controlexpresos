@@ -55,7 +55,7 @@ export class IndicadoresServices {
   getIndicadoresdDataOps(month, year, dia, filter, parametro) {
     console.log(month, year, dia, filter, parametro);
     let endpoint = '';
-    //https://qajakiro2.zippyttech.com/api/dashboard/cakeChart
+    //https://qajakiro2.zippyttech.com/api/dashboard/cakeChartOpsByDay?day=
     if (filter === "dias") {
       endpoint = `dashboard/cakeChartOpsByDay?day=${year}-${month}-${dia}`;
     }

@@ -454,7 +454,7 @@ export class IndicadoresTableComponent implements OnInit {
   }
 
   makeGraphCo(title?, xAxis?, yAxisText?, data?) {
-
+    console.log(data[0]['data']['datos'])
     this.chartCo = new Chart({
       chart: {
         plotBackgroundColor: null,
@@ -463,10 +463,10 @@ export class IndicadoresTableComponent implements OnInit {
         type: 'pie'
       },
       title: {
-        text: title
+        text: title + '<br> <b>Creadas: </b>' + data[0]['data'].creadas + '<b>, Esperadas: </b> ' + data[0]['data'].esperadas
       },
       tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        pointFormat: '{series.name}: <b>{point.y:.1f}%</b>'
       },
       accessibility: {
         point: {
@@ -479,7 +479,7 @@ export class IndicadoresTableComponent implements OnInit {
           cursor: 'pointer',
           dataLabels: {
             enabled: true,
-            format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+            format: '<b>{point.name}</b>: {point.y:.1f} %'
           }
         }
       },
@@ -487,7 +487,7 @@ export class IndicadoresTableComponent implements OnInit {
         name: 'Consumido',
         colorByPoint: true,
         type: undefined,
-        data: data[0]['data']
+        data: [data[0]['data']['datos']]
       }]
     });
   }
