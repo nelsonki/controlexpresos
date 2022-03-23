@@ -55,10 +55,12 @@
                         &nbsp;
                         <button type="button" mat-raised-button color="primary"
                             (click)="setFilterLibras()">Buscar</button>
+                        <label class="ml-4">Total Libras: {{ totalLibras }} Lb</label>
+
                     </div>
                 </div>
-                <div class="col-md-4 right">
 
+                <div class="col-md-4 right">
                     <mat-form-field>
                         <mat-select formControlName="toogleDateLi" placeholder="Filtrar  ">
                             <mat-option value="year">por año</mat-option>

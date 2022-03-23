@@ -48,6 +48,7 @@ export class IndicadoresTableComponent implements OnInit {
 
   formLibras: FormGroup;
   formConsumido: FormGroup;
+  public totalLibras = 0
 
   constructor(
     public toaster: ToastrService,
@@ -415,7 +416,8 @@ export class IndicadoresTableComponent implements OnInit {
 
 
   makeGraphLibras(title?, xAxis?, yAxisText?, data?) {
-
+    this.totalLibras = (data[0]['data'].total) ? data[0]['data'].total : 0
+    console.log(data[0]['data'].total)
     this.chartLibras = new Chart({
       chart: {
         plotBackgroundColor: null,
@@ -427,7 +429,7 @@ export class IndicadoresTableComponent implements OnInit {
         text: title
       },
       tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        pointFormat: '<br>Libras: <b>{point.x} Lb</b> <br>{series.name}: <b>{point.percentage:.1f}%</b>'
       },
       accessibility: {
         point: {
@@ -440,21 +442,21 @@ export class IndicadoresTableComponent implements OnInit {
           cursor: 'pointer',
           dataLabels: {
             enabled: true,
-            format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+            format: ' {point.name}<br> Libras: {point.x}  Lb<br> {series.name}: {point.percentage:.1f} %'
           }
         }
       },
       series: [{
-        name: 'Libras',
+        name: 'Porcentaje',
         colorByPoint: true,
         type: undefined,
-        data: data[0]['data']
+        data: data[0]['data']['data']
       }]
     });
   }
 
   makeGraphCo(title?, xAxis?, yAxisText?, data?) {
-    console.log(data[0]['data']['datos'])
+    //console.log(data[0]['data']['datos'])
     this.chartCo = new Chart({
       chart: {
         plotBackgroundColor: null,
