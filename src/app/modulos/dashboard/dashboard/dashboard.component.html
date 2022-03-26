@@ -38,15 +38,15 @@
         <ul class="side-menu" style="list-style: none; ">
 
             <ng-container *ngIf="role===1 || role===2 || role===3">
-                <li style="padding-top: 15px; padding-left: 15px" *ngIf="role===1 || role===2">
+                <li style="padding-top: 15px; padding-left: 15px" *ngIf="role===1">
                     <a [routerLink]="['/Stats' ]" routerLinkActive="router-link-active" (click)="dashboard()">
                         <mat-icon>addchart</mat-icon>
                         <span style=" font-family: Arial, Helvetica, sans-serif; font-weight: bold; padding-left: 6px">
                             Dashboard</span>
                     </a>
                 </li>
-                <hr *ngIf="role===1 || role===2">
-                <li *ngIf="role===1 || role===2">
+                <hr *ngIf="role===1 ">
+                <li *ngIf="role===1 ">
                     <button mat-button (click)="indicadores()" [routerLink]="['/indicadores' ]"
                         routerLinkActive="router-link-active">
                         <mat-icon>pie_chart</mat-icon>
@@ -55,8 +55,8 @@
                     </button>
 
                 </li>
-                <hr *ngIf="role===1 || role===2">
-                <li *ngIf="role===1 || role===2">
+                <hr *ngIf="role===1 ">
+                <li *ngIf="role===1 ">
                     <button mat-button [matMenuTriggerFor]="menuCatalogo">
                         <mat-icon>folder_shared</mat-icon>
                         &nbsp;
@@ -79,8 +79,8 @@
                         </button>
                     </mat-menu>
                 </li>
-                <hr *ngIf="role===1 || role===2">
-                <li *ngIf="role===1 || role===2 ">
+                <hr *ngIf="role===1">
+                <li *ngIf="role===1 ">
                     <button mat-button [matMenuTriggerFor]="menuInventario">
                         <mat-icon>assignment</mat-icon>
                         &nbsp;
@@ -102,18 +102,18 @@
                     </mat-menu>
                 </li>
                 <hr>
-                <li *ngIf="role===1 || role===3">
+                <li *ngIf="role===1 || role===2 || role===3">
                     <button mat-button [matMenuTriggerFor]="menuOpera">
                         <mat-icon>assignment_returned</mat-icon>
                         &nbsp;
                         <span style="font-size: 15px; font-weight: bold;">Operaciones</span>
                     </button>
                     <mat-menu #menuOpera="matMenu">
-                        <button mat-menu-item (click)="listarEntradas()" mat-menu-item [routerLink]="['/Entradas' ]"
-                            routerLinkActive="router-link-active">
+                        <button *ngIf="role===1 || role===3" mat-menu-item (click)="listarEntradas()" mat-menu-item
+                            [routerLink]="['/Entradas' ]" routerLinkActive="router-link-active">
                             <mat-icon>arrow_circle_down</mat-icon>&nbsp;Registrar entrada
                         </button>
-                        <button *ngIf="role===1 " mat-menu-item (click)="listarSalidas()" mat-menu-item
+                        <button *ngIf="role===1 || role===2" mat-menu-item (click)="listarSalidas()" mat-menu-item
                             [routerLink]="['/Salidas' ]" routerLinkActive="router-link-active">
                             <mat-icon>arrow_circle_up</mat-icon>&nbsp;Registrar Salida
                         </button>
@@ -133,8 +133,8 @@
                         </button>
                     </mat-menu>
                 </li>
-                <hr *ngIf="role===1 || role===2">
-                <li *ngIf="role===1 || role===2">
+                <hr *ngIf="role===1 ">
+                <li *ngIf="role===1 ">
                     <button mat-button (click)="settings()" [routerLink]="['/settings' ]"
                         routerLinkActive="router-link-active">
                         <mat-icon>settings</mat-icon>

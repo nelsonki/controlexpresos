@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     //public afAuth: AngularFireAuth,
     public localService: LocalService,
     public authService: AuthService
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -66,61 +66,66 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   sendData() {
     //this.navigateTo('/dashboard/Stats');
-   
+
     const formData = this.form.value;
     let object = {
       password: formData.password,
       username: formData.username.trim(),
       // account: 9
-    } 
-    if (this.form.valid) { 
+    }
+    if (this.form.valid) {
       this.http.doPost('login', object, this.api).subscribe((data: any) => {
-        console.log(data);        
-      
-         
-          /*if (data.user.status === 2) {
-            this.toastr.error('Usuario bloqueado, consulte al administrador', 'Error');
-          } else if (data.user.roles[0].id != 1 && data.user.roles[0].id != 9 && data.user.roles[0].id != 10) {
-            this.toastr.error('Acceso no autorizado', 'Error');
-          } else {*/
-            this.localService.setJsonValue('info', data);
-            
-            //this.localService.setJsonValue('iduserlog', data.id);
-             console.log(this.localService)
-             let info = this.localService.getJsonValue('info');
-             if(info.rol.toLowerCase() === 'op_entradas'){
-              this.router.navigate(['/dashboard/Entradas'])
+        console.log(data);
 
-             }else{
-              this.router.navigate(['/dashboard/Stats'])
 
-             }
-          //}
+        /*if (data.user.status === 2) {
+          this.toastr.error('Usuario bloqueado, consulte al administrador', 'Error');
+        } else if (data.user.roles[0].id != 1 && data.user.roles[0].id != 9 && data.user.roles[0].id != 10) {
+          this.toastr.error('Acceso no autorizado', 'Error');
+        } else {*/
+        this.localService.setJsonValue('info', data);
 
-       
+        //this.localService.setJsonValue('iduserlog', data.id);
+        console.log(this.localService)
+        let info = this.localService.getJsonValue('info');
+        if (info.rol.toLowerCase() === 'op_entradas') {
+          this.router.navigate(['/dashboard/Entradas'])
+
+        }
+        if (info.rol.toLowerCase() === 'operador') {
+          this.router.navigate(['/dashboard/Salidas'])
+
+        }
+        if (info.rol.toLowerCase() === 'admin') {
+          this.router.navigate(['/dashboard/Stats'])
+
+        }
+        //}
+
+
         if (data.image) {
           this.localService.setJsonValue('image', data.image);
 
         } else {
           this.localService.setJsonValue('image', '../../../../assets/userProfile.png');
 
-        }  
+        }
       }, (error) => {
-        
-          this.toastr.error('Error en las credenciales', 'Sistema Jakiro');
-        
-        
+
+        this.toastr.error('Error en las credenciales', 'Sistema Jakiro');
+
+
       }, () => {
 
-      }); 
-     
+      });
+
     } else {
       this.toastr.error('Los campos son requeridos', 'Sistema Jakiro');
 
     }
   }
 
- 
+
   navigateTo(url) {
     this.router.navigate([url]);
 
@@ -261,9 +266,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
       }
       this._snackBar.dismiss();
     });*/
-    
+
   }
 
- 
+
 }
 
