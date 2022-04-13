@@ -45,8 +45,8 @@
                             Dashboard</span>
                     </a>
                 </li>
-                <hr *ngIf="role===1 ">
-                <li *ngIf="role===1 ">
+                <hr *ngIf="role===1">
+                <li *ngIf="role===1">
                     <button mat-button (click)="indicadores()" [routerLink]="['/indicadores' ]"
                         routerLinkActive="router-link-active">
                         <mat-icon>pie_chart</mat-icon>
@@ -55,8 +55,8 @@
                     </button>
 
                 </li>
-                <hr *ngIf="role===1 ">
-                <li *ngIf="role===1 ">
+                <hr *ngIf="role===1">
+                <li *ngIf="role===1">
                     <button mat-button [matMenuTriggerFor]="menuCatalogo">
                         <mat-icon>folder_shared</mat-icon>
                         &nbsp;
@@ -80,7 +80,7 @@
                     </mat-menu>
                 </li>
                 <hr *ngIf="role===1">
-                <li *ngIf="role===1 ">
+                <li *ngIf="role===1">
                     <button mat-button [matMenuTriggerFor]="menuInventario">
                         <mat-icon>assignment</mat-icon>
                         &nbsp;
@@ -133,8 +133,8 @@
                         </button>
                     </mat-menu>
                 </li>
-                <hr *ngIf="role===1 ">
-                <li *ngIf="role===1 ">
+                <hr *ngIf="role===1">
+                <li *ngIf="role===1">
                     <button mat-button (click)="settings()" [routerLink]="['/settings' ]"
                         routerLinkActive="router-link-active">
                         <mat-icon>settings</mat-icon>
