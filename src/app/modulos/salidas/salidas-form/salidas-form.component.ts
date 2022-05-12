@@ -151,7 +151,7 @@ export class SalidasFormComponent implements OnInit {
   public fruits3: string[] = [];
   public fruitCtrl3 = new FormControl();
   public misSubServicios3: any;
-  
+
   public id_input: any;
   keySearch: string;
   public contarNuevos = false;
@@ -159,7 +159,7 @@ export class SalidasFormComponent implements OnInit {
   public colores: Array<any> = [];
   public totalPesoEntrada = 0;
   public totalPesoSalida = 0;
-  public idVieneGrupo=0;
+  public idVieneGrupo = 0;
   public tipoRopa: Array<any> = [{
     value: 'nueva',
   },
@@ -169,7 +169,9 @@ export class SalidasFormComponent implements OnInit {
   {
     value: 'desmanche',
   },
-
+  {
+    value: 'rechazo',
+  },
   ];
   public personList_entradas: Array<any> = [
     {
@@ -188,7 +190,7 @@ export class SalidasFormComponent implements OnInit {
   public personList: Array<any> = [
     {
       id: 0,
-      group_id:0,
+      group_id: 0,
       servicio: '',
       servicio_id: '',
       peso: '',
@@ -200,7 +202,7 @@ export class SalidasFormComponent implements OnInit {
       tipo: '',
     }
   ];
-  public ultimoGrupo=0;
+  public ultimoGrupo = 0;
 
   constructor(
     public dialog: MatDialog,
@@ -242,19 +244,19 @@ export class SalidasFormComponent implements OnInit {
 
       myControl_sub: [''],
 
-      myControl_ser: ['' ],
-      myControl_ser_id: ['' ],
+      myControl_ser: [''],
+      myControl_ser_id: [''],
 
-      tipo: ['' ],
+      tipo: [''],
       fruitCtrl2: [""],
       fruitCtrl3: [""],
     });
-    
+
     /*BUSCAR GRUPO*/
     this.salidasServices.getLastGroup().pipe()
-    .subscribe((value2) => {
-      this.ultimoGrupo =  value2["max"] + 1
-     });
+      .subscribe((value2) => {
+        this.ultimoGrupo = value2["max"] + 1
+      });
 
     /*BUSCAR SUB-SERVICIO*/
     this.subServiceServices.getList().pipe()
@@ -323,25 +325,25 @@ export class SalidasFormComponent implements OnInit {
     );
 
     /*BUSCAR CLIENTE*******************************/
-        setTimeout(() => {
-    this.clientServices.getListSinEntradas()
-      .subscribe((value) => {
+    setTimeout(() => {
+      this.clientServices.getListSinEntradas()
+        .subscribe((value) => {
 
-        Object.keys(value).forEach(i => {
-          this.options6.push(
-            {
-              id: value[i].id,
-              name: value[i].name,
+          Object.keys(value).forEach(i => {
+            this.options6.push(
+              {
+                id: value[i].id,
+                name: value[i].name,
 
-            }
+              }
 
-          );
+            );
 
+          });
+          this.dataSource = new MatTableDataSource(this.options6);
+          this.dataSource.paginator = this.paginator;
+          return this.dataSource;
         });
-        this.dataSource = new MatTableDataSource(this.options6);
-        this.dataSource.paginator = this.paginator;
-        return this.dataSource;
-      });
     }, 3000);
     this.filteredOptions6 = this.firstFormGroup.controls['client'].valueChanges.pipe(
       startWith(''),
@@ -353,32 +355,32 @@ export class SalidasFormComponent implements OnInit {
     this.options7 = [];
     setTimeout(() => {
 
-    this.branchServices.getListIdCliente(this.idsubservicio6)
-      .subscribe((value: any) => {
-        console.log(value)
-        if (value.length > 0) {
-          this.vieneSucursal = true;
-          Object.keys(value).forEach(i => {
-            this.options7.push(
-              {
-                id: value[i].id,
-                name: value[i].name,
+      this.branchServices.getListIdCliente(this.idsubservicio6)
+        .subscribe((value: any) => {
+          console.log(value)
+          if (value.length > 0) {
+            this.vieneSucursal = true;
+            Object.keys(value).forEach(i => {
+              this.options7.push(
+                {
+                  id: value[i].id,
+                  name: value[i].name,
 
-              }
+                }
 
-            );
+              );
 
-          });
-          this.dataSourceSucursal = new MatTableDataSource(this.options7);
-          this.dataSourceSucursal.paginator = this.paginator;
-          return this.dataSourceSucursal;
-        } else {
-          this.vieneSucursal = false;
+            });
+            this.dataSourceSucursal = new MatTableDataSource(this.options7);
+            this.dataSourceSucursal.paginator = this.paginator;
+            return this.dataSourceSucursal;
+          } else {
+            this.vieneSucursal = false;
 
-        }
+          }
 
 
-      });
+        });
     }, 3000);
 
     this.filteredOptions7 = this.secondsFormGroup.controls['sucursal'].valueChanges.pipe(
@@ -388,55 +390,55 @@ export class SalidasFormComponent implements OnInit {
     );
   }
 
-//precionar TECLA ENTER PARA OBSERVACION
-searchKeyCode(event, key) {
-   if (event.keyCode === 13) {
-    switch (key) {
-      case 'observacion':
-        this.keySearch = 'observacion';
-        let nombre: string
-        nombre = this.treeFormGroup.controls['observacion'].value
-        this.onSelectionChangedObser(nombre);
-        break;
-     
-      default:
-        break;
+  //precionar TECLA ENTER PARA OBSERVACION
+  searchKeyCode(event, key) {
+    if (event.keyCode === 13) {
+      switch (key) {
+        case 'observacion':
+          this.keySearch = 'observacion';
+          let nombre: string
+          nombre = this.treeFormGroup.controls['observacion'].value
+          this.onSelectionChangedObser(nombre);
+          break;
+
+        default:
+          break;
+      }
     }
+
   }
 
-}
-
-asignKey(value) {
-  this.keySearch = value;
-}
-
-onSelectionChangedObser(nombre) {
-  
-  console.log(nombre);
-  this.treeFormGroup.controls['observacion'].setValue('');
-  this.buscarSubServicio3(nombre)
-
-  this.fruits3.push(nombre);
-
-}
- /////////////////////remover observacion seleccionados tipo etiquetas
- buscarSubServicio3(fruit3: string): void {
-  const index = this.fruits3.indexOf(fruit3);
-  if (index >= 0) {
-    this.fruits3.splice(index, 1);
+  asignKey(value) {
+    this.keySearch = value;
   }
-  this.myControl2.controls["fruitCtrl3"].setValue(this.fruits3);
-}
 
-removePhone3(fruit3: string): void {
-  const index = this.fruits3.indexOf(fruit3);
-  if (index >= 0) {
-    this.fruits3.splice(index, 1);
+  onSelectionChangedObser(nombre) {
+
+    console.log(nombre);
+    this.treeFormGroup.controls['observacion'].setValue('');
+    this.buscarSubServicio3(nombre)
+
+    this.fruits3.push(nombre);
+
   }
-  this.myControl2.controls["fruitCtrl3"].setValue(this.fruits3);
-}
-/////////////////////remover subservicios seleccionados tipo etiquetas
-//precionar TECLA ENTER PARA OBSERVACION
+  /////////////////////remover observacion seleccionados tipo etiquetas
+  buscarSubServicio3(fruit3: string): void {
+    const index = this.fruits3.indexOf(fruit3);
+    if (index >= 0) {
+      this.fruits3.splice(index, 1);
+    }
+    this.myControl2.controls["fruitCtrl3"].setValue(this.fruits3);
+  }
+
+  removePhone3(fruit3: string): void {
+    const index = this.fruits3.indexOf(fruit3);
+    if (index >= 0) {
+      this.fruits3.splice(index, 1);
+    }
+    this.myControl2.controls["fruitCtrl3"].setValue(this.fruits3);
+  }
+  /////////////////////remover subservicios seleccionados tipo etiquetas
+  //precionar TECLA ENTER PARA OBSERVACION
 
 
   public closeModal() {
@@ -445,7 +447,7 @@ removePhone3(fruit3: string): void {
     this.reloadComponent();
   }
   public addForm(id, idGrupo?) {
-    if(idGrupo){
+    if (idGrupo) {
       this.idVieneGrupo = idGrupo;
       this.totalPesoEntrada = 0;
       this.totalPesoSalida = 0;
@@ -466,7 +468,7 @@ removePhone3(fruit3: string): void {
       this.myControl2.controls["fruitCtrl3"].setValue('');
 
       this.treeFormGroup.controls["observacion"].setValue('');
-  
+
       var editDetail = [];
       this.idEdit = id;
       let dataEdit = [];
@@ -484,16 +486,16 @@ removePhone3(fruit3: string): void {
       this.fruits3 = (ss !== "") ? ss : [];
       this.myControl2.controls["fruitCtrl3"].setValue(this.fruits3);
       //this.treeFormGroup.controls["observacion"].setValue(dataEdit[0]["obs_out"]);
-  
+
       console.log(dataEdit[0]);
       this.id_input = dataEdit[0].id;
       //console.log(this.id_input);
-  
+
       Object.keys(dataEdit[0].inputs).forEach(i => {
-  
-  
+
+
         this.personList_entradas.push(
-  
+
           {
             'id': dataEdit[0].inputs[i].id,
             'peso': dataEdit[0].inputs[i].weight,
@@ -509,10 +511,10 @@ removePhone3(fruit3: string): void {
         this.totalPesoEntrada = this.totalPesoEntrada + parseFloat(dataEdit[0].inputs[i].weight);
       });
       Object.keys(dataEdit[0].outputs).forEach(i => {
-  
-        if(idGrupo===dataEdit[0].outputs[i].group_id){
+
+        if (idGrupo === dataEdit[0].outputs[i].group_id) {
           this.personList.push(
-    
+
             {
               'id': dataEdit[0].outputs[i].id,
               'group_id': dataEdit[0].outputs[i].group_id,
@@ -528,11 +530,11 @@ removePhone3(fruit3: string): void {
           );
         }
       });
-    }else{
+    } else {
       this.totalPesoEntrada = 0;
       this.totalPesoSalida = 0;
       this.validForm = false;
-  
+
       this.myControl2.controls['myControl_ser'].setValue('');
       this.myControl2.controls['myControl_ser_id'].setValue('');
       this.myControl2.controls['peso'].setValue('');
@@ -547,7 +549,7 @@ removePhone3(fruit3: string): void {
       this.fruits3 = [];
       this.myControl2.controls["fruitCtrl3"].setValue('');
       this.treeFormGroup.controls["observacion"].setValue('');
-  
+
       var editDetail = [];
       this.idEdit = id;
       let dataEdit = [];
@@ -561,7 +563,7 @@ removePhone3(fruit3: string): void {
           dataEdit.push(this.element[i]);
         }
       });
-      
+
       let ss = (dataEdit[0]["obs_out"]) ? dataEdit[0]["obs_out"].split(",") : "";
       this.fruits3 = (ss !== "") ? ss : [];
       this.myControl2.controls["fruitCtrl3"].setValue(this.fruits3);
@@ -570,12 +572,12 @@ removePhone3(fruit3: string): void {
       console.log(dataEdit[0]);
       this.id_input = dataEdit[0].id;
       //console.log(this.id_input);
-  
+
       Object.keys(dataEdit[0].inputs).forEach(i => {
-  
-  
+
+
         this.personList_entradas.push(
-  
+
           {
             'id': dataEdit[0].inputs[i].id,
             'peso': dataEdit[0].inputs[i].weight,
@@ -591,10 +593,10 @@ removePhone3(fruit3: string): void {
         this.totalPesoEntrada = this.totalPesoEntrada + parseFloat(dataEdit[0].inputs[i].weight);
       });
       Object.keys(dataEdit[0].outputs).forEach(i => {
-  
-  
+
+
         this.personList.push(
-  
+
           {
             'id': dataEdit[0].outputs[i].id,
             'group_id': dataEdit[0].outputs[i].group_id,
@@ -610,7 +612,7 @@ removePhone3(fruit3: string): void {
         );
       });
     }
-    
+
 
 
   }
@@ -699,8 +701,8 @@ removePhone3(fruit3: string): void {
     if (idv == null) {
       miid = 0;
       for (let list of this.personList) {
-        if (list.group_id == this.idVieneGrupo &&  list.servicio_id === form.value.myControl_ser_id && list.color_id === form.value.myControl_color_id && list.tipo === form.value.tipo && list.subservicio === serviciosVan) {
-            list.servicio = form.value.myControl_ser,
+        if (list.group_id == this.idVieneGrupo && list.servicio_id === form.value.myControl_ser_id && list.color_id === form.value.myControl_color_id && list.tipo === form.value.tipo && list.subservicio === serviciosVan) {
+          list.servicio = form.value.myControl_ser,
             list.servicio_id = form.value.myControl_ser_id,
             list.peso = parseFloat(list.peso) + parseFloat(pesoVan),
             list.cantidad = list.cantidad + cantidadVan,
@@ -729,7 +731,7 @@ removePhone3(fruit3: string): void {
       miid = this.personList[idv].id;
       for (let list of this.personList) {
         if (list.group_id == this.idVieneGrupo && list.id === miid && list.servicio_id === form.value.myControl_ser_id && list.color_id === form.value.myControl_color_id && list.tipo === form.value.tipo && list.subservicio === serviciosVan) {
-            list.id = miid,
+          list.id = miid,
             list.servicio = form.value.myControl_ser,
             list.servicio_id = form.value.myControl_ser_id,
             list.peso = parseFloat(pesoVan),
@@ -790,9 +792,9 @@ removePhone3(fruit3: string): void {
     this.myControl2.controls["fruitCtrl2"].setValue('');
 
   }
- 
+
   onSubmit() {
-    
+
     console.log(this.ultimoGrupo)
 
     this.totalPesoSalida = 0;
@@ -807,59 +809,59 @@ removePhone3(fruit3: string): void {
       let listNuevos = [];
       this.loading = true;
       Object.keys(this.personList).forEach(e => {
-        if (this.idVieneGrupo!==0) {//viene del boton de salidas parciales
+        if (this.idVieneGrupo !== 0) {//viene del boton de salidas parciales
 
           if (this.personList[e]["id"] === 0) {
             list.push({
               id: 0,
-              group_id: this.idVieneGrupo, 
+              group_id: this.idVieneGrupo,
               service_id: this.personList[e]["servicio_id"],
               weight: (this.personList[e]["peso"] !== '') ? this.personList[e]["peso"] : 0,
               quantity: (this.personList[e]["cantidad"] !== '') ? this.personList[e]["cantidad"] : 0,
               color_id: (this.personList[e]["color_id"] !== '') ? this.personList[e]["color_id"] : null,
               subservice_id: (this.personList[e]["subservicio"] !== '') ? this.personList[e]["subservicio"] : '',
               operation_type: this.personList[e]["tipo"],
-  
+
             });
-          }else{
+          } else {
             list.push({
               id: this.personList[e]["id"],
-              group_id:this.idVieneGrupo,
+              group_id: this.idVieneGrupo,
               service_id: this.personList[e]["servicio_id"],
               weight: (this.personList[e]["peso"] !== '') ? this.personList[e]["peso"] : 0,
               quantity: (this.personList[e]["cantidad"] !== '') ? this.personList[e]["cantidad"] : 0,
               color_id: (this.personList[e]["color_id"] !== '') ? this.personList[e]["color_id"] : null,
               subservice_id: (this.personList[e]["subservicio"] !== '') ? this.personList[e]["subservicio"] : '',
               operation_type: this.personList[e]["tipo"],
-  
+
             });
 
           }
 
-        }else{ 
+        } else {
           if (this.personList[e]["id"] === 0) {
             listNuevos.push({
               id: 0,
-              group_id:this.ultimoGrupo,
+              group_id: this.ultimoGrupo,
               service_id: this.personList[e]["servicio_id"],
               weight: (this.personList[e]["peso"] !== '') ? this.personList[e]["peso"] : 0,
               quantity: (this.personList[e]["cantidad"] !== '') ? this.personList[e]["cantidad"] : 0,
               color_id: (this.personList[e]["color_id"] !== '') ? this.personList[e]["color_id"] : null,
               subservice_id: (this.personList[e]["subservicio"] !== '') ? this.personList[e]["subservicio"] : '',
               operation_type: this.personList[e]["tipo"],
-  
+
             });
-          }else{
+          } else {
             list.push({
               id: this.personList[e]["id"],
-              group_id: this.personList[e]["group_id"], 
+              group_id: this.personList[e]["group_id"],
               service_id: this.personList[e]["servicio_id"],
               weight: (this.personList[e]["peso"] !== '') ? this.personList[e]["peso"] : 0,
               quantity: (this.personList[e]["cantidad"] !== '') ? this.personList[e]["cantidad"] : 0,
               color_id: (this.personList[e]["color_id"] !== '') ? this.personList[e]["color_id"] : null,
               subservice_id: (this.personList[e]["subservicio"] !== '') ? this.personList[e]["subservicio"] : '',
               operation_type: this.personList[e]["tipo"],
-  
+
             });
           }
 
@@ -941,7 +943,7 @@ removePhone3(fruit3: string): void {
         this.toasTer.error('No puede guardar campo vacios');
 
       } else {
-        if (this.personList.length === 0 ) {
+        if (this.personList.length === 0) {
           this.loading = false;
           this.toasTer.error('Debe agregar al menos 1 salida');
 
@@ -952,11 +954,11 @@ removePhone3(fruit3: string): void {
 
           } else {
             let miobser
-            if (this.fruits3.length === 0 ) {
-              miobser =this.treeFormGroup.controls["observacion"].value
+            if (this.fruits3.length === 0) {
+              miobser = this.treeFormGroup.controls["observacion"].value
 
 
-            }else{
+            } else {
               this.misSubServicios3 = '';
               Object.keys(this.fruits3).forEach(i => {
                 this.misSubServicios3 += this.fruits3[i] + ",";
@@ -965,20 +967,20 @@ removePhone3(fruit3: string): void {
               miobser = serviciosVan3
             }
             let bodyData
-            if(this.idVieneGrupo===0){
+            if (this.idVieneGrupo === 0) {
               bodyData = Object.assign({
                 "observation": miobser,
                 "moreOutputs": listNuevos
-              }); 
-            }else{
+              });
+            } else {
               bodyData = Object.assign({
                 "observation": miobser,
                 "moreOutputs": list
               });
             }
-            
+
             console.warn(bodyData);
-            
+
             this.salidasServices.update(this.id_input, bodyData).subscribe(
               response => {
                 this.toasTer.success(SalidasMsg.update);
@@ -1037,10 +1039,10 @@ removePhone3(fruit3: string): void {
 
           } else {
             let miobser
-            if (this.fruits3.length === 0 ) {
-              miobser =this.treeFormGroup.controls["observacion"].value
+            if (this.fruits3.length === 0) {
+              miobser = this.treeFormGroup.controls["observacion"].value
 
-            }else{
+            } else {
               this.misSubServicios3 = '';
               Object.keys(this.fruits3).forEach(i => {
                 this.misSubServicios3 += this.fruits3[i] + ",";
@@ -1055,7 +1057,7 @@ removePhone3(fruit3: string): void {
               "foo": list
             });
             console.log(bodyData);
-            
+
             this.salidasServices.save(bodyData).subscribe(
               response => {
                 this.toasTer.success(SalidasMsg.save);
@@ -1301,34 +1303,34 @@ removePhone3(fruit3: string): void {
       /*BUSCAR sucursal*******************************/
       setTimeout(() => {
 
-      this.branchServices.getListIdClienteSinEntrada(this.idsubservicio6)
-        .subscribe((value: any) => {
-          if (value.length > 0) {
-            this.vieneSucursal = true;
+        this.branchServices.getListIdClienteSinEntrada(this.idsubservicio6)
+          .subscribe((value: any) => {
+            if (value.length > 0) {
+              this.vieneSucursal = true;
 
-            Object.keys(value).forEach(i => {
+              Object.keys(value).forEach(i => {
 
-              this.options7.push(
-                {
-                  id: value[i].id,
-                  name: value[i].name,
+                this.options7.push(
+                  {
+                    id: value[i].id,
+                    name: value[i].name,
 
-                }
+                  }
 
-              );
+                );
 
-            });
-            this.dataSourceSucursal = new MatTableDataSource(this.options7);
-            this.dataSourceSucursal.paginator = this.paginator;
-            return this.dataSourceSucursal;
-          } else {
+              });
+              this.dataSourceSucursal = new MatTableDataSource(this.options7);
+              this.dataSourceSucursal.paginator = this.paginator;
+              return this.dataSourceSucursal;
+            } else {
 
-            this.vieneSucursal = false;
-          }
+              this.vieneSucursal = false;
+            }
 
 
 
-        });
+          });
       }, 3000);
       this.filteredOptions7 = this.secondsFormGroup.controls['sucursal'].valueChanges.pipe(
         startWith(''),

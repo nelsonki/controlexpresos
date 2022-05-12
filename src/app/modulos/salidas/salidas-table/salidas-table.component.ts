@@ -61,6 +61,15 @@ export class SalidasTableComponent implements OnInit {
   public total_weight_out = 0;
   //public grupoID =[];
   //public resultGrupoID =[]
+  public totalRechazo = 0
+  public totalProcesado = 0
+  public totalFacturado
+
+  public totalRechazoC = 0
+  public totalProcesadoC = 0
+  public totalFacturadoC
+
+  public totalC = 0
 
   start_date;
   end_date;
@@ -185,6 +194,11 @@ export class SalidasTableComponent implements OnInit {
             let pesoParcial = 0
             let cantidadParcial = 0
 
+            let pesoParcialTotal = 0
+            let pesoRechazoTotal = 0
+            let pesoParcialTotalC = 0
+            let pesoRechazoTotalC = 0
+
             //agrupo salidas por id
             for (let data of resultId) {
 
@@ -192,13 +206,30 @@ export class SalidasTableComponent implements OnInit {
                 if (e.group_id == data) {
                   pesoParcial = pesoParcial + parseFloat(e.weight)
                   cantidadParcial = cantidadParcial + parseFloat(e.quantity)
+                  if (e.operation_type === "rechazo") {
+                    pesoRechazoTotal = pesoRechazoTotal + parseFloat(e.weight)
+                    pesoRechazoTotalC = pesoRechazoTotalC + parseFloat(e.quantity)
 
+                  } else {
+                    pesoParcialTotal = pesoParcialTotal + parseFloat(e.weight)
+                    pesoParcialTotalC = pesoParcialTotalC + parseFloat(e.quantity)
+
+                  }
                 }
 
                 return e.group_id == data;
 
               });
-              //console.log(valueGroupId);
+              this.totalC = this.totalC + cantidadParcial
+              this.totalProcesado = pesoParcialTotal
+              this.totalRechazo = pesoRechazoTotal
+              this.totalProcesadoC = pesoParcialTotalC
+              this.totalRechazoC = pesoRechazoTotalC
+              this.totalFacturado = (this.totalProcesado + this.totalRechazo) - this.totalRechazo
+              this.totalFacturadoC = (this.totalProcesadoC + this.totalRechazoC) - this.totalRechazoC
+
+              console.log(valueGroupId)
+              //operation_type
               let dataEnd = Object.assign({}, {
                 subPeso: pesoParcial,
                 subCantidad: cantidadParcial,
@@ -212,7 +243,7 @@ export class SalidasTableComponent implements OnInit {
               //lista.push(dataEnd);
             }
             //console.log(lista);
-            //console.log(this.element[e])              
+            //console.log(this.element[e])
           }
         });
 

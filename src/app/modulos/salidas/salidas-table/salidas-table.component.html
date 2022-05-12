@@ -11,32 +11,36 @@
                     &nbsp; Salidas
                 </div>
             </div>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto col-lg-9 col-md-9 col-sm-9 col-xs-9">
                     <li class="nav-item   button-li-top col-lg-1 col-md-1 col-sm-1 col-xs-1">
                         <a class="pointer" (click)="Refresh()">
-                            <button *ngIf="true" mat-mini-fab color="white" matTooltip="Refrescar Tabla" data-toggle="tooltip" data-placement="left">
+                            <button *ngIf="true" mat-mini-fab color="white" matTooltip="Refrescar Tabla"
+                                data-toggle="tooltip" data-placement="left">
                                 <i class="fas fa-sync-alt"></i>
                             </button>
                         </a>
                     </li>
                     <li class="nav-item   button-li-top col-lg-1 col-md-1 col-sm-1 col-xs-1">
                         <a class="pointer" (click)="exportTo()">
-                            <button class="opAut-button-excel" mat-mini-fab color="white" matTooltip="Exportar a Excel" data-toggle="tooltip" data-placement="left">
+                            <button class="opAut-button-excel" mat-mini-fab color="white" matTooltip="Exportar a Excel"
+                                data-toggle="tooltip" data-placement="left">
                                 <svg style="width:20px;height:20px;" viewBox="0 0 24 24">
                                     <path fill="#ffff"
-                                      d="M6,2H14L20,8V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V4A2,2 0 0,1 6,2M13,3.5V9H18.5L13,3.5M17,11H13V13H14L12,14.67L10,13H11V11H7V13H8L11,15.5L8,18H7V20H11V18H10L12,16.33L14,18H13V20H17V18H16L13,15.5L16,13H17V11Z" />
-                                  </svg>
+                                        d="M6,2H14L20,8V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V4A2,2 0 0,1 6,2M13,3.5V9H18.5L13,3.5M17,11H13V13H14L12,14.67L10,13H11V11H7V13H8L11,15.5L8,18H7V20H11V18H10L12,16.33L14,18H13V20H17V18H16L13,15.5L16,13H17V11Z" />
+                                </svg>
                             </button>
                         </a>
 
                     </li>
                     <li class="nav-item   button-li-top col-lg-1 col-md-1 col-sm-1 col-xs-1">
                         <a class="pointer" (click)="filtrarOperacion()">
-                            <button mat-mini-fab color="white" matTooltip="Filtro Avanzado" data-toggle="tooltip" data-placement="left">
+                            <button mat-mini-fab color="white" matTooltip="Filtro Avanzado" data-toggle="tooltip"
+                                data-placement="left">
                                 <i class="fas fa-filter"></i>
                             </button>
                         </a>
@@ -53,14 +57,14 @@
                 </ul>
 
                 <span class="navbar-text button-li-top">
-          <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-              <mat-form-field width="40px">
-                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar" />
-              </mat-form-field>
-            </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <mat-form-field width="40px">
+                                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar" />
+                            </mat-form-field>
+                        </div>
 
-            <!--<div class="col-lg-7 col-md-5 col-sm-5 col-xs-5 text-right">
+                        <!--<div class="col-lg-7 col-md-5 col-sm-5 col-xs-5 text-right">
               <a class="pointer" (click)="exportTo('xls')">
                 <button class="opAut-button-excel" mat-mini-fab color="white" matTooltip="Exportar a Excel"
                   data-toggle="tooltip" data-placement="left">
@@ -71,8 +75,8 @@
                 </button>
               </a>
             </div>-->
-          </div>
-        </span>
+                    </div>
+                </span>
             </div>
         </nav>
     </div>
@@ -122,13 +126,16 @@
                 <th mat-header-cell *matHeaderCellDef> Acciones </th>
                 <td mat-cell *matCellDef="let element">
                     <div class="row text-center purchase-width-actions">
-                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Agregar Salidas Parciales" (click)="openEdit(element.id); basicModal.show()">
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer"
+                            matTooltip="Agregar Salidas Parciales" (click)="openEdit(element.id); basicModal.show()">
                             <mat-icon height="28px">arrow_circle_up</mat-icon>
                         </div>
-                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Cerrar operación" (click)="cerrarOp(element.id)">
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer"
+                            matTooltip="Cerrar operación" (click)="cerrarOp(element.id)">
                             <mat-icon height="28px">archive</mat-icon>
                         </div>
-                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Imprimir operación" (click)="print(element.id)">
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer"
+                            matTooltip="Imprimir operación" (click)="print(element.id)">
                             <mat-icon height="28px">print</mat-icon>
                         </div>
                         <!--
@@ -144,7 +151,8 @@
 
             <ng-container matColumnDef="expandedDetail">
                 <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
-                    <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                    <div class="example-element-detail"
+                        [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
                         <div class="table-responsive">
 
                             <h3 class="text-center"> Listado de Operaciones de Entradas </h3>
@@ -196,15 +204,21 @@
                                         <th>Acciones</th>
                                         <th mat-cell>
                                             <div class="row text-center purchase-width-actions">
-                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Editar Salida Parcial" (click)="openEditParcial(element.id, grupo.group_id); basicModal.show()">
+                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer"
+                                                    matTooltip="Editar Salida Parcial"
+                                                    (click)="openEditParcial(element.id, grupo.group_id); basicModal.show()">
                                                     <i class="fas fa-edit"></i>
                                                 </div>
 
-                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Imprimir Salida Parcial" (click)="printParcial(element.id, grupo.group_id)">
+                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer"
+                                                    matTooltip="Imprimir Salida Parcial"
+                                                    (click)="printParcial(element.id, grupo.group_id)">
                                                     <i class="fas fa-print"></i>
                                                 </div>
 
-                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Eliminar Salida Parcial" (click)="eliminarGrupo(grupo.group_id)">
+                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer"
+                                                    matTooltip="Eliminar Salida Parcial"
+                                                    (click)="eliminarGrupo(grupo.group_id)">
                                                     <i class="far fa-trash-alt"></i>
                                                 </div>
                                             </div>
@@ -260,7 +274,36 @@
                                     <br>
 
                                 </ng-container>
-
+                                <tr>
+                                    <th> </th>
+                                    <th>Peso</th>
+                                    <th>Cantidad </th>
+                                    <th colspan="5"> </th>
+                                </tr>
+                                <tr>
+                                    <th> Totales</th>
+                                    <th>{{ total_weight_out }}</th>
+                                    <th> {{totalC}}</th>
+                                    <th colspan="5"> </th>
+                                </tr>
+                                <tr>
+                                    <th> Total Procesadas</th>
+                                    <th>{{totalProcesado}} </th>
+                                    <th>{{totalProcesadoC}} </th>
+                                    <th colspan="5"> </th>
+                                </tr>
+                                <tr>
+                                    <th> Total rechazos</th>
+                                    <th> {{totalRechazo}}</th>
+                                    <th> {{totalRechazoC}}</th>
+                                    <th colspan="5"> </th>
+                                </tr>
+                                <tr>
+                                    <th> Total Facturado</th>
+                                    <th> {{totalFacturado}}</th>
+                                    <th> {{totalFacturadoC}}</th>
+                                    <th colspan="5"> </th>
+                                </tr>
                             </table>
                             <br>
                         </div>
@@ -270,7 +313,9 @@
                 </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="example-element-row" [class.example-expanded-row]="expandedElement === element" (click)="expandedElement = expandedElement === element ? null : element">
+            <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="example-element-row"
+                [class.example-expanded-row]="expandedElement === element"
+                (click)="expandedElement = expandedElement === element ? null : element">
             </tr>
             <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
         </table>
@@ -279,17 +324,22 @@
 
 
     <div class="btn-group">
-        <button id="boton" matTooltip="{{ titleModal }}" (click)="basicModal.show(); reset(); showModal()" mat-mini-fab color="primary" class="btn btn-fab" data-toggle="tooltip" data-placement="left" data-original-title="" title="" id="main">
+        <button id="boton" matTooltip="{{ titleModal }}" (click)="basicModal.show(); reset(); showModal()" mat-mini-fab
+            color="primary" class="btn btn-fab" data-toggle="tooltip" data-placement="left" data-original-title=""
+            title="" id="main">
             <mat-icon height="22px">arrow_circle_up</mat-icon>
         </button>
     </div>
-    <div id="modal" mdbModal #basicModal="mdbModal" class="modal fade right modal-scroll" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true" [config]='{backdrop: false, ignoreBackdropClick: false}' style="overflow: auto;">
+    <div id="modal" mdbModal #basicModal="mdbModal" class="modal fade right modal-scroll" tabindex="-1" role="dialog"
+        aria-labelledby="myBasicModalLabel" aria-hidden="true" [config]='{backdrop: false, ignoreBackdropClick: false}'
+        style="overflow: auto;">
         <div class="modal-dialog modal-lg modal-full-height modal-right" style="
         margin-top: 1px !important;" role="document">
             <div class="modal-content">
                 <div class="modal-header mat-toolbar mat-primary mat-toolbar-single-row" color="primary">
-                    <button type="button" class="close modal-button pull-right" aria-label="Close" (click)="closeModals($event)">
-                        <span aria-hidden="true"   class="client-buttom-close"> x </span>
+                    <button type="button" class="close modal-button pull-right" aria-label="Close"
+                        (click)="closeModals($event)">
+                        <span aria-hidden="true" class="client-buttom-close"> x </span>
                     </button>
                     <h4 class="modal-title w-100" id="myModalLabel">
                         <mat-icon height="38px">arrow_circle_up</mat-icon>
@@ -301,7 +351,8 @@
                     <div class="row">
                         <div class="container">
                             <div class="col-xs-12 col-sm-12">
-                                <app-salidas-form (statusCloseModal)="closeModals($event)" [element]="element"> </app-salidas-form>
+                                <app-salidas-form (statusCloseModal)="closeModals($event)" [element]="element">
+                                </app-salidas-form>
                             </div>
                         </div>
                     </div>
