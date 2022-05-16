@@ -357,7 +357,7 @@ export class SalidasFormComponent implements OnInit {
 
       this.branchServices.getListIdCliente(this.idsubservicio6)
         .subscribe((value: any) => {
-          console.log(value)
+          // console.log(value)
           if (value.length > 0) {
             this.vieneSucursal = true;
             Object.keys(value).forEach(i => {

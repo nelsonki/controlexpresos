@@ -61,13 +61,14 @@ export class SalidasTableComponent implements OnInit {
   public total_weight_out = 0;
   //public grupoID =[];
   //public resultGrupoID =[]
-  public totalRechazo = 0
-  public totalProcesado = 0
-  public totalFacturado
 
-  public totalRechazoC = 0
-  public totalProcesadoC = 0
-  public totalFacturadoC
+  /* public totalRechazo = 0
+   public totalProcesado = 0
+   public totalFacturado = 0
+ 
+   public totalRechazoC = 0
+   public totalProcesadoC = 0
+   public totalFacturadoC = 0*/
 
   public totalC = 0
 
@@ -105,6 +106,9 @@ export class SalidasTableComponent implements OnInit {
     //this.loadAll(this.fechaInicio, this.fechaFin);
   }
   public loadAll(fInicio?, fFin?, vieneCliente?, vieneSucursal?) {
+
+
+
     this.total_weight_in = 0;
     this.total_weight_out = 0;
     this.salidasServices.getList(fInicio, fFin, vieneCliente, vieneSucursal).subscribe((value) => {
@@ -115,7 +119,21 @@ export class SalidasTableComponent implements OnInit {
       //console.log(value["data"])
       if (value["data"]) {
         this.element = [];
+        let totalRechazo = 0
+        let totalFacturado = 0
+        let totalRechazoC = 0
+        let totalProcesadoC = 0
+        let totalFacturadoC = 0
+        let totalProcesado = 0
         Object.keys(value["data"]).forEach(e => {
+
+          this.totalC = 0
+          let pesoParcialTotal = 0
+          let pesoRechazoTotal = 0
+          let pesoParcialTotalC = 0
+          let pesoRechazoTotalC = 0
+
+
           const datos = {
             Item: "",
             "id": value["data"][e].id,
@@ -132,6 +150,11 @@ export class SalidasTableComponent implements OnInit {
             "inputs": [],
             "outputs": [],
             "grupos": [],
+            "totalProcesados": 0,
+            "totalRechazados": 0,
+            "totalProcesadosC": 0,
+            "totalRechazadosC": 0
+
           };
           this.element.push(datos);
           Object.keys(value["data"][e].inputs).forEach(i => {
@@ -194,10 +217,7 @@ export class SalidasTableComponent implements OnInit {
             let pesoParcial = 0
             let cantidadParcial = 0
 
-            let pesoParcialTotal = 0
-            let pesoRechazoTotal = 0
-            let pesoParcialTotalC = 0
-            let pesoRechazoTotalC = 0
+
 
             //agrupo salidas por id
             for (let data of resultId) {
@@ -220,30 +240,32 @@ export class SalidasTableComponent implements OnInit {
                 return e.group_id == data;
 
               });
-              this.totalC = this.totalC + cantidadParcial
-              this.totalProcesado = pesoParcialTotal
-              this.totalRechazo = pesoRechazoTotal
-              this.totalProcesadoC = pesoParcialTotalC
-              this.totalRechazoC = pesoRechazoTotalC
-              this.totalFacturado = (this.totalProcesado + this.totalRechazo) - this.totalRechazo
-              this.totalFacturadoC = (this.totalProcesadoC + this.totalRechazoC) - this.totalRechazoC
 
-              console.log(valueGroupId)
+              // console.log(valueGroupId)
               //operation_type
               let dataEnd = Object.assign({}, {
                 subPeso: pesoParcial,
                 subCantidad: cantidadParcial,
                 group_id: data,
                 values: valueGroupId
+
               });
+
+
               pesoParcial = 0
               cantidadParcial = 0
               this.element[e].grupos.push(dataEnd)
-              //this.element[e].grupos[data]=dataEnd;
-              //lista.push(dataEnd);
+
             }
-            //console.log(lista);
-            //console.log(this.element[e])
+
+
+
+            this.element[e].totalProcesados = pesoParcialTotal;
+            this.element[e].totalRechazados = pesoRechazoTotal;
+            this.element[e].totalProcesadosC = pesoParcialTotalC;
+            this.element[e].totalRechazadosC = pesoRechazoTotalC;
+
+
           }
         });
 
@@ -253,7 +275,7 @@ export class SalidasTableComponent implements OnInit {
 
         });
 
-        console.log(this.element)
+        //console.log(this.element)
         this.dataSource = new MatTableDataSource(this.element);
         this.dataSource.paginator = this.paginator;
         return this.dataSource;
@@ -502,10 +524,10 @@ export class SalidasTableComponent implements OnInit {
     this.fechaExcelFin = this.end_dateExp
     this.loadAll(this.start_date, this.end_date, this.cliente, this.sucursal);
 
-    console.log(this.start_date)
-    console.log(this.end_date)
-    console.log(this.cliente)
-    console.log(this.sucursal)
+    //console.log(this.start_date)
+    //console.log(this.end_date)
+    //console.log(this.cliente)
+    //console.log(this.sucursal)
   }
   toModel(date: Date): string | null {
     return date != null ? `${pad(date.getDate())}-${pad(date.getMonth() + 1)}-${date.getFullYear()}` : null;

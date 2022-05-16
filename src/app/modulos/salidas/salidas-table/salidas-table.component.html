@@ -187,6 +187,7 @@
 
 
                                     </tr>
+
                                 </ng-container>
 
                             </table><br>
@@ -195,7 +196,7 @@
                                 <caption>
                                     Observaciones de salida: {{ element.obs_out }}
                                 </caption>
-                                <ng-container *ngFor="let grupo of element.grupos; let id2 = index">
+                                <ng-container *ngFor="let grupo of element.grupos; let id3 = index">
 
                                     <tr>
                                         <th colspan="6"> Salida Parcial: {{grupo.group_id}}
@@ -265,15 +266,11 @@
                                         <th>{{grupo.subPeso}}</th>
                                         <th>{{grupo.subCantidad}}</th>
                                         <th colspan="5"> </th>
-
-
-
-
-
                                     </tr>
                                     <br>
-
                                 </ng-container>
+
+
                                 <tr>
                                     <th> </th>
                                     <th>Peso</th>
@@ -282,28 +279,31 @@
                                 </tr>
                                 <tr>
                                     <th> Totales</th>
-                                    <th>{{ total_weight_out }}</th>
-                                    <th> {{totalC}}</th>
+                                    <th>{{element.totalProcesados + element.totalRechazados}}</th>
+                                    <th> {{element.totalProcesadosC + element.totalRechazadosC}}</th>
                                     <th colspan="5"> </th>
                                 </tr>
                                 <tr>
                                     <th> Total Procesadas</th>
-                                    <th>{{totalProcesado}} </th>
-                                    <th>{{totalProcesadoC}} </th>
+                                    <th>{{element.totalProcesados}} </th>
+                                    <th> {{element.totalProcesadosC}}</th>
                                     <th colspan="5"> </th>
                                 </tr>
                                 <tr>
                                     <th> Total rechazos</th>
-                                    <th> {{totalRechazo}}</th>
-                                    <th> {{totalRechazoC}}</th>
+                                    <th>{{element.totalRechazados}} </th>
+                                    <th>{{element.totalRechazadosC}} </th>
                                     <th colspan="5"> </th>
                                 </tr>
                                 <tr>
                                     <th> Total Facturado</th>
-                                    <th> {{totalFacturado}}</th>
-                                    <th> {{totalFacturadoC}}</th>
+                                    <th> {{(element.totalProcesados + element.totalRechazados)-element.totalRechazados}}
+                                    </th>
+                                    <th>{{(element.totalProcesadosC +
+                                        element.totalRechazadosC)-element.totalRechazadosC}} </th>
                                     <th colspan="5"> </th>
                                 </tr>
+
                             </table>
                             <br>
                         </div>
