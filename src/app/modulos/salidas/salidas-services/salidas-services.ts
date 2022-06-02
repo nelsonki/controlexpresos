@@ -24,26 +24,26 @@ export class SalidasServices {
     }
 
     getList(fechaInicio?, fechaFin?, cliente?, sucursal?) {
-        let enpoint;  
-        let vieneCliente = (cliente?cliente:0)
-        let vieneSucursal = (sucursal?sucursal:0)
+        let enpoint;
+        let vieneCliente = (cliente ? cliente : 0)
+        let vieneSucursal = (sucursal ? sucursal : 0)
         if ((fechaInicio && fechaFin) || vieneCliente || vieneSucursal) {
-    
-            if(fechaInicio==="" && fechaFin===""){
+
+            if (fechaInicio === "" && fechaFin === "") {
                 enpoint = `outputs/index/in_course?client_id=${vieneCliente}&branch_id=${vieneSucursal}`;
 
-            }else{
-                if(fechaInicio === fechaFin){ 
+            } else {
+                if (fechaInicio === fechaFin) {
                     enpoint = `outputs/index/in_course?day=${fechaInicio}&client_id=${vieneCliente}&branch_id=${vieneSucursal} `;
-               }else{
+                } else {
                     enpoint = `outputs/index/in_course?interval=${fechaInicio}_${fechaFin}&client_id=${vieneCliente}&branch_id=${vieneSucursal}`;
-                }  
+                }
             }
-        }else{
+        } else {
             enpoint = 'outputs/index/in_course';
         }
-
-        return this.http.doGet(this.api, enpoint );
+        console.log(enpoint)
+        return this.http.doGet(this.api, enpoint);
     }
 
 
@@ -51,70 +51,69 @@ export class SalidasServices {
     getOperaciones(fechaInicio?, fechaFin?) {
         let enpoint;
 
-    if(fechaInicio==="" && fechaFin===""){
-        enpoint = 'outputs/index/processed';
-    }else{
-        if(fechaInicio === fechaFin){
-            enpoint = 'outputs/index/processed?day='+fechaInicio;
-       }else{
-            enpoint = 'outputs/index/processed?interval='+fechaInicio+"_"+fechaFin;
-        }  
-    }
-       
+        if (fechaInicio === "" && fechaFin === "") {
+            enpoint = 'outputs/index/processed';
+        } else {
+            if (fechaInicio === fechaFin) {
+                enpoint = 'outputs/index/processed?day=' + fechaInicio;
+            } else {
+                enpoint = 'outputs/index/processed?interval=' + fechaInicio + "_" + fechaFin;
+            }
+        }
 
-        return this.http.doGet(this.api, enpoint );
+
+        return this.http.doGet(this.api, enpoint);
     }
     getList2(fechaInicio?, fechaFin?) {
         let enpoint;
-    if(fechaInicio === fechaFin){
-         enpoint = 'outputs/index/in_course/'+fechaInicio+"_"+fechaFin;
-    }else{
-         enpoint = 'outputs/index/in_course/'+fechaInicio;
+        if (fechaInicio === fechaFin) {
+            enpoint = 'outputs/index/in_course/' + fechaInicio + "_" + fechaFin;
+        } else {
+            enpoint = 'outputs/index/in_course/' + fechaInicio;
 
+        }
+        return this.http.doGet(this.api, enpoint);
     }
-        return this.http.doGet(this.api, enpoint );
-    }
-    getLastGroup()
-    {
+    getLastGroup() {
         let enpoint = 'outputs/lastGroupId';
-        return this.http.doGet(this.api, enpoint );
+        return this.http.doGet(this.api, enpoint);
     }
     /*getOperaciones()
     {
         let enpoint = 'outputs/index/processed';
         return this.http.doGet(this.api, enpoint );
     }*/
-    cancelarProcesadas(id, body){
-        let enpoint = 'inputs/cancel/'+id;
+    cancelarProcesadas(id, body) {
+        let enpoint = 'inputs/cancel/' + id;
         return this.http.doPut(this.api, enpoint, body);
     }
-    procesar(id, body){
-        let enpoint = 'inputs/process/'+id;
+    procesar(id, body) {
+        let enpoint = 'inputs/process/' + id;
         return this.http.doPut(this.api, enpoint, body);
     }
     save(body) {
         let enpoint = 'outputs/store';
         return this.http.doPost(this.api, enpoint, body);
-     }
+    }
 
     update(id, body) {
-        let enpoint = 'outputs/update/'+id;
+        let enpoint = 'outputs/update/' + id;
         return this.http.doPut(this.api, enpoint, body);
     }
- 
+
     delete(id, modulo) {
-        if(modulo === "delete"){
-           let enpoint = 'outputs/delete/'+id;
-           return this.http.doDelete(this.api, enpoint); 
-       }
-       if(modulo === "deleteOp"){
-           let enpoint = 'outputs/deleteOp/'+id;
-           return this.http.doDelete(this.api, enpoint); 
-       }
-       if(modulo === "deleteGrupo"){
-        let enpoint = 'outputs/deletePartials/'+id;
-        return this.http.doDelete(this.api, enpoint); 
+        if (modulo === "delete") {
+            let enpoint = 'outputs/delete/' + id;
+            return this.http.doDelete(this.api, enpoint);
+        }
+        if (modulo === "deleteOp") {
+            let enpoint = 'outputs/deleteOp/' + id;
+            return this.http.doDelete(this.api, enpoint);
+        }
+        if (modulo === "deleteGrupo") {
+            let enpoint = 'outputs/deletePartials/' + id;
+            return this.http.doDelete(this.api, enpoint);
         }
     }
-     
+
 }

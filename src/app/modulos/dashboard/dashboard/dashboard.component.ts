@@ -83,7 +83,10 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['/dashboard/indicadores']);
     this.drawer.close();
   }
-
+  report() {
+    this.router.navigate(['/dashboard/report']);
+    this.drawer.close();
+  }
   settings() {
     this.router.navigate(['/dashboard/settings']);
     this.drawer.close();

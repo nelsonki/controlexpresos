@@ -94,6 +94,8 @@ export class ProcessedTableComponent implements OnInit {
             "observation": value["data"][e].observation,
             "processed_time": value["data"][e].processed_time,
             "user": value["data"][e].user,
+            "user_env": value["data"][e].user_env,
+
             "weight_in": value["data"][e].weight_in,
             "weight_out": value["data"][e].weight_out,
             "status": value["data"][e].status,

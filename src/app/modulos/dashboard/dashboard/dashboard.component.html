@@ -131,6 +131,11 @@
                             routerLinkActive="router-link-active">
                             <mat-icon>compare_arrows</mat-icon>&nbsp;Procesadas
                         </button>
+
+                        <button mat-menu-item (click)="report()" mat-menu-item [routerLink]="['/report' ]"
+                            routerLinkActive="router-link-active">
+                            <mat-icon>local_printshop</mat-icon>&nbsp;Reportes
+                        </button>
                     </mat-menu>
                 </li>
                 <hr *ngIf="role===1">

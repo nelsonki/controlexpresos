@@ -145,6 +145,7 @@ export class SalidasTableComponent implements OnInit {
             "obs_out": value["data"][e].obs_out,
             "date_time": value["data"][e].date_time,
             "user": value["data"][e].user,
+            "user_env": value["data"][e].user_env,
             "weight_in": value["data"][e].weight_in,
             "weight_out": value["data"][e].weight_out,
             "inputs": [],
@@ -272,10 +273,11 @@ export class SalidasTableComponent implements OnInit {
         Object.keys(this.element).forEach((i, index) => {
           //this.total_weight_in = this.total_weight_in + parseFloat(this.element[i].weight_in) ;
           this.total_weight_out = this.total_weight_out + parseFloat(this.element[i].weight_out);
+          console.log(this.element[i].user_env)
 
         });
 
-        //console.log(this.element)
+
         this.dataSource = new MatTableDataSource(this.element);
         this.dataSource.paginator = this.paginator;
         return this.dataSource;

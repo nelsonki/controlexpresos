@@ -1,16 +1,16 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import {AfterViewInit,  ViewChild} from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatTableDataSource} from '@angular/material/table';
+import { AfterViewInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { ModalDirective } from "angular-bootstrap-md";
 import { ToastrService } from 'ngx-toastr';
-import {animate, state, style, transition, trigger} from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import {Router} from "@angular/router";
+import { Router } from "@angular/router";
 
-import {EntradasServices} from '../entradas-services/entradas-services'
-import {EntradasFormComponent} from '../entradas-form/entradas-form.component'
-import {EntradasDeleteComponent} from '../dialog/entradas-delete/entradas-delete.component'
+import { EntradasServices } from '../entradas-services/entradas-services'
+import { EntradasFormComponent } from '../entradas-form/entradas-form.component'
+import { EntradasDeleteComponent } from '../dialog/entradas-delete/entradas-delete.component'
 import { LocalService } from '../../../http/httpServices/local-service.service';
 import { environment } from '../../../../environments/environment';
 
@@ -22,8 +22,8 @@ declare var $: any;
   styleUrls: ['./entradas-table.component.scss'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
@@ -39,22 +39,22 @@ export class EntradasTableComponent implements OnInit {
   displayedColumns: string[] = ['Item', 'ID', 'Cliente - Sucursal', 'Fecha - Hora', 'Peso de entrada', 'Usuario', 'Acciones'];
   dataSource;
   public titleModal: string;
-  public element =[];
+  public element = [];
   data: any = [];
   expandedElement;
 
-  fechas:any;
-  public contInit:number = 0;
-  public fechaInicio="";
-  public fechaFin="";
+  fechas: any;
+  public contInit: number = 0;
+  public fechaInicio = "";
+  public fechaFin = "";
 
-  public total_weight_in=0;
-  public total_weight_out=0;
+  public total_weight_in = 0;
+  public total_weight_out = 0;
   public role;
   public api: string;
 
   ngAfterViewInit() {
-   }
+  }
   constructor(
     public localService: LocalService,
 
@@ -62,7 +62,7 @@ export class EntradasTableComponent implements OnInit {
     public router: Router,
     public toasTer: ToastrService,
     public entradasServices: EntradasServices,
-    
+
   ) {
     //this.api = environment.apiInventory;
     this.titleModal = "Crear Entrada";
@@ -72,40 +72,42 @@ export class EntradasTableComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.fechaInicio="";
-    this.fechaFin="";
-   
-    this.total_weight_in=0; 
+    this.fechaInicio = "";
+    this.fechaFin = "";
+
+    this.total_weight_in = 0;
     //this.loadAll(this.fechaInicio, this.fechaFin)
   }
-  public loadAll(fInicio?, fFin?){ 
-    this.total_weight_in=0;  
+  public loadAll(fInicio?, fFin?) {
+    this.total_weight_in = 0;
     this.entradasServices.getList(fInicio, fFin).subscribe((value) => {
-      this.data=[];
-      this.element=[];
+      this.data = [];
+      this.element = [];
       console.log(value["data"])
-      if (value["data"]){
+      if (value["data"]) {
         this.element = [];
         Object.keys(value["data"]).forEach(e => {
-            const datos ={
-              Item: "",
-              "id":value["data"][e].id,
-              "client_name":value["data"][e].client_name,
-              "client_id":value["data"][e].client_id,
-              "branch_name":value["data"][e].branch_name,
-              "branch_id":value["data"][e].branch_id,
-              "observation":value["data"][e].observation,
-              "date_time": value["data"][e].date_time,
-              "user":value["data"][e].user,
-              "weight_in": value["data"][e].weight_in,
+          const datos = {
+            Item: "",
+            "id": value["data"][e].id,
+            "client_name": value["data"][e].client_name,
+            "client_id": value["data"][e].client_id,
+            "branch_name": value["data"][e].branch_name,
+            "branch_id": value["data"][e].branch_id,
+            "observation": value["data"][e].observation,
+            "date_time": value["data"][e].date_time,
+            "user": value["data"][e].user,
+            "user_env": value["data"][e].user_env,
 
-              "inputs":[]
-            };
-            this.element.push(datos);
-            Object.keys(value["data"][e].inputs).forEach(i => {
+            "weight_in": value["data"][e].weight_in,
+
+            "inputs": []
+          };
+          this.element.push(datos);
+          Object.keys(value["data"][e].inputs).forEach(i => {
             this.data =
             {
-              id:value["data"][e].inputs[i].id,
+              id: value["data"][e].inputs[i].id,
               weight: value["data"][e].inputs[i].weight,
               quantity: value["data"][e].inputs[i].quantity,
               service_id: value["data"][e].inputs[i].service_id,
@@ -117,46 +119,46 @@ export class EntradasTableComponent implements OnInit {
               operation_type: value["data"][e].inputs[i].operation_type,
               created_at: value["data"][e].inputs[i].date_time,
 
-            } ;  
+            };
             this.element[e].inputs.push(this.data);
-              }); 
-         });
-         
-         Object.keys(this.element).forEach((i, index) => {
-          this.element[i].Item = index + 1;
-          this.total_weight_in = this.total_weight_in + parseFloat(this.element[i].weight_in) ;
+          });
+        });
 
-       });
-      
+        Object.keys(this.element).forEach((i, index) => {
+          this.element[i].Item = index + 1;
+          this.total_weight_in = this.total_weight_in + parseFloat(this.element[i].weight_in);
+
+        });
+
         this.dataSource = new MatTableDataSource(this.element);
         this.dataSource.paginator = this.paginator;
         return this.dataSource;
       } else {
         this.toasTer.error(value["message"]);
         this.data = [];
-        this.element=[];
+        this.element = [];
         this.dataSource = new MatTableDataSource(this.element);
         this.dataSource.paginator = this.paginator;
         return this.dataSource;
       }
     });
-    
+
   }
-  Refresh(){
- 
-    this.fechaInicio="";
-    this.fechaFin="";
+  Refresh() {
+
+    this.fechaInicio = "";
+    this.fechaFin = "";
     this.loadAll(this.fechaInicio, this.fechaFin);
 
   }
-  public applyFilter(filterValue: string){
+  public applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLocaleLowerCase();
     Object.keys(this.dataSource.filteredData).forEach((i, index) => {
       this.dataSource.filteredData[i].Item = index + 1;
     });
   }
-  reset(){
-   /* this.form.myControl2.reset();*/
+  reset() {
+    /* this.form.myControl2.reset();*/
     this.form.nameButtonAceptar = 'Agregar';
     this.form.firstFormGroup.controls['client'].setValue('');
     this.form.firstFormGroup.controls['client_id'].setValue('');
@@ -175,15 +177,15 @@ export class EntradasTableComponent implements OnInit {
     this.form.myControl2.controls['myControl_sub'].setValue('');
     this.form.myControl2.controls['tipo'].setValue('');
 
-    this.form.fruits2=[];
+    this.form.fruits2 = [];
     this.form.myControl2.controls["fruitCtrl2"].setValue('');
 
     this.form.putSubmit = false;
     this.titleModal = "Crear Entrada";
     this.form.personList = [];
     this.form.stepper.selectedIndex = 0;
-    this.form.idsubservicio6=0;
-    this.form.vieneSucursal =false;
+    this.form.idsubservicio6 = 0;
+    this.form.vieneSucursal = false;
   }
   showModal() {
     $("#basicModal").show();
@@ -194,88 +196,88 @@ export class EntradasTableComponent implements OnInit {
     this.basicModal.hide();
 
   }
-  reloadComponent(){
+  reloadComponent() {
     const currentUrl = this.router.url;
     const refreshUrl = currentUrl.indexOf('/dashboard/Entradas') > -1 ? '/' : '/';
     this.router.navigateByUrl(refreshUrl).then(() => this.router.navigateByUrl(currentUrl));
-}
+  }
   public openEdit(id) {
     this.titleModal = "Modificar Entrada";
     this.form.addForm(id);
   }
-  eliminar(id){
-    let modulo ="delete";
+  eliminar(id) {
+    let modulo = "delete";
     this.dialog.open(EntradasDeleteComponent, {
-     width: "450px",
-     data: [id, modulo,0]
-   });
-  
-  }
-  eliminarOp(id){
-    let modulo ="deleteOp";
-    this.dialog.open(EntradasDeleteComponent, {
-     width: "450px",
-     data: [id, modulo,0]
-   });
-  
-  }
-   //*  FUNCION PARA EL FILTRADO DESDE EL SELECTOR DE FECHAS
+      width: "450px",
+      data: [id, modulo, 0]
+    });
 
-   public DateFilter(event) {
+  }
+  eliminarOp(id) {
+    let modulo = "deleteOp";
+    this.dialog.open(EntradasDeleteComponent, {
+      width: "450px",
+      data: [id, modulo, 0]
+    });
+
+  }
+  //*  FUNCION PARA EL FILTRADO DESDE EL SELECTOR DE FECHAS
+
+  public DateFilter(event) {
     //const info = JSON.parse(localStorage.getItem('info'));
     this.contInit = 0;
     this.fechas = event;
     const fechaInicio = this.convertFormat(this.fechas.fromDate);
-    const fechaFinal  = this.convertFormat(this.fechas.toDate);
-   
+    const fechaFinal = this.convertFormat(this.fechas.toDate);
+
     //this.doWhere = 'where=[ {"op":"eq","field":"hg.account","value":' + info.account +'}, {"op":"bt", "field":"hg.created_at", "value":["' + fechaInicio + ' 01:00:00","' + fechaFinal + ' 23:59:59"]}]'
     //this.doWhereReport = 'where=[ {"op":"eq","field":"hg.account","value":' + info.account +'}, {"op":"bt", "field":"hg.created_at", "value":["' + fechaInicio + ' 01:00:00","' + fechaFinal + ' 23:59:59"]}]'
     //this.loadDataTable('historialgenerates?' + this.doWhere);
     //this.paginator.pageIndex = 0;
-    console.log(fechaInicio +"_"+fechaFinal)
+    console.log(fechaInicio + "_" + fechaFinal)
     this.loadAll(fechaInicio, fechaFinal);
   }
 
-  convertFormat(range){
+  convertFormat(range) {
     var fecha = new Date(range)
     var dia = fecha.getDate();
     var mes = fecha.getMonth();
     var anno = fecha.getFullYear();
 
     var fechaSearch;
-    if ( dia < 10 ) {
-      fechaSearch =  0 + (dia);
+    if (dia < 10) {
+      fechaSearch = 0 + (dia);
     } else {
-      fechaSearch =  (dia);
+      fechaSearch = (dia);
     }
 
-    if (( mes + 1 ) < 10 ) {
-      fechaSearch = fechaSearch  + '-' + 0 + (mes + 1) + '-' + anno;
+    if ((mes + 1) < 10) {
+      fechaSearch = fechaSearch + '-' + 0 + (mes + 1) + '-' + anno;
     } else {
-      fechaSearch = fechaSearch  + '-' + (mes + 1) + '-' + anno;
+      fechaSearch = fechaSearch + '-' + (mes + 1) + '-' + anno;
     }
 
-    
+
 
     return fechaSearch;
-    
-  }
-  
-    //*  FUNCION PARA EL FILTRADO DESDE EL SELECTOR DE FECHAS
-    checkRole() {
 
-      let info = this.localService.getJsonValue('info');
-      if (info.rol) {
-        if (info.rol.toLowerCase() === 'admin') {
-          return 1;
-        }
-        if (info.rol.toLowerCase() === 'operador') {
-          return 2;
-        }
-        if (info.rol.toLowerCase() === 'op_entradas') {
-          return 3;
-        }  
+  }
+
+  //*  FUNCION PARA EL FILTRADO DESDE EL SELECTOR DE FECHAS
+  checkRole() {
+
+    let info = this.localService.getJsonValue('info');
+    if (info.rol) {
+      if (info.rol.toLowerCase() === 'admin') {
+        return 1;
       }
-  
+      if (info.rol.toLowerCase() === 'operador') {
+        return 2;
+      }
+      if (info.rol.toLowerCase() === 'op_entradas') {
+        return 3;
+      }
     }
- }
+
+  }
+}

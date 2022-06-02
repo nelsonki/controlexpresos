@@ -1,0 +1,95 @@
+<div class="container">
+    <div class="row" style="padding-top: 20px; padding-bottom: 100px ">
+        <div class="col-md-8 mx-auto">
+            <mat-tab-group [linear]="true" #stepper class="mat-elevation-z8">
+
+                <mat-tab [stepControl]="form">
+                    <ng-template mat-tab-label>
+                        <mat-icon class="material-icons"> local_printshop </mat-icon>
+                        Reportes
+                    </ng-template>
+                    <div class="example-large-box mat-lifting-z4">
+                        <form [formGroup]="form">
+
+                            <div class="row">
+                                <div class="col-md-12">
+
+
+                                    <div class="row">
+
+                                        <div class="col-md-6">
+
+                                            <div class="input-group form-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-print"></i></span>
+                                                </div>
+                                                <mat-select class="form-control" [(value)]=" selectedCo"
+                                                    formControlName="type" placeholder="Seleccione el tipo de reporte">
+
+                                                    <mat-option value="2021">Reporte de entradas detallado</mat-option>
+                                                    <mat-option value="2022">Reporte de salidas detallado</mat-option>
+                                                    <mat-option value="2023">Reporte diario</mat-option>
+
+                                                </mat-select>
+
+                                            </div>
+                                            <div style="font-size:9px; color:red;"
+                                                *ngIf="form.get('type').touched &&    form.get('type').hasError('required')">
+                                                Tipo de reporte requerido</div>
+
+                                        </div>
+                                        <div class="col-md-6">
+
+                                            <div class="input-group form-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i
+                                                            class="fas fa-calendar"></i></span>
+                                                </div>
+                                                <input autocomplete="true" type="text" class="form-control"
+                                                    formControlName="date" placeholder="fecha">
+                                            </div>
+                                            <div style="font-size:9px; color:red;"
+                                                *ngIf="form.get('date').touched && form.get('date').hasError('required')">
+                                                Fecha requerida</div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+
+                                <div class="row">
+                                    <hr>
+                                </div>
+
+
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6" style="text-align: left;">
+                                            <button mat-raised-button color="primary" (click)="submitUpdateProfile()"
+                                                class="btn btn-accent">Generar Reporte</button>
+
+                                        </div>
+                                        <div class="col-md-6" style="text-align: right;">
+                                            <button style="color:white !important" mat-raised-button color="accent"
+                                                (click)="goToMenu()"
+                                                class="btn btn-accent profile-buttom-cancel">Cancelar</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </form>
+                    </div>
+                </mat-tab>
+
+            </mat-tab-group>
+        </div>
+        <!-- FIN COL-MD-12-->
+    </div>
+    <!-- FIN ROW-->
+</div>
+<div style="padding-bottom: 100px"></div>

@@ -72,6 +72,10 @@ const routes: Routes = [
           path: 'settings', canActivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard],
           loadChildren: () => import('./modulos/settings/settings.module').then(m => m.SettingsModule)
         },
+        {
+          path: 'report', canActivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard],
+          loadChildren: () => import('./modulos/report/report.module').then(m => m.ReportModule)
+        },
       ]
   }
 ];
