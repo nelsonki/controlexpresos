@@ -270,6 +270,7 @@ export class ProcessedTableComponent implements OnInit {
 
   }
   //*  FUNCION PARA EL FILTRADO DESDE EL SELECTOR DE FECHAS
+
   public exportTo() {
     //qajakiro2.zippyttech.com/api/reports/export/2022-02-01_2022-02-15?status=procesada
 

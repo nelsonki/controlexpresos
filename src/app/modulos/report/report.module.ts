@@ -24,8 +24,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
+import { MatSelectModule } from '@angular/material/select';
+
+
+import { DateRangeComponent } from './date-range/date-range.component';
+import { NgxMatDrpModule } from './date-range/modules/ngx-mat-drp/ngx-mat-drp.module';
+
 @NgModule({
-  declarations: [ReportFormComponent],
+  declarations: [ReportFormComponent, DateRangeComponent],
   imports: [
     CommonModule,
     ReportRoutingModule,
@@ -42,7 +48,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
     MatFormFieldModule,
     MatToolbarModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxMatDrpModule,
+    MatSelectModule
   ],
   providers: [{ provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false } }],
 
