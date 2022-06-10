@@ -8,10 +8,13 @@ import { ToastrService } from 'ngx-toastr';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router, ActivatedRoute, Params } from "@angular/router";
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 import { EntradasServices } from '../../entradas/entradas-services/entradas-services'
 import { LocalService } from '../../../http/httpServices/local-service.service';
 import { environment } from '../../../../environments/environment';
+const pad = (i: number): string => i < 10 ? `0${i}` : `${i}`;
 
 declare var $: any;
 
@@ -52,6 +55,11 @@ export class ReportEntradaComponent implements OnInit {
   public role;
   public api: string;
   fechaViene: string
+  campaignOne: FormGroup;
+  eventoStart
+  keysStart
+  eventoEnd
+  keysEnd
   ngAfterViewInit() {
   }
   constructor(
@@ -82,7 +90,10 @@ export class ReportEntradaComponent implements OnInit {
         return this.fechaViene
       }
     );
-
+    this.campaignOne = new FormGroup({
+      start2: new FormControl(),
+      end2: new FormControl()
+    });
     if (this.fechaViene) {
       let vFecha = this.fechaViene.split("_")
       this.fechaInicio = vFecha[0];
@@ -188,20 +199,50 @@ export class ReportEntradaComponent implements OnInit {
 
 
   //*  FUNCION PARA EL FILTRADO DESDE EL SELECTOR DE FECHAS
+  toModel(date: Date): string | null {
+    return date != null ? `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}` : null;
+  }
+  public DateFilter() {
 
-  public DateFilter(event) {
-    //const info = JSON.parse(localStorage.getItem('info'));
-    this.contInit = 0;
-    this.fechas = event;
-    const fechaInicio = this.convertFormat(this.fechas.fromDate);
-    const fechaFinal = this.convertFormat(this.fechas.toDate);
+    let fechaBasica = new Date()
 
-    //this.doWhere = 'where=[ {"op":"eq","field":"hg.account","value":' + info.account +'}, {"op":"bt", "field":"hg.created_at", "value":["' + fechaInicio + ' 01:00:00","' + fechaFinal + ' 23:59:59"]}]'
-    //this.doWhereReport = 'where=[ {"op":"eq","field":"hg.account","value":' + info.account +'}, {"op":"bt", "field":"hg.created_at", "value":["' + fechaInicio + ' 01:00:00","' + fechaFinal + ' 23:59:59"]}]'
-    //this.loadDataTable('historialgenerates?' + this.doWhere);
-    //this.paginator.pageIndex = 0;
-    console.log(fechaInicio + "_" + fechaFinal)
-    this.loadAll(fechaInicio, fechaFinal);
+
+    let fechaInicio = (this.eventoStart) ? this.eventoStart : ""
+    let fechaFin = (this.eventoEnd) ? this.eventoEnd : ""
+
+    if (fechaInicio !== "" && fechaFin !== "") {
+      fechaInicio = this.toModel(this.eventoStart)
+      fechaFin = this.toModel(this.eventoEnd)
+
+    }
+    if (fechaInicio !== "" && fechaFin === "") {
+      fechaInicio = this.toModel(this.eventoStart)
+      fechaFin = this.toModel(this.eventoStart)
+
+    }
+    if (fechaInicio === "" && fechaFin !== "") {
+      fechaInicio = this.toModel(this.eventoEnd)
+      fechaFin = this.toModel(this.eventoEnd)
+
+    }
+    if (fechaInicio === "" && fechaFin === "") {
+      fechaInicio = this.toModel(fechaBasica)
+      fechaFin = this.toModel(fechaBasica)
+      /*
+      const today2 = new Date();
+      const day = today2.getDay();
+  
+      const month2 = today2.getMonth();
+      const year2 = today2.getFullYear();*/
+    }
+
+
+    this.fechaInicio = fechaInicio;
+    this.fechaFin = fechaFin;
+
+
+    console.log(this.fechaInicio + "_" + this.fechaFin)
+    this.loadAll(this.fechaInicio, this.fechaFin);
   }
 
   convertFormat(range) {
@@ -250,5 +291,16 @@ export class ReportEntradaComponent implements OnInit {
 
     window.open(this.api + 'reports/inputs/exportinput/' + this.fechaInicio + "_" + this.fechaFin);
 
+  }
+
+  filterByDateStart(event: MatDatepickerInputEvent<Date>, key) {
+    console.log("startChange", event.value, key)
+    this.eventoStart = event.value
+    this.keysStart = key
+  }
+  filterByDateEnd(event: MatDatepickerInputEvent<Date>, key) {
+    console.log("endChange", event.value, key)
+    this.eventoEnd = event.value
+    this.keysEnd = key
   }
 }

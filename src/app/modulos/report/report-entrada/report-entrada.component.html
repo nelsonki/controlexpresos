@@ -42,8 +42,33 @@
 
                     </li>
 
-                    <li class="nav-item  button-li-top2 col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                        <app-date-range (dateNow)="DateFilter($event)"></app-date-range>
+                    <li class="nav-item  button-li-top col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <!--<app-date-range (dateNow)="DateFilter($event)"></app-date-range>-->
+                        <mat-form-field class="  example-form-field  ">
+                            <mat-label>Intervalos de fecha</mat-label>
+                            <mat-date-range-input [formGroup]="campaignOne" [rangePicker]="campaignOnePicker"
+                                [comparisonStart]="campaignOne.value.start" [comparisonEnd]="campaignOne.value.end">
+                                <input nameit matStartDate placeholder="Fecha inicio" formControlName="start2"
+                                    (dateChange)="filterByDateStart($event, 'start')">
+                                <input nameit matEndDate placeholder="Fecha fin" formControlName="end2"
+                                    (dateChange)="filterByDateEnd($event, 'end')">
+                            </mat-date-range-input>
+                            <mat-datepicker-toggle matSuffix [for]="campaignOnePicker">
+                            </mat-datepicker-toggle>
+                            <mat-date-range-picker #campaignOnePicker>
+                            </mat-date-range-picker>
+                        </mat-form-field>
+                    </li>
+
+                    <li class="nav-item   button-li-top2 col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                        <a class="pointer" (click)="DateFilter()">
+                            <button *ngIf="true" mat-mini-fab color="white" matTooltip="Filtrar" data-toggle="tooltip"
+                                data-placement="left">
+                                <!--<i class="fas fa-sync-alt"></i>-->
+                                <img src="assets/menuIcons/search.png" alt="" height="22px" />
+                            </button>
+                        </a>
+
                     </li>
                     <li class="nav-item   button-li-top3  col-lg-4 col-md-4 col-sm-4 col-xs-4 tpeso">
                         Total peso de entrada: {{ total_weight_in }}
