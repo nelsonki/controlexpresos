@@ -158,7 +158,9 @@ export class ReportFormComponent implements OnInit {
       case "re":
         //https://qajakiro2.zippyttech.com/api/reports/inputs/exportinput/2022-05-20_2022-06-07
 
-        window.open(this.api + 'reports/inputs/exportinput/' + fechaInicio + "_" + fechaFin);
+        // window.open(this.api + 'reports/inputs/exportinput/' + fechaInicio + "_" + fechaFin);
+        this.router.navigate(['dashboard/report-form/report-form/report-entrada/' + fechaInicio + "_" + fechaFin])
+
         break;
       case "red":
         //https://qajakiro2.zippyttech.com/api/reports/inputs/detail/exportinput/2022-05-20_2022-06-07

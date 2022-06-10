@@ -29,9 +29,11 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { DateRangeComponent } from './date-range/date-range.component';
 import { NgxMatDrpModule } from './date-range/modules/ngx-mat-drp/ngx-mat-drp.module';
+import { ReportEntradaComponent } from './report-entrada/report-entrada.component';
+import { ReportComponent } from './report.component';
 
 @NgModule({
-  declarations: [ReportFormComponent, DateRangeComponent],
+  declarations: [ReportComponent, ReportFormComponent, DateRangeComponent, ReportEntradaComponent],
   imports: [
     CommonModule,
     ReportRoutingModule,
@@ -57,5 +59,9 @@ import { NgxMatDrpModule } from './date-range/modules/ngx-mat-drp/ngx-mat-drp.mo
   bootstrap: [],
 
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
+  entryComponents: [
+    ReportFormComponent,
+    ReportEntradaComponent
+  ]
 })
 export class ReportModule { }

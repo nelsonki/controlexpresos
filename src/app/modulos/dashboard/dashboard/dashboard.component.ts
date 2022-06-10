@@ -84,7 +84,7 @@ export class DashboardComponent implements OnInit {
     this.drawer.close();
   }
   report() {
-    this.router.navigate(['/dashboard/report']);
+    this.router.navigate(['/dashboard/report-form/report-form']);
     this.drawer.close();
   }
   settings() {

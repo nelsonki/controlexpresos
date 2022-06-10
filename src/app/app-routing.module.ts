@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './../app/modulos/dashboard/dashboard/dashboard.component';
 //import { ProfileComponent } from './modulos/profile/profile/profile.component';
 import { CanActivateViaAuthGuard } from './guard';
-
+import { ReportEntradaComponent } from '../app/modulos/report/report-entrada/report-entrada.component'
 const routes: Routes = [
   {
     path: 'login',
@@ -73,9 +73,10 @@ const routes: Routes = [
           loadChildren: () => import('./modulos/settings/settings.module').then(m => m.SettingsModule)
         },
         {
-          path: 'report', canActivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard],
+          path: 'report-form', canActivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard],
           loadChildren: () => import('./modulos/report/report.module').then(m => m.ReportModule)
         },
+
       ]
   }
 ];
