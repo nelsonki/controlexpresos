@@ -10,25 +10,26 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import {  MatIconModule } from '@angular/material/icon';
-import {  MatTableModule } from '@angular/material/table';
-import {  MatSortModule } from '@angular/material/sort';
-import {  MatMenuModule } from '@angular/material/menu';
-import {  MatPaginatorModule } from '@angular/material/paginator';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MaterialModule } from './../../material.module';
 
 
 
 
 import { ProcessedTableComponent } from './processed-table/processed-table.component';
-import {ProcessedRoutingModule} from '../processed/processed-routing.module'
+import { ProcessedRoutingModule } from '../processed/processed-routing.module'
 import { DateRangeComponent } from './date-range/date-range.component';
 import { NgxMatDrpModule } from './date-range/modules/ngx-mat-drp/ngx-mat-drp.module';
 import { ProcessedCancelComponent } from './dialog/processed-cancel/processed-cancel.component';
+import { ProcessedComponent } from './processed.component';
 
 
 @NgModule({
-  declarations: [ProcessedTableComponent, DateRangeComponent, ProcessedCancelComponent],
+  declarations: [ProcessedTableComponent, DateRangeComponent, ProcessedCancelComponent, ProcessedComponent],
   imports: [
     CommonModule,
     ProcessedRoutingModule,
@@ -48,7 +49,7 @@ import { ProcessedCancelComponent } from './dialog/processed-cancel/processed-ca
     ReactiveFormsModule,
     NgxMatDrpModule
   ],
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA,
     NO_ERRORS_SCHEMA]
 })
 export class ProcessedModule { }

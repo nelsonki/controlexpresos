@@ -4,15 +4,19 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ModalDirective } from "angular-bootstrap-md";
 import { ToastrService } from 'ngx-toastr';
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute, Params } from "@angular/router";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { SalidasServices } from '../../salidas/salidas-services/salidas-services'
 import { environment } from '../../../../environments/environment';
 import { DateRangeComponent } from '../date-range/date-range.component';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+
 import { ProcessedCancelComponent } from '../dialog/processed-cancel/processed-cancel.component'
 declare var $: any;
+const pad = (i: number): string => i < 10 ? `0${i}` : `${i}`;
 
 @Component({
   selector: 'app-processed-table',
@@ -36,6 +40,8 @@ export class ProcessedTableComponent implements OnInit {
 
   displayedColumns: string[] = ['Item', 'ID', 'Cliente - Sucursal', 'Peso de entrada', 'Peso de salida', 'Fecha Procesada', 'Fecha Anulada', 'Status', 'Usuario', 'Acciones'];
   dataSource;
+  campaignOne: FormGroup;
+
   public titleModal: string;
   public element = [];
   public data;
@@ -50,6 +56,11 @@ export class ProcessedTableComponent implements OnInit {
   public total_weight_out = 0;
   public fechaExcelInicio = "";
   public fechaExcelFin = "";
+  public fechaViene
+  eventoStart
+  keysStart
+  eventoEnd
+  keysEnd
   ngAfterViewInit() {
   }
   constructor(
@@ -57,6 +68,8 @@ export class ProcessedTableComponent implements OnInit {
     public router: Router,
     public toasTer: ToastrService,
     public salidasServices: SalidasServices,
+    private route: ActivatedRoute,
+
   ) {
     //this.api = environment.apiInventory;
     // this.titleModal = "Crear Salida";
@@ -70,9 +83,34 @@ export class ProcessedTableComponent implements OnInit {
     this.total_weight_in = 0;
     this.total_weight_out = 0;
 
-    //this.loadAll(this.fechaInicio, this.fechaFin);
+    const sb = this.route.params.subscribe(
+      (params: Params) => {
+        this.fechaViene = params.id;
+        return this.fechaViene
+      }
+    );
+    this.campaignOne = new FormGroup({
+      start2: new FormControl(),
+      end2: new FormControl()
+    });
+    if (this.fechaViene) {
+      let vFecha = this.fechaViene.split("_")
+      let inif = vFecha[0].split("-")
+      let finf = vFecha[1].split("-");
+      this.fechaInicio = inif[2] + "-" + inif[1] + "-" + inif[0];
+      this.fechaFin = finf[2] + "-" + finf[1] + "-" + finf[0];
+      this.fechaExcelInicio = inif[0] + "-" + inif[1] + "-" + inif[2];
+      this.fechaExcelFin = finf[0] + "-" + finf[1] + "-" + finf[2];
+    }
+
+    // console.log(this.fechaInicio)
+    //console.log(this.fechaFin)
+
+    this.loadAll(this.fechaInicio, this.fechaFin)
   }
   public loadAll(fInicio?, fFin?) {
+
+    console.log(fInicio + "_" + fFin)
     this.total_weight_in = 0;
     this.total_weight_out = 0;
     this.salidasServices.getOperaciones(fInicio, fFin).subscribe((value) => {
@@ -203,21 +241,17 @@ export class ProcessedTableComponent implements OnInit {
   }
   //*  FUNCION PARA EL FILTRADO DESDE EL SELECTOR DE FECHAS
 
-  public DateFilter(event) {
-    //const info = JSON.parse(localStorage.getItem('info'));
-    this.contInit = 0;
-    this.fechas = event;
-    const fechaInicio = this.convertFormat(this.fechas.fromDate);
-    const fechaFinal = this.convertFormat(this.fechas.toDate);
-    this.fechaExcelInicio = this.convertFormatYear(this.fechas.fromDate);
-    this.fechaExcelFin = this.convertFormatYear(this.fechas.toDate);
-    //this.doWhere = 'where=[ {"op":"eq","field":"hg.account","value":' + info.account +'}, {"op":"bt", "field":"hg.created_at", "value":["' + fechaInicio + ' 01:00:00","' + fechaFinal + ' 23:59:59"]}]'
-    //this.doWhereReport = 'where=[ {"op":"eq","field":"hg.account","value":' + info.account +'}, {"op":"bt", "field":"hg.created_at", "value":["' + fechaInicio + ' 01:00:00","' + fechaFinal + ' 23:59:59"]}]'
-    //this.loadDataTable('historialgenerates?' + this.doWhere);
-    //this.paginator.pageIndex = 0;
-    console.log(fechaInicio + "_" + fechaFinal)
-    this.loadAll(fechaInicio, fechaFinal);
-  }
+  /*public DateFilter(event) {
+      this.contInit = 0;
+     this.fechas = event;
+     const fechaInicio = this.convertFormat(this.fechas.fromDate);
+     const fechaFinal = this.convertFormat(this.fechas.toDate);
+     this.fechaExcelInicio = this.convertFormatYear(this.fechas.fromDate);
+     this.fechaExcelFin = this.convertFormatYear(this.fechas.toDate);
+  
+     console.log(fechaInicio + "_" + fechaFinal)
+     this.loadAll(fechaInicio, fechaFinal);
+   }*/
   convertFormat(range) {
     var fecha = new Date(range)
     var dia = fecha.getDate();
@@ -273,9 +307,74 @@ export class ProcessedTableComponent implements OnInit {
 
   public exportTo() {
     //qajakiro2.zippyttech.com/api/reports/export/2022-02-01_2022-02-15?status=procesada
-
+    console.log(this.fechaExcelInicio + "_" + this.fechaExcelFin)
     window.open(this.api + 'reports/export/' + this.fechaExcelInicio + "_" + this.fechaExcelFin + '?status=procesada');
 
 
+  }
+
+  Refresh2() {
+
+    this.router.navigate(['dashboard/report-form/report-form'])
+
+  }
+  toModel(date: Date): string | null {
+    return date != null ? `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}` : null;
+  }
+  public DateFilter() {
+
+    let fechaBasica = new Date()
+
+
+    let fechaInicio = (this.eventoStart) ? this.eventoStart : ""
+    let fechaFin = (this.eventoEnd) ? this.eventoEnd : ""
+
+    if (fechaInicio !== "" && fechaFin !== "") {
+      fechaInicio = this.toModel(this.eventoStart)
+      fechaFin = this.toModel(this.eventoEnd)
+
+    }
+    if (fechaInicio !== "" && fechaFin === "") {
+      fechaInicio = this.toModel(this.eventoStart)
+      fechaFin = this.toModel(this.eventoStart)
+
+    }
+    if (fechaInicio === "" && fechaFin !== "") {
+      fechaInicio = this.toModel(this.eventoEnd)
+      fechaFin = this.toModel(this.eventoEnd)
+
+    }
+    if (fechaInicio === "" && fechaFin === "") {
+      fechaInicio = this.toModel(fechaBasica)
+      fechaFin = this.toModel(fechaBasica)
+      /*
+      const today2 = new Date();
+      const day = today2.getDay();
+  
+      const month2 = today2.getMonth();
+      const year2 = today2.getFullYear();*/
+    }
+
+
+    this.fechaInicio = fechaInicio;
+    this.fechaFin = fechaFin;
+    let inif = fechaInicio.split("-")
+    let finf = fechaFin.split("-");
+    this.fechaExcelInicio = inif[0] + "-" + inif[1] + "-" + inif[2];
+    this.fechaExcelFin = finf[0] + "-" + finf[1] + "-" + finf[2];
+
+
+    console.log(this.fechaInicio + "_" + this.fechaFin)
+    this.loadAll(this.fechaInicio, this.fechaFin);
+  }
+  filterByDateStart(event: MatDatepickerInputEvent<Date>, key) {
+    console.log("startChange", event.value, key)
+    this.eventoStart = event.value
+    this.keysStart = key
+  }
+  filterByDateEnd(event: MatDatepickerInputEvent<Date>, key) {
+    console.log("endChange", event.value, key)
+    this.eventoEnd = event.value
+    this.keysEnd = key
   }
 } 

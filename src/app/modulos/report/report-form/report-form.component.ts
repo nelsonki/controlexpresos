@@ -158,8 +158,8 @@ export class ReportFormComponent implements OnInit {
       case "re":
         //https://qajakiro2.zippyttech.com/api/reports/inputs/exportinput/2022-05-20_2022-06-07
 
-        // window.open(this.api + 'reports/inputs/exportinput/' + fechaInicio + "_" + fechaFin);
-        this.router.navigate(['dashboard/report-form/report-form/report-entrada/' + fechaInicio + "_" + fechaFin])
+        window.open(this.api + 'reports/inputs/exportinput/' + fechaInicio + "_" + fechaFin);
+        //this.router.navigate(['dashboard/report-form/report-form/report-entrada/' + fechaInicio + "_" + fechaFin])
 
         break;
       case "red":
@@ -170,6 +170,12 @@ export class ReportFormComponent implements OnInit {
       case "rsd":
         //https://qajakiro2.zippyttech.com/api/reports/outputs/detail/export/2022-05-20_2022-06-07
         window.open(this.api + 'reports/outputs/detail/export/' + fechaInicio + "_" + fechaFin);
+        break;
+      case "rp":
+        //https://qajakiro2.zippyttech.com/api/reports/outputs/detail/export/2022-05-20_2022-06-07
+        this.router.navigate(['dashboard/Procesadas/Procesadas/' + fechaInicio + "_" + fechaFin])
+
+        //window.open(this.api + 'reports/outputs/detail/export/' + fechaInicio + "_" + fechaFin);
         break;
       default:
         break;
