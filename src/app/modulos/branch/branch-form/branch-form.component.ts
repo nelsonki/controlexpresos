@@ -14,20 +14,20 @@ import { Router } from "@angular/router";
 import { branchMsg } from "../../../utils/const/message";
 import { ToastrService } from "ngx-toastr";
 import { BranchServices } from '../branch-services/branch-services';
-import {environment} from '../../../../environments/environment'
+import { environment } from '../../../../environments/environment'
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
-import {HttpServices}from '../../../http/httpServices/httpServices'
+import { HttpServices } from '../../../http/httpServices/httpServices'
 @Component({
   selector: 'app-branch-form',
   templateUrl: './branch-form.component.html',
   styleUrls: ['./branch-form.component.scss']
 })
 export class BranchFormComponent implements OnInit {
-  @Input() element: string  ;
+  @Input() element: string;
   @Output() statusCloseModal = new EventEmitter();
-  
-  public firstform: FormGroup ;
+
+  public firstform: FormGroup;
   public submitted = false;
   public loading: boolean = false;
   public editSubmit: boolean = false;
@@ -42,7 +42,7 @@ export class BranchFormComponent implements OnInit {
 
   public putSubmit: boolean = false;
   public idEdit: any;
-  
+
   public api;
   openOptionClient: boolean = false;
   filteredOptions: Observable<string[]>;
@@ -58,16 +58,16 @@ export class BranchFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.firstform = this.formBuilder.group({ 
+    this.firstform = this.formBuilder.group({
       dni: ["", Validators.required],
       name: ["", Validators.required],
       address: ["", ""],
       client_id: ["", Validators.required],
       client: ["", Validators.required],
 
-     });
+    });
   }
-    public searchClient() {
+  public searchClient() {
     this.api = environment.apiJakiro2;
     let valueSearch = this.firstform.controls["client"].value;
     if (valueSearch.trim() !== "") {
@@ -93,7 +93,7 @@ export class BranchFormComponent implements OnInit {
   public closeOption() {
     this.openOptionClient = false;
   }
-  public addForm(id) {  
+  public addForm(id) {
     this.idEdit = id;
     let dataEdit = [];
     this.editSubmit = true;
@@ -110,84 +110,84 @@ export class BranchFormComponent implements OnInit {
     this.firstform.controls["client_id"].setValue(dataEdit[0]["cliente_id"]);
     this.firstform.controls["name"].setValue(dataEdit[0]["name"]);
     this.firstform.controls["address"].setValue(dataEdit[0]["address"]);
-  
+
   }
   public closeModal() {
     this.closeStatus = !this.closeStatus;
     this.statusCloseModal.emit(this.closeStatus);
   }
-  onSubmit(){
-    
+  onSubmit() {
+
     this.submitted = true;
-     if(this.firstform.invalid) {
+    if (this.firstform.invalid) {
       return;
-    }else{
-    if (this.putSubmit) {
-      this.loading = true;
-    
+    } else {
+      if (this.putSubmit) {
+        this.loading = true;
 
-      let bodyData = Object.assign({
-        "dni": this.firstform.controls["dni"].value,
 
-        "name": this.firstform.controls["name"].value,
-        "address": this.firstform.controls["address"].value,
-        "client_id": this.firstform.controls["client_id"].value,
- 
-      });
-         // console.warn(bodyData);
-          this.branchServices.update(this.idEdit, bodyData).subscribe(
-            response => {
-                  this.toasTer.success(branchMsg.update);
-                  this.reloadComponent();
-              },
-              error => {
-                if (error["status"] === 422) {
-                  this.toasTer.error('Ya existe este DNI de sucursal');
-                  this.loading = false;
+        let bodyData = Object.assign({
+          "dni": this.firstform.controls["dni"].value,
 
-                }else{
-                      this.loading = false;
-                this.toasTer.error(branchMsg.errorProcess);
-                this.loading = false;
-                }
-          
-              }
-            );
-        
-      
-    }
-    else {
-          this.loading = true;
+          "name": this.firstform.controls["name"].value,
+          "address": this.firstform.controls["address"].value,
+          "client_id": this.firstform.controls["client_id"].value,
 
-          //let codFormatted = cod.trim().replace(/\s/g, "");//para que se usa
-          let bodyData = Object.assign({
-            "dni": this.firstform.controls["dni"].value,
+        });
+        // console.warn(bodyData);
+        this.branchServices.update(this.idEdit, bodyData).subscribe(
+          response => {
+            this.toasTer.success(branchMsg.update);
+            this.reloadComponent();
+          },
+          error => {
+            if (error["status"] === 422) {
+              this.toasTer.error('Ya existe este DNI de sucursal');
+              this.loading = false;
 
-            "name": this.firstform.controls["name"].value,
-            "address": this.firstform.controls["address"].value,
-            "client_id": this.firstform.controls["client_id"].value,
+            } else {
+              this.loading = false;
+              this.toasTer.error(branchMsg.errorProcess);
+              this.loading = false;
+            }
 
-            });
-           // console.log(bodyData);
-            this.branchServices.save(bodyData).subscribe(
-              response => {
-                    this.toasTer.success(branchMsg.save);
-                    this.reloadComponent();
-                },
-                error => {
-                  if (error["status"] === 422) {
-                    this.toasTer.error('Ya existe este DNI de sucursal');
-                    this.loading = false;
+          }
+        );
 
-                  }else{
-                        this.loading = false;
-                  this.toasTer.error(branchMsg.errorProcess);
-                  this.loading = false;
-                  }
-                }
-              );
-          
-        
+
+      }
+      else {
+        this.loading = true;
+
+        //let codFormatted = cod.trim().replace(/\s/g, "");//para que se usa
+        let bodyData = Object.assign({
+          "dni": this.firstform.controls["dni"].value,
+
+          "name": this.firstform.controls["name"].value,
+          "address": this.firstform.controls["address"].value,
+          "client_id": this.firstform.controls["client_id"].value,
+
+        });
+        // console.log(bodyData);
+        this.branchServices.save(bodyData).subscribe(
+          response => {
+            this.toasTer.success(branchMsg.save);
+            this.reloadComponent();
+          },
+          error => {
+            if (error["status"] === 422) {
+              this.toasTer.error('Ya existe este DNI de sucursal');
+              this.loading = false;
+
+            } else {
+              this.loading = false;
+              this.toasTer.error(branchMsg.errorProcess);
+              this.loading = false;
+            }
+          }
+        );
+
+
       }
     }
   }
@@ -197,7 +197,7 @@ export class BranchFormComponent implements OnInit {
     this.router
       .navigateByUrl(refreshUrl)
       .then(() => this.router.navigateByUrl(currentUrl));
-   }
+  }
   get f() {
     return this.firstform.controls;
   }

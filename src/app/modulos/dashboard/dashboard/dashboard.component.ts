@@ -120,7 +120,7 @@ export class DashboardComponent implements OnInit {
     this.drawer.close();
   }
   listarProcesadas() {
-    this.router.navigate(['/dashboard/Procesadas']);
+    this.router.navigate(['/dashboard/Procesadas/Procesadas']);
     this.drawer.close();
   }
   ngOnInit(): void {
@@ -196,6 +196,9 @@ export class DashboardComponent implements OnInit {
       }
       if (info.rol.toLowerCase() === 'op_entradas') {
         return 3;
+      }
+      if (info.rol.toLowerCase() === 'cliente') {
+        return 4;
       }
     }
 

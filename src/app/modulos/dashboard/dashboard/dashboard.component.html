@@ -37,7 +37,7 @@
     <mat-drawer #drawer mode="over" opened="false" position="start" class="example-sidenav" style="width:100%">
         <ul class="side-menu" style="list-style: none; ">
 
-            <ng-container *ngIf="role===1 || role===2 || role===3">
+            <ng-container *ngIf="role===1 || role===2 || role===3 || role===4">
                 <li style="padding-top: 15px; padding-left: 15px" *ngIf="role===1">
                     <a [routerLink]="['/Stats' ]" routerLinkActive="router-link-active" (click)="dashboard()">
                         <mat-icon>addchart</mat-icon>
@@ -120,19 +120,19 @@
                     </mat-menu>
                 </li>
                 <hr>
-                <li *ngIf="role===1 || role===2">
+                <li *ngIf="role===1 || role===2 || role===4">
                     <button mat-button [matMenuTriggerFor]="menuInspe">
                         <mat-icon>assignment_turned_in</mat-icon>
                         &nbsp;
                         <span style="font-size: 15px; font-weight: bold;">Lista de Operaciones</span>
                     </button>
                     <mat-menu #menuInspe="matMenu">
-                        <!-- <button mat-menu-item (click)="listarProcesadas()" mat-menu-item [routerLink]="['/Procesadas' ]"
-                            routerLinkActive="router-link-active">
+                        <button *ngIf="  role===4" mat-menu-item (click)="listarProcesadas()" mat-menu-item
+                            [routerLink]="['/Procesadas/Procesadas' ]" routerLinkActive="router-link-active">
                             <mat-icon>compare_arrows</mat-icon>&nbsp;Procesadas
-                        </button>-->
+                        </button>
 
-                        <button mat-menu-item (click)="report()" mat-menu-item
+                        <button *ngIf="role===1 || role===2  " mat-menu-item (click)="report()" mat-menu-item
                             [routerLink]="['/report-form/report-form' ]" routerLinkActive="router-link-active">
                             <mat-icon>local_printshop</mat-icon>&nbsp;Reportes
                         </button>

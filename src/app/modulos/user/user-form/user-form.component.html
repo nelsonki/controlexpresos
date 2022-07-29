@@ -22,7 +22,8 @@
         <mat-form-field class="example-chip-list">
             <mat-label>Rol(*)</mat-label>
             <mat-select formControlName="rol" placeholder="Rol">
-                <mat-option *ngFor="let act  of roles" [value]="act.value">
+                <mat-option *ngFor="let act  of roles" (click)="
+               setDataFormulRol($event, act.value)" [value]="act.value">
                     {{act.name}}
                 </mat-option>
             </mat-select>
@@ -32,6 +33,39 @@
                 </div>
             </mat-error>
         </mat-form-field>
+        <!--BUSCADOR DE CLIENTE PARA ROL-->
+
+        <div *ngIf="validCliente" class="form-group" class="width-form-groud ">
+            <mat-form-field class="example-full-width" style="width: 100%;">
+                <mat-label>Cliente(*)</mat-label>
+
+                <input type="text" placeholder="Cliente(*)" aria-label="Number" matInput formControlName="client">
+                <div class="typeahead--wrapper" *ngIf="openOptionClient">
+                    <ul class="typeahead--ul">
+                        <li *ngFor="let data of filteredOptions" (click)="
+               setDataFormul($event,
+                 data.id,
+                 data.name
+               )
+             " class="typeahead--list">
+                            <b>{{ data.name }}</b>
+                        </li>
+                    </ul>
+                </div>
+                <mat-error *ngIf="submitted && f.client.errors">
+                    <div *ngIf="f.client.errors.required">Por favor, seleccione un Cliente</div>
+                </mat-error>
+            </mat-form-field>
+
+            <div>
+                <button [disabled]="disabledButoon" matTooltip="Buscar" class="button-search" (click)="searchClient()">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <input formControlName="client_id" matInput="" style="display: none;" />
+
+        </div>
+        <!--BUSCADOR DE CLIENTE PARA ROL-->
         <mat-form-field class="example-chip-list">
             <mat-label>Clave(*)</mat-label>
             <input matInput formControlName="clave" type="password" />
@@ -60,13 +94,14 @@
                 <div class="row">
                     <div class="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <button [disabled]="loading" mat-raised-button color="primary" class="btn btn-accent">
-            Aceptar
-          </button>
+                            Aceptar
+                        </button>
                     </div>
                     <div class="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <button style="color:white" mat-raised-button color="accent" class="btn btn-accent" type="button" (click)="closeModal()">
-            Cancelar
-          </button>
+                        <button style="color:white" mat-raised-button color="accent" class="btn btn-accent"
+                            type="button" (click)="closeModal()">
+                            Cancelar
+                        </button>
                     </div>
                 </div>
             </div>
