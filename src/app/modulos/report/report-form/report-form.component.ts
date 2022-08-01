@@ -55,7 +55,7 @@ export class ReportFormComponent implements OnInit {
   public fechaExcelInicio = "";
   public fechaExcelFin = "";
   public api: string;
-
+  public idAsociado
   constructor(public router: Router,
     public toasTer: ToastrService,
     public http: HttpService,
@@ -86,9 +86,24 @@ export class ReportFormComponent implements OnInit {
 
     });
     let info = this.localService.getJsonValue('info');
+    this.idAsociado = info.id_cliente_asoc
     this.apiSettings = environment.apiJakiro2;
     this.getDataSettings();
-    this.userRole = info.rol;
+    // this.userRole = info.rol;
+    if (info.rol) {
+      if (info.rol.toLowerCase() === 'admin') {
+        this.userRole = 1;
+      }
+      if (info.rol.toLowerCase() === 'operador') {
+        this.userRole = 2;
+      }
+      if (info.rol.toLowerCase() === 'op_entradas') {
+        this.userRole = 3;
+      }
+      if (info.rol.toLowerCase() === 'cliente') {
+        this.userRole = 4;
+      }
+    }
 
   }
 
@@ -172,10 +187,14 @@ export class ReportFormComponent implements OnInit {
         window.open(this.api + 'reports/outputs/detail/export/' + fechaInicio + "_" + fechaFin);
         break;
       case "rp":
-        //https://qajakiro2.zippyttech.com/api/reports/outputs/detail/export/2022-05-20_2022-06-07
-        this.router.navigate(['dashboard/Procesadas/Procesadas/' + fechaInicio + "_" + fechaFin])
+        if (this.userRole === 4) {
+          this.router.navigate(['dashboard/Procesadas/Procesadas/' + this.idAsociado + '/' + fechaInicio + "_" + fechaFin])
 
-        //window.open(this.api + 'reports/outputs/detail/export/' + fechaInicio + "_" + fechaFin);
+        } else {
+          this.router.navigate(['dashboard/Procesadas/Procesadas/0/' + fechaInicio + "_" + fechaFin])
+
+        }
+
         break;
       default:
         break;

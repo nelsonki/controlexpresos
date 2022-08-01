@@ -120,7 +120,12 @@ export class DashboardComponent implements OnInit {
     this.drawer.close();
   }
   listarProcesadas() {
-    this.router.navigate(['/dashboard/Procesadas/Procesadas']);
+
+    let info = this.localService.getJsonValue('info');
+    let client_id = info.id_cliente_asoc
+    this.router.navigate(['/dashboard/Procesadas/Procesadas/' + client_id])
+
+    // this.router.navigate(['/dashboard/Procesadas/Procesadas']);
     this.drawer.close();
   }
   ngOnInit(): void {

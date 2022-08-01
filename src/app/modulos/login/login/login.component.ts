@@ -88,6 +88,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         //this.localService.setJsonValue('iduserlog', data.id);
         console.log(this.localService)
         let info = this.localService.getJsonValue('info');
+
         if (info.rol.toLowerCase() === 'op_entradas') {
           this.router.navigate(['/dashboard/Entradas'])
 
@@ -101,7 +102,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
         }
         if (info.rol.toLowerCase() === 'cliente') {
-          this.router.navigate(['/dashboard/Procesadas/Procesadas'])
+          let client_id = info.id_cliente_asoc
+          this.router.navigate(['/dashboard/Procesadas/Procesadas/' + client_id + '/0'])
 
         }
         //}

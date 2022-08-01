@@ -13,6 +13,7 @@ import { SalidasServices } from '../../salidas/salidas-services/salidas-services
 import { environment } from '../../../../environments/environment';
 import { DateRangeComponent } from '../date-range/date-range.component';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { LocalService } from '../../../http/httpServices/local-service.service';
 
 import { ProcessedCancelComponent } from '../dialog/processed-cancel/processed-cancel.component'
 declare var $: any;
@@ -57,6 +58,8 @@ export class ProcessedTableComponent implements OnInit {
   public fechaExcelInicio = "";
   public fechaExcelFin = "";
   public fechaViene
+  public clienteViene
+  public userRole
   eventoStart
   keysStart
   eventoEnd
@@ -69,6 +72,8 @@ export class ProcessedTableComponent implements OnInit {
     public toasTer: ToastrService,
     public salidasServices: SalidasServices,
     private route: ActivatedRoute,
+    public localService: LocalService,
+
 
   ) {
     //this.api = environment.apiInventory;
@@ -85,15 +90,34 @@ export class ProcessedTableComponent implements OnInit {
 
     const sb = this.route.params.subscribe(
       (params: Params) => {
-        this.fechaViene = params.id;
-        return this.fechaViene
+        console.log(params)
+        this.clienteViene = params.id;
+
+        this.fechaViene = params.fecha;
+        //return this.fechaViene
       }
     );
     this.campaignOne = new FormGroup({
       start2: new FormControl(),
       end2: new FormControl()
     });
-    if (this.fechaViene) {
+    let info = this.localService.getJsonValue('info');
+    if (info.rol) {
+      if (info.rol.toLowerCase() === 'admin') {
+        this.userRole = 1;
+      }
+      if (info.rol.toLowerCase() === 'operador') {
+        this.userRole = 2;
+      }
+      if (info.rol.toLowerCase() === 'op_entradas') {
+        this.userRole = 3;
+      }
+      if (info.rol.toLowerCase() === 'cliente') {
+        this.userRole = 4;
+      }
+    }
+
+    if (this.fechaViene && this.fechaViene !== '0') {
       let vFecha = this.fechaViene.split("_")
       let inif = vFecha[0].split("-")
       let finf = vFecha[1].split("-");
@@ -106,14 +130,14 @@ export class ProcessedTableComponent implements OnInit {
     // console.log(this.fechaInicio)
     //console.log(this.fechaFin)
 
-    this.loadAll(this.fechaInicio, this.fechaFin)
+    this.loadAll(this.fechaInicio, this.fechaFin, this.clienteViene)
   }
-  public loadAll(fInicio?, fFin?) {
+  public loadAll(fInicio?, fFin?, id?) {
 
-    console.log(fInicio + "_" + fFin)
+    //console.log(fInicio + "_" + fFin)
     this.total_weight_in = 0;
     this.total_weight_out = 0;
-    this.salidasServices.getOperaciones(fInicio, fFin).subscribe((value) => {
+    this.salidasServices.getOperaciones(fInicio, fFin, id).subscribe((value) => {
       this.data = [];
       this.dataOut = [];
 
@@ -205,7 +229,7 @@ export class ProcessedTableComponent implements OnInit {
   Refresh() {
     this.fechaInicio = "";
     this.fechaFin = "";
-    this.loadAll(this.fechaInicio, this.fechaFin);
+    this.loadAll(this.fechaInicio, this.fechaFin, this.clienteViene);
   }
 
   public closeModals(value) {
@@ -365,7 +389,7 @@ export class ProcessedTableComponent implements OnInit {
 
 
     console.log(this.fechaInicio + "_" + this.fechaFin)
-    this.loadAll(this.fechaInicio, this.fechaFin);
+    this.loadAll(this.fechaInicio, this.fechaFin, this.clienteViene);
   }
   filterByDateStart(event: MatDatepickerInputEvent<Date>, key) {
     console.log("startChange", event.value, key)

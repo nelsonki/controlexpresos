@@ -19,14 +19,20 @@
 
                                         <div class="col-md-6">
 
-                                            <div class="input-group form-group">
+                                            <div *ngIf="userRole===1 || userRole===2 || userRole===4"
+                                                class="input-group form-group">
 
                                                 <mat-select class="form-control" [(value)]=" selectedCo"
                                                     formControlName="type" placeholder="Seleccione el tipo de reporte">
-                                                    <mat-option value="re">Reporte de entradas</mat-option>
-                                                    <mat-option value="red">Reporte de entradas detalladas</mat-option>
-                                                    <mat-option value="rsd">Reporte de salidas detalladas</mat-option>
-                                                    <mat-option value="rp">Reporte de procesadas</mat-option>
+                                                    <mat-option value="re" *ngIf="userRole===1 || userRole===2  ">
+                                                        Reporte de entradas</mat-option>
+                                                    <mat-option value="red" *ngIf="userRole===1 || userRole===2  ">
+                                                        Reporte de entradas detalladas</mat-option>
+                                                    <mat-option value="rsd" *ngIf="userRole===1 || userRole===2  ">
+                                                        Reporte de salidas detalladas</mat-option>
+                                                    <mat-option value="rp"
+                                                        *ngIf="userRole===1 || userRole===2 || userRole===4">Reporte de
+                                                        procesadas</mat-option>
 
                                                 </mat-select>
 

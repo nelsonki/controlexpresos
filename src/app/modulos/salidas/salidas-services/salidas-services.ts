@@ -48,18 +48,46 @@ export class SalidasServices {
 
 
 
-    getOperaciones(fechaInicio?, fechaFin?) {
+    getOperaciones(fechaInicio?, fechaFin?, id?) {
+        let idViene = (id) ? id : 0
+        console.log(idViene)
         let enpoint;
+        if (idViene > 0) {
+            //enpoint = 'outputs/index/processed?client_id=' + idViene;
+            if (fechaInicio === "" && fechaFin === "") {
+                enpoint = 'outputs/index/processed?client_id=' + idViene;
+                console.log(enpoint)
 
-        if (fechaInicio === "" && fechaFin === "") {
-            enpoint = 'outputs/index/processed';
-        } else {
-            if (fechaInicio === fechaFin) {
-                enpoint = 'outputs/index/processed?day=' + fechaInicio;
             } else {
-                enpoint = 'outputs/index/processed?interval=' + fechaInicio + "_" + fechaFin;
+                if (fechaInicio === fechaFin) {
+                    enpoint = 'outputs/index/processed?client_id=' + idViene + '&day=' + fechaInicio;
+                    console.log(enpoint)
+
+                } else {
+                    enpoint = 'outputs/index/processed?client_id=' + idViene + '&interval=' + fechaInicio + "_" + fechaFin;
+                    console.log(enpoint)
+
+                }
+            }
+        } else {
+            if (fechaInicio === "" && fechaFin === "") {
+                enpoint = 'outputs/index/processed';
+                console.log(enpoint)
+
+            } else {
+                if (fechaInicio === fechaFin) {
+                    enpoint = 'outputs/index/processed?day=' + fechaInicio;
+                    console.log(enpoint)
+
+                } else {
+                    enpoint = 'outputs/index/processed?interval=' + fechaInicio + "_" + fechaFin;
+                    console.log(enpoint)
+
+                }
             }
         }
+
+
 
 
         return this.http.doGet(this.api, enpoint);

@@ -169,7 +169,7 @@
                         </div>
 
 
-                        <div *ngIf="element.status==='Procesada'"
+                        <div *ngIf="element.status==='Procesada' && userRole!==4"
                             class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer"
                             matTooltip="Anular operación" (click)="cancel(element.id)">
                             <i class="fas fa-times-circle"></i>
