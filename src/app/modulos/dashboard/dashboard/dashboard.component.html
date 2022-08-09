@@ -77,6 +77,10 @@
                             routerLinkActive="router-link-active">
                             <mat-icon>store</mat-icon>&nbsp;Sucursales
                         </button>
+                        <button (click)="listarVehicles()" mat-menu-item [routerLink]="['/vehicles' ]"
+                            routerLinkActive="router-link-active">
+                            <mat-icon>directions_car</mat-icon>&nbsp;Vehículos
+                        </button>
                     </mat-menu>
                 </li>
                 <hr *ngIf="role===1">

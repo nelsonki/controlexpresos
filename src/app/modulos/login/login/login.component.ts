@@ -106,6 +106,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
           this.router.navigate(['/dashboard/Procesadas/Procesadas/' + client_id + '/0'])
 
         }
+        if (info.rol.toLowerCase() === 'conductor') {
+          this.router.navigate(['/dashboard/Stats'])
+
+        }
         //}
 
 

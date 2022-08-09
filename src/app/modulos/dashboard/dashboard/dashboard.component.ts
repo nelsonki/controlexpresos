@@ -99,6 +99,10 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['/dashboard/Branch']);
     this.drawer.close();
   }
+  listarVehicles() {
+    this.router.navigate(['/dashboard/vehicles']);
+    this.drawer.close();
+  }
   listarColores() {
     this.router.navigate(['/dashboard/Color']);
     this.drawer.close();

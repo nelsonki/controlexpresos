@@ -37,6 +37,7 @@ import { StatsServices } from '../app/modulos/stats/stats-services/stats-service
 import { UserServices } from '../app/modulos/user/user-services/user-services'
 import { IndicadoresServices } from '../app/modulos/indicadores/indicadores-services/indicadores-services'
 import { SettingsServices } from '../app/modulos/settings/settings-services/settings-services'
+import { VehiclesServices } from '../app/modulos/vehicles/vehicles-services/vehicles-services'
 
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -112,8 +113,8 @@ registerLocaleData(localeEs);
     UserServices,
     CanActivateViaAuthGuard,
     IndicadoresServices,
-    SettingsServices
-
+    SettingsServices,
+    VehiclesServices
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],

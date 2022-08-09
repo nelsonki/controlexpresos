@@ -76,7 +76,10 @@ const routes: Routes = [
           path: 'report-form', canActivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard],
           loadChildren: () => import('./modulos/report/report.module').then(m => m.ReportModule)
         },
-
+        {
+          path: 'vehicles', canActivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard],
+          loadChildren: () => import('./modulos/vehicles/vehicles.module').then(m => m.VehiclesModule)
+        },
       ]
   }
 ];

@@ -53,7 +53,8 @@ export class UserFormComponent implements OnInit {
     { value: 'operador', name: 'Operador' },
     { value: 'admin', name: 'Admin' },
     { value: 'op_entradas', name: 'Op. entradas' },
-    { value: 'cliente', name: 'Cliente' }
+    { value: 'cliente', name: 'Cliente' },
+    { value: 'conductor', name: 'Conductor' }
 
   ]
 
