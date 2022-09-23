@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-
 import { StatsServices } from '../stats-services/stats-services';
-
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Chart } from 'angular-highcharts';
-
+import { UserServices } from '../../user/user-services/user-services'
+import { DriversServices } from '../../drivers/drivers-services/drivers-services'
+import { PartnersServices } from '../../partners/partners-services/partners-services'
+import { VehiclesServices } from '../../vehicles/vehicles-services/vehicles-services'
+import { OfficesServices } from '../../offices/offices-services/offices-services'
+import { LiquidationsServices } from '../../liquidations/liquidations-services/liquidations-services'
 declare var $: any;
 
 @Component({
@@ -42,34 +45,91 @@ export class StatsTableComponent implements OnInit {
   ];
   formUser: FormGroup;
   formPay: FormGroup;
-
+  public totalUsuarios = 0
+  public totalChoferes = 0
+  public totalVehiculos = 0
+  public totalOficinas = 0
+  public totalSocios = 0
+  public totalViajes = 0
+  public totalViajesLiquidacion = 0
+  public totalViajesEnCurso = 0
+  public fInicio = ""
+  public fFin = ""
   constructor(
     public toaster: ToastrService,
     public fb: FormBuilder,
-    public statsServices: StatsServices) {
-    this.selected = this.dateNow.getFullYear().toString();
-    
-    this.formUser = fb.group({
-      searchDateByYear: ['2021'],
-      searchDateByMonth: [],
-      toogleDate: [true]
-    });
-    this.formUser.controls['searchDateByYear'].setValue(this.selected);
+    public statsServices: StatsServices,
+    private userServices: UserServices,
+    private driversServices: DriversServices,
+    private partnersServices: PartnersServices,
+    private vehiclesServices: VehiclesServices,
+    private officesServices: OfficesServices,
+    private liquidationsServices: LiquidationsServices
+  ) {
+    /*
+  this.selected = this.dateNow.getFullYear().toString();
+  
+  this.formUser = fb.group({
+    searchDateByYear: ['2021'],
+    searchDateByMonth: [],
+    toogleDate: [true]
+  });
+  this.formUser.controls['searchDateByYear'].setValue(this.selected);
 
-    this.formPay = fb.group({
-      searchDateByYear: ['2021'],
-      searchDateByMonth: [],
-      toogleDate2: [true]
-    });
-    this.formPay.controls['searchDateByYear'].setValue(this.selected);
+  this.formPay = fb.group({
+    searchDateByYear: ['2021'],
+    searchDateByMonth: [],
+    toogleDate2: [true]
+  });
+  this.formPay.controls['searchDateByYear'].setValue(this.selected);
 
 
-
+*/
   }
   ngOnDestroy(): void {
   }
 
   ngOnInit() {
+    this.userServices.getList().subscribe((value) => {
+      this.totalUsuarios = value["data"].length
+      console.log(this.totalUsuarios)
+    })
+    this.driversServices.getList().subscribe((value) => {
+      this.totalChoferes = value["data"].length
+      console.log(this.totalChoferes)
+    })
+    this.partnersServices.getList().subscribe((value) => {
+      this.totalSocios = value["data"].length
+      console.log(this.totalSocios)
+    })
+    this.vehiclesServices.getList().subscribe((value) => {
+      this.totalVehiculos = value["data"].length
+      console.log(this.totalVehiculos)
+    })
+    this.officesServices.getList().subscribe((value) => {
+      this.totalOficinas = value["data"].length
+      console.log(this.totalOficinas)
+    })
+    this.liquidationsServices.getListTravels(this.fInicio, this.fFin).subscribe((value) => {
+      console.log(value["data"])
+
+      Object.keys(value["data"]).forEach(e => {
+        if (value["data"][e].status == 'Finalizado') {
+          console.log(value["data"][e])
+
+          this.totalViajes = this.totalViajes + 1
+          this.totalViajesLiquidacion = this.totalViajesLiquidacion + value["data"][e].total
+
+        }
+        if (value["data"][e].status == 'En Viaje') {
+
+          this.totalViajesEnCurso = this.totalViajesEnCurso + 1
+
+        }
+      })
+
+    })
+    /*
     this.formUser.controls['toogleDate'].valueChanges.subscribe((data: any) => {
       if (data === false) {
         this.labelFiltroUser = 'Filtrar por mes';
@@ -90,17 +150,12 @@ export class StatsTableComponent implements OnInit {
       }
     });
 
-    
-    //  OBTENEMOS EL LISTADO DE ABRIDORES
-    //let accountData = JSON.parse(localStorage.getItem("info"));
-    //let logAccount = accountData.account;
 
     this.setFilterUser();
-    this.setFilter();
+    this.setFilter();*/
   }
   setFilterUser() {
     let month = 0;
-    // recibe el objeto searchDateByYear, searchDateByMonth
     if (this.formUser.value.searchDateByMonth === null && this.formUser.value.searchDateByYear === null) {
       this.toaster.warning("Por favor seleccione un año y un mes")
       return false;
@@ -113,19 +168,18 @@ export class StatsTableComponent implements OnInit {
       this.toaster.warning("Por favor seleccione un un mes")
       return false;
     }
-    // si mes va vacio es null
     if (this.formUser.value.toogleDate === false) {
       let days = []
       month = this.daysInMonth(this.formUser.value.searchDateByMonth, this.formUser.value.searchDateByYear)
       for (let i = 1; i <= month; i++) {
         days.push(i);
       }
-      this.xAxis = days; 
-      this.statsServices.getDashboardData(this.formUser.value.searchDateByMonth, this.formUser.value.searchDateByYear, 'dias','quantity').subscribe((response: any) => {
+      this.xAxis = days;
+      this.statsServices.getDashboardData(this.formUser.value.searchDateByMonth, this.formUser.value.searchDateByYear, 'dias', 'quantity').subscribe((response: any) => {
         this.graphicData = [{
-            data: response,
-            name: "Operaciones de salidas Registradas",
-          }
+          data: response,
+          name: "Operaciones de salidas Registradas",
+        }
         ];
         console.log(response)
       }, (error: any) => {
@@ -137,7 +191,7 @@ export class StatsTableComponent implements OnInit {
       });
     } else {
       this.xAxis = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
-      this.statsServices.getDashboardData(this.formUser.value.searchDateByMonth, this.formUser.value.searchDateByYear, 'annio','quantity').subscribe((response: any) => {
+      this.statsServices.getDashboardData(this.formUser.value.searchDateByMonth, this.formUser.value.searchDateByYear, 'annio', 'quantity').subscribe((response: any) => {
         this.graphicData = [
           {
             name: "Operaciones de salidas Registradas",
@@ -148,7 +202,6 @@ export class StatsTableComponent implements OnInit {
       }, (error: any) => {
 
       }, () => {
-        //console.log(this.graphicData);
         this.makeGraphUser('Total de Operaciones de salidas por mes, año ' + this.formUser.value.searchDateByYear, this.xAxis, 'Cantidad', this.graphicData);
 
       });
@@ -157,7 +210,6 @@ export class StatsTableComponent implements OnInit {
 
   setFilter() {
     let month = 0;
-    // recibe el objeto searchDateByYear, searchDateByMonth
     if (this.formPay.value.searchDateByMonth === null && this.formPay.value.searchDateByYear === null) {
       this.toaster.warning("Por favor seleccione un año y un mes")
       return false;
@@ -170,19 +222,18 @@ export class StatsTableComponent implements OnInit {
       this.toaster.warning("Por favor seleccione un un mes")
       return false;
     }
-    // si mes va vacio es null
     if (this.formPay.value.toogleDate2 === false) {
       let days = []
       month = this.daysInMonth(this.formPay.value.searchDateByMonth, this.formPay.value.searchDateByYear)
       for (let i = 1; i <= month; i++) {
         days.push(i);
       }
-      this.xAxis = days; 
-      this.statsServices.getDashboardData(this.formPay.value.searchDateByMonth, this.formPay.value.searchDateByYear, 'dias','weight').subscribe((response: any) => {
+      this.xAxis = days;
+      this.statsServices.getDashboardData(this.formPay.value.searchDateByMonth, this.formPay.value.searchDateByYear, 'dias', 'weight').subscribe((response: any) => {
         this.graphicData2 = [{
-            data: response,
-            name: "Pesos",
-          }
+          data: response,
+          name: "Pesos",
+        }
         ];
         console.log(response)
       }, (error: any) => {
@@ -194,7 +245,7 @@ export class StatsTableComponent implements OnInit {
       });
     } else {
       this.xAxis = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
-      this.statsServices.getDashboardData(this.formPay.value.searchDateByMonth, this.formPay.value.searchDateByYear, 'annio','weight').subscribe((response: any) => {
+      this.statsServices.getDashboardData(this.formPay.value.searchDateByMonth, this.formPay.value.searchDateByYear, 'annio', 'weight').subscribe((response: any) => {
         this.graphicData2 = [
           {
             name: "Pesos",
@@ -212,7 +263,7 @@ export class StatsTableComponent implements OnInit {
     }
   }
 
- 
+
 
 
 
@@ -261,19 +312,7 @@ export class StatsTableComponent implements OnInit {
     }
     return mes;
   }
-  /*openDoor(id, name) {
-    const env = {
-      deviceId: id,
-      action: "open"
-    }
-    this.statsServices.postdevice(env)
-      .subscribe(data => {
-        this.toaster.success(`Abierto`);
-      }, error => {
-        this.toaster.error(`No hay conexión con el dispositivo: ${name}`);
-      }
-      );
-  }*/
+
   makeGraphUser(title, xAxis, yAxisText, data) {
     this.chartUser = new Chart({
       chart: {

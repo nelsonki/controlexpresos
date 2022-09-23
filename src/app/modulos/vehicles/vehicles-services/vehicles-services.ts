@@ -13,7 +13,7 @@ export class VehiclesServices {
         private http: HttpServices,
         //public localService: LocalService
     ) {
-        this.api = environment.apiJakiro2;
+        this.api = environment.apiUrl;
         //this.local = this.localService.getJsonValue('info');
         /*if (this.local !== null) {
             this.autorization = new HttpHeaders({
@@ -24,22 +24,22 @@ export class VehiclesServices {
     }
 
     getList() {
-        let enpoint = 'vehicles';
+        let enpoint = '/vehicles';
         return this.http.doGet(this.api, enpoint);
     }
 
     save(body) {
-        let enpoint = 'vehicles';
+        let enpoint = '/vehicles';
         return this.http.doPost(this.api, enpoint, body);
     }
 
     update(id, body) {
-        let enpoint = 'vehicles/' + id;
+        let enpoint = '/vehicles/' + id;
         return this.http.doPut(this.api, enpoint, body);
     }
 
     delete(id) {
-        let enpoint = 'vehicles/' + id;
+        let enpoint = '/vehicles/' + id;
         return this.http.doDelete(this.api, enpoint);
     }
 

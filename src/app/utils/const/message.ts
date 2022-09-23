@@ -47,9 +47,9 @@ export const entradasMsg = {
     save: 'Registro creado de forma exitosa',
     update: 'Registro modificado de forma exitosa',
     delete: 'Registro eliminado de forma exitosa',
-    get: 'Entrada encontrada',
-    getFail: 'Ha ocurrido un error al obtener la entrada',
-    getAllFail: 'Ha ocurrido un error al obtener la entrada',
+    get: 'Liquidación encontrada',
+    getFail: 'Ha ocurrido un error al obtener la liquidación',
+    getAllFail: 'Ha ocurrido un error al obtener la liquidación',
     errorProcess: 'Proceso rechazado'
 };
 export const SalidasMsg = {

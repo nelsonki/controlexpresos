@@ -25,7 +25,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class LoginComponent implements OnInit, AfterViewInit {
   public form: FormGroup;
-  public api = environment.apiJakiro2;
+  public api = environment.apiUrl;
   public firebaseToken;
   public resultFirebase;
   public accountUser: number;
@@ -70,11 +70,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
     const formData = this.form.value;
     let object = {
       password: formData.password,
-      username: formData.username.trim(),
+      email: formData.username.trim(),
       // account: 9
     }
     if (this.form.valid) {
-      this.http.doPost('login', object, this.api).subscribe((data: any) => {
+      this.http.doPost('/auth/login', object, this.api).subscribe((data: any) => {
         console.log(data);
 
 
@@ -84,45 +84,46 @@ export class LoginComponent implements OnInit, AfterViewInit {
           this.toastr.error('Acceso no autorizado', 'Error');
         } else {*/
         this.localService.setJsonValue('info', data);
+        //localStorage.setItem('info', JSON.stringify(dataLogin['data']));
 
         //this.localService.setJsonValue('iduserlog', data.id);
-        console.log(this.localService)
         let info = this.localService.getJsonValue('info');
+        /*
+                if (info.rol.toLowerCase() === 'op_entradas') {
+                  this.router.navigate(['/dashboard/Entradas'])
+        
+                }
+                if (info.rol.toLowerCase() === 'operador') {
+                  this.router.navigate(['/dashboard/Salidas'])
+        
+                }
+                if (info.rol.toLowerCase() === 'admin') {
+                  this.router.navigate(['/dashboard/Stats'])
+        
+                }
+                if (info.rol.toLowerCase() === 'cliente') {
+                  let client_id = info.id_cliente_asoc
+                  this.router.navigate(['/dashboard/Procesadas/Procesadas/' + client_id + '/0'])
+        
+                }
+                if (info.rol.toLowerCase() === 'conductor') {
+                  this.router.navigate(['/dashboard/Stats'])
+        
+                }
+                
+        
+                if (data.image) {
+                  this.localService.setJsonValue('image', data.image);
+        
+                } else {*/
+        this.router.navigate(['/dashboard/Stats'])
 
-        if (info.rol.toLowerCase() === 'op_entradas') {
-          this.router.navigate(['/dashboard/Entradas'])
-
-        }
-        if (info.rol.toLowerCase() === 'operador') {
-          this.router.navigate(['/dashboard/Salidas'])
-
-        }
-        if (info.rol.toLowerCase() === 'admin') {
-          this.router.navigate(['/dashboard/Stats'])
-
-        }
-        if (info.rol.toLowerCase() === 'cliente') {
-          let client_id = info.id_cliente_asoc
-          this.router.navigate(['/dashboard/Procesadas/Procesadas/' + client_id + '/0'])
-
-        }
-        if (info.rol.toLowerCase() === 'conductor') {
-          this.router.navigate(['/dashboard/Stats'])
-
-        }
-        //}
+        this.localService.setJsonValue('image', '../../../../assets/userProfile.png');
 
 
-        if (data.image) {
-          this.localService.setJsonValue('image', data.image);
-
-        } else {
-          this.localService.setJsonValue('image', '../../../../assets/userProfile.png');
-
-        }
       }, (error) => {
 
-        this.toastr.error('Error en las credenciales', 'Sistema Jakiro');
+        this.toastr.error('Error en las credenciales', 'Sistema Control');
 
 
       }, () => {
@@ -130,7 +131,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
       });
 
     } else {
-      this.toastr.error('Los campos son requeridos', 'Sistema Jakiro');
+      this.toastr.error('Los campos son requeridos', 'Sistema Control');
 
     }
   }

@@ -11,19 +11,28 @@
             </mat-error>
         </mat-form-field>
         <mat-form-field class="example-chip-list">
-            <mat-label>Usuario(*)</mat-label>
-            <input matInput autocomplete="true" formControlName="username" type="username" />
-            <mat-error *ngIf="submitted && f.username.errors">
-                <div *ngIf="f.username.errors.required">
-                    Por Favor, Ingrese usuario
+            <mat-label>Apellido(*)</mat-label>
+            <input matInput autocomplete="true" formControlName="apellido" type="text" />
+            <mat-error *ngIf="submitted && f.apellido.errors">
+                <div *ngIf="f.apellido.errors.required">
+                    Por Favor, Ingrese el apellido
                 </div>
             </mat-error>
         </mat-form-field>
         <mat-form-field class="example-chip-list">
+            <mat-label>Correo(*)</mat-label>
+            <input matInput autocomplete="true" formControlName="correo" type="text" />
+            <mat-error *ngIf="submitted && f.correo.errors">
+                <div *ngIf="f.correo.errors.required">
+                    Por Favor, Ingrese el correo
+                </div>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-chip-list">
             <mat-label>Rol(*)</mat-label>
-            <mat-select formControlName="rol" placeholder="Rol">
-                <mat-option *ngFor="let act  of roles" (click)="
-               setDataFormulRol($event, act.value)" [value]="act.value">
+            <mat-select formControlName="rol" name="rol" placeholder="Rol">
+                <mat-option *ngFor="let act  of roles" [value]="act.value">
                     {{act.name}}
                 </mat-option>
             </mat-select>
@@ -33,38 +42,26 @@
                 </div>
             </mat-error>
         </mat-form-field>
-        <!--BUSCADOR DE CLIENTE PARA ROL-->
-
-        <div *ngIf="validCliente" class="form-group" class="width-form-groud ">
-            <mat-form-field class="example-full-width" style="width: 100%;">
-                <mat-label>Cliente(*)</mat-label>
-
-                <input type="text" placeholder="Cliente(*)" aria-label="Number" matInput formControlName="client">
-                <div class="typeahead--wrapper" *ngIf="openOptionClient">
-                    <ul class="typeahead--ul">
-                        <li *ngFor="let data of filteredOptions" (click)="
-               setDataFormul($event,
-                 data.id,
-                 data.name
-               )
-             " class="typeahead--list">
-                            <b>{{ data.name }}</b>
-                        </li>
-                    </ul>
+        <mat-form-field class="example-chip-list">
+            <mat-label>Afiliar a socio (*)</mat-label>
+            <input aria-label="Number" type="text" placeholder="Ingresar socio" matInput formControlName="partner"
+                [matAutocomplete]="auto7">
+            <mat-autocomplete (optionSelected)="onSelectionChanged7($event)" autoActiveFirstOption
+                #auto7="matAutocomplete">
+                <!--[displayWith]="displayFn"-->
+                <mat-option *ngFor="let option  of filteredOptions7  | async" [value]="option">
+                    {{ option.name }}
+                </mat-option>
+            </mat-autocomplete>
+            <mat-error *ngIf="submitted && f.partner.errors">
+                <div *ngIf="f.partner.errors.required">
+                    Por favor, ingrese una moneda
                 </div>
-                <mat-error *ngIf="submitted && f.client.errors">
-                    <div *ngIf="f.client.errors.required">Por favor, seleccione un Cliente</div>
-                </mat-error>
-            </mat-form-field>
+            </mat-error>
+        </mat-form-field>
+        <!-- BUSCADOR DE CLIENTE PARA ROL-->
 
-            <div>
-                <button [disabled]="disabledButoon" matTooltip="Buscar" class="button-search" (click)="searchClient()">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
-            <input formControlName="client_id" matInput="" style="display: none;" />
 
-        </div>
         <!--BUSCADOR DE CLIENTE PARA ROL-->
         <mat-form-field class="example-chip-list">
             <mat-label>Clave(*)</mat-label>

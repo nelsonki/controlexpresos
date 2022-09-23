@@ -7,6 +7,8 @@ import {
   Output,
   EventEmitter
 } from "@angular/core";
+import { map, startWith } from 'rxjs/operators';
+
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { userMsg } from "../../../utils/const/message";
@@ -17,7 +19,12 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { HttpServices } from '../../../http/httpServices/httpServices'
 import { Observable } from "rxjs";
-
+import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { PartnersServices } from './../../partners/partners-services/partners-services'
+export interface Socios {
+  id: number;
+  name: string;
+}
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
@@ -50,15 +57,16 @@ export class UserFormComponent implements OnInit {
   public validCliente: boolean = false;
 
   public roles: any[] = [
-    { value: 'operador', name: 'Operador' },
-    { value: 'admin', name: 'Admin' },
-    { value: 'op_entradas', name: 'Op. entradas' },
-    { value: 'cliente', name: 'Cliente' },
-    { value: 'conductor', name: 'Conductor' }
+    { value: 2, name: 'Usuario' },
+    { value: 1, name: 'Admin' },
+
 
   ]
 
-
+  //buscar socio
+  public filteredOptions7: Observable<Socios[]>;
+  public options7: Array<any> = [];
+  public idsubsocio7 = 0;
 
 
   constructor(
@@ -66,19 +74,42 @@ export class UserFormComponent implements OnInit {
     public router: Router,
     public toasTer: ToastrService,
     public userServices: UserServices,
-    public http: HttpServices
+    public http: HttpServices,
+    private partnersServices: PartnersServices
   ) { }
 
   ngOnInit() {
     this.firstform = this.formBuilder.group({
       nombre: ["", Validators.required],
-      username: ["", Validators.required],
-      rol: ["", Validators.required],
+      apellido: ["", Validators.required],
       clave: ["", Validators.required],
       rclave: ["", Validators.required],
-      client: ["", ""],
-      client_id: [0, ""],
+      correo: ["", Validators.required],
+      rol: ["", Validators.required],
+      partner: ["", Validators.required],
+      partner_id: [""],
     });
+    /*BUSCAR socios*/
+    this.partnersServices.getList().pipe()
+      .subscribe((value) => {
+        console.log(value)
+        Object.keys(value["data"]).forEach(i => {
+          this.options7.push(
+            {
+              "id": value["data"][i].id,
+              "name": value["data"][i].first_name,
+
+            }
+
+          );
+
+        });
+      });
+    this.filteredOptions7 = this.firstform.controls['partner'].valueChanges.pipe(
+      startWith(''),
+      map(value => typeof value === 'string' ? value : value.name),
+      map(name => name ? this._filter7(name) : this.options7.slice())
+    );
   }
   public addForm(id) {
     this.idEdit = id;
@@ -87,24 +118,18 @@ export class UserFormComponent implements OnInit {
     this.putSubmit = true;
     Object.keys(this.element).forEach(i => {
       if (this.element[i].id == id) {
+        console.log(this.element[i])
         dataEdit.push(this.element[i]);
       }
     });
     console.log(dataEdit[0]);
-    this.firstform.controls["nombre"].setValue(dataEdit[0]["name"]);
-    this.firstform.controls["username"].setValue(dataEdit[0]["username"]);
-    this.firstform.controls["rol"].setValue(dataEdit[0]["rol"]);
-    if (dataEdit[0]["rol"] === "cliente") {
-      this.validCliente = true;
-      this.firstform.controls["client_id"].setValue(dataEdit[0].id_cliente_asoc);
-      console.log(dataEdit[0])
-      this.firstform.controls["client"].setValue(dataEdit[0].cliente_name);
-    } else {
-      this.validCliente = false;
-      this.firstform.controls["client_id"].setValue(0);
-      this.firstform.controls["client"].setValue("");
+    this.firstform.controls["nombre"].setValue(dataEdit[0]["first_name"]);
+    this.firstform.controls["apellido"].setValue(dataEdit[0]["last_name"]);
+    this.firstform.controls["correo"].setValue(dataEdit[0]["email"]);
+    this.firstform.controls["rol"].setValue(dataEdit[0]["rol_id"]);
 
-    }
+
+
 
   }
   public closeModal() {
@@ -112,103 +137,97 @@ export class UserFormComponent implements OnInit {
     this.statusCloseModal.emit(this.closeStatus);
   }
   onSubmit() {
-    let cliente_asoc = null
     this.submitted = true;
     if (this.firstform.invalid) {
       return;
     } else {
-      if (this.validCliente && (this.firstform.controls["client_id"].value === 0 || this.firstform.controls["client_id"].value == "")) {
-        this.toasTer.error('Debe agregar un cliente');
-        this.loading = false;
-        return;
-
-      } else {
 
 
-        if (this.putSubmit) {
-          cliente_asoc = this.firstform.controls["client_id"].value
-          this.loading = true;
-          let bodyData = Object.assign({
-            "fullname": this.firstform.controls["nombre"].value,
-            "username": this.firstform.controls["username"].value,
-            "rol": this.firstform.controls["rol"].value,
-            "password": this.firstform.controls["clave"].value,
-            "id_cliente_asoc": cliente_asoc
+      if (this.putSubmit) {
+        this.loading = true;
+        let bodyData = Object.assign({
+          "first_name": this.firstform.controls["nombre"].value,
+          "last_name": this.firstform.controls["apellido"].value,
+          "email": this.firstform.controls["correo"].value,
+          "role_id": this.firstform.controls["rol"].value,
+          "partner_id": this.firstform.controls["partner_id"].value,
+          "password": this.firstform.controls["clave"].value,
+          "password_confirmation": this.firstform.controls["rclave"].value
+        }); console.warn(bodyData);
 
-          });
-          let repeatPass = this.firstform.controls["rclave"].value;
-          if (bodyData.password === repeatPass) {
-            // console.warn(bodyData);
-            this.userServices.update(this.idEdit, bodyData).subscribe(
-              response => {
-                this.toasTer.success(userMsg.update);
-                this.reloadComponent();
-              },
-              error => {
-                if (error["status"] === 422) {
-                  this.toasTer.error('Ya existe ');
-                  this.loading = false;
+        let repeatPass = this.firstform.controls["rclave"].value;
+        if (bodyData.password === repeatPass) {
+          this.userServices.update(this.idEdit, bodyData).subscribe(
+            response => {
+              this.toasTer.success(userMsg.update);
+              this.reloadComponent();
+            },
+            error => {
+              if (error["status"] === 422) {
+                this.toasTer.error(error.error.data);
+                this.loading = false;
 
-                } else {
-                  this.loading = false;
-                  this.toasTer.error(userMsg.errorProcess);
-                  this.loading = false;
-                }
+              } else {
+                this.loading = false;
+                this.toasTer.error(userMsg.errorProcess);
+                this.loading = false;
               }
-            );
-          } else {
-            this.loading = false;
+            }
+          );
+        } else {
+          this.loading = false;
 
-            this.toasTer.error('Las contraseñas no coinciden', 'Sistema Jakiro');
-            this.loading = false;
-
-          }
-
+          this.toasTer.error('Las contraseñas no coinciden', 'Sistema Control');
+          this.loading = false;
 
         }
-        else {
-          this.loading = true;
-          cliente_asoc = this.firstform.controls["client_id"].value
-
-          let bodyData = Object.assign({
-            "fullname": this.firstform.controls["nombre"].value,
-            "username": this.firstform.controls["username"].value,
-            "rol": this.firstform.controls["rol"].value,
-            "password": this.firstform.controls["clave"].value,
-            "id_cliente_asoc": cliente_asoc
-          });
-          let repeatPass = this.firstform.controls["rclave"].value;
-          if (bodyData.password === repeatPass) {
-            // console.log(bodyData);
-            this.userServices.save(bodyData).subscribe(
-              response => {
-                this.toasTer.success(userMsg.save);
-                this.reloadComponent();
-              },
-              error => {
-                if (error["status"] === 422) {
-                  this.toasTer.error('Ya existe ');
-                  this.loading = false;
-
-                } else {
-                  this.loading = false;
-                  this.toasTer.error(userMsg.errorProcess);
-                  this.loading = false;
-                }
-              }
-            );
-          } else {
-            this.loading = false;
-
-            this.toasTer.error('Las contraseñas no coinciden', 'Sistema Jakiro');
-            this.loading = false;
-          }
 
 
-
-
-        }
       }
+      else {
+        this.loading = true;
+
+        let bodyData = Object.assign({
+          "first_name": this.firstform.controls["nombre"].value,
+          "last_name": this.firstform.controls["apellido"].value,
+          "email": this.firstform.controls["correo"].value,
+          "role_id": this.firstform.controls["rol"].value,
+          "partner_id": this.firstform.controls["partner_id"].value,
+          "password": this.firstform.controls["clave"].value,
+          "password_confirmation": this.firstform.controls["rclave"].value
+        }); console.log(bodyData);
+
+        let repeatPass = this.firstform.controls["rclave"].value;
+        if (bodyData.password === repeatPass) {
+          this.userServices.save(bodyData).subscribe(
+            response => {
+              this.toasTer.success(userMsg.save);
+              this.reloadComponent();
+            },
+            error => {
+              if (error["status"] === 422) {
+                this.toasTer.error('Ya existe ');
+                this.loading = false;
+
+              } else {
+                this.loading = false;
+                this.toasTer.error(userMsg.errorProcess);
+                this.loading = false;
+              }
+            }
+          );
+        } else {
+          this.loading = false;
+
+          this.toasTer.error('Las contraseñas no coinciden', 'Sistema Control');
+          this.loading = false;
+        }
+
+
+
+
+      }
+
     }
   }
   reloadComponent() {
@@ -221,44 +240,30 @@ export class UserFormComponent implements OnInit {
   get f() {
     return this.firstform.controls;
   }
-  //BUSCAR CLIENTE PARA EL ROL cliente
-  public searchClient() {
-    this.api = environment.apiJakiro2;
-    let valueSearch = this.firstform.controls["client"].value;
-    if (valueSearch.trim() !== "") {
-      let enpoint = "clients/search/" + this.firstform.controls["client"].value;
-      this.http.doGet(this.api, enpoint).subscribe((data: any) => {
-        console.log(data);
-        if (data.length > 0) {
-          this.openOptionClient = true;
-          this.filteredOptions = data;
-        } else {
-          this.openOptionClient = false;
-          this.firstform.controls["client_id"].setValue(0);
-          this.firstform.controls["client"].setValue("");
-        }
-      });
-    }
-  }
-  public setDataFormulRol(event, nombre) {
-    if (nombre === "cliente") {
-      this.validCliente = true
-    } else {
-      this.validCliente = false
-      this.firstform.controls["client_id"].setValue(0);
-      this.firstform.controls["client"].setValue("");
-    }
-    console.log(nombre)
-    //this.openOptionClient = false;
-    //this.firstform.controls["client_id"].setValue(id);
-    //this.firstform.controls["client"].setValue(nombreComercial);
-  }
-  public setDataFormul(event, id, nombreComercial) {
-    this.openOptionClient = false;
-    this.firstform.controls["client_id"].setValue(id);
-    this.firstform.controls["client"].setValue(nombreComercial);
-  }
   public closeOption() {
     this.openOptionClient = false;
+  }
+
+  /*BUSCAR socio*///////////////////////////////////////////////////////////////////////////////////////////////
+
+  displayFn7(socio: Socios): string {
+    return socio && socio.name ? socio.name : '';
+  }
+
+  onSelectionChanged7(event: MatAutocompleteSelectedEvent) {
+    this.idsubsocio7 = 0;
+    let namesub7: string;
+
+    const viene7 = event.option.value;
+    this.idsubsocio7 = viene7.id ? viene7.id : 0;
+    namesub7 = viene7.name ? viene7.name : '';
+    this.firstform.controls['partner'].setValue(namesub7);
+    this.firstform.controls['partner_id'].setValue(this.idsubsocio7);
+
+  }
+
+  private _filter7(name: string): Socios[] {
+    const filterValue7 = name.toLowerCase();
+    return this.options7.filter(option => option.name.toLowerCase().indexOf(filterValue7) === 0);
   }
 }

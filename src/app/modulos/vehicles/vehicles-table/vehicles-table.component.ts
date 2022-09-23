@@ -23,7 +23,7 @@ export class VehiclesTableComponent implements OnInit {
   @ViewChild(VehiclesFormComponent) form: VehiclesFormComponent;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  displayedColumns: string[] = ['Item', 'Placa', 'Número', 'Tipo', 'Descripción', 'Acciones'];
+  displayedColumns: string[] = ['Item', 'Placa', 'Número', 'Estatus', 'Descripción', 'Asociado a', 'Acciones'];
   dataSource;
   public titleModal: string;
   public element;
@@ -50,16 +50,17 @@ export class VehiclesTableComponent implements OnInit {
     this.vehiclesServices.getList().subscribe((value) => {
       this.data = [];
       this.element = [];
-      if (value["list"]) {
+      console.log(value)
+      if (value["data"]) {
         this.element = [];
-        Object.keys(value["list"]).forEach(e => {
+        Object.keys(value["data"]).forEach(e => {
           const datos = {
             Item: "",
-            "id": value["list"][e].id,
-            "number": value["list"][e].number,
-            "placa": value["list"][e].placa,
-            "type": value["list"][e].type,
-            "description": value["list"][e].description,
+            "id": value["data"][e].id,
+            "number": value["data"][e].num_control,
+            "placa": value["data"][e].plate,
+            "status": value["data"][e].status,
+            "description": value["data"][e].description,
 
           };
           this.data.push(datos);
@@ -100,6 +101,8 @@ export class VehiclesTableComponent implements OnInit {
     this.form.firstform.controls["tipo"].setValue("");
     this.form.firstform.controls["numero"].setValue("");
     this.form.firstform.controls["description"].setValue("");
+    this.form.firstform.controls["socio"].setValue("");
+    this.form.firstform.controls["socio_id"].setValue("");
 
     this.titleModal = "Crear Vehículo";
     this.form.putSubmit = false;

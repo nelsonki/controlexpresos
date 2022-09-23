@@ -1,0 +1,71 @@
+<form [formGroup]="firstform" class="client-form-top" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+
+        <mat-form-field class="example-chip-list">
+            <mat-label>Descripción(*)</mat-label>
+            <input matInput formControlName="description"
+                [ngClass]="{ 'is-invalid': submitted && f.description.errors }" />
+            <mat-error *ngIf="submitted && f.description.errors">
+                <div *ngIf="f.description.errors.required">
+                    Por Favor, Ingrese description
+                </div>
+            </mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field class="example-chip-list">
+            <mat-label>Monto(*)</mat-label>
+            <input matInput autocomplete="true" formControlName="monto" type="number" />
+            <mat-error *ngIf="submitted && f.monto.errors">
+                <div *ngIf="f.monto.errors.required">
+                    Por Favor, Ingrese el monto
+                </div>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-chip-list">
+            <mat-label>Tipo de Moneda (*)</mat-label>
+
+            <input aria-label="Number" type="text" placeholder="Tipo de moneda" matInput formControlName="moneda"
+                [matAutocomplete]="auto">
+            <mat-autocomplete (optionSelected)="onSelectionChanged4($event)" autoActiveFirstOption
+                #auto="matAutocomplete">
+                <!--[displayWith]="displayFn"-->
+
+                <mat-option *ngFor="let option  of filteredOptions4  | async" [value]="option">
+                    {{ option.name }}
+                </mat-option>
+            </mat-autocomplete>
+            <mat-error *ngIf="submitted && f.moneda.errors">
+                <div *ngIf="f.moneda.errors.required">
+                    Por favor, ingrese un tipo de moneda
+                </div>
+            </mat-error>
+        </mat-form-field>
+
+
+
+    </div>
+
+
+
+    <div class="form-group warehouse-width-button">
+        <div class="row ">
+            <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="row">
+                    <div class="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <button [disabled]="loading" mat-raised-button color="primary" class="btn btn-accent">
+                            Aceptar
+                        </button>
+                    </div>
+                    <div class="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <button style="color:white" mat-raised-button color="accent" class="btn btn-accent"
+                            type="button" (click)="closeModal()">
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

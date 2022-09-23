@@ -1,28 +1,31 @@
 <br>
 <div class="container">
-    <div class="d-flex justify-content-center h-100">
-        <div class="card" style="height: 430px;">
+    <div class="d-flex justify-content-center  ">
+        <div class="card" style="height: 450px;">
             <div class="card-header">
-                <h3 style="text-align: center;"><img width='150px' src="../../../../assets/userProfile.png" /></h3>
+                <h3 style="text-align: center;"><img width='200px' src="../../../../assets/userProfile.png" /></h3>
 
             </div>
-            <div class="card-body" style="height: 10rem; margin-bottom: 5px;">
+            <div class="card-body" style="height: 12rem; margin-bottom: 2px;">
                 <form [formGroup]="form">
                     <div class="input-group form-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                         </div>
-                        <input autocomplete="true" required type="text" class="form-control" formControlName="username" placeholder="Usuario (*)">
+                        <input autocomplete="true" required type="text" class="form-control" formControlName="username"
+                            placeholder="Usuario (*)">
 
                     </div>
                     <div class="input-group form-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-key"></i></span>
                         </div>
-                        <input (keyup.enter)="onEnter()" required type="password" formControlName="password" class="form-control" placeholder="contraseña (*)">
+                        <input (keyup.enter)="onEnter()" required type="password" formControlName="password"
+                            class="form-control" placeholder="contraseña (*)">
                     </div>
                     <div class="input-group form-group">
-                        <input type="button" value="Ingresar" (click)="sendData()" class="btn float-left login_btn btn-success">
+                        <input type="button" value="Ingresar" (click)="sendData()"
+                            class="btn float-left login_btn btn-success">
                     </div>
 
                 </form>

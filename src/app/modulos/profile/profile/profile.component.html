@@ -6,7 +6,8 @@
                 <mat-tab [stepControl]="form">
                     <ng-template mat-tab-label>
                         <mat-icon class="material-icons"> person </mat-icon>
-                        Datos de Usuario</ng-template>
+                        Datos de Usuario
+                    </ng-template>
                     <div class="example-large-box mat-lifting-z4">
                         <form [formGroup]="form">
 
@@ -14,14 +15,16 @@
                                 <div class="col-md-12">
                                     <ng-container *ngIf="this.profileImage !== null">
                                         <div class="row">
-                                            <div class="col-md-6" style="text-align: center;">
-                                                <img style="border-radius: 50%; width:120px; height: 120px;" [src]="profileImage" alt="">
-                                                <br> <input type="file" name="file" id="file" class="inputfile" accept="image/*" (change)="updateSource($event)">
-                                                <label for="file">Cambiar Imágen</label>
+                                           <div class="col-md-6" style="text-align: center;">
+                                                <img style="border-radius: 50%; width:120px; height: 120px;"
+                                                    [src]="profileImage" alt="">
+                                                <br> <!-- <input type="file" name="file" id="file" class="inputfile"
+                                                    accept="image/*" (change)="updateSource($event)">
+                                                <label for="file">Cambiar Imágen</label>-->
                                             </div>
                                             <div class="col-md-6" style="text-align: left; margin-top: 40px">
                                                 <h2><b>{{userName}}</b></h2>
-                                                <!-- <h4>{{userRole}}</h4>-->
+                                                 <h4>{{userRole}}</h4> 
 
                                             </div>
                                         </div>
@@ -32,29 +35,35 @@
 
                                         <div class="row">
                                             <div class="col-md-6" style="text-align: center;">
-                                                <i style="font-size:84px" class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
-                                                <br> <input type="file" name="file" id="file" class="inputfile" accept="image/*" (change)="updateSource($event)">
-                                                <label for="file">Cargar Imágen</label>
+                                                <i style="font-size:84px" class="fas fa-cloud-upload-alt"
+                                                    aria-hidden="true"></i><!--
+                                                <br> <input type="file" name="file" id="file" class="inputfile"
+                                                    accept="image/*" (change)="updateSource($event)">
+                                                <label for="file">Cargar Imágen</label>-->
                                             </div>
                                             <div class="col-md-6" style="text-align: left; margin-top: 40px">
                                                 <h2><b>{{userName}}</b></h2>
-                                                <!-- <h4>{{userRole}}</h4>-->
+                                                  <h4>{{userRole}}</h4> 
                                             </div>
                                         </div>
                                         <hr>
                                     </ng-container>
-                                    <div class="row">
+                                    <!--<div class="row">
 
                                         <div class="col-md-6">
 
                                             <div class="input-group form-group">
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                                    <span class="input-group-text"><i
+                                                            class="fas fa-envelope"></i></span>
                                                 </div>
-                                                <input autocomplete="true" type="text" class="form-control" formControlName="username" placeholder="Usuario(*)">
+                                                <input autocomplete="true" type="text" class="form-control"
+                                                    formControlName="username" placeholder="Usuario(*)">
 
                                             </div>
-                                            <div style="font-size:9px; color:red;" *ngIf="form.get('username').touched &&    form.get('username').hasError('required')">El usuario es requerido</div>
+                                            <div style="font-size:9px; color:red;"
+                                                *ngIf="form.get('username').touched &&    form.get('username').hasError('required')">
+                                                El usuario es requerido</div>
 
                                         </div>
                                         <div class="col-md-6">
@@ -63,13 +72,16 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fas fa-user"></i></span>
                                                 </div>
-                                                <input autocomplete="true" type="text" class="form-control" formControlName="name" placeholder="Nombre(*)">
+                                                <input autocomplete="true" type="text" class="form-control"
+                                                    formControlName="name" placeholder="Nombre(*)">
                                             </div>
-                                            <div style="font-size:9px; color:red;" *ngIf="form.get('name').touched && form.get('name').hasError('required')">El nombre es requerido</div>
+                                            <div style="font-size:9px; color:red;"
+                                                *ngIf="form.get('name').touched && form.get('name').hasError('required')">
+                                                El nombre es requerido</div>
 
                                         </div>
 
-                                    </div>
+                                    </div>-->
                                 </div>
 
 
@@ -81,12 +93,15 @@
 
                                 <div class="col-md-12">
                                     <div class="row">
-                                        <div class="col-md-6" style="text-align: left;">
-                                            <button mat-raised-button color="primary" (click)="submitUpdateProfile()" class="btn btn-accent">Guardar</button>
+                                       <!-- <div class="col-md-6" style="text-align: left;">
+                                            <button mat-raised-button color="primary" (click)="submitUpdateProfile()"
+                                                class="btn btn-accent">Guardar</button>
 
-                                        </div>
+                                        </div>-->
                                         <div class="col-md-6" style="text-align: right;">
-                                            <button style="color:white !important" mat-raised-button color="accent" (click)="goToMenu()" class="btn btn-accent profile-buttom-cancel">Cancelar</button>
+                                            <button style="color:white !important" mat-raised-button color="accent"
+                                                (click)="goToMenu()"
+                                                class="btn btn-accent profile-buttom-cancel">Cancelar</button>
 
                                         </div>
                                     </div>
@@ -97,10 +112,11 @@
                         </form>
                     </div>
                 </mat-tab>
-                <mat-tab>
+               <!--<mat-tab>
                     <ng-template mat-tab-label>
                         <mat-icon class="material-icons"> https </mat-icon>
-                        Datos de Autenticación</ng-template>
+                        Datos de Autenticación
+                    </ng-template>
                     <div class="example-large-box mat-lifting-z4">
                         <form [formGroup]="formPass">
                             <div class="row">
@@ -109,11 +125,12 @@
                                     <ng-container *ngIf="this.profileImage !== null">
                                         <div class="row">
                                             <div class="col-md-6" style="text-align: center;">
-                                                <img style="border-radius: 50%; width:120px; height: 120px;" [src]="profileImage" alt="">
+                                                <img style="border-radius: 50%; width:120px; height: 120px;"
+                                                    [src]="profileImage" alt="">
                                             </div>
                                             <div class="col-md-6" style="text-align: left; margin-top: 40px">
                                                 <h2><b>{{userName}}</b></h2>
-                                                <!-- <h4>{{userRole}}</h4>-->
+                                                  <h4>{{userRole}}</h4> 
                                             </div>
                                         </div>
                                         <hr>
@@ -123,12 +140,13 @@
 
                                         <div class="row">
                                             <div class="col-md-6" style="text-align: center;">
-                                                <i style="font-size:84px" class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
+                                                <i style="font-size:84px" class="fas fa-cloud-upload-alt"
+                                                    aria-hidden="true"></i>
                                                 <br> <input type="file" name="file" id="file" class="inputfile">
                                             </div>
                                             <div class="col-md-6" style="text-align: left; margin-top: 40px">
                                                 <h2><b>{{userName}}</b></h2>
-                                                <!-- <h4>{{userRole}}</h4>-->
+                                                <h4>{{userRole}}</h4> 
                                             </div>
                                         </div>
                                         <hr>
@@ -140,9 +158,12 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fas fa-key"></i></span>
                                                 </div>
-                                                <input autocomplete="true" type="password" class="form-control" formControlName="password" placeholder="Contraseña(*)">
+                                                <input autocomplete="true" type="password" class="form-control"
+                                                    formControlName="password" placeholder="Contraseña(*)">
                                             </div>
-                                            <div style="font-size:9px; color:red;" *ngIf="formPass.get('password').touched && formPass.get('password').hasError('required')">La contraseña es requerido</div>
+                                            <div style="font-size:9px; color:red;"
+                                                *ngIf="formPass.get('password').touched && formPass.get('password').hasError('required')">
+                                                La contraseña es requerido</div>
 
                                         </div>
                                         <div class="col-md-6">
@@ -151,25 +172,30 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fas fa-key"></i></span>
                                                 </div>
-                                                <input autocomplete="true" type="password" class="form-control" formControlName="repeatPassword" placeholder="Repita la contraseña(*)">
+                                                <input autocomplete="true" type="password" class="form-control"
+                                                    formControlName="repeatPassword"
+                                                    placeholder="Repita la contraseña(*)">
                                             </div>
-                                            <div style="font-size:9px; color:red;" *ngIf="formPass.get('repeatPassword').touched && formPass.get('repeatPassword').hasError('required')">Por favor repita la contraseña</div>
+                                            <div style="font-size:9px; color:red;"
+                                                *ngIf="formPass.get('repeatPassword').touched && formPass.get('repeatPassword').hasError('required')">
+                                                Por favor repita la contraseña</div>
 
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <!-- <button mat-raised-button style="color:white !important" color="accent" matStepperPrevious class="btn btn-accent profile-buttom-cancel">Anterior</button>-->
-
+ 
                                 </div>
                                 <div class="col-md-12">
                                     <div class="row">
-                                        <div class="col-md-6" style="text-align: left;">
-                                            <button mat-raised-button color="primary" (click)="submitUpdateProfile()" class="btn btn-accent">Guardar</button>
-
-                                        </div>
+                                         <div class="col-md-6" style="text-align: left;">
+                                            <button mat-raised-button color="primary" (click)="submitUpdateProfile()"
+                                                class="btn btn-accent">Guardar</button>
+                                        </div> 
                                         <div class="col-md-6" style="text-align: right;">
-                                            <button mat-raised-button style="color:white !important" color="accent" (click)="goToMenu()" class="btn btn-accent profile-buttom-cancel">Cancelar</button>
+                                            <button mat-raised-button style="color:white !important" color="accent"
+                                                (click)="goToMenu()"
+                                                class="btn btn-accent profile-buttom-cancel">Cancelar</button>
 
                                         </div>
                                     </div>
@@ -178,10 +204,9 @@
                         </form>
                     </div>
                 </mat-tab>
+            -->
             </mat-tab-group>
         </div>
-        <!-- FIN COL-MD-12-->
-    </div>
-    <!-- FIN ROW-->
-</div>
+     </div>
+ </div>
 <div style="padding-bottom: 100px"></div>

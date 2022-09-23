@@ -68,7 +68,7 @@ export class BranchFormComponent implements OnInit {
     });
   }
   public searchClient() {
-    this.api = environment.apiJakiro2;
+    this.api = environment.apiUrl;
     let valueSearch = this.firstform.controls["client"].value;
     if (valueSearch.trim() !== "") {
       let enpoint = "clients/search/" + this.firstform.controls["client"].value;

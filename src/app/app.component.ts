@@ -20,12 +20,13 @@ export class AppComponent {
 
   constructor(public localService: LocalService, public router: Router) {
     var info = this.localService.getJsonValue('info');
-    if (!info || info.session.original.token == '') {
+    console.log(info)
+    if (!info || info.data.token == '') {
       this.router.navigateByUrl('login');
     }
   }
 
-  title = 'Trackingfrontend2';
+  title = 'Control Expresos';
   prepareRoute(outlet: RouterOutlet) {
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
   }

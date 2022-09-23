@@ -1,0 +1,57 @@
+<h5 class="text-center"> <i class="fas fa-exclamation-triangle"></i> Gastos y Efectivo recibido</h5>
+<mat-dialog-content class="mat-typography text-center">
+    <table [dataSource]="dataSource" class="table table-bordered " style="width: 100%;">
+
+        <tr>
+            <th>Gasto o Deducción</th>
+            <th>Porcentaje</th>
+            <th>Cantidad</th>
+            <th>Tipo</th>
+            <th>Moneda</th>
+
+
+        </tr>
+        <ng-container *ngFor="let input of element ">
+            <tr>
+
+                <td>{{input.description}}</td>
+                <td>{{input.percent}}</td>
+                <td>{{input.quantity}}</td>
+                <td>{{input.coin_id}}</td>
+                <td>{{input.type}}</td>
+
+
+
+
+            </tr>
+        </ng-container>
+
+    </table>
+    <br>
+    <table [dataSource]="dataSourceMontos" class="table table-bordered " style="width: 100%;">
+
+        <tr>
+            <th>Moneda</th>
+            <th>Cantidad</th>
+
+
+
+        </tr>
+        <ng-container *ngFor="let inputMontos of elementMontos ">
+            <tr>
+
+                <td>{{inputMontos.coin_id}}</td>
+                <td>{{inputMontos.quantity}}</td>
+
+
+
+
+
+            </tr>
+        </ng-container>
+
+    </table>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-button mat-raised-button color="accent" class="color-text" mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>

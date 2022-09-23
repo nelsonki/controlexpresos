@@ -19,7 +19,7 @@ export class HttpService {
     this.local = this.localService.getJsonValue('info');
     if (this.local !== null) {
       this.autorization = new HttpHeaders({
-        'Authorization': 'Bearer ' + this.local.session.original.token,
+        'Authorization': this.local.data.token,
         'x-timezone': 'America/Caracas,-04:00'
       });
     }
@@ -56,14 +56,6 @@ export class HttpService {
     const url = api + endpoint + id;
     return this.httpService.delete(url, { headers: this.autorization });
   }
-  doPostFirebase(endpoint: string, body, api: string, token) {
-    this.firebase = new HttpHeaders({
-      'Authorization': token
-    })
-    let url = api + endpoint;
-    let query = this.httpService.post(url, body, { headers: this.firebase });
-    return query;
-  }
 
   doUpdate(api: string, endpoint: string, body) {
     const url = api + endpoint;
@@ -74,19 +66,19 @@ export class HttpService {
   getUser(api) {
     var info = this.localService.getJsonValue('info');
     if (info !== undefined) {
-      this.userName = (info.fullname !== undefined) ? info.fullname : info;
+      this.userName = (info.data.name !== undefined) ? info.data.name : info;
 
     } else {
-      this.userName = (info.fullname !== undefined) ? info.fullname : info;
+      this.userName = (info.data.name !== undefined) ? info.data.name : info;
     }
-
-    let endpoint = api + 'users/search/' + info.id;
-    let autorization = new HttpHeaders({
-      'Authorization': 'Bearer ' + info.session.original.token,
-      'x-timezone': 'America/Caracas,-04:00'
-    });
-
-    return this.httpService.get(endpoint, { headers: autorization });
+    /*
+        let endpoint = api + 'users/search/' + info.id;
+        let autorization = new HttpHeaders({
+          'Authorization': info.data.token,
+          'x-timezone': 'America/Caracas,-04:00'
+        });
+    
+        return this.httpService.get(endpoint, { headers: autorization });*/
   }
 
   getAccountData(api, endpoint) {

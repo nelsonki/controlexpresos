@@ -1,0 +1,247 @@
+<div class="container-fluid prod-container-table">
+
+    <div class="nav-menu-top">
+        <nav class="navbar  navbar-expand-lg navbar-dark mat-toolbar mat-primary nav-padding-option">
+            <div class="table-title-width">
+                <div>
+                    <mat-icon height="38px">assignment</mat-icon>
+
+                </div>
+                <div>
+                    &nbsp; Liquidaciones
+                </div>
+            </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto col-lg-9 col-md-9 col-sm-9 col-xs-9">
+
+
+                    <li class="nav-item   button-li-top col-lg-1 col-md-1 col-sm-1 col-xs-1  ">
+                        <a class="pointer" (click)="Refresh()">
+                            <button *ngIf="true" mat-mini-fab color="white" matTooltip="Operaciones en curso"
+                                data-toggle="tooltip" data-placement="left">
+                                <!--<i class="fas fa-sync-alt"></i>-->
+                                <img src="assets/menuIcons/programaciones.png" alt="" height="22px" />
+                            </button>
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item  button-li-top2 col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <app-date-range (dateNow)="DateFilter($event)"></app-date-range>
+                    </li>
+                    <li class="nav-item   button-li-top3  col-lg-4 col-md-4 col-sm-4 col-xs-4 tpeso">
+                        Total liquidación: {{ totalViajesLiquidacion | number:'1.2-2' }}
+                    </li>
+
+                </ul>
+
+                <span class="navbar-text button-li-top">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <mat-form-field width="40px">
+                                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar" />
+                            </mat-form-field>
+                        </div>
+
+
+                    </div>
+                </span>
+            </div>
+        </nav>
+    </div>
+
+
+    <div class="prod-scroll-table">
+        <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8  ">
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="Item">
+                <th mat-header-cell *matHeaderCellDef> Item </th>
+                <td mat-cell *matCellDef="let element"> {{element.Item}}</td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="Número de Control">
+                <th mat-header-cell *matHeaderCellDef>Número de Control </th>
+                <td mat-cell *matCellDef="let element"> {{element.vehicle}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="Fecha Inicio">
+                <th mat-header-cell *matHeaderCellDef> Fecha Inicio</th>
+                <td mat-cell *matCellDef="let element"> {{element.date_start}}</td>
+            </ng-container>
+            <!-- Weight Column -->
+            <ng-container matColumnDef="Fecha Fin">
+                <th mat-header-cell *matHeaderCellDef> Fecha Fin</th>
+                <td mat-cell *matCellDef="let element"> {{element.date_end}}</td>
+            </ng-container>
+            <ng-container matColumnDef="Total">
+                <th mat-header-cell *matHeaderCellDef> Total</th>
+                <td mat-cell *matCellDef="let element" style="text-align:center"> {{element.total}} </td>
+            </ng-container>
+            <!-- Weight Column -->
+            <ng-container matColumnDef="Estatus">
+                <th mat-header-cell *matHeaderCellDef> Estatus </th>
+                <td mat-cell *matCellDef="let element"
+                    [ngStyle]="element.status=='Finalizado' && {'color':'#5FCD55' } ">
+                    {{element.status}} </td>
+            </ng-container>
+            <!-- Weight Column -->
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="Acciones">
+                <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                <td mat-cell *matCellDef="let element">
+                    <!--*ngIf="role=== 1 || role===2"-->
+                    <div class="row text-center purchase-width-actions">
+                        <div *ngIf="element.gastos.length>0"
+                            class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer"
+                            matTooltip="Reporte de Viaje" (click)="reporte(element.id); basicModal.show()">
+                            <i class="fas fa-archive"></i>
+                        </div>
+                        <div *ngIf="element.status==='Finalizado'"
+                            class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer"
+                            matTooltip="Agregar gastos de viaje" (click)="openGastosViaje(element.id) ">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <!--<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer" matTooltip="Eliminar Embarque" (click)="remove(element.id)">
+            <i class="far fa-trash-alt"></i>
+            </div>-->
+                        <!-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 purchase-buttom-edit pointer"
+                            matTooltip="Eliminar" (click)="eliminar(element.id)">
+                            <i class="far fa-trash-alt"></i>
+
+                        </div>-->
+                    </div>
+
+
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="expandedDetail">
+                <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+                    <div class="example-element-detail"
+                        [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                        <div class="table-responsive">
+                            <br>
+                            <table [dataSource]="dataSource" class="table table-bordered " style="width: 100%;">
+                                <caption>
+                                    <br> Observaciones del viaje: {{ element.observation }}
+
+                                </caption>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Fecha</th>
+                                    <th>Precio del Pasaje</th>
+                                    <th>Pasajeros</th>
+                                    <th>Oficina Origen</th>
+                                    <th>Oficina Destino</th>
+                                    <th>total</th>
+                                    <th>Acciones</th>
+
+                                </tr>
+                                <ng-container *ngFor="let input of element.liquidations; let id2 = index;">
+                                    <tr>
+
+                                        <td>{{id2+1}}</td>
+                                        <td>{{input.date}}</td>
+                                        <td>{{input.precio_pasaje}}</td>
+                                        <td>{{input.pasajeros}}</td>
+                                        <td>{{input.name_office_origin}}</td>
+                                        <td>{{input.name_office_destiny}}</td>
+                                        <td>{{input.total}}</td>
+                                        <!-- *ngIf="role=== 1 || role===2"-->
+                                        <td class="text-center">
+                                            <span class="table-remove m-1">
+                                                <a (click)="verGastos(input.id)">
+                                                    <i class="fas fa-low-vision" size="1.5x"
+                                                        matTooltip="Ver gastos"></i>
+
+                                                </a>
+                                            </span>
+
+                                            <!--<span class="table-remove m-1">
+                                                <a (click)="openEdit(input.id,element.id); basicModal.show()">
+                                                    <i class="fas fa-edit" size="1.5x"
+                                                        matTooltip="Editar Liquidación"></i>
+
+                                                </a>
+                                            </span>-->
+                                            <div *ngIf="element.liquidations.length>=2">
+
+                                                <!-- <span class="table-remove m-1">
+                                                    <a (click)="eliminarOp(input.id)">
+                                                        <mdb-icon fas icon="trash-alt" size="1.5x" style="color:#CD6155"
+                                                            matTooltip="Eliminar"></mdb-icon>
+                                                    </a>
+                                                </span>-->
+                                            </div>
+                                        </td>
+
+
+
+                                    </tr>
+                                </ng-container>
+
+                            </table><br>
+                        </div>
+
+
+                    </div>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="example-element-row"
+                [class.example-expanded-row]="expandedElement === element"
+                (click)="expandedElement = expandedElement === element ? null : element">
+            </tr>
+            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+        </table>
+    </div>
+    <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
+
+    <div class="btn-group">
+        <button id="boton" matTooltip="{{ titleModal }}" (click)="basicModal.show(); reset(); showModal()" mat-mini-fab
+            color="primary" class="btn btn-fab" data-toggle="tooltip" data-placement="left" data-original-title=""
+            title="" id="main">
+            <mat-icon height="2px">assignment</mat-icon>
+        </button>
+    </div>
+    <div id="modal" mdbModal #basicModal="mdbModal" class="modal fade right modal-scroll" tabindex="-1" role="dialog"
+        aria-labelledby="myBasicModalLabel" aria-hidden="true" [config]='{backdrop: false, ignoreBackdropClick: false}'
+        style="overflow: auto;">
+        <div class="modal-dialog modal-lg modal-full-height modal-right" style="
+        margin-top: 1px !important;" role="document">
+            <div class="modal-content">
+                <div class="modal-header mat-toolbar mat-primary mat-toolbar-single-row" color="primary">
+                    <button type="button" class="close modal-button pull-right" aria-label="Close"
+                        (click)="closeModals($event)">
+                        <span aria-hidden="true" class="client-buttom-close"> x </span>
+                    </button>
+                    <h4 class="modal-title w-100" id="myModalLabel">
+                        <mat-icon height="38px">assignment</mat-icon>
+                        {{ titleModal }}
+                        <!--<img src="assets/menuIcons/tags.png" alt="" height="22px" /> {{ titleModal }}-->
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="container">
+                            <div class="col-xs-12 col-sm-12">
+                                <app-liquidations-form (statusCloseModal)="closeModals($event)" [element]="element">
+                                </app-liquidations-form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

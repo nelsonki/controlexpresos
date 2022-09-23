@@ -57,7 +57,7 @@ export class SettingsFormComponent implements OnInit {
       operations: ['', ''],
     });
     let info = this.localService.getJsonValue('info');
-    this.apiSettings = environment.apiJakiro2;
+    this.apiSettings = environment.apiUrl;
     this.getDataSettings();
     this.userRole = info.rol;
 
