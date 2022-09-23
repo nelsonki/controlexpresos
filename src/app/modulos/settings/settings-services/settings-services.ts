@@ -17,7 +17,7 @@ export class SettingsServices {
     private http: HttpServices,
     public localService: LocalService
   ) {
-    this.api = environment.apiJakiro2;
+    this.api = environment.apiUrl;
     this.local = this.localService.getJsonValue('info');
     if (this.local !== null) {
       this.autorization = new HttpHeaders({

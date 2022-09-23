@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiJakiro2: 'https://qajakiro2.zippyttech.com/api/'
+  apiUrl: 'https://controls-transport.herokuapp.com/api',
 
 };
 

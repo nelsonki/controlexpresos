@@ -26,13 +26,11 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { ModalModule, ButtonsModule, WavesModule } from 'angular-bootstrap-md';
 
 import { HttpServices } from '../app/http/httpServices/httpServices';
-import { ClientServices } from '../app/modulos/client/client-services/client-services'
+import { DriversServices } from '../app/modulos/drivers/drivers-services/drivers-services'
 import { BranchServices } from '../app/modulos/branch/branch-services/branch-services'
 import { ColorServices } from '../app/modulos/color/color-services/color-services'
 import { ServiceServices } from '../app/modulos/service/service-services/service-services'
 import { SubServiceServices } from '../app/modulos/sub-service/sub-service-services/sub-service-services'
-import { EntradasServices } from '../app/modulos/entradas/entradas-services/entradas-services'
-import { SalidasServices } from '../app/modulos/salidas/salidas-services/salidas-services'
 import { StatsServices } from '../app/modulos/stats/stats-services/stats-services'
 import { UserServices } from '../app/modulos/user/user-services/user-services'
 import { IndicadoresServices } from '../app/modulos/indicadores/indicadores-services/indicadores-services'
@@ -50,6 +48,12 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 //import { ProfileComponent } from './modulos/profile/profile/profile.component';
 import { CanActivateViaAuthGuard } from './guard';
+import { PartnersServices } from './modulos/partners/partners-services/partners-services';
+import { CoinsServices } from './modulos/coins/coins-services/coins-services';
+import { AdditionalsServices } from './modulos/additionals/addtionals-services/additionals-services';
+import { OfficesServices } from './modulos/offices/offices-services/offices-services';
+import { LiquidationsServices } from './modulos/liquidations/liquidations-services/liquidations-services';
+import { GastosvariosServices } from './modulos/gastosvarios/gastosvarios-services/gastosvarios-services';
 
 registerLocaleData(localeEs);
 
@@ -102,19 +106,23 @@ registerLocaleData(localeEs);
 
   providers: [
     HttpServices,
-    ClientServices,
     BranchServices,
     ColorServices,
     ServiceServices,
     SubServiceServices,
-    EntradasServices,
-    SalidasServices,
     StatsServices,
     UserServices,
     CanActivateViaAuthGuard,
     IndicadoresServices,
     SettingsServices,
-    VehiclesServices
+    VehiclesServices,
+    PartnersServices,
+    DriversServices,
+    CoinsServices,
+    AdditionalsServices,
+    OfficesServices,
+    LiquidationsServices,
+    GastosvariosServices
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],

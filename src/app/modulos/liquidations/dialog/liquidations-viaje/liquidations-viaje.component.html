@@ -1,0 +1,114 @@
+<form [formGroup]="treeFormGroup">
+
+    <h5 class="text-center"> <i class="fas fa-exclamation-triangle"></i> gastos de viaje</h5>
+    <mat-dialog-content class="mat-typography text-center">
+
+        <div class="form-group"><br>
+            <mat-toolbar>
+                Detalles de gastos
+            </mat-toolbar><br>
+            <div class="row">
+                <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
+                    <mat-label>Descripción de Gasto de viajes</mat-label>
+                    <input aria-label="Number" type="text" placeholder="Ingresar gastos de viaje" matInput
+                        formControlName="myControl_gasto" [matAutocomplete]="auto8">
+                    <mat-autocomplete (optionSelected)="onSelectionChanged8($event)" autoActiveFirstOption
+                        #auto8="matAutocomplete">
+                        <!--[displayWith]="displayFn"-->
+                        <mat-option *ngFor="let option  of filteredOptions8  | async" [value]="option">
+                            {{ option.name }}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-error *ngIf=" t.myControl_gasto.errors">
+                        <div *ngIf="t.myControl_gasto.errors.required">
+                            Por favor, ingrese una gasto
+                        </div>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
+                    <mat-label>Observación</mat-label>
+                    <input aria-label="Number" type="text" placeholder="Ingresar observacion general" matInput
+                        formControlName="observacion">
+
+
+                </mat-form-field>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
+                            <button mat-raised-button color="primary" class="btn btn-accent " (click)="add()"
+                                [disabled]="!treeFormGroup.valid ||  idsubgastos8===0">Agregar</button>&nbsp;
+                            &nbsp;
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            <mat-toolbar>
+                Gastos agregados
+            </mat-toolbar>
+            <div class="row">
+
+
+                <div id="table" class="table-editable miTableTripulante">
+                    <table mdbTable borderless="true" id="tablacrews">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Código</th>
+                                <th class="text-center"> Gastos de viaje</th>
+                                <th class="text-center">Moneda</th>
+                                <th class="text-center" colspan="2">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr mdb TableCol *ngFor="let person of personList; let id_list = index">
+                                <td class="text-center">
+                                    {{person.id_gasto }}
+                                </td>
+                                <td class="text-center">
+                                    {{person.name }}
+                                </td>
+
+
+
+
+                                <td class="text-center">
+                                    {{person.coin }}
+                                </td>
+                                <!-- <td class="text-center">
+                                <span class="table-remove" *ngIf="!loading">
+                                    <a (click)="edittri(id_list)">
+                                        <mdb-icon fas icon="edit" size="4.5x" matTooltip="Editar">
+                                        </mdb-icon>
+                                    </a>
+                                </span>
+
+                            </td>-->
+                                <td class="text-center">
+
+                                    <span class="table-remove">
+                                        <a (click)="removeGasto(id_list, person.id_gasto)">
+                                            <mdb-icon fas icon="trash-alt" size="4.5x" style="color:#CD6155"
+                                                matTooltip="Eliminar"> </mdb-icon>
+                                        </a>
+                                    </span>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+
+
+
+    </mat-dialog-content>
+    <button mat-button mat-raised-button color="primary" [mat-dialog-close]="true" (click)="onSubmit()">Agregar</button>
+    <button mat-button mat-raised-button color="accent" class="color-text" mat-dialog-close>Cancelar</button>
+
+</form>

@@ -53,7 +53,7 @@ export class DashboardComponent implements OnInit {
     private toastr: ToastrService,
     public router: Router,
   ) {
-    this.name = 'JAKIRO2';
+    this.name = 'Control Expresos';
     console.log("hola bashboard")
     this.role = this.checkRole();
 
@@ -71,7 +71,7 @@ export class DashboardComponent implements OnInit {
   }
 
   showSuccess() {
-    this.toastr.success('Hola Bienvenido', 'Jakiro2!');
+    this.toastr.success('Hola Bienvenido', 'Control Expresos!');
     this.router.navigate(['/dashboard/Stats']);
 
   }
@@ -91,12 +91,12 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['/dashboard/settings']);
     this.drawer.close();
   }
-  listarClientes() {
-    this.router.navigate(['/dashboard/Client']);
+  listarDrivers() {
+    this.router.navigate(['/dashboard/drivers']);
     this.drawer.close();
   }
-  listarBranch() {
-    this.router.navigate(['/dashboard/Branch']);
+  listarPartners() {
+    this.router.navigate(['/dashboard/partners']);
     this.drawer.close();
   }
   listarVehicles() {
@@ -115,12 +115,24 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['/dashboard/Sub-service']);
     this.drawer.close();
   }
-  listarEntradas() {
-    this.router.navigate(['/dashboard/Entradas']);
+  listarCoins() {
+    this.router.navigate(['/dashboard/coins']);
     this.drawer.close();
   }
-  listarSalidas() {
-    this.router.navigate(['/dashboard/Salidas']);
+  listarGastos() {
+    this.router.navigate(['/dashboard/additionals']);
+    this.drawer.close();
+  }
+  listarGastosViaje() {
+    this.router.navigate(['/dashboard/gastosvarios']);
+    this.drawer.close();
+  }
+  listarOficinas() {
+    this.router.navigate(['/dashboard/offices']);
+    this.drawer.close();
+  }
+  listarLiquidaciones() {
+    this.router.navigate(['/dashboard/liquidations']);
     this.drawer.close();
   }
   listarProcesadas() {
@@ -142,11 +154,12 @@ export class DashboardComponent implements OnInit {
     });
     //this.localService.getJsonValue('info');
     let info = this.localService.getJsonValue('info');
+    console.log(info)
     if (info) {
       if (info.user !== undefined) {
-        this.userLoggedIN = (info.fullname === undefined) ? info : info.fullname;
+        this.userLoggedIN = (info.data.name === undefined) ? info : info.data.name;
       } else {
-        this.userLoggedIN = info.fullname;
+        this.userLoggedIN = info.data.name;
       }
 
     } else {
@@ -178,6 +191,7 @@ export class DashboardComponent implements OnInit {
         location.reload();
         // this.router.navigateByUrl('/login');
       });
+
   }
 
 
@@ -196,19 +210,14 @@ export class DashboardComponent implements OnInit {
   checkRole() {
 
     let info = this.localService.getJsonValue('info');
-    if (info.rol) {
-      if (info.rol.toLowerCase() === 'admin') {
+    if (info.role) {
+      if (info.role === 1) {
         return 1;
       }
-      if (info.rol.toLowerCase() === 'operador') {
+      if (info.role === 2) {
         return 2;
       }
-      if (info.rol.toLowerCase() === 'op_entradas') {
-        return 3;
-      }
-      if (info.rol.toLowerCase() === 'cliente') {
-        return 4;
-      }
+
     }
 
   }

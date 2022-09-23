@@ -13,7 +13,7 @@ export class BranchServices {
         private http: HttpServices,
         //public localService: LocalService
     ) {
-        this.api = environment.apiJakiro2;
+        this.api = environment.apiUrl;
         //this.local = this.localService.getJsonValue('info');
         /*if (this.local !== null) {
             this.autorization = new HttpHeaders({
@@ -25,32 +25,32 @@ export class BranchServices {
 
     getList() {
         let enpoint = 'branches/index';
-        return this.http.doGet(this.api, enpoint );
+        return this.http.doGet(this.api, enpoint);
     }
     getListIdCliente(id) {
         //branches/search/{nombre de la sucursal}/{id del cliente}
-        let enpoint = 'branches/search/'+id;
-        return this.http.doGet(this.api, enpoint );
+        let enpoint = 'branches/search/' + id;
+        return this.http.doGet(this.api, enpoint);
     }
     getListIdClienteSinEntrada(id) {
         //branches/search/{nombre de la sucursal}/{id del cliente}
-        let enpoint = 'branches/sort/'+id;
-        return this.http.doGet(this.api, enpoint );
+        let enpoint = 'branches/sort/' + id;
+        return this.http.doGet(this.api, enpoint);
     }
     save(body) {
         let enpoint = 'branches/store';
         return this.http.doPost(this.api, enpoint, body);
-     }
+    }
 
     update(id, body) {
-        let enpoint = 'branches/update/'+id;
+        let enpoint = 'branches/update/' + id;
         return this.http.doPut(this.api, enpoint, body);
     }
 
     delete(id) {
-        let enpoint = 'branches/delete/'+id;
+        let enpoint = 'branches/delete/' + id;
         return this.http.doDelete(this.api, enpoint);
-     }
+    }
 
-     
+
 }

@@ -1,0 +1,515 @@
+<div class="user-content-form">
+    <mat-horizontal-stepper linear #stepper>
+        <mat-step [stepControl]="firstFormGroup">
+            <form [formGroup]="firstFormGroup">
+                <ng-template matStepLabel> Vehículo </ng-template>
+                <div class="form-group"><br>
+                    <mat-toolbar>
+                        Control del Vehículo
+                    </mat-toolbar><br>
+                    <div class="row">
+                        <div class="form-group" class="width-form-groud col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <mat-form-field class="example-full-width ">
+                                <mat-label>Vehículo (*)</mat-label>
+                                <input aria-label="Number" type="text" placeholder="Vehículo" matInput
+                                    formControlName="vehiculo" [matAutocomplete]="auto6">
+                                <mat-autocomplete (optionSelected)="onSelectionChanged6($event)" autoActiveFirstOption
+                                    #auto6="matAutocomplete">
+                                    <mat-option *ngFor="let option  of filteredOptions6  | async" [value]="option">
+                                        {{ option.name }}
+                                    </mat-option>
+                                </mat-autocomplete>
+                                <mat-error *ngIf="submitted && f.vehiculo.errors">
+                                    <div *ngIf="f.vehiculo.errors.required">
+                                        Por favor, seleccione un Vehículo
+                                    </div>
+                                </mat-error>
+                            </mat-form-field>
+                        </div><br>
+                        <div class="prod-scroll-table width-form-groud col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <table mat-table [dataSource]="dataSource">
+
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="Nombre">
+                                    <th mat-header-cell *matHeaderCellDef> Control </th>
+                                    <td class="option_tipe" mat-cell *matCellDef="let options6"
+                                        (click)="selectUsers($event, options6);"> {{options6.name}} </td>
+                                </ng-container>
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="Placa">
+                                    <th mat-header-cell *matHeaderCellDef> Placa </th>
+                                    <td class="option_tipe2" mat-cell *matCellDef="let options6"> {{options6.plate}}
+                                    </td>
+                                </ng-container>
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="Descripción">
+                                    <th mat-header-cell *matHeaderCellDef> Descripción </th>
+                                    <td class="option_tipe2" mat-cell *matCellDef="let options6">
+                                        {{options6.description}} </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+
+                        </div>
+                        <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
+
+                    </div>
+
+                </div>
+                <br><br>
+                <!--
+                <div class="user-margin-buttons">
+                    <div class="row">
+
+                        <div class="col-4 col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <button tabindex="-1" mat-raised-button color="accent" matStepperNext>
+                                <img src="../../../../../assets/menuIcons/next_w.png" height="36px" alt="">
+                              </button> </div>
+                    </div>
+                </div>-->
+
+
+
+            </form>
+        </mat-step>
+
+        <mat-step [stepControl]="myControl2" [optional]="isOptional">
+            <form [formGroup]="myControl2" class="user-form-top">
+                <ng-template matStepLabel>Liquidación</ng-template>
+                <div class="form-group"><br>
+                    <mat-toolbar>
+                        Nueva Liquidación
+                    </mat-toolbar><br>
+                    <div class="row">
+                        <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
+                            <mat-label>Tipo de Viaje (*)</mat-label>
+                            <mat-select formControlName="tipo" id="tipo">
+                                <mat-option *ngFor="let t  of tipoViaje" [value]="t.value">
+                                    {{t.value}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
+                            <mat-label>Moneda Actual (*)</mat-label>
+                            <input aria-label="Number" type="text" placeholder="Ingresar Moneda Actual" matInput
+                                formControlName="myControl_coin" [matAutocomplete]="auto7">
+                            <mat-autocomplete (optionSelected)="onSelectionChanged7($event)" autoActiveFirstOption
+                                #auto7="matAutocomplete">
+                                <!--[displayWith]="displayFn"-->
+                                <mat-option *ngFor="let option  of filteredOptions7  | async" [value]="option">
+                                    {{ option.name }}
+                                </mat-option>
+                            </mat-autocomplete>
+                            <mat-error *ngIf="submitted && c.myControl_coin.errors">
+                                <div *ngIf="c.myControl_coin.errors.required">
+                                    Por favor, ingrese una moneda
+                                </div>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
+                            <mat-label>Oficina de Origen (*)</mat-label>
+                            <input aria-label="Number" type="text" placeholder="Ingresar Oficina de Origen" matInput
+                                formControlName="myControl_ofi_ini" [matAutocomplete]="auto">
+                            <mat-autocomplete (optionSelected)="onSelectionChanged4($event)" autoActiveFirstOption
+                                #auto="matAutocomplete">
+                                <!--[displayWith]="displayFn"-->
+                                <mat-option *ngFor="let option  of filteredOptions4  | async" [value]="option">
+                                    {{ option.name }}
+                                </mat-option>
+                            </mat-autocomplete>
+                            <mat-error *ngIf="submitted && c.myControl_ofi_ini.errors">
+                                <div *ngIf="c.myControl_ofi_ini.errors.required">
+                                    Por favor, ingrese una oficina de origen
+                                </div>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
+                            <mat-label>Oficina de Destino (*)</mat-label>
+                            <input aria-label="Number" type="text" placeholder="Ingresar Oficina de Destino" matInput
+                                formControlName="myControl_ofi_fin" [matAutocomplete]="auto5">
+                            <mat-autocomplete (optionSelected)="onSelectionChanged5($event)" autoActiveFirstOption
+                                #auto5="matAutocomplete">
+                                <!--[displayWith]="displayFn"-->
+                                <mat-option *ngFor="let option  of filteredOptions5  | async" [value]="option">
+                                    {{ option.name }}
+                                </mat-option>
+                            </mat-autocomplete>
+                            <mat-error *ngIf="submitted && c.myControl_ofi_fin.errors">
+                                <div *ngIf="c.myControl_ofi_fin.errors.required">
+                                    Por favor, ingrese una oficina destino
+                                </div>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
+                            <mat-label>Precio del Pasaje (*)</mat-label>
+                            <input matInput formControlName="precio" id="precio" type="number" min="0.00"
+                                onkeypress="return event.charCode >= 48 || (event.charCode === 44) || (event.charCode === 46)" />
+                        </mat-form-field>
+                        <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
+                            <mat-label>Cantidad de pasajeros (*)</mat-label>
+                            <input matInput formControlName="cantidad" id="cantidad" type="number" min="0"
+                                onkeypress="return event.charCode >= 48" />
+                        </mat-form-field>
+                        <div class="container">
+                            <div class="row">
+                                <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
+                                    <mat-label>Fecha de viaje (*)</mat-label>
+                                    <input matInput formControlName="fecha" id="fecha" type="date"
+                                        (change)="SendDataonChange($event)" [(ngModel)]="changed" />
+                                </mat-form-field>
+                                <div class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
+                                    <button mat-raised-button color="primary" class="btn btn-accent "
+                                        (click)="clearInputLiquidacion()" color="warning">Limpiar</button>&nbsp; &nbsp;
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="user-margin-buttons">
+                        <div class="row">
+                            <div class="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <button tabindex="-1" mat-raised-button color="accent" matStepperPrevious>
+                                    <img src="../../../../../assets/menuIcons/back_w.png" height="36px" alt="">
+                                </button>
+                            </div>
+                            <div class="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <button [disabled]="!myControl2.valid " tabindex="-1" mat-raised-button color="primary"
+                                    matStepperNext>
+                                    <img src="../../../../../assets/menuIcons/next_w.png" height="36px" alt="">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </mat-step>
+        <mat-step [stepControl]="treeFormGroup" [optional]="isOptional">
+            <form [formGroup]="treeFormGroup">
+                <ng-template matStepLabel> Gastos </ng-template>
+                <div class="form-group"><br>
+                    <mat-toolbar>
+                        Detalles de gastos
+                    </mat-toolbar><br>
+                    <div class="row">
+                        <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
+                            <mat-label>Descripción de Gasto (Deducción o Retención) (*)</mat-label>
+                            <input aria-label="Number" type="text" placeholder="Ingresar Oficina de Destino" matInput
+                                formControlName="myControl_gasto" [matAutocomplete]="auto8">
+                            <mat-autocomplete (optionSelected)="onSelectionChanged8($event)" autoActiveFirstOption
+                                #auto8="matAutocomplete">
+                                <!--[displayWith]="displayFn"-->
+                                <mat-option *ngFor="let option  of filteredOptions8  | async" [value]="option">
+                                    {{ option.name }} - {{ option.type }}
+                                </mat-option>
+                            </mat-autocomplete>
+                            <mat-error *ngIf="submitted && t.myControl_gasto.errors">
+                                <div *ngIf="t.myControl_gasto.errors.required">
+                                    Por favor, ingrese una gasto
+                                </div>
+                            </mat-error>
+                        </mat-form-field>
+
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
+                                    <button mat-raised-button color="primary" class="btn btn-accent " (click)="add()"
+                                        [disabled]="!treeFormGroup.valid ||  idsubgastos8===0">Agregar</button>&nbsp;
+                                    &nbsp;
+                                </div>
+                                <div class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
+                                    <button mat-raised-button color="primary" class="btn btn-accent "
+                                        (click)="clearInputLiquidacion()" color="accent">Limpiar</button>&nbsp; &nbsp;
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <mat-toolbar>
+                        Gastos agregados
+                    </mat-toolbar>
+                    <div class="row">
+
+
+                        <div id="table" class="table-editable miTableTripulante">
+                            <table mdbTable borderless="true" id="tablacrews">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Código</th>
+                                        <th class="text-center">Descripción de Gastos</th>
+                                        <th class="text-center">Porcentaje</th>
+                                        <th class="text-center">Cantidad</th>
+                                        <th class="text-center">Tipo</th>
+                                        <th class="text-center">Moneda</th>
+                                        <th class="text-center" colspan="2">Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr mdb TableCol *ngFor="let person of personList; let id_list = index">
+                                        <td class="text-center">
+                                            {{person.id_gasto }}
+                                        </td>
+                                        <td class="text-center">
+                                            {{person.name }}
+                                        </td>
+                                        <td class="text-center">
+                                            {{person.percent }}
+
+                                        </td>
+                                        <td class="text-center">
+                                            {{person.quantity }}
+
+                                        </td>
+                                        <td class="text-center">
+                                            {{person.type }}
+
+                                        </td>
+
+                                        <td class="text-center">
+                                            {{person.coin }}
+                                        </td>
+                                        <!-- <td class="text-center">
+                                            <span class="table-remove" *ngIf="!loading">
+                                                <a (click)="edittri(id_list)">
+                                                    <mdb-icon fas icon="edit" size="4.5x" matTooltip="Editar">
+                                                    </mdb-icon>
+                                                </a>
+                                            </span>
+
+                                        </td>-->
+                                        <td class="text-center">
+
+                                            <span class="table-remove">
+                                                <a (click)="removeGasto(id_list, person.id_gasto)">
+                                                    <mdb-icon fas icon="trash-alt" size="4.5x" style="color:#CD6155"
+                                                        matTooltip="Eliminar"> </mdb-icon>
+                                                </a>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <!--<tr mdb TableCol>
+                                        <td class="text-center" colspan="2">
+                                            Total de productos
+                                        </td>
+
+                                        <td class="text-center">
+
+                                        </td>
+                                        <td class="text-center">
+                                            {{totalProductos }}
+                                        </td>
+                                        <td class="text-center">
+
+                                        </td>
+                                        <td class="text-center">
+                                        </td>
+                                        <td class="text-center">
+                                        </td>
+                                        <td class="text-center">
+
+
+                                        </td>
+                                        <td class="text-center">
+
+                                        </td>
+                                    </tr>-->
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="user-margin-buttons">
+                    <div class="row">
+                        <div class="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <button tabindex="-1" mat-raised-button color="accent" matStepperPrevious>
+                                <img src="../../../../../assets/menuIcons/back_w.png" height="36px" alt="">
+                            </button>
+                        </div>
+                        <div class="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <button [disabled]="personList.length ===0" tabindex="-1" mat-raised-button color="primary"
+                                matStepperNext>
+                                <img src="../../../../../assets/menuIcons/next_w.png" height="36px" alt="">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <br><br>
+
+
+
+            </form>
+        </mat-step>
+        <mat-step [stepControl]="fourFormGroup">
+            <form [formGroup]="fourFormGroup">
+                <ng-template matStepLabel> Efectivo </ng-template>
+                <div class="form-group"><br>
+                    <mat-toolbar>
+                        Detalle del Efectivo entregado
+                    </mat-toolbar><br>
+                    <div class="row">
+                        <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
+                            <mat-label>Tipo de Moneda recibida (*)</mat-label>
+                            <input aria-label="Number" type="text" placeholder="Ingresar tipo de moneda" matInput
+                                formControlName="myControl_coinRecibe" [matAutocomplete]="auto9">
+                            <mat-autocomplete (optionSelected)="onSelectionChanged9($event)" autoActiveFirstOption
+                                #auto9="matAutocomplete">
+                                <!--[displayWith]="displayFn"-->
+                                <mat-option *ngFor="let option  of filteredOptions9  | async" [value]="option">
+                                    {{ option.name }} - {{ option.type }}
+                                </mat-option>
+                            </mat-autocomplete>
+                            <mat-error *ngIf="submitted && f4.myControl_coinRecibe.errors">
+                                <div *ngIf="f4.myControl_coinRecibe.errors.required">
+                                    Por favor, ingrese un tipo de moneda
+                                </div>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
+                            <mat-label>Monto (*)</mat-label>
+                            <input matInput formControlName="myControl_monto" id="myControl_monto" type="number"
+                                min="0.00"
+                                onkeypress="return event.charCode >= 48 || (event.charCode === 44) || (event.charCode === 46)" />
+                            <mat-error *ngIf="submitted && f4.myControl_monto.errors">
+                                <div *ngIf="f4.myControl_monto.errors.required">
+                                    Por favor, ingrese un tipo de moneda
+                                </div>
+                            </mat-error>
+                        </mat-form-field>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
+                                    <button mat-raised-button color="primary" class="btn btn-accent " (click)="add2()"
+                                        [disabled]="!fourFormGroup.valid  ">Agregar</button>&nbsp;
+                                    &nbsp;
+                                </div>
+                                <div class="col-12 col-xs-4 col-sm-4 col-md-6 col-lg-6">
+                                    <button mat-raised-button color="primary" class="btn btn-accent "
+                                        (click)="clearInput2()" color="accent">Limpiar</button>&nbsp; &nbsp;
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <mat-toolbar>
+                        Tipo de efectivo recibido
+                    </mat-toolbar>
+                    <div class="row">
+
+
+                        <div id="table" class="table-editable miTableTripulante">
+                            <table mdbTable borderless="true" id="tablacrews">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Código</th>
+                                        <th class="text-center">Tipo de moneda</th>
+                                        <th class="text-center">Monto recibido</th>
+                                        <th class="text-center" colspan="2">Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr mdb TableCol *ngFor="let person2 of personListMontos; let id_list2 = index">
+                                        <td class="text-center">
+                                            {{person2.id_coin }}
+                                        </td>
+                                        <td class="text-center">
+                                            {{person2.name }}
+                                        </td>
+
+                                        <td class="text-center">
+                                            {{person2.monto }}
+
+                                        </td>
+
+                                        <td class="text-center">
+                                            <span class="table-remove" *ngIf="!loading">
+                                                <a (click)="edittri(id_list2)">
+                                                    <mdb-icon fas icon="edit" size="4.5x" matTooltip="Editar">
+                                                    </mdb-icon>
+                                                </a>
+                                            </span>
+
+                                        </td>
+                                        <td class="text-center">
+
+                                            <span class="table-remove">
+                                                <a (click)="remove(id_list2, person2.id_coin)">
+                                                    <mdb-icon fas icon="trash-alt" size="4.5x" style="color:#CD6155"
+                                                        matTooltip="Eliminar"> </mdb-icon>
+                                                </a>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <!--<tr mdb TableCol>
+                                        <td class="text-center" colspan="2">
+                                            Total de productos
+                                        </td>
+
+                                        <td class="text-center">
+
+                                        </td>
+                                        <td class="text-center">
+                                            {{totalProductos }}
+                                        </td>
+                                        <td class="text-center">
+
+                                        </td>
+                                        <td class="text-center">
+                                        </td>
+                                        <td class="text-center">
+                                        </td>
+                                        <td class="text-center">
+
+
+                                        </td>
+                                        <td class="text-center">
+
+                                        </td>
+                                    </tr>-->
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4 col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <button tabindex="-1" mat-raised-button color="accent" matStepperPrevious>
+                                <img src="../../../../../assets/menuIcons/back_w.png" height="36px" alt="">
+                            </button>
+                        </div>
+
+                        <div class="col-4 col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <button tabindex="-1" [disabled]="loading" mat-raised-button (click)="onSubmit()"
+                                color="primary">
+                                <strong>Guardar</strong>
+                            </button>
+                        </div>
+
+                        <div class="col-4 col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <button tabindex="-1" type="button" (click)="closeModal()" mat-raised-button color="accent"
+                                style="color:white" class="btn btn-accent">
+
+                                <strong>Cancelar</strong>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <br><br>
+
+
+
+            </form>
+        </mat-step>
+    </mat-horizontal-stepper>
+
+
+</div>

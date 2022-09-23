@@ -1,5 +1,5 @@
 <mat-toolbar>
-    <span>JAKIRO2 </span>
+    <span>Control Expresos</span>
     <button type="button" mat-button (click)="drawer.toggle() ">
         <!--<button type="button" mat-button (click)="goToMenu()">-->
         <mat-icon>menu</mat-icon>
@@ -37,126 +37,108 @@
     <mat-drawer #drawer mode="over" opened="false" position="start" class="example-sidenav" style="width:100%">
         <ul class="side-menu" style="list-style: none; ">
 
-            <ng-container *ngIf="role===1 || role===2 || role===3 || role===4">
-                <li style="padding-top: 15px; padding-left: 15px" *ngIf="role===1">
+            <ng-container>
+                <li style="padding-top: 15px; padding-left: 15px">
                     <a [routerLink]="['/Stats' ]" routerLinkActive="router-link-active" (click)="dashboard()">
                         <mat-icon>addchart</mat-icon>
                         <span style=" font-family: Arial, Helvetica, sans-serif; font-weight: bold; padding-left: 6px">
                             Dashboard</span>
                     </a>
                 </li>
-                <hr *ngIf="role===1">
-                <li *ngIf="role===1">
-                    <button mat-button (click)="indicadores()" [routerLink]="['/indicadores' ]"
-                        routerLinkActive="router-link-active">
-                        <mat-icon>pie_chart</mat-icon>
-                        &nbsp;
-                        <span style="font-size: 15px; font-weight: bold;">Indicadores</span>
-                    </button>
+                <hr>
 
-                </li>
-                <hr *ngIf="role===1">
-                <li *ngIf="role===1">
+
+                <li>
                     <button mat-button [matMenuTriggerFor]="menuCatalogo">
                         <mat-icon>folder_shared</mat-icon>
                         &nbsp;
                         <span style="font-size: 15px; font-weight: bold;">Catálogos</span>
                     </button>
                     <mat-menu #menuCatalogo="matMenu">
-                        <div *ngIf="role===1">
+                        <div>
                             <button (click)="listarUsuarios()" mat-menu-item [routerLink]="['/user' ]"
                                 routerLinkActive="router-link-active">
-                                <mat-icon> account_box</mat-icon>&nbsp;Usuarios
+                                <mat-icon> account_circle</mat-icon>&nbsp;Usuarios
                             </button>
                         </div>
-                        <button (click)="listarClientes()" mat-menu-item [routerLink]="['/Client' ]"
+                        <button (click)="listarDrivers()" mat-menu-item [routerLink]="['/drivers' ]"
                             routerLinkActive="router-link-active">
-                            <mat-icon>supervisor_account</mat-icon>&nbsp;Clientes
+                            <mat-icon> assignment_ind</mat-icon>&nbsp;Choferes
                         </button>
-                        <button (click)="listarBranch()" mat-menu-item [routerLink]="['/Branch' ]"
+                        <button (click)="listarPartners()" mat-menu-item [routerLink]="['/partners' ]"
                             routerLinkActive="router-link-active">
-                            <mat-icon>store</mat-icon>&nbsp;Sucursales
+                            <mat-icon> supervisor_account</mat-icon>&nbsp;Socios
                         </button>
+                        <hr>
                         <button (click)="listarVehicles()" mat-menu-item [routerLink]="['/vehicles' ]"
                             routerLinkActive="router-link-active">
-                            <mat-icon>directions_car</mat-icon>&nbsp;Vehículos
+                            <mat-icon>directions_bus</mat-icon>&nbsp;Vehículos
+                        </button>
+                        <button (click)="listarOficinas()" mat-menu-item [routerLink]="['/offices' ]"
+                            routerLinkActive="router-link-active">
+                            <mat-icon>store</mat-icon>&nbsp;Oficinas
                         </button>
                     </mat-menu>
                 </li>
-                <hr *ngIf="role===1">
-                <li *ngIf="role===1">
-                    <button mat-button [matMenuTriggerFor]="menuInventario">
-                        <mat-icon>assignment</mat-icon>
-                        &nbsp;
-                        <span style="font-size: 15px; font-weight: bold;">Inventario</span>
-                    </button>
-                    <mat-menu #menuInventario="matMenu">
-                        <button (click)="listarColores()" mat-menu-item [routerLink]="['/Color' ]"
-                            routerLinkActive="router-link-active">
-                            <mat-icon>color_lens</mat-icon>&nbsp;Colores
-                        </button>
-                        <button (click)="listarServices()" mat-menu-item [routerLink]="['/Service' ]"
-                            routerLinkActive="router-link-active">
-                            <mat-icon>local_laundry_service</mat-icon>&nbsp;Servicios
-                        </button>
-                        <button (click)="listarSubServices()" mat-menu-item [routerLink]="['/Sub-service' ]"
-                            routerLinkActive="router-link-active">
-                            <mat-icon>local_offer</mat-icon>&nbsp;Sub-Servicios
-                        </button>
-                    </mat-menu>
-                </li>
+
                 <hr>
-                <li *ngIf="role===1 || role===2 || role===3">
+                <li>
                     <button mat-button [matMenuTriggerFor]="menuOpera">
                         <mat-icon>assignment_returned</mat-icon>
                         &nbsp;
                         <span style="font-size: 15px; font-weight: bold;">Operaciones</span>
                     </button>
                     <mat-menu #menuOpera="matMenu">
-                        <button *ngIf="role===1 || role===3" mat-menu-item (click)="listarEntradas()" mat-menu-item
-                            [routerLink]="['/Entradas' ]" routerLinkActive="router-link-active">
-                            <mat-icon>arrow_circle_down</mat-icon>&nbsp;Registrar entrada
+                        <button mat-menu-item (click)="listarLiquidaciones()" mat-menu-item
+                            [routerLink]="['/liquidations' ]" routerLinkActive="router-link-active">
+                            <mat-icon>assignment</mat-icon>&nbsp;Liquidaciones
                         </button>
-                        <button *ngIf="role===1 || role===2" mat-menu-item (click)="listarSalidas()" mat-menu-item
-                            [routerLink]="['/Salidas' ]" routerLinkActive="router-link-active">
-                            <mat-icon>arrow_circle_up</mat-icon>&nbsp;Registrar Salida
-                        </button>
+                        <!--<button mat-menu-item (click)="listarCoins()" mat-menu-item [routerLink]="['/coins' ]"
+                            routerLinkActive="router-link-active">
+                            <mat-icon>arrow_circle_up</mat-icon>&nbsp;Cuadre de caja
+                        </button>-->
                     </mat-menu>
                 </li>
-                <hr>
-                <li *ngIf="role===1 || role===2 || role===4">
-                    <button mat-button [matMenuTriggerFor]="menuInspe">
-                        <mat-icon>assignment_turned_in</mat-icon>
-                        &nbsp;
-                        <span style="font-size: 15px; font-weight: bold;">Lista de Operaciones</span>
-                    </button>
-                    <mat-menu #menuInspe="matMenu">
-                        <button *ngIf="  role===4" mat-menu-item (click)="listarProcesadas()" mat-menu-item
-                            [routerLink]="['/Procesadas/Procesadas' ]" routerLinkActive="router-link-active">
-                            <mat-icon>compare_arrows</mat-icon>&nbsp;Procesadas
-                        </button>
-
-                        <button *ngIf="role===1 || role===2  " mat-menu-item (click)="report()" mat-menu-item
-                            [routerLink]="['/report-form/report-form' ]" routerLinkActive="router-link-active">
-                            <mat-icon>local_printshop</mat-icon>&nbsp;Reportes
-                        </button>
-                    </mat-menu>
-                </li>
-                <hr *ngIf="role===1">
-                <li *ngIf="role===1">
-                    <button mat-button (click)="settings()" [routerLink]="['/settings' ]"
+                <!-- <hr>
+                <li>
+                    <button mat-button (click)="report()" [routerLink]="['/report-form/report-form' ]"
                         routerLinkActive="router-link-active">
+                        <mat-icon>local_printshop</mat-icon>
+                        &nbsp;
+                        <span style="font-size: 15px; font-weight: bold;">Reportes</span>
+                    </button>
+
+                </li>-->
+
+
+                <hr>
+                <li>
+                    <button mat-button [matMenuTriggerFor]="menuConfig">
                         <mat-icon>settings</mat-icon>
                         &nbsp;
                         <span style="font-size: 15px; font-weight: bold;">Configuración</span>
                     </button>
-
+                    <mat-menu #menuConfig="matMenu">
+                        <button mat-menu-item (click)="listarCoins()" mat-menu-item [routerLink]="['/coins' ]"
+                            routerLinkActive="router-link-active">
+                            <mat-icon>monetization_on</mat-icon>&nbsp;Monedas
+                        </button>
+                        <button mat-menu-item (click)="listarGastos()" mat-menu-item [routerLink]="['/additionals' ]"
+                            routerLinkActive="router-link-active">
+                            <mat-icon>list_alt</mat-icon>&nbsp;Gastos
+                        </button>
+                        <button mat-menu-item (click)="listarGastosViaje()" mat-menu-item
+                            [routerLink]="['/gastosvarios' ]" routerLinkActive="router-link-active">
+                            <mat-icon>list_alt</mat-icon>&nbsp;Gastos de viaje
+                        </button>
+                    </mat-menu>
                 </li>
+
             </ng-container>
 
         </ul>
     </mat-drawer>
-
+    <!--*ngIf="role===1"-->
     <router-outlet #outlet="outlet">
 
 

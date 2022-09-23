@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './../app/modulos/dashboard/dashboard/dashboard.component';
 //import { ProfileComponent } from './modulos/profile/profile/profile.component';
 import { CanActivateViaAuthGuard } from './guard';
-import { ReportEntradaComponent } from '../app/modulos/report/report-entrada/report-entrada.component'
 const routes: Routes = [
   {
     path: 'login',
@@ -29,8 +28,8 @@ const routes: Routes = [
           loadChildren: () => import('./modulos/profile/profile.module').then(m => m.ProfileModule)
         },
         {
-          path: 'Client', canActivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard],
-          loadChildren: () => import('./modulos/client/client.module').then(m => m.ClientModule)
+          path: 'drivers', canActivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard],
+          loadChildren: () => import('./modulos/drivers/drivers.module').then(m => m.DriversModule)
         },
         {
           path: 'Branch', canActivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard],
@@ -48,18 +47,7 @@ const routes: Routes = [
           path: 'Sub-service', canActivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard],
           loadChildren: () => import('./modulos/sub-service/sub-service.module').then(m => m.SubServiceModule)
         },
-        {
-          path: 'Entradas', canActivate: [CanActivateViaAuthGuard],
-          loadChildren: () => import('./modulos/entradas/entradas.module').then(m => m.EntradasModule)
-        },
-        {
-          path: 'Salidas', canActivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard],
-          loadChildren: () => import('./modulos/salidas/salidas.module').then(m => m.SalidasModule)
-        },
-        {
-          path: 'Procesadas', canActivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard],
-          loadChildren: () => import('./modulos/processed/processed.module').then(m => m.ProcessedModule)
-        },
+
         {
           path: 'Stats', canActivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard],
           loadChildren: () => import('./modulos/stats/stats.module').then(m => m.StatsModule)
@@ -72,13 +60,34 @@ const routes: Routes = [
           path: 'settings', canActivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard],
           loadChildren: () => import('./modulos/settings/settings.module').then(m => m.SettingsModule)
         },
-        {
-          path: 'report-form', canActivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard],
-          loadChildren: () => import('./modulos/report/report.module').then(m => m.ReportModule)
-        },
+
         {
           path: 'vehicles', canActivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard],
           loadChildren: () => import('./modulos/vehicles/vehicles.module').then(m => m.VehiclesModule)
+        },
+        {
+          path: 'partners', canActivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard],
+          loadChildren: () => import('./modulos/partners/partners.module').then(m => m.PartnersModule)
+        },
+        {
+          path: 'coins', canActivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard],
+          loadChildren: () => import('./modulos/coins/coins.module').then(m => m.CoinsModule)
+        },
+        {
+          path: 'additionals', canActivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard],
+          loadChildren: () => import('./modulos/additionals/additionals.module').then(m => m.AdditionalsModule)
+        },
+        {
+          path: 'offices', canActivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard],
+          loadChildren: () => import('./modulos/offices/offices.module').then(m => m.OfficesModule)
+        },
+        {
+          path: 'liquidations', canActivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard],
+          loadChildren: () => import('./modulos/liquidations/liquidations.module').then(m => m.LiquidationsModule)
+        },
+        {
+          path: 'gastosvarios', canActivate: [CanActivateViaAuthGuard], canActivateChild: [CanActivateViaAuthGuard],
+          loadChildren: () => import('./modulos/gastosvarios/gastosvarios.module').then(m => m.GastosvariosModule)
         },
       ]
   }

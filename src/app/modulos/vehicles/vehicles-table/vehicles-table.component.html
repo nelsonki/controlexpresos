@@ -4,7 +4,7 @@
         <nav class="navbar  navbar-expand-lg navbar-dark mat-toolbar mat-primary nav-padding-option">
             <div class="table-title-width">
                 <div>
-                    <mat-icon height="38px">directions_car</mat-icon>
+                    <mat-icon height="38px">directions_bus</mat-icon>
 
                 </div>
                 <div>
@@ -71,13 +71,18 @@
                 <td mat-cell *matCellDef="let element"> {{element.number}} </td>
             </ng-container>
             <!-- Position Column -->
-            <ng-container matColumnDef="Tipo">
-                <th mat-header-cell *matHeaderCellDef> Tipo </th>
-                <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+            <ng-container matColumnDef="Estatus">
+                <th mat-header-cell *matHeaderCellDef> Estatus </th>
+                <td mat-cell *matCellDef="let element"> {{element.status}} </td>
             </ng-container>
             <!-- Position Column -->
             <ng-container matColumnDef="Descripción">
                 <th mat-header-cell *matHeaderCellDef> Descripción </th>
+                <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+            </ng-container>
+            <!-- Position Column -->
+            <ng-container matColumnDef="Asociado a">
+                <th mat-header-cell *matHeaderCellDef> Asociado a </th>
                 <td mat-cell *matCellDef="let element"> {{element.description}} </td>
             </ng-container>
             <!-- Weight Column -->
@@ -113,7 +118,7 @@
         <button id="boton" matTooltip="{{ titleModal }}" (click)="basicModal.show(); reset(); showModal()" mat-mini-fab
             color="primary" class="btn btn-fab" data-toggle="tooltip" data-placement="left" data-original-title=""
             title="" id="main">
-            <mat-icon height="22px">directions_car</mat-icon>
+            <mat-icon height="22px">directions_bus</mat-icon>
         </button>
     </div>
     <div id="modal" mdbModal #basicModal="mdbModal" class="modal fade right modal-scroll" tabindex="-1" role="dialog"
@@ -128,7 +133,7 @@
                         <span aria-hidden="true" class="client-buttom-close"> x </span>
                     </button>
                     <h4 class="modal-title w-100" id="myModalLabel">
-                        <mat-icon height="38px">directions_car</mat-icon>
+                        <mat-icon height="38px">directions_bus</mat-icon>
                         {{ titleModal }}
                         <!--<img src="assets/menuIcons/tags.png" alt="" height="22px" /> {{ titleModal }}-->
                     </h4>

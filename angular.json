@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "Trackingfrontend2": {
+        "ControlExpresos": {
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:component": {
@@ -20,7 +20,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/Trackingfrontend2",
+                        "outputPath": "dist/ControlExpresos",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
@@ -79,18 +79,18 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "Trackingfrontend2:build"
+                        "browserTarget": "ControlExpresos:build"
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "Trackingfrontend2:build:production"
+                            "browserTarget": "ControlExpresos:build:production"
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "Trackingfrontend2:build"
+                        "browserTarget": "ControlExpresos:build"
                     }
                 },
                 "test": {
@@ -128,18 +128,18 @@
                     "builder": "@angular-devkit/build-angular:protractor",
                     "options": {
                         "protractorConfig": "e2e/protractor.conf.js",
-                        "devServerTarget": "Trackingfrontend2:serve"
+                        "devServerTarget": "ControlExpresos:serve"
                     },
                     "configurations": {
                         "production": {
-                            "devServerTarget": "Trackingfrontend2:serve:production"
+                            "devServerTarget": "ControlExpresos:serve:production"
                         }
                     }
                 }
             }
         }
     },
-    "defaultProject": "Trackingfrontend2",
+    "defaultProject": "ControlExpresos",
     "cli": {
         "analytics": false
     }

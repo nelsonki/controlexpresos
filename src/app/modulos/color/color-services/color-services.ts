@@ -13,7 +13,7 @@ export class ColorServices {
         private http: HttpServices,
         //public localService: LocalService
     ) {
-        this.api = environment.apiJakiro2;
+        this.api = environment.apiUrl;
         //this.local = this.localService.getJsonValue('info');
         /*if (this.local !== null) {
             this.autorization = new HttpHeaders({
@@ -25,23 +25,23 @@ export class ColorServices {
 
     getList() {
         let enpoint = 'colors/index';
-        return this.http.doGet(this.api, enpoint );
+        return this.http.doGet(this.api, enpoint);
     }
 
     save(body) {
         let enpoint = 'colors/store';
         return this.http.doPost(this.api, enpoint, body);
-     }
+    }
 
     update(id, body) {
-        let enpoint = 'colors/update/'+id;
+        let enpoint = 'colors/update/' + id;
         return this.http.doPut(this.api, enpoint, body);
     }
 
     delete(id) {
-        let enpoint = 'colors/delete/'+id;
+        let enpoint = 'colors/delete/' + id;
         return this.http.doDelete(this.api, enpoint);
-     }
+    }
 
-     
+
 }

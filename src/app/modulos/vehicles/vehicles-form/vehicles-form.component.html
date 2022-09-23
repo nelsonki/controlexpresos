@@ -13,7 +13,7 @@
 
         <mat-form-field class="example-chip-list">
             <mat-label>Número(*)</mat-label>
-            <input type="number" matInput formControlName="numero"
+            <input type="text" matInput formControlName="numero"
                 [ngClass]="{ 'is-invalid': submitted && f.numero.errors }" />
             <mat-error *ngIf="submitted && f.numero.errors">
                 <div *ngIf="f.numero.errors.required">
@@ -23,14 +23,15 @@
         </mat-form-field>
 
 
+        
         <mat-form-field class="example-chip-list">
-            <mat-label>Tipo(*)</mat-label>
-            <input matInput formControlName="tipo" [ngClass]="{ 'is-invalid': submitted && f.tipo.errors }" />
-            <mat-error *ngIf="submitted && f.tipo.errors">
-                <div *ngIf="f.tipo.errors.required">
-                    Por Favor, Ingrese el tipo
-                </div>
-            </mat-error>
+            <mat-label>Estatus(*)</mat-label>
+
+            <mat-select   formControlName="tipo"
+                placeholder="Seleccione Estatus">
+                 <mat-option value="Operativo">Operativo</mat-option>
+     
+            </mat-select>
         </mat-form-field>
         <mat-form-field class="example-chip-list">
             <mat-label>Descripción(*)</mat-label>
@@ -39,6 +40,23 @@
             <mat-error *ngIf="submitted && f.description.errors">
                 <div *ngIf="f.description.errors.required">
                     Por Favor, Ingrese la Descripción
+                </div>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-chip-list">
+            <mat-label>Socio (*)</mat-label>
+
+            <input aria-label="Number" type="text" placeholder="Ingresar nombre de socio" matInput formControlName="socio" [matAutocomplete]="auto">
+            <mat-autocomplete (optionSelected)="onSelectionChanged4($event)" autoActiveFirstOption #auto="matAutocomplete">
+                <!--[displayWith]="displayFn"-->
+
+                <mat-option *ngFor="let option  of filteredOptions4  | async" [value]="option">
+                    {{ option.name }}
+                </mat-option>
+            </mat-autocomplete>
+            <mat-error *ngIf="submitted && f.socio.errors">
+                <div *ngIf="f.socio.errors.required">
+                    Por favor, ingrese un socio
                 </div>
             </mat-error>
         </mat-form-field>

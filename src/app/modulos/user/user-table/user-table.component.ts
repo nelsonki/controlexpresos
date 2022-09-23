@@ -23,7 +23,7 @@ export class UserTableComponent implements OnInit {
   @ViewChild(UserFormComponent) form: UserFormComponent;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  displayedColumns: string[] = ['Item', 'Nombre', 'Usuario', 'Rol', 'Acciones'];
+  displayedColumns: string[] = ['Item', 'Nombre', 'Apellido', 'Correo', 'Rol', 'Acciones'];
   dataSource;
   public titleModal: string;
   public element;
@@ -49,31 +49,26 @@ export class UserTableComponent implements OnInit {
 
     this.userServices.getList().subscribe((value) => {
       let r;
-      let nameCliente = ""
       this.data = [];
       this.element = [];
-      console.log(value["data"])
+      console.log(value)
       if (value["data"]) {
         this.element = [];
         Object.keys(value["data"]).forEach(e => {
-          if (value["data"][e].rol === "op_entradas") {
-            r = "op. entradas";
+          if (value["data"][e].role_id === 1) {
+            r = "Admin";
           } else {
-            r = value["data"][e].rol;
+            r = "Usuario";
           }
-          if (value["data"][e].id_cliente_asoc > 0) {
-            nameCliente = value["data"][e].cliente[0].name
-          } else {
-            nameCliente = ""
-          }
+
           const datos = {
             Item: "",
             "id": value["data"][e].id,
-            "name": value["data"][e].fullname,
-            "username": value["data"][e].username,
+            "first_name": value["data"][e].first_name,
+            "last_name": value["data"][e].last_name,
+            "email": value["data"][e].email,
+            "rol_id": value["data"][e].role_id,
             "rol": r,
-            "id_cliente_asoc": value["data"][e].id_cliente_asoc,
-            "cliente_name": nameCliente
           };
           this.data.push(datos);
           this.element.push(datos);
@@ -110,8 +105,12 @@ export class UserTableComponent implements OnInit {
   }
   reset() {
     this.form.firstform.controls["nombre"].setValue("");
-    this.form.firstform.controls["username"].setValue("");
-    this.form.firstform.controls["rol"].setValue('');
+    this.form.firstform.controls["apellido"].setValue("");
+    this.form.firstform.controls["correo"].setValue('');
+    this.form.firstform.controls["rol"].setValue("");
+    this.form.firstform.controls["partner"].setValue("");
+    this.form.firstform.controls["partner_id"].setValue("");
+
     this.form.firstform.controls["clave"].setValue("");
     this.form.firstform.controls["rclave"].setValue("");
 
