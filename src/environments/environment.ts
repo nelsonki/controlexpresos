@@ -1,33 +1,18 @@
-// import * as dotenv from 'dotenv'
-// dotenv.config()
-// export const environment = {
-//   production: process.env.PRODUCTION,
-//   apiUrl: process.env.API_URL,
+// This file can be replaced during build by using the `fileReplacements` array.
+// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
+// The list of file replacements can be found in `angular.json`.
 
-// };
+export const environment = {
+  production: false,
+  apiUrl: 'https://controls-transport.herokuapp.com/api',
 
-const { writeFile } = require('fs');
-const { argv } = require('yargs');
-// read environment variables from .env file
-require('dotenv').config();
-// read the command line arguments passed with yargs
-const environment = argv.environment;
-const isProduction = environment === 'prod';
-const targetPath = isProduction
-  ? `./src/environments/environment.prod.ts`
-  : `./src/environments/environment.ts`;
-// we have access to our environment variables
-// in the process.env object thanks to dotenv
-const environmentFileContent = `
-  export const environment = {
-    production: ${isProduction},
-    apiUrl: "${process.env.API_URL}"
-  };
-`;
-// write the content to the respective file
-writeFile(targetPath, environmentFileContent, function (err) {
-  if (err) {
-    console.log(err);
-  }
-  console.log(`Wrote variables to ${targetPath}`);
-});
+};
+
+/*
+ * For easier debugging in development mode, you can import the following file
+ * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
+ *
+ * This import should be commented out in production mode because it will have a negative impact
+ * on performance if an error is thrown.
+ */
+// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
