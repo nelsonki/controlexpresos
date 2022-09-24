@@ -145,6 +145,8 @@ export class DashboardComponent implements OnInit {
     this.drawer.close();
   }
   ngOnInit(): void {
+    this.role = this.checkRole();
+    console.log(this.role)
     //this.showSuccess()
     $(document).ready(function () {
       $('.leftmenutrigger').on('click', function (e) {
@@ -210,11 +212,12 @@ export class DashboardComponent implements OnInit {
   checkRole() {
 
     let info = this.localService.getJsonValue('info');
-    if (info.role) {
-      if (info.role === 1) {
+    console.log(info)
+    if (info.data.role) {
+      if (info.data.role === 1) {
         return 1;
       }
-      if (info.role === 2) {
+      if (info.data.role === 2) {
         return 2;
       }
 

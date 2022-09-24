@@ -61,7 +61,7 @@ export class VehiclesTableComponent implements OnInit {
             "placa": value["data"][e].plate,
             "status": value["data"][e].status,
             "description": value["data"][e].description,
-
+            "socio": (value["data"][e].partner) ? value["data"][e].partner.first_name : ""
           };
           this.data.push(datos);
           this.element.push(datos);
