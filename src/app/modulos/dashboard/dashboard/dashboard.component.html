@@ -37,7 +37,7 @@
     <mat-drawer #drawer mode="over" opened="false" position="start" class="example-sidenav" style="width:100%">
         <ul class="side-menu" style="list-style: none; ">
 
-            <ng-container>
+            <ng-container *ngIf="role===1 || role===2">
                 <li style="padding-top: 15px; padding-left: 15px">
                     <a [routerLink]="['/Stats' ]" routerLinkActive="router-link-active" (click)="dashboard()">
                         <mat-icon>addchart</mat-icon>
@@ -45,10 +45,10 @@
                             Dashboard</span>
                     </a>
                 </li>
-                <hr>
+                <hr *ngIf="role===1">
 
 
-                <li>
+                <li *ngIf="role===1">
                     <button mat-button [matMenuTriggerFor]="menuCatalogo">
                         <mat-icon>folder_shared</mat-icon>
                         &nbsp;
@@ -119,13 +119,13 @@
                         <span style="font-size: 15px; font-weight: bold;">Configuración</span>
                     </button>
                     <mat-menu #menuConfig="matMenu">
-                        <button mat-menu-item (click)="listarCoins()" mat-menu-item [routerLink]="['/coins' ]"
-                            routerLinkActive="router-link-active">
+                        <button *ngIf="role===1" mat-menu-item (click)="listarCoins()" mat-menu-item
+                            [routerLink]="['/coins' ]" routerLinkActive="router-link-active">
                             <mat-icon>monetization_on</mat-icon>&nbsp;Monedas
                         </button>
                         <button mat-menu-item (click)="listarGastos()" mat-menu-item [routerLink]="['/additionals' ]"
                             routerLinkActive="router-link-active">
-                            <mat-icon>list_alt</mat-icon>&nbsp;Gastos
+                            <mat-icon>list_alt</mat-icon>&nbsp;Retenciones
                         </button>
                         <button mat-menu-item (click)="listarGastosViaje()" mat-menu-item
                             [routerLink]="['/gastosvarios' ]" routerLinkActive="router-link-active">
@@ -138,7 +138,7 @@
 
         </ul>
     </mat-drawer>
-    <!--*ngIf="role===1"-->
+    <!---->
     <router-outlet #outlet="outlet">
 
 
